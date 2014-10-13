@@ -1,14 +1,22 @@
 package at.bmlvs.NDMS.domain.templates;
 
+import java.util.ArrayList;
+
 public class Template
 {
 	private String version;
 	private String os_version;
 	private String device_type;
 	
-	public Template()
+	private ArrayList<Snippet> snippets;
+	
+	public Template(String version, String os_version, String device_type)
 	{
+		setVersion(version);
+		setOs_version(os_version);
+		setDevice_type(device_type);
 		
+		setSnippets(new ArrayList<Snippet>());
 	}
 
 	public String getVersion()
@@ -39,5 +47,15 @@ public class Template
 	public void setDevice_type(String device_type)
 	{
 		this.device_type = device_type;
+	}
+
+	public ArrayList<Snippet> getSnippets()
+	{
+		return snippets;
+	}
+
+	public void setSnippets(ArrayList<Snippet> snippets)
+	{
+		this.snippets = snippets;
 	}
 }
