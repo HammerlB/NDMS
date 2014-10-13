@@ -49,9 +49,6 @@ public class SSHConnector extends TerminalConnector
 		this.port = port;
 	}
 
-	/**
-	 * 
-	 */
 	public void connect()
 	{
 		try
@@ -67,11 +64,16 @@ public class SSHConnector extends TerminalConnector
 			channel.setInputStream(System.in);
 			channel.setOutputStream(System.out);
 			channel.connect(3*1000);
-//			channel.disconnect();
+			//channel.disconnect();
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	public void disconnect()
+	{
+		
 	}
 }
