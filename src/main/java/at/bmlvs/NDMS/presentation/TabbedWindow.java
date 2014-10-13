@@ -5,26 +5,16 @@ import javax.swing.JTabbedPane;
 
 public class TabbedWindow
 {
+	JTabbedPane tabpane = new JTabbedPane(JTabbedPane.TOP,JTabbedPane.SCROLL_TAB_LAYOUT);
+	
 	public TabbedWindow()
 	{
 
 	}
 
-	public void addTabbedMenu()
+	public void addTabbedMenu(String tabname)
 	{
-		JPanel panelSwitch = new JPanel();
-		JPanel panelRange = new JPanel();
-
-		// Erzeugung eines JTabbedPane-Objektes
-		JTabbedPane tabpane = new JTabbedPane(JTabbedPane.TOP,
-				JTabbedPane.SCROLL_TAB_LAYOUT);
-
-		// Hier werden die JPanels als Registerkarten hinzugefügt
-		tabpane.addTab("192.168.10.253", panelSwitch);
-		tabpane.addTab("10.0.0.1 - 10.0.0.5", panelRange);
-
-		// JTabbedPane wird unserem Dialog hinzugefügt
-		PresentationFactory.getMainWindow().add(tabpane);
+		tabpane.addTab(tabname,new JPanel());
+		PresentationFactory.getMainWindow().mainFrame.add(tabpane);
 	}
-
 }

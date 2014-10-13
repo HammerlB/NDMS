@@ -1,5 +1,6 @@
 package at.bmlvs.NDMS.presentation;
 
+import javax.swing.JPanel;
 import javax.swing.UIManager;
 
 public class RunPresentation
@@ -19,8 +20,12 @@ public class RunPresentation
 		}
 
 		PresentationFactory.setMainWindow(new MainWindow());
+		PresentationFactory.setTabbedWindow(new TabbedWindow());
+		
 		PresentationFactory.getMainWindow().addTopMenu();
-		PresentationFactory.getMainWindow().addTabbedMenu();
+		PresentationFactory.getTabbedWindow().addTabbedMenu("10.0.0.1");
+		PresentationFactory.getTabbedWindow().addTabbedMenu("10.0.0.2");
+		
 	}
 
 }
