@@ -2,10 +2,12 @@ package at.bmlvs.NDMS.presentation;
 
 import java.awt.Color;
 
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
@@ -35,6 +37,16 @@ public class MainWindow
         
         //Dateimenü
         JMenuItem neuverb = new JMenuItem("Neue Verbindung");
+        neuverb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                JOptionPane op = new JOptionPane();
+                String input = op.showInputDialog("Verbinden zu..");
+                
+                PresentationFactory.getTabbedWindow().addTabbedMenu(input);
+                
+            }
+        });
+            
         JMenuItem importe = new JMenuItem("Importieren");
         JMenuItem export = new JMenuItem("Exportieren");
         JMenuItem einst = new JMenuItem("Einstellungen");
@@ -79,5 +91,5 @@ public class MainWindow
 		
 		mainFrame.setVisible(true);
 	}
-
+	
 }
