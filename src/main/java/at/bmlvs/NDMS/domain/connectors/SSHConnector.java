@@ -1,17 +1,27 @@
 package at.bmlvs.NDMS.domain.connectors;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.input.ReaderInputStream;
+import org.apache.commons.io.output.WriterOutputStream;
 
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.JSch;
@@ -25,8 +35,7 @@ import com.jcraft.jsch.Session;
 public class SSHConnector extends TerminalConnector {
 	private String version;
 	private int port;
-	private InputStream input;
-	private OutputStream output;
+	private String out;
 
 	public SSHConnector() {
 		super();
@@ -58,22 +67,11 @@ public class SSHConnector extends TerminalConnector {
 	}
 
 	public void setInput(String input) {
-		this.input = new ByteArrayInputStream(input.getBytes(StandardCharsets.ISO_8859_1));
+		
 	}
 
-	public void setOutput(OutputStream output) {
-		this.output = output;
-	}
-
-	public String getOutput(){
-		ByteArrayOutputStream os = new ByteArrayOutputStream();
-		String txt = "";
-		try {
-			txt = new String(os.toByteArray(),"ISO_8859_1");
-		} catch (UnsupportedEncodingException e) {
-			System.err.println(e.getMessage());
-		}
-		return txt;
+	public String getOutput() {
+		
 	}
 
 	public void connect() {
@@ -88,12 +86,11 @@ public class SSHConnector extends TerminalConnector {
 			session.connect(30000);
 			Channel channel = session.openChannel("shell");
 			channel.setInputStream(input);
-//			this.setOutput(System.out); 
-			channel.setOutputStream(System.out);
+			channel.setOutputStream(output);
 			channel.connect(3 * 1000);
 			// channel.disconnect();
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		}
 	}
 

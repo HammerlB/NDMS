@@ -17,5 +17,6 @@ public class App
 				+ "show run | include interface\n"
 				+ "         ");
 		sshcon.connect();
+		System.out.println(sshcon.getOutput());
 	}
 }
