@@ -20,6 +20,7 @@ import javax.swing.JToolBar;
 import javax.swing.filechooser.FileFilter;
 
 import at.bmlvs.NDMS.domain.templates.Templates;
+import at.bmlvs.NDMS.linker.TemplatesToPathLinker;
 import at.bmlvs.NDMS.service.ServiceFactory;
 
 public class MainWindow
@@ -168,15 +169,7 @@ public class MainWindow
 				fa += ".xml";
 			}
 
-			// if (ServiceFactory.getPersistenceService().checkIfModelExists(
-			// ServiceFactory.getModelService().getActiveModel()) != true)
-			// {
-			// ServiceFactory.getPersistenceService().addModel(
-			// ServiceFactory.getModelService().getActiveModel(), fa);
-			// }
-
-			for (ModelToPathLinker m : ServiceFactory.getPersistenceService()
-					.getModels())
+			for (TemplatesToPathLinker m : ServiceFactory.getPersistenceService().getTemplates())
 			{
 				if (m.getElement().equals(
 						ServiceFactory.getModelService().getActiveModel()))
@@ -193,7 +186,6 @@ public class MainWindow
 	
 	public void load()
 	{
-		/*
 		JFileChooser f = new JFileChooser();
 		f.setFileFilter(new FileFilter()
 		{
@@ -218,26 +210,7 @@ public class MainWindow
 
 		if (file != null)
 		{
-			Templates templates = ServiceFactory.getPersistenceService()
-					.loadTemplates(file.getAbsolutePath()).getElement();
-			
-			if(!ServiceFactory.getTemplatesService().containsModel(model.getName()))
-			{
-				PanelDraw pd = new PanelDraw();
-				pd.setPanelDrawErd(panelDrawErd);
-				pd.setPanelQuickMenu(panelQuickMenu);
-				pd.setWindowMain(windowMain);
-
-				JScrollPane sp = new JScrollPane(pd);
-				sp.getHorizontalScrollBar().setUnitIncrement(15);
-				sp.getVerticalScrollBar().setUnitIncrement(15);
-				
-				addTab(sp, model);
-			}
-			else
-			{
-				JOptionPane.showMessageDialog(windowMain, "Model can not be loaded: Model '" + model.getName() + "' already exists!");
-			}
-		}*/
+			Templates templates = ServiceFactory.getPersistenceService().loadTemplates(file.getAbsolutePath()).getElement();
+		}
 	}
 }
