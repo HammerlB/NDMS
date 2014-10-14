@@ -1,7 +1,11 @@
 package at.bmlvs.NDMS.presentation;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -10,6 +14,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.JToolBar;
 
 public class MainWindow
 {
@@ -87,9 +92,32 @@ public class MainWindow
         hilfe.addSeparator();
         hilfe.add(about);
         
+        //Toolbar
+        
+        
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        
+        JToolBar toolbar1 = new JToolBar();
+
+        ImageIcon newi = new ImageIcon("icons/new.png");
+        ImageIcon imp = new ImageIcon("icons/import.png");
+        ImageIcon exp = new ImageIcon("icons/export.png");
+
+        JButton newb = new JButton(newi);
+        JButton impb = new JButton(imp);
+        JButton expb = new JButton(exp);
+
+        toolbar1.add(newb);
+        toolbar1.add(impb);
+        toolbar1.add(expb);
+        toolbar1.setAlignmentX(0);
+
+        panel.add(toolbar1);
+
+        mainFrame.add(panel, BorderLayout.NORTH);
+        
         mainFrame.setJMenuBar(bar);
-		
 		mainFrame.setVisible(true);
 	}
-	
 }
