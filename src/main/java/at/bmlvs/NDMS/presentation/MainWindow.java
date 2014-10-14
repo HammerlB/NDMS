@@ -257,7 +257,7 @@ public class MainWindow
 
 		if (file != null)
 		{
-			Templates templates = ServiceFactory.getPersistenceService().loadTemplates(file.getAbsolutePath()).getElement();
+//			Templates templates = ServiceFactory.getPersistenceService().loadTemplate(file.getAbsolutePath()).getElement();
 		}
 	}
 }
