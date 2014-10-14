@@ -23,8 +23,7 @@ public class RunPresentation
 		PresentationFactory.setTabbedWindow(new TabbedWindow());
 		
 		PresentationFactory.getMainWindow().addTopMenu();
-		PresentationFactory.getTabbedWindow().addTabbedMenu("10.0.0.1");
-		PresentationFactory.getTabbedWindow().addTabbedMenu("10.0.0.2");
+		//PresentationFactory.getTabbedWindow().addTabbedMenu("10.0.0.1");
 		
 	}
 
