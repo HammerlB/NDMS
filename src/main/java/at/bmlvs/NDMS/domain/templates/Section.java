@@ -1,8 +1,10 @@
 package at.bmlvs.NDMS.domain.templates;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Section
+@SuppressWarnings("serial")
+public class Section implements Serializable
 {
 	private String name;
 	

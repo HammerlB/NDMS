@@ -1,0 +1,112 @@
+package at.bmlvs.NDMS.service;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+
+public class AppConfig implements Serializable
+{
+	// Serialization
+	private String NDMS_DEFAULT_PATH_APP;
+	private String NDMS_DEFAULT_PATH_APPCONFIG;
+	private String NDMS_DEFAULT_PATH_TEMPLATE_DIRECTORY;
+	private String NDMS_DEFAULT_PATH_CONFIG_DIRECTORY;
+	private String NDMS_DEFAULT_PATH_BACKUP_DIRECTORY;
+	
+	private ArrayList<String> NDMS_DEFAULT_PATH_TEMPLATES;
+	private ArrayList<String> NDMS_DEFAULT_PATH_CONFIGS;
+	
+	public AppConfig()
+	{
+		setDefaultSerialization();
+	}
+	
+	public String getNDMS_DEFAULT_PATH_APP()
+	{
+		return NDMS_DEFAULT_PATH_APP;
+	}
+
+	public void setNDMS_DEFAULT_PATH_APP(String nDMS_DEFAULT_PATH_APP)
+	{
+		NDMS_DEFAULT_PATH_APP = nDMS_DEFAULT_PATH_APP;
+	}
+
+	public String getNDMS_DEFAULT_PATH_APPCONFIG()
+	{
+		return NDMS_DEFAULT_PATH_APPCONFIG;
+	}
+
+	public void setNDMS_DEFAULT_PATH_APPCONFIG(String nDMS_DEFAULT_PATH_APPCONFIG)
+	{
+		NDMS_DEFAULT_PATH_APPCONFIG = nDMS_DEFAULT_PATH_APPCONFIG;
+	}
+
+	public String getNDMS_DEFAULT_PATH_TEMPLATE_DIRECTORY()
+	{
+		return NDMS_DEFAULT_PATH_TEMPLATE_DIRECTORY;
+	}
+
+	public void setNDMS_DEFAULT_PATH_TEMPLATE_DIRECTORY(
+			String nDMS_DEFAULT_PATH_TEMPLATE_DIRECTORY)
+	{
+		NDMS_DEFAULT_PATH_TEMPLATE_DIRECTORY = nDMS_DEFAULT_PATH_TEMPLATE_DIRECTORY;
+	}
+
+	public String getNDMS_DEFAULT_PATH_CONFIG_DIRECTORY()
+	{
+		return NDMS_DEFAULT_PATH_CONFIG_DIRECTORY;
+	}
+
+	public void setNDMS_DEFAULT_PATH_CONFIG_DIRECTORY(
+			String nDMS_DEFAULT_PATH_CONFIG_DIRECTORY)
+	{
+		NDMS_DEFAULT_PATH_CONFIG_DIRECTORY = nDMS_DEFAULT_PATH_CONFIG_DIRECTORY;
+	}
+
+	public String getNDMS_DEFAULT_PATH_BACKUP_DIRECTORY()
+	{
+		return NDMS_DEFAULT_PATH_BACKUP_DIRECTORY;
+	}
+
+	public void setNDMS_DEFAULT_PATH_BACKUP_DIRECTORY(
+			String nDMS_DEFAULT_PATH_BACKUP_DIRECTORY)
+	{
+		NDMS_DEFAULT_PATH_BACKUP_DIRECTORY = nDMS_DEFAULT_PATH_BACKUP_DIRECTORY;
+	}
+
+	public ArrayList<String> getNDMS_DEFAULT_PATH_TEMPLATES()
+	{
+		return NDMS_DEFAULT_PATH_TEMPLATES;
+	}
+
+	public void setNDMS_DEFAULT_PATH_TEMPLATES(
+			ArrayList<String> nDMS_DEFAULT_PATH_TEMPLATES)
+	{
+		NDMS_DEFAULT_PATH_TEMPLATES = nDMS_DEFAULT_PATH_TEMPLATES;
+	}
+
+	public ArrayList<String> getNDMS_DEFAULT_PATH_CONFIGS()
+	{
+		return NDMS_DEFAULT_PATH_CONFIGS;
+	}
+
+	public void setNDMS_DEFAULT_PATH_CONFIGS(
+			ArrayList<String> nDMS_DEFAULT_PATH_CONFIGS)
+	{
+		NDMS_DEFAULT_PATH_CONFIGS = nDMS_DEFAULT_PATH_CONFIGS;
+	}
+
+	/**
+	 * Serialization default-configuration
+	 */
+	private void setDefaultSerialization()
+	{
+		setNDMS_DEFAULT_PATH_APP(System.getProperty("user.dir"));
+		setNDMS_DEFAULT_PATH_APPCONFIG("appconfig.xml");
+		setNDMS_DEFAULT_PATH_TEMPLATE_DIRECTORY("templates");
+		setNDMS_DEFAULT_PATH_CONFIG_DIRECTORY("configs");
+		setNDMS_DEFAULT_PATH_BACKUP_DIRECTORY("backup");
+		
+		setNDMS_DEFAULT_PATH_TEMPLATES(new ArrayList<String>());
+		setNDMS_DEFAULT_PATH_CONFIGS(new ArrayList<String>());
+	}
+}

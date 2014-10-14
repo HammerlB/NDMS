@@ -1,8 +1,10 @@
 package at.bmlvs.NDMS.domain.templates;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Template
+@SuppressWarnings("serial")
+public class Template implements Serializable
 {
 	private String version;
 	private String os_version;
