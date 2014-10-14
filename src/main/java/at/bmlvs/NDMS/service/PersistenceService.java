@@ -3,13 +3,13 @@ package at.bmlvs.NDMS.service;
 import java.util.ArrayList;
 
 import at.bmlvs.NDMS.linker.TemplateToPathLinker;
-import at.bmlvs.NDMS.persistence.specific.XMLTemplatesDAO;
+import at.bmlvs.NDMS.persistence.specific.XMLTemplateDAO;
 
 public class PersistenceService
 {
 	private ArrayList<TemplateToPathLinker> templates;
 	
-	private XMLTemplatesDAO tdao = new XMLTemplatesDAO();
+	private XMLTemplateDAO tdao = new XMLTemplateDAO();
 	
 	public PersistenceService()
 	{
@@ -26,12 +26,12 @@ public class PersistenceService
 		this.templates = templates;
 	}
 
-	public XMLTemplatesDAO getTdao()
+	public XMLTemplateDAO getTdao()
 	{
 		return tdao;
 	}
 
-	public void setTdao(XMLTemplatesDAO tdao)
+	public void setTdao(XMLTemplateDAO tdao)
 	{
 		this.tdao = tdao;
 	}
