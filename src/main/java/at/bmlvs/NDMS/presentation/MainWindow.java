@@ -2,6 +2,7 @@ package at.bmlvs.NDMS.presentation;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.io.File;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -13,8 +14,13 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
+import javax.swing.filechooser.FileFilter;
+
+import at.bmlvs.NDMS.domain.templates.Templates;
+import at.bmlvs.NDMS.service.ServiceFactory;
 
 public class MainWindow
 {
@@ -53,6 +59,15 @@ public class MainWindow
         });
             
         JMenuItem importe = new JMenuItem("Importieren");
+        importe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                JOptionPane op = new JOptionPane();
+                String input = op.showInputDialog("Verbinden zu..");
+                
+                PresentationFactory.getTabbedWindow().addTabbedMenu(input);
+                
+            }
+        });
         JMenuItem export = new JMenuItem("Exportieren");
         JMenuItem einst = new JMenuItem("Einstellungen");
         JMenuItem exit = new JMenuItem("Beenden");
@@ -118,5 +133,111 @@ public class MainWindow
         
         mainFrame.setJMenuBar(bar);
 		mainFrame.setVisible(true);
+	}
+	
+	private void save()
+	{
+		/*
+		JFileChooser f = new JFileChooser();
+		f.setAcceptAllFileFilterUsed(false);
+		f.setFileFilter(new FileFilter()
+		{
+			public String getDescription()
+			{
+				return "XML-Files(*.xml)";
+			}
+
+			// shows only directories and xml-files in the file chooser
+			public boolean accept(File f)
+			{
+				if (f.isDirectory())
+					return true;
+				return f.getName().toLowerCase().endsWith(".xml")
+						|| f.isDirectory();
+			}
+		});
+
+		int returnValue = f.showSaveDialog(M.this);
+		if (returnValue == JFileChooser.APPROVE_OPTION)
+		{
+			// Gets the selected file and attaches the file extension
+			File fileToSave = f.getSelectedFile();
+			String fa = fileToSave.getPath();
+			if (!fa.toLowerCase().endsWith(".xml"))
+			{
+				fa += ".xml";
+			}
+
+			// if (ServiceFactory.getPersistenceService().checkIfModelExists(
+			// ServiceFactory.getModelService().getActiveModel()) != true)
+			// {
+			// ServiceFactory.getPersistenceService().addModel(
+			// ServiceFactory.getModelService().getActiveModel(), fa);
+			// }
+
+			for (ModelToPathLinker m : ServiceFactory.getPersistenceService()
+					.getModels())
+			{
+				if (m.getElement().equals(
+						ServiceFactory.getModelService().getActiveModel()))
+				{
+					m.setPath(fa);
+				}
+			}
+
+			ServiceFactory.getPersistenceService().saveModel(
+					ServiceFactory.getModelService().getActiveModel());
+		}
+		*/
+	}
+	
+	public void load()
+	{
+		/*
+		JFileChooser f = new JFileChooser();
+		f.setFileFilter(new FileFilter()
+		{
+			public String getDescription()
+			{
+				return "XML-Dateien(*.xml)";
+			}
+
+			@Override
+			public boolean accept(File f)
+			{
+				return f.getName().toLowerCase().endsWith(".xml")
+						|| f.isDirectory();
+			}
+		});
+
+		f.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+		f.showOpenDialog(null);
+
+		File file = f.getSelectedFile();
+
+		if (file != null)
+		{
+			Templates templates = ServiceFactory.getPersistenceService()
+					.loadTemplates(file.getAbsolutePath()).getElement();
+			
+			if(!ServiceFactory.getTemplatesService().containsModel(model.getName()))
+			{
+				PanelDraw pd = new PanelDraw();
+				pd.setPanelDrawErd(panelDrawErd);
+				pd.setPanelQuickMenu(panelQuickMenu);
+				pd.setWindowMain(windowMain);
+
+				JScrollPane sp = new JScrollPane(pd);
+				sp.getHorizontalScrollBar().setUnitIncrement(15);
+				sp.getVerticalScrollBar().setUnitIncrement(15);
+				
+				addTab(sp, model);
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(windowMain, "Model can not be loaded: Model '" + model.getName() + "' already exists!");
+			}
+		}*/
 	}
 }
