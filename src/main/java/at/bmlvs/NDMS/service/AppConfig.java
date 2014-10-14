@@ -3,6 +3,7 @@ package at.bmlvs.NDMS.service;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+@SuppressWarnings("serial")
 public class AppConfig implements Serializable
 {
 	// Serialization
