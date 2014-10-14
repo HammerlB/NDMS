@@ -94,7 +94,6 @@ public class MainWindow
         
         //Toolbar
         
-        
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         
@@ -112,7 +111,7 @@ public class MainWindow
         toolbar1.add(impb);
         toolbar1.add(expb);
         toolbar1.setAlignmentX(0);
-
+        toolbar1.setFloatable(false);
         panel.add(toolbar1);
 
         mainFrame.add(panel, BorderLayout.NORTH);
