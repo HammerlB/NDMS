@@ -40,7 +40,7 @@ public class PersistenceService
 	{
 		for(TemplateToPathLinker t: getTemplates())
 		{
-			tdao.write(t.getElement(), getTemplates().getPath());
+			tdao.write(t.getElement(), t.getPath());
 		}
 	}
 	
