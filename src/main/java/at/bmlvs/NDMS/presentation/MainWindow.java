@@ -184,6 +184,14 @@ public class MainWindow
 		});
 		impb.setFocusable(false);
 		impb.setToolTipText("Importieren");
+		impb.addActionListener(new java.awt.event.ActionListener()
+		{
+			public void actionPerformed(java.awt.event.ActionEvent e)
+			{
+				load();
+
+			}
+		});
 		expb.setFocusable(false);
 		expb.setToolTipText("Exportieren");
 		konfb.setFocusable(false);
