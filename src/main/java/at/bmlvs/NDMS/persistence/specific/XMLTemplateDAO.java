@@ -1,29 +1,27 @@
-package at.bmlvs.NDMS.persistence.xml;
+package at.bmlvs.NDMS.persistence.specific;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.List;
 
 import at.bmlvs.NDMS.domain.templates.Template;
-import at.bmlvs.NDMS.domain.templates.Templates;
+import at.bmlvs.NDMS.persistence.general.TemplateDAO;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
 @SuppressWarnings("serial")
-public class XMLTemplatesDAO implements TemplatesDAO, Serializable
+public class XMLTemplateDAO implements TemplateDAO, Serializable
 {
-	public void write(Templates element, String path)
+	public void write(Template element, String path)
 	{
 		FileOutputStream fs = null;
 
 		try
 		{
 			XStream xs = new XStream();
-			xs.alias("templates", Templates.class);
 			xs.alias("template", Template.class);
 
 			try
@@ -56,27 +54,25 @@ public class XMLTemplatesDAO implements TemplatesDAO, Serializable
 		}
 	}
 
-	public void delete(List<Template> element, String path)
+	public void delete(Template element, String path)
 	{
 		// TODO Auto-generated method stub
-
 	}
 
-	@SuppressWarnings({ "unchecked", "finally" })
-	public Templates read(String path)
+	@SuppressWarnings("finally")
+	public Template read(String path)
 	{
 		FileInputStream fs = null;
 
 		XStream xs = new XStream(new DomDriver());
-		Templates element = null;
+		Template element = null;
 
 		try
 		{
 			fs = new FileInputStream(path);
-			xs.alias("templates", Templates.class);
 			xs.alias("template", Template.class);
 
-			element = (Templates) xs.fromXML(fs);
+			element = (Template) xs.fromXML(fs);
 		}
 		catch (FileNotFoundException e)
 		{
@@ -99,13 +95,9 @@ public class XMLTemplatesDAO implements TemplatesDAO, Serializable
 		}
 	}
 
-	public void delete(Templates element, String path)
+	public void update(Template newelement, Template oldelement, String path)
 	{
 		// TODO Auto-generated method stub
-	}
-
-	public void update(Templates newelement, Templates oldelement, String path)
-	{
-		// TODO Auto-generated method stub
+		
 	}
 }

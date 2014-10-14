@@ -1,8 +1,10 @@
 package at.bmlvs.NDMS.domain.templates;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Command
+@SuppressWarnings("serial")
+public class Command implements Serializable
 {
 	private int id;
 	private String name;

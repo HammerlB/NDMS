@@ -1,6 +1,9 @@
 package at.bmlvs.NDMS.domain.templates;
 
-public class Parameter
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class Parameter implements Serializable
 {
 	private int id;
 	private String name;

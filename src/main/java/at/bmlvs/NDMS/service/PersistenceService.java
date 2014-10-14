@@ -1,46 +1,51 @@
 package at.bmlvs.NDMS.service;
 
-import at.bmlvs.NDMS.linker.TemplatesToPathLinker;
-import at.bmlvs.NDMS.persistence.xml.XMLTemplatesDAO;
+import java.util.ArrayList;
+
+import at.bmlvs.NDMS.linker.TemplateToPathLinker;
+import at.bmlvs.NDMS.persistence.specific.XMLTemplateDAO;
 
 public class PersistenceService
 {
-	private TemplatesToPathLinker templates;
+	private ArrayList<TemplateToPathLinker> templates;
 	
-	private XMLTemplatesDAO tdao = new XMLTemplatesDAO();
+	private XMLTemplateDAO tdao = new XMLTemplateDAO();
 	
 	public PersistenceService()
 	{
 		
 	}
 
-	public TemplatesToPathLinker getTemplates()
+	public ArrayList<TemplateToPathLinker> getTemplates()
 	{
 		return templates;
 	}
 
-	public void setTemplates(TemplatesToPathLinker templates)
+	public void setTemplates(ArrayList<TemplateToPathLinker> templates)
 	{
 		this.templates = templates;
 	}
 
-	public XMLTemplatesDAO getTdao()
+	public XMLTemplateDAO getTdao()
 	{
 		return tdao;
 	}
 
-	public void setTdao(XMLTemplatesDAO tdao)
+	public void setTdao(XMLTemplateDAO tdao)
 	{
 		this.tdao = tdao;
 	}
 	
 	public void saveTemplates()
 	{
-		tdao.write(getTemplates().getElement(), getTemplates().getPath());
+		for(TemplateToPathLinker t: getTemplates())
+		{
+			tdao.write(t.getElement(), getTemplates().getPath());
+		}
 	}
 	
-	public TemplatesToPathLinker loadTemplates(String path)
+	public TemplateToPathLinker loadTemplates(String path)
 	{
-		return new TemplatesToPathLinker(tdao.read(path), path);
+		return new TemplateToPathLinker(tdao.read(path), path);
 	}
 }

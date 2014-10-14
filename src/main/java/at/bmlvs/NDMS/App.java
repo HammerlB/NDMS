@@ -15,7 +15,10 @@ public class App
 				+ "show run | include interface\n"
 				+ "         ");
 		sshcon.connect();
-		
+		System.out.println(sshcon.getOutput());
 		ServiceFactory.setPersistenceService(new PersistenceService());
+		
+		//Test
+		//ServiceFactory.getPersistenceService().setTemplates(new Tem);
 	}
 }
