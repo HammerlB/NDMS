@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import at.bmlvs.NDMS.domain.helper.UUIDGenerator;
+import at.bmlvs.NDMS.service.ServiceFactory;
 
 public class TabbedWindow
 {
@@ -26,12 +27,13 @@ public class TabbedWindow
 
 	}
 
+	@SuppressWarnings("static-access")
 	public void addTabbedMenu(String tabname)
 	{
 		final String id = UUIDGenerator.generateUUID();
 		tabpane.addTab(id, new JPanel());
 
-		PresentationFactory.getMainWindow().mainFrame.add(tabpane);
+		ServiceFactory.getPresentationService().getMainWindow().mainFrame.add(tabpane);
 
 		// closebutton
 		index = tabpane.indexOfTab(id);
