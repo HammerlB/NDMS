@@ -17,5 +17,8 @@ public class App
 		sshcon.connect();
 		
 		ServiceFactory.setPersistenceService(new PersistenceService());
+		
+		//Test
+		//ServiceFactory.getPersistenceService().setTemplates(new Tem);
 	}
 }

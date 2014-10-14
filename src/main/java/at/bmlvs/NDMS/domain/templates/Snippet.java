@@ -1,8 +1,10 @@
 package at.bmlvs.NDMS.domain.templates;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Snippet
+@SuppressWarnings("serial")
+public class Snippet implements Serializable
 {
 	private String name;
 	private String prev;

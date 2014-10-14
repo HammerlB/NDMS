@@ -20,7 +20,7 @@ import javax.swing.JToolBar;
 import javax.swing.filechooser.FileFilter;
 
 import at.bmlvs.NDMS.domain.templates.Templates;
-import at.bmlvs.NDMS.linker.TemplatesToPathLinker;
+import at.bmlvs.NDMS.linker.TemplateToPathLinker;
 import at.bmlvs.NDMS.service.ServiceFactory;
 
 public class MainWindow
