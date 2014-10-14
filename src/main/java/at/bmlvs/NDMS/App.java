@@ -1,11 +1,9 @@
 package at.bmlvs.NDMS;
 
 import at.bmlvs.NDMS.domain.connectors.SSHConnector;
+import at.bmlvs.NDMS.service.PersistenceService;
+import at.bmlvs.NDMS.service.ServiceFactory;
 
-/**
- * Hello world!
- *
- */
 public class App
 {
 	public static void main(String[] args)
@@ -17,5 +15,7 @@ public class App
 				+ "show run | include interface\n"
 				+ "         ");
 		sshcon.connect();
+		
+		ServiceFactory.setPersistenceService(new PersistenceService());
 	}
 }
