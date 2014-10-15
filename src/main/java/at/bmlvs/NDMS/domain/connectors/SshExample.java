@@ -2,28 +2,24 @@ package at.bmlvs.NDMS.domain.connectors;
 
 //import java.io.InputStream;
 //import java.io.OutputStream;
-import java.io.BufferedReader;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.sshtools.j2ssh.*;
-import com.sshtools.j2ssh.authentication.*;
+import com.sshtools.j2ssh.SshClient;
+import com.sshtools.j2ssh.authentication.AuthenticationProtocolState;
+import com.sshtools.j2ssh.authentication.PasswordAuthenticationClient;
 import com.sshtools.j2ssh.session.SessionChannelClient;
-import com.sshtools.j2ssh.transport.*;
+import com.sshtools.j2ssh.transport.ConsoleKnownHostsKeyVerification;
 
 
 public class SshExample {
-	private static BufferedReader reader = new BufferedReader(
-			new InputStreamReader(System.in));
+//	private static BufferedReader reader = new BufferedReader(
+//			new InputStreamReader(System.in));
 
 	public static void main(String args[]) {
 		try {
 			SshClient ssh = new SshClient();
-			System.out.print("Host to connect: ");
 			ssh.connect("192.168.1.12", new ConsoleKnownHostsKeyVerification());
 			PasswordAuthenticationClient pwd = new PasswordAuthenticationClient();
 
@@ -38,6 +34,7 @@ public class SshExample {
 			pwd.setPassword(password);
 
 			int result = ssh.authenticate(pwd);
+			ssh.getServerHostKey();
 
 			if (result == AuthenticationProtocolState.FAILED)
 				System.out.println("The authentication failed");
@@ -65,6 +62,7 @@ public class SshExample {
 			byte buffer[] = new byte[1024];
 			int read = in.read(buffer);
 			String outputfinal=null;
+			System.out.println(ssh.getServerHostKey().getFingerprint());
 			while((read = in.read(buffer)) > 0) {
 			   String output = new String(buffer, 0, read);
 			   outputfinal+=output;
