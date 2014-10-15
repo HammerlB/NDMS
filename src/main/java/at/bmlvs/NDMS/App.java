@@ -14,6 +14,7 @@ public class App
 	@SuppressWarnings("static-access")
 	public static void main(String[] args)
 	{
+		
 		// Presentation
 		// TODO Auto-generated method stub
 		// Set the look and feel to users OS LaF.
@@ -37,12 +38,16 @@ public class App
 
 		/*
 		// SSH
-		SSHConnector sshcon = new SSHConnector("192.168.1.12", "Herkel",
-				"gwdH_2014", "2", 22);
-		sshcon.setInput("enable\n" + "gwd_2014\n"
-				+ "show run | include interface\n" + "         ");	//%08
+		SSHConnector sshcon  = new SSHConnector("192.168.1.12","Herkel","gwdH_2014", "2", 22);
 		sshcon.connect();
+		sshcon.sendCmd(
+				"enable\n"
+				+ "gwd_2014\n"
+				+ "show run | include interface\n"
+				+ "         ");
+		sshcon.createOutput(new byte[1024], 2000);
 		System.out.println(sshcon.getOutput());
+		sshcon.disconnect();
 
 		// Test
 		// ServiceFactory.getPersistenceService().setTemplates(new Tem);*/
