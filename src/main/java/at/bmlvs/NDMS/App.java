@@ -35,6 +35,7 @@ public class App
 
 		ServiceFactory.getPresentationService().getMainWindow().addTopMenu();
 
+		/*
 		// SSH
 		SSHConnector sshcon = new SSHConnector("192.168.1.12", "Herkel",
 				"gwdH_2014", "2", 22);
@@ -44,6 +45,6 @@ public class App
 		System.out.println(sshcon.getOutput());
 
 		// Test
-		// ServiceFactory.getPersistenceService().setTemplates(new Tem);
+		// ServiceFactory.getPersistenceService().setTemplates(new Tem);*/
 	}
 }

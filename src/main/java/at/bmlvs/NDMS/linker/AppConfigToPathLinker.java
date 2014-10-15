@@ -12,9 +12,5 @@ public class AppConfigToPathLinker extends Linker<AppConfig, String> implements
 	public AppConfigToPathLinker(AppConfig element, String path)
 	{
 		super(element, path);
-
-		setPath(ServiceFactory.getAppConfig().getNDMS_DEFAULT_PATH_APP()
-				+ ServiceFactory.getAppConfig()
-						.getNDMS_DEFAULT_PATH_APPCONFIG());
 	}
 }
