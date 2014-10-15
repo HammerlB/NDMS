@@ -14,7 +14,7 @@ public class App
 	@SuppressWarnings("static-access")
 	public static void main(String[] args)
 	{
-		// Presentation
+		SSHConnector sshcon  = new SSHConnector("192.168.1.12","Herkel","gwdH_2014", "2", 22);
 		sshcon.connect();
 		sshcon.sendCmd(
 				"enable\n"
@@ -22,6 +22,10 @@ public class App
 				+ "show run | include interface\n"
 				+ "         ");
 		sshcon.createOutput(new byte[1024], 2000);
+		
+		// Presentation
+		// TODO Auto-generated method stub
+		// Set the look and feel to users OS LaF.
 		try
 		{
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
