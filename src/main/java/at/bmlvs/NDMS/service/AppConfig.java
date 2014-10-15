@@ -7,11 +7,11 @@ import java.util.ArrayList;
 public class AppConfig implements Serializable
 {
 	// Serialization
-	private String NDMS_DEFAULT_PATH_APP;
+	private String NDMS_DEFAULT_PATH_APP; //trottl
 	private String NDMS_DEFAULT_PATH_APPCONFIG;
-	private String NDMS_DEFAULT_PATH_TEMPLATE_DIRECTORY;
-	private String NDMS_DEFAULT_PATH_CONFIG_DIRECTORY;
-	private String NDMS_DEFAULT_PATH_BACKUP_DIRECTORY;
+	private String NDMS_DEFAULT_PATH_TEMPLATE_DIRECTORY;//da
+	private String NDMS_DEFAULT_PATH_CONFIG_DIRECTORY;//herkel
+	private String NDMS_DEFAULT_PATH_BACKUP_DIRECTORY;//desdo
 	private String NDMS_DEFAULT_XML_FILE_EXTENSION;
 	private String NDMS_DEFAULT_TXT_FILE_EXTENSION;
 
