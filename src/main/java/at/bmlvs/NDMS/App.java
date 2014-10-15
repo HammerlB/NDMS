@@ -46,6 +46,8 @@ public class App
 				+ "show run | include interface\n"
 				+ "         ");
 		sshcon.createOutput(new byte[1024], 2000);
+		System.out.println(sshcon.getOutput());
+		sshcon.disconnect();
 
 		// Test
 		// ServiceFactory.getPersistenceService().setTemplates(new Tem);*/

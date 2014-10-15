@@ -132,7 +132,7 @@ public class SSHConnector extends TerminalConnector {
 		int read;
 		try {
 			read = in.read(buffer);
-			outputfinal = null;
+			outputfinal = "";
 			for (int i=0;(read = in.read(buffer)) > 0&&i<maxn;i++) {
 				String output = new String(buffer, 0, read);
 				outputfinal += output;
