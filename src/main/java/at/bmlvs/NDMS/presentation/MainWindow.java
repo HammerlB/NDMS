@@ -1,8 +1,6 @@
 package at.bmlvs.NDMS.presentation;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Image;
 import java.io.File;
 
 import javax.swing.BoxLayout;
@@ -15,14 +13,9 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
-import javax.swing.JToolTip;
 import javax.swing.filechooser.FileFilter;
 
-import at.bmlvs.NDMS.domain.templates.Templates;
-import at.bmlvs.NDMS.linker.TemplateToPathLinker;
 import at.bmlvs.NDMS.service.ServiceFactory;
 
 public class MainWindow
@@ -60,7 +53,7 @@ public class MainWindow
 				JOptionPane op = new JOptionPane();
 				String input = op.showInputDialog("Verbinden zu..");
 
-				PresentationFactory.getTabbedWindow().addTabbedMenu(input);
+				ServiceFactory.getPresentationService().getTabbedWindow().addTabbedMenu(input);
 
 			}
 		});
@@ -181,12 +174,13 @@ public class MainWindow
 		newb.setToolTipText("Neue Verbindung");
 		newb.addActionListener(new java.awt.event.ActionListener()
 		{
+			@SuppressWarnings("static-access")
 			public void actionPerformed(java.awt.event.ActionEvent e)
 			{
 				JOptionPane op = new JOptionPane();
 				String input = op.showInputDialog("Verbinden zu..");
 
-				PresentationFactory.getTabbedWindow().addTabbedMenu(input);
+				ServiceFactory.getPresentationService().getTabbedWindow().addTabbedMenu(input);
 
 			}
 		});
