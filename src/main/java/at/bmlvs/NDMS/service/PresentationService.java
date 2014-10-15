@@ -1,6 +1,9 @@
-package at.bmlvs.NDMS.presentation;
+package at.bmlvs.NDMS.service;
 
-public class PresentationFactory
+import at.bmlvs.NDMS.presentation.MainWindow;
+import at.bmlvs.NDMS.presentation.TabbedWindow;
+
+public class PresentationService
 {
 	private static MainWindow mainWindow;
 	private static TabbedWindow tabbedWindow;
@@ -12,7 +15,7 @@ public class PresentationFactory
 
 	public static void setMainWindow(MainWindow mainWindow)
 	{
-		PresentationFactory.mainWindow = mainWindow;
+		PresentationService.mainWindow = mainWindow;
 	}
 
 	public static TabbedWindow getTabbedWindow()
@@ -22,6 +25,6 @@ public class PresentationFactory
 
 	public static void setTabbedWindow(TabbedWindow tabbedWindow)
 	{
-		PresentationFactory.tabbedWindow = tabbedWindow;
+		PresentationService.tabbedWindow = tabbedWindow;
 	}
 }

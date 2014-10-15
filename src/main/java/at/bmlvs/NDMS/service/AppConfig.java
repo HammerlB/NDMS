@@ -12,15 +12,17 @@ public class AppConfig implements Serializable
 	private String NDMS_DEFAULT_PATH_TEMPLATE_DIRECTORY;
 	private String NDMS_DEFAULT_PATH_CONFIG_DIRECTORY;
 	private String NDMS_DEFAULT_PATH_BACKUP_DIRECTORY;
-	
+	private String NDMS_DEFAULT_XML_FILE_EXTENSION;
+	private String NDMS_DEFAULT_TXT_FILE_EXTENSION;
+
 	private ArrayList<String> NDMS_DEFAULT_PATH_TEMPLATES;
 	private ArrayList<String> NDMS_DEFAULT_PATH_CONFIGS;
-	
+
 	public AppConfig()
 	{
 		setDefaultSerialization();
 	}
-	
+
 	public String getNDMS_DEFAULT_PATH_APP()
 	{
 		return NDMS_DEFAULT_PATH_APP;
@@ -36,7 +38,8 @@ public class AppConfig implements Serializable
 		return NDMS_DEFAULT_PATH_APPCONFIG;
 	}
 
-	public void setNDMS_DEFAULT_PATH_APPCONFIG(String nDMS_DEFAULT_PATH_APPCONFIG)
+	public void setNDMS_DEFAULT_PATH_APPCONFIG(
+			String nDMS_DEFAULT_PATH_APPCONFIG)
 	{
 		NDMS_DEFAULT_PATH_APPCONFIG = nDMS_DEFAULT_PATH_APPCONFIG;
 	}
@@ -74,6 +77,28 @@ public class AppConfig implements Serializable
 		NDMS_DEFAULT_PATH_BACKUP_DIRECTORY = nDMS_DEFAULT_PATH_BACKUP_DIRECTORY;
 	}
 
+	public String getNDMS_DEFAULT_XML_FILE_EXTENSION()
+	{
+		return NDMS_DEFAULT_XML_FILE_EXTENSION;
+	}
+
+	public void setNDMS_DEFAULT_XML_FILE_EXTENSION(
+			String nDMS_DEFAULT_XML_FILE_EXTENSION)
+	{
+		NDMS_DEFAULT_XML_FILE_EXTENSION = nDMS_DEFAULT_XML_FILE_EXTENSION;
+	}
+
+	public String getNDMS_DEFAULT_TXT_FILE_EXTENSION()
+	{
+		return NDMS_DEFAULT_TXT_FILE_EXTENSION;
+	}
+
+	public void setNDMS_DEFAULT_TXT_FILE_EXTENSION(
+			String nDMS_DEFAULT_TXT_FILE_EXTENSION)
+	{
+		NDMS_DEFAULT_TXT_FILE_EXTENSION = nDMS_DEFAULT_TXT_FILE_EXTENSION;
+	}
+
 	public ArrayList<String> getNDMS_DEFAULT_PATH_TEMPLATES()
 	{
 		return NDMS_DEFAULT_PATH_TEMPLATES;
@@ -106,7 +131,9 @@ public class AppConfig implements Serializable
 		setNDMS_DEFAULT_PATH_TEMPLATE_DIRECTORY("templates");
 		setNDMS_DEFAULT_PATH_CONFIG_DIRECTORY("configs");
 		setNDMS_DEFAULT_PATH_BACKUP_DIRECTORY("backup");
-		
+		setNDMS_DEFAULT_XML_FILE_EXTENSION(".xml");
+		setNDMS_DEFAULT_TXT_FILE_EXTENSION(".txt");
+
 		setNDMS_DEFAULT_PATH_TEMPLATES(new ArrayList<String>());
 		setNDMS_DEFAULT_PATH_CONFIGS(new ArrayList<String>());
 	}

@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import at.bmlvs.NDMS.domain.configs.Configuration;
+import at.bmlvs.NDMS.domain.helper.Filewalker;
 import at.bmlvs.NDMS.linker.AppConfigToPathLinker;
 import at.bmlvs.NDMS.linker.ConfigurationToPathLinker;
 import at.bmlvs.NDMS.linker.DatatypesToPathLinker;
@@ -119,15 +120,32 @@ public class PersistenceService
 		this.ddao = ddao;
 	}
 
-	public void saveTemplates()
+	public void saveTemplate(TemplateToPathLinker template)
 	{
-		for (TemplateToPathLinker t : getTemplates())
+		tdao.write(template.getElement(), template.getPath());
+	}
+	
+	public ArrayList<TemplateToPathLinker> loadAllTemplates(String pathToDirectory)
+	{
+		ArrayList<TemplateToPathLinker> templates = new ArrayList<TemplateToPathLinker>();
+		
+		for(String path : Filewalker.walk(pathToDirectory))
 		{
-			tdao.write(t.getElement(), t.getPath());
+			templates.add(loadTemplate(path));
+		}
+		
+		return templates;
+	}
+	
+	public void saveAllTemplates()
+	{
+		for(TemplateToPathLinker template : getTemplates())
+		{
+			saveTemplate(template);
 		}
 	}
 
-	public TemplateToPathLinker loadTemplates(String path)
+	public TemplateToPathLinker loadTemplate(String path)
 	{
 		TemplateToPathLinker template = new TemplateToPathLinker(tdao.read(path), path);;
 		getTemplates().add(template);
