@@ -79,6 +79,14 @@ public class MainWindow
 				"icons/smallexport.png"));
 		JMenuItem einst = new JMenuItem("Einstellungen", new ImageIcon(
 				"icons/smallsettings.png"));
+		einst.addActionListener(new java.awt.event.ActionListener()
+		{
+			public void actionPerformed(java.awt.event.ActionEvent e)
+			{
+				SettingWindow sw = new SettingWindow();
+				sw.settingwindow();
+			}
+		});
 		JMenuItem exit = new JMenuItem("Beenden", new ImageIcon(
 				"icons/smallclose.png"));
 		exit.addActionListener(new java.awt.event.ActionListener()
