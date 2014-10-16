@@ -25,7 +25,7 @@ public class SettingWindow extends javax.swing.JFrame
 	private JTextField field1;
 	private JTextField field2;
 	private JTextField field3;
-	
+	//TEST
 	public SettingWindow()
 	{
 		settingFrame = new JFrame("Einstellungen");
