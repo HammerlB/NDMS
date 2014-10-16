@@ -1,9 +1,9 @@
 <appconfig>
-  <NDMS__DEFAULT__PATH__APP>C:\Users\Herkel\workspace\NDMS</NDMS__DEFAULT__PATH__APP>
+  <NDMS__DEFAULT__PATH__APP>C:\Dokumente und Einstellungen\Alex\workspacerino\NDMS</NDMS__DEFAULT__PATH__APP>
   <NDMS__DEFAULT__PATH__APPCONFIG>appconfig.xml</NDMS__DEFAULT__PATH__APPCONFIG>
-  <NDMS__DEFAULT__PATH__TEMPLATE__DIRECTORY>templates</NDMS__DEFAULT__PATH__TEMPLATE__DIRECTORY>
-  <NDMS__DEFAULT__PATH__CONFIG__DIRECTORY>configs</NDMS__DEFAULT__PATH__CONFIG__DIRECTORY>
-  <NDMS__DEFAULT__PATH__BACKUP__DIRECTORY>backup</NDMS__DEFAULT__PATH__BACKUP__DIRECTORY>
+  <NDMS__DEFAULT__PATH__TEMPLATE__DIRECTORY>C:\Dokumente und Einstellungen\Alex\workspacerino\NDMS\C:\Dokumente und Einstellungen\Alex\workspacerino\NDMS\templates</NDMS__DEFAULT__PATH__TEMPLATE__DIRECTORY>
+  <NDMS__DEFAULT__PATH__CONFIG__DIRECTORY>C:\Dokumente und Einstellungen\Alex\workspacerino\NDMS\C:\Dokumente und Einstellungen\Alex\workspacerino\NDMS\C:\Dokumente und Einstellungen\Alex\workspacerino\NDMS\konfig</NDMS__DEFAULT__PATH__CONFIG__DIRECTORY>
+  <NDMS__DEFAULT__PATH__BACKUP__DIRECTORY>C:\Dokumente und Einstellungen\Alex\workspacerino\NDMS\C:\Dokumente und Einstellungen\Alex\workspacerino\NDMS\backup</NDMS__DEFAULT__PATH__BACKUP__DIRECTORY>
   <NDMS__DEFAULT__XML__FILE__EXTENSION>.xml</NDMS__DEFAULT__XML__FILE__EXTENSION>
   <NDMS__DEFAULT__TXT__FILE__EXTENSION>.txt</NDMS__DEFAULT__TXT__FILE__EXTENSION>
   <NDMS__DEFAULT__PATH__TEMPLATES/>
