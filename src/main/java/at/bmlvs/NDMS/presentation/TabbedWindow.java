@@ -16,6 +16,7 @@ import javax.swing.JTabbedPane;
 import at.bmlvs.NDMS.domain.helper.UUIDGenerator;
 import at.bmlvs.NDMS.service.ServiceFactory;
 
+//TEST
 public class TabbedWindow
 {
 	JTabbedPane tabpane = new JTabbedPane(JTabbedPane.TOP,

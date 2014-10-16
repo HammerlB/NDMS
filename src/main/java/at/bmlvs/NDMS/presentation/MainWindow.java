@@ -77,7 +77,6 @@ public class MainWindow
 			public void actionPerformed(java.awt.event.ActionEvent e)
 			{
 				SettingWindow sw = new SettingWindow();
-				sw.settingwindow();
 			}
 		});
 		JMenuItem exit = new JMenuItem("Beenden", new ImageIcon(

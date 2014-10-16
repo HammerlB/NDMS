@@ -57,7 +57,7 @@ public class SettingWindow extends javax.swing.JFrame
 		settingpanel.add(new JLabel(" "));
 		
 		settingpanel.add(new JLabel("Templates:"));
-		settingpanel.add(setField1(new JTextField("do is da pfad",10)));
+		//settingpanel.add(setField1(new JTextField("do is da pfad",10)));
 		settingpanel.add(open);
 		open.addActionListener(new java.awt.event.ActionListener()
 		{
