@@ -43,7 +43,7 @@ public class MainWindow
 		bar.add(werkzeug);
 		bar.add(hilfe);
 
-		// Dateimenü
+		// Dateimenue
 		JMenuItem neuverb = new JMenuItem("Neue Verbindung", new ImageIcon(
 				"icons/smallnew.png"));
 		neuverb.addActionListener(new java.awt.event.ActionListener()
