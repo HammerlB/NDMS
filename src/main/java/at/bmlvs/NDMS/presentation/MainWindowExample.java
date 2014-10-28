@@ -32,8 +32,10 @@
 
 package at.bmlvs.NDMS.presentation;
 
+
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class MainWindowExample extends Application {
@@ -42,9 +44,10 @@ public class MainWindowExample extends Application {
         MainWindowController customControl = new MainWindowController();
         
         stage.setScene(new Scene(customControl));
-        stage.setTitle("Main Window");
-        stage.setWidth(300);
-        stage.setHeight(200);
+        stage.setTitle("NDSM");
+        stage.getIcons().add(new Image("file:icons/ndms.png"));
+        stage.setWidth(800);
+        stage.setHeight(700);
         stage.show();
     }
     
