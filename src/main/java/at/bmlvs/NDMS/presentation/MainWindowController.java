@@ -70,3 +70,222 @@ public class MainWindowController extends VBox {
         return textField.textProperty();                
     }
 }
+
+/*
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="803.0" prefWidth="915.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+  <children>
+    <MenuBar VBox.vgrow="NEVER">
+         <menus>
+            <Menu mnemonicParsing="false" text="Datei">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Neu">
+                     <graphic>
+                        <ImageView>
+                           <image>
+                              <Image url="@icons/smallnew.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuItem>
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Import">
+                     <graphic>
+                        <ImageView>
+                           <image>
+                              <Image url="@icons/smallimport.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" text="Export">
+                     <graphic>
+                        <ImageView>
+                           <image>
+                              <Image url="@icons/smallexport.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuItem>
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Einstellungen">
+                     <graphic>
+                        <ImageView>
+                           <image>
+                              <Image url="@icons/smallsettings.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuItem>
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Beenden">
+                     <graphic>
+                        <ImageView>
+                           <image>
+                              <Image url="@icons/smallclose.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuItem>
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Konfiguration">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Portkonfiguration">
+                     <graphic>
+                        <ImageView>
+                           <image>
+                              <Image url="@icons/smallportkonf.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuItem>
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Vorlagen">
+                     <graphic>
+                        <ImageView>
+                           <image>
+                              <Image url="@icons/smallvorlagen.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuItem>
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Werkzeug">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Zur Standard-Konfiguration zurücksetzen">
+                     <graphic>
+                        <ImageView>
+                           <image>
+                              <Image url="@icons/smallresetstandart.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuItem>
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Diagnose">
+                     <graphic>
+                        <ImageView>
+                           <image>
+                              <Image url="@icons/smalldiag.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuItem>
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Hilfe">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Benutzerhandbuch">
+                     <graphic>
+                        <ImageView>
+                           <image>
+                              <Image url="@icons/smallbook.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuItem>
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Über NDSM">
+                     <graphic>
+                        <ImageView>
+                           <image>
+                              <Image url="@icons/smallabout.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuItem>
+               </items>
+            </Menu>
+         </menus>
+    </MenuBar>
+      <ToolBar>
+        <items>
+          <Button contentDisplay="CENTER" focusTraversable="false" mnemonicParsing="false">
+               <graphic>
+                  <ImageView>
+                     <image>
+                        <Image url="@icons/new.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Separator orientation="VERTICAL" prefHeight="20.0" />
+            <Button contentDisplay="CENTER" focusTraversable="false" mnemonicParsing="false">
+               <graphic>
+                  <ImageView>
+                     <image>
+                        <Image url="@icons/import.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button contentDisplay="CENTER" focusTraversable="false" mnemonicParsing="false">
+               <graphic>
+                  <ImageView>
+                     <image>
+                        <Image url="@icons/export.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Separator orientation="VERTICAL" prefHeight="20.0" />
+            <Button contentDisplay="CENTER" focusTraversable="false" mnemonicParsing="false">
+               <graphic>
+                  <ImageView>
+                     <image>
+                        <Image url="@icons/portkonf.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button contentDisplay="CENTER" focusTraversable="false" mnemonicParsing="false">
+               <graphic>
+                  <ImageView>
+                     <image>
+                        <Image url="@icons/vorlagen.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Separator orientation="VERTICAL" prefHeight="20.0" />
+            <Button contentDisplay="CENTER" focusTraversable="false" mnemonicParsing="false">
+               <graphic>
+                  <ImageView>
+                     <image>
+                        <Image url="@icons/resetstandart.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button contentDisplay="CENTER" focusTraversable="false" mnemonicParsing="false">
+               <graphic>
+                  <ImageView>
+                     <image>
+                        <Image url="@icons/diag.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+        </items>
+      </ToolBar>
+      <TabPane focusTraversable="false" prefHeight="730.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE">
+         <tabs>
+            <Tab text="Prolog" />
+            <Tab text="Prolug" />
+         </tabs>
+      </TabPane>
+  </children>
+</VBox>
+*/
