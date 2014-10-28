@@ -1,5 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- 
 /*
  * Copyright (c) 2011, 2014 Oracle and/or its affiliates.
  * All rights reserved. Use is subject to license terms.
@@ -31,12 +29,27 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
--->
- 
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 
-<fx:root type="javafx.scene.layout.VBox" xmlns:fx="http://javafx.com/fxml"> 
-    <TextField fx:id="textField"/>
-</fx:root>
+package at.bmlvs.NDMS.presentation;
+
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+public class MainWindowExample extends Application {
+    @Override
+    public void start(Stage stage) throws Exception {
+        MainWindowController customControl = new MainWindowController();
+        customControl.setText("Hello!");
+        
+        stage.setScene(new Scene(customControl));
+        stage.setTitle("Main Window");
+        stage.setWidth(300);
+        stage.setHeight(200);
+        stage.show();
+    }
+    
+    public static void main(String[] args) {
+        launch(args);
+    }
+}

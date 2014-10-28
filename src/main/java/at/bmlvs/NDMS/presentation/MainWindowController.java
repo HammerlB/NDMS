@@ -1,5 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- 
 /*
  * Copyright (c) 2011, 2014 Oracle and/or its affiliates.
  * All rights reserved. Use is subject to license terms.
@@ -31,12 +29,44 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
--->
- 
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 
-<fx:root type="javafx.scene.layout.VBox" xmlns:fx="http://javafx.com/fxml"> 
-    <TextField fx:id="textField"/>
-</fx:root>
+package at.bmlvs.NDMS.presentation;
+
+import java.io.IOException;
+
+import javafx.beans.property.StringProperty;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
+
+/**
+ * Sample custom control hosting a text field and a button.
+ */
+public class MainWindowController extends VBox {
+    @FXML private TextField textField;
+
+    public MainWindowController() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
+        
+        try {
+            fxmlLoader.load();            
+        } catch (IOException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+    
+    public String getText() {
+        return textProperty().get();
+    }
+    
+    public void setText(String value) {
+        textProperty().set(value);
+    }
+    
+    public StringProperty textProperty() {
+        return textField.textProperty();                
+    }
+}
