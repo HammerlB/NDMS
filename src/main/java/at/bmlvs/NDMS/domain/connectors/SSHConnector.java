@@ -16,7 +16,7 @@ import com.sshtools.j2ssh.transport.InvalidHostFileException;
  * @author GWDH
  *
  */
-public class SSHConnector extends TerminalConnector {
+public class SSHConnector extends TerminalConnector implements Runnable {
 	private String version;
 	private int port;
 	private SshClient ssh;
@@ -28,6 +28,7 @@ public class SSHConnector extends TerminalConnector {
 	private InputStream in;
 	private OutputStream out;
 	private String outputfinal;
+	private byte[] buffer = new byte[1024];
 
 	public SSHConnector() {
 		super();
@@ -106,12 +107,12 @@ public class SSHConnector extends TerminalConnector {
 		}
 	}
 
-	public void createOutput(byte[] buffer,int maxn) {
+	public void createOutput(byte[] buffer, int maxn) {
 		int read;
 		try {
 			read = in.read(buffer);
 			outputfinal = "";
-			for (int i=0;(read = in.read(buffer)) > 0&&i<maxn;i++) {
+			for (int i = 0; (read = in.read(buffer)) > 0 && i < maxn; i++) {
 				String output = new String(buffer, 0, read);
 				outputfinal += output;
 			}
@@ -119,8 +120,8 @@ public class SSHConnector extends TerminalConnector {
 			e.printStackTrace();
 		}
 	}
-	
-	public String getOutput(){
+
+	public String getOutput() {
 		return this.outputfinal;
 	}
 
@@ -159,25 +160,40 @@ public class SSHConnector extends TerminalConnector {
 			e.printStackTrace();
 		}
 	}
-	
+
+	@Override
+	public void run() {
+		int read;
+		try {
+			read = in.read(buffer);
+			// outputfinal = "";
+			// for (int i=0;(read = in.read(buffer)) > 0&&i<maxn;i++) {
+			String output = new String(buffer, 0, read);
+			outputfinal += output;
+			// }
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	// public void connect() {
-		// try {
-		// // http://www.jcraft.com/jsch/examples/Shell.java.html
-		// //
-		// http://stackoverflow.com/questions/782178/how-do-i-convert-a-string-to-an-inputstream-in-java
-		// JSch jsch = new JSch();
-		// Session session = jsch.getSession(getUsername(), getHost(),
-		// getPort());
-		// session.setPassword(getPassword());
-		// session.setConfig("StrictHostKeyChecking", "no");
-		// session.connect(30000);
-		// Channel channel = session.openChannel("shell");
-		// channel.setInputStream(input);
-		// channel.setOutputStream(output);
-		// channel.connect(3 * 1000);
-		// // channel.disconnect();
-		// } catch (Exception e) {
-		// System.err.println(e.getMessage());
-		// }
-		// }
+	// try {
+	// // http://www.jcraft.com/jsch/examples/Shell.java.html
+	// //
+	// http://stackoverflow.com/questions/782178/how-do-i-convert-a-string-to-an-inputstream-in-java
+	// JSch jsch = new JSch();
+	// Session session = jsch.getSession(getUsername(), getHost(),
+	// getPort());
+	// session.setPassword(getPassword());
+	// session.setConfig("StrictHostKeyChecking", "no");
+	// session.connect(30000);
+	// Channel channel = session.openChannel("shell");
+	// channel.setInputStream(input);
+	// channel.setOutputStream(output);
+	// channel.connect(3 * 1000);
+	// // channel.disconnect();
+	// } catch (Exception e) {
+	// System.err.println(e.getMessage());
+	// }
+	// }
 }
