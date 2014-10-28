@@ -14,7 +14,8 @@ public class VelocTest {
 		Template t = ve.getTemplate("hello.xml");
 		/* create a context and add data */
 		VelocityContext context = new VelocityContext();
-		context.put("name", "f0/1");
+		context.put("name", "Interface");
+		context.put("value", "fa0/1");
 		/* now render the template into a StringWriter */
 		StringWriter writer = new StringWriter();
 		t.merge(context, writer);

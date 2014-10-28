@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <template>
-     <param>$name</param>
+	<snippet>
+		<section>
+			<command>
+				<parameter no="1" name="$name" type="String">$value</parameter>
+			</command>
+		</section>
+	</snippet>
 </template>
