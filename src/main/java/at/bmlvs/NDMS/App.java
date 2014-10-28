@@ -31,8 +31,8 @@ public class App
 		ServiceFactory.setPresentationService(new PresentationService());
 		ServiceFactory.getPersistenceService().saveAppConfig();
 		
-		ServiceFactory.getPresentationService().setMainWindow(new MainWindow());
-		ServiceFactory.getPresentationService().setTabbedWindow(new TabbedWindow());
+		//ServiceFactory.getPresentationService().setMainWindow(new MainWindow());
+		//ServiceFactory.getPresentationService().setTabbedWindow(new TabbedWindow());
 
 		ServiceFactory.getPresentationService().getMainWindow().addTopMenu();
 
