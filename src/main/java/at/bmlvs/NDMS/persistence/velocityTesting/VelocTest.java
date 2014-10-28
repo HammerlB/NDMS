@@ -11,10 +11,10 @@ public class VelocTest {
 		VelocityEngine ve = new VelocityEngine();
 		ve.init();
 		/* next, get the Template */
-		Template t = ve.getTemplate("hello.vm");
+		Template t = ve.getTemplate("hello.xml");
 		/* create a context and add data */
 		VelocityContext context = new VelocityContext();
-		context.put("name", "World");
+		context.put("name", "f0/1");
 		/* now render the template into a StringWriter */
 		StringWriter writer = new StringWriter();
 		t.merge(context, writer);
