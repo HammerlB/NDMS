@@ -1,5 +1,6 @@
 package at.bmlvs.NDMS.service;
 
+/*
 import at.bmlvs.NDMS.presentation.MainWindow;
 import at.bmlvs.NDMS.presentation.TabbedWindow;
 
@@ -28,3 +29,4 @@ public class PresentationService
 		PresentationService.tabbedWindow = tabbedWindow;
 	}
 }
+*/

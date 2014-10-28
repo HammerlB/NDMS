@@ -40,7 +40,6 @@ public class MainWindowExample extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         MainWindowController customControl = new MainWindowController();
-        customControl.setText("Hello!");
         
         stage.setScene(new Scene(customControl));
         stage.setTitle("Main Window");

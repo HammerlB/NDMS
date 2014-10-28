@@ -44,7 +44,6 @@ import javafx.scene.layout.VBox;
  * Sample custom control hosting a text field and a button.
  */
 public class MainWindowController extends VBox {
-    @FXML private TextField textField;
 
     public MainWindowController() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
@@ -56,18 +55,6 @@ public class MainWindowController extends VBox {
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-    }
-    
-    public String getText() {
-        return textProperty().get();
-    }
-    
-    public void setText(String value) {
-        textProperty().set(value);
-    }
-    
-    public StringProperty textProperty() {
-        return textField.textProperty();                
     }
 }
 
@@ -164,7 +151,7 @@ public class MainWindowController extends VBox {
             </Menu>
             <Menu mnemonicParsing="false" text="Werkzeug">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Zur Standard-Konfiguration zurücksetzen">
+                  <MenuItem mnemonicParsing="false" text="Zur Standard-Konfiguration zurï¿½cksetzen">
                      <graphic>
                         <ImageView>
                            <image>
@@ -197,7 +184,7 @@ public class MainWindowController extends VBox {
                      </graphic>
                   </MenuItem>
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Über NDSM">
+                  <MenuItem mnemonicParsing="false" text="ï¿½ber NDSM">
                      <graphic>
                         <ImageView>
                            <image>

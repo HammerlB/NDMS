@@ -3,10 +3,10 @@ package at.bmlvs.NDMS;
 import javax.swing.UIManager;
 
 import at.bmlvs.NDMS.domain.connectors.SSHConnector;
-import at.bmlvs.NDMS.presentation.MainWindow;
-import at.bmlvs.NDMS.presentation.TabbedWindow;
+//import at.bmlvs.NDMS.presentation.MainWindow;
+//import at.bmlvs.NDMS.presentation.TabbedWindow;
 import at.bmlvs.NDMS.service.PersistenceService;
-import at.bmlvs.NDMS.service.PresentationService;
+//import at.bmlvs.NDMS.service.PresentationService;
 import at.bmlvs.NDMS.service.ServiceFactory;
 
 public class App
@@ -28,13 +28,13 @@ public class App
 
 		ServiceFactory.setPersistenceService(new PersistenceService());
 		ServiceFactory.setAppConfig(ServiceFactory.getPersistenceService().getAppconfig().getElement());
-		ServiceFactory.setPresentationService(new PresentationService());
+//		ServiceFactory.setPresentationService(new PresentationService());
 		ServiceFactory.getPersistenceService().saveAppConfig();
 		
 		//ServiceFactory.getPresentationService().setMainWindow(new MainWindow());
 		//ServiceFactory.getPresentationService().setTabbedWindow(new TabbedWindow());
 
-		ServiceFactory.getPresentationService().getMainWindow().addTopMenu();
+		//ServiceFactory.getPresentationService().getMainWindow().addTopMenu();
 
 		/*
 		// SSH
