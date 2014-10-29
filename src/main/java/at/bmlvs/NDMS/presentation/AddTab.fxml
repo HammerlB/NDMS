@@ -4,17 +4,71 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="542.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.bmlvs.NDMS.presentation.MainWindowController">
    <children>
-      <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
-        <tabs>
-          <Tab text="Untitled Tab 1">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
-          </Tab>
-        </tabs>
-      </TabPane>
+      <GridPane>
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="40.0" minWidth="40.0" prefWidth="40.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="40.0" minWidth="40.0" prefWidth="40.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="40.0" minWidth="40.0" prefWidth="40.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="40.0" minWidth="40.0" prefWidth="40.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="40.0" minWidth="40.0" prefWidth="40.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="40.0" minWidth="40.0" prefWidth="40.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="40.0" minWidth="40.0" prefWidth="40.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="40.0" minWidth="40.0" prefWidth="40.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <RadioButton id="rbaddress" fx:id="rbaddress" mnemonicParsing="false" onAction="#iptoggle" selected="true" text="IP-Addresse" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
+               <toggleGroup>
+                  <ToggleGroup fx:id="radiotoggle" />
+               </toggleGroup></RadioButton>
+            <RadioButton id="rbrange" fx:id="rbrange" mnemonicParsing="false" onAction="#rangetoggle" text="IP-Range" toggleGroup="$radiotoggle" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" /> 
+            <TextField id="ipaddress1" fx:id="ipaddress1" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <TextField id="ipaddress2" fx:id="ipaddress2" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+            <TextField id="ipaddress3" fx:id="ipaddress3" GridPane.columnIndex="7" GridPane.rowIndex="1" />
+            <TextField id="ipaddress4" fx:id="ipaddress4" GridPane.columnIndex="9" GridPane.rowIndex="1" />
+            <TextField id="iprange1" fx:id="iprange1" disable="true" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <TextField id="iprange2" fx:id="iprange2" disable="true" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+            <TextField id="iprange3" fx:id="iprange3" disable="true" GridPane.columnIndex="7" GridPane.rowIndex="3" />
+            <TextField id="iprange4" fx:id="iprange4" disable="true" GridPane.columnIndex="9" GridPane.rowIndex="3" />
+            <TextField id="iprange5" fx:id="iprange5" disable="true" GridPane.columnIndex="11" GridPane.rowIndex="3" />
+            <TextField id="iprange6" fx:id="iprange6" disable="true" GridPane.columnIndex="13" GridPane.rowIndex="3" />
+            <TextField id="iprange7" fx:id="iprange7" disable="true" GridPane.columnIndex="15" GridPane.rowIndex="3" />
+            <TextField id="iprange8" fx:id="iprange8" disable="true" GridPane.columnIndex="17" GridPane.rowIndex="3" />
+            <Label alignment="CENTER" contentDisplay="CENTER" text="." textAlignment="CENTER" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+            <Label text="." GridPane.columnIndex="8" GridPane.rowIndex="1" />
+            <Label text="." GridPane.columnIndex="6" GridPane.rowIndex="1" />
+            <Label text="." GridPane.columnIndex="4" GridPane.rowIndex="3" />
+            <Label text="." GridPane.columnIndex="6" GridPane.rowIndex="3" />
+            <Label text="." GridPane.columnIndex="8" GridPane.rowIndex="3" />
+            <Label text="-" GridPane.columnIndex="10" GridPane.rowIndex="3" />
+            <Label text="." GridPane.columnIndex="12" GridPane.rowIndex="3" />
+            <Label text="." GridPane.columnIndex="14" GridPane.rowIndex="3" />
+            <Label text="." GridPane.columnIndex="16" GridPane.rowIndex="3" />
+            <Button mnemonicParsing="false" onAction="#startconnection" text="Verbinden..." GridPane.columnIndex="15" GridPane.columnSpan="3" GridPane.rowIndex="5" />
+            <Button mnemonicParsing="false" onAction="#startoffline" text="Offline Sessiion" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="6" />
+         </children>
+      </GridPane>
    </children>
 </VBox>

@@ -203,7 +203,7 @@
             </Button>
         </items>
       </ToolBar>
-      <TabPane focusTraversable="false" prefHeight="730.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="tabPane" id="tabPane" focusTraversable="false" prefHeight="730.0" prefWidth="1280.0" tabClosingPolicy="ALL_TABS">
          <tabs>
             <Tab text="Test1" />
             <Tab text="Test2" />

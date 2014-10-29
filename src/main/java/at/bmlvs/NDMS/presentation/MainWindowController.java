@@ -1,54 +1,71 @@
-/*
- * Copyright (c) 2011, 2014 Oracle and/or its affiliates.
- * All rights reserved. Use is subject to license terms.
- *
- * This file is available and licensed under the following license:
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- *  - Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *  - Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in
- *    the documentation and/or other materials provided with the distribution.
- *  - Neither the name of Oracle nor the names of its
- *    contributors may be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
- * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
- * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
 package at.bmlvs.NDMS.presentation;
 
 import java.io.IOException;
 
+import javax.swing.event.ChangeListener;
+
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+
 
 /**
  * Sample custom control hosting a text field and a button.
  */
+@SuppressWarnings("unused")
 public class MainWindowController extends VBox {
 
+    @FXML
+    private TabPane tabPane;
+    @FXML
+    private ToggleGroup radiotoggle;
+    @FXML
+    private RadioButton rbaddress;
+    @FXML
+    private RadioButton rbrange;
+    @FXML
+    private TextField ipaddress1;
+    @FXML
+    private TextField ipaddress2;
+    @FXML
+    private TextField ipaddress3;
+    @FXML
+    private TextField ipaddress4;
+    @FXML
+    private TextField iprange1;
+    @FXML
+    private TextField iprange2;
+    @FXML
+    private TextField iprange3;
+    @FXML
+    private TextField iprange4;
+    @FXML
+    private TextField iprange5;
+    @FXML
+    private TextField iprange6;
+    @FXML
+    private TextField iprange7;
+    @FXML
+    private TextField iprange8;
+    
+    private Stage stage;
+    
     public MainWindowController() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         
@@ -57,17 +74,68 @@ public class MainWindowController extends VBox {
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+        
     }
     
     @FXML
     private void addnew(ActionEvent event) throws IOException {
-        System.out.println("workserino");
-        Parent root = FXMLLoader.load(getClass().getResource("AddTab.fxml"));
-        Scene scene = new Scene(root);        
-        Stage stage = new Stage();
-        stage.setScene(scene);   
+    	
+    	stage = new Stage();
+    	Parent root = FXMLLoader.load(getClass().getResource("AddTab.fxml"));
+        Scene scene = new Scene(root);
+        stage.setTitle("Verbinden zu...");
+        stage.getIcons().add(new Image("file:icons/ndms.png"));
+        stage.setScene(scene);
+        stage.setResizable(false);
+        
+        //stage.initModality(Modality.WINDOW_MODAL);
+        //stage.initOwner(((Node)event.getSource()).getScene().getWindow() );
+        
         stage.show();
         
-        
+    }
+    @FXML
+    private void startconnection(ActionEvent event) throws IOException {
+    	
+    	tabPane.getTabs().add(new Tab("asdfadf"));
+    	
+    }
+    @FXML
+    private void startoffline(ActionEvent event) throws IOException {
+    	
+    	tabPane.getTabs().add(new Tab("asdfadf"));
+    }
+    @FXML
+    private void iptoggle(ActionEvent event) throws IOException {
+    	iprange1.setDisable(true);
+    	iprange2.setDisable(true);
+    	iprange3.setDisable(true);
+    	iprange4.setDisable(true);
+    	iprange5.setDisable(true);
+    	iprange6.setDisable(true);
+    	iprange7.setDisable(true);
+    	iprange8.setDisable(true);
+    	
+    	ipaddress1.setDisable(false);
+    	ipaddress2.setDisable(false);
+    	ipaddress3.setDisable(false);
+    	ipaddress4.setDisable(false);
+    	
+    }
+    @FXML
+    private void rangetoggle(ActionEvent event) throws IOException {
+    	iprange1.setDisable(false);
+    	iprange2.setDisable(false);
+    	iprange3.setDisable(false);
+    	iprange4.setDisable(false);
+    	iprange5.setDisable(false);
+    	iprange6.setDisable(false);
+    	iprange7.setDisable(false);
+    	iprange8.setDisable(false);
+    	
+    	ipaddress1.setDisable(true);
+    	ipaddress2.setDisable(true);
+    	ipaddress3.setDisable(true);
+    	ipaddress4.setDisable(true);
     }
 }
