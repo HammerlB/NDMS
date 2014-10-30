@@ -1,32 +1,19 @@
 package at.bmlvs.NDMS.service;
 
-/*
-import at.bmlvs.NDMS.presentation.MainWindow;
-import at.bmlvs.NDMS.presentation.TabbedWindow;
+import at.bmlvs.NDMS.presentation.MainWindowController;
 
 public class PresentationService
 {
-	private static MainWindow mainWindow;
-	private static TabbedWindow tabbedWindow;
+	private static MainWindowController mainWindowController;
 
-	public static MainWindow getMainWindow()
+	public static MainWindowController getMainWindowController()
 	{
-		return mainWindow;
+		return mainWindowController;
 	}
 
-	public static void setMainWindow(MainWindow mainWindow)
+	public static void setMainWindowController(
+			MainWindowController mainWindowController)
 	{
-		PresentationService.mainWindow = mainWindow;
-	}
-
-	public static TabbedWindow getTabbedWindow()
-	{
-		return tabbedWindow;
-	}
-
-	public static void setTabbedWindow(TabbedWindow tabbedWindow)
-	{
-		PresentationService.tabbedWindow = tabbedWindow;
+		PresentationService.mainWindowController = mainWindowController;
 	}
 }
-*/
