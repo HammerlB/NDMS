@@ -163,7 +163,6 @@ public class SSHConnector extends TerminalConnector implements Runnable {
 		}
 	}
 
-	@Override
 	public void run() {
 		int read;
 		try {
