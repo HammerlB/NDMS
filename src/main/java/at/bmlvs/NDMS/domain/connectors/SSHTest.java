@@ -6,12 +6,15 @@ public class SSHTest {
 		SSHConnector ssh = new SSHConnector();
 //		System.out.println(ssh.getSshFingerprint());
 		
-		Thread th = new Thread(ssh);
-//		th.start();
+//		Thread th = new Thread(ssh);
 		ssh.connect();
-		ssh.sendCmd("ping 192.168.1.12\n");
-		ssh.createOutput(new byte[16384]);
-		ssh.disconnect();
+//		ssh.sendCmd("enable\n"
+//				+ "gwd_2014\n"
+//				+ "conf t\n"
+//				+ "hostname test\n");
+//		th.start();
+//		ssh.createOutput(new byte[16384]);
+//		ssh.disconnect();
 //		th.interrupt();
 //		System.out.println(ssh.getOutput());
 	}
