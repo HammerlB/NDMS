@@ -35,4 +35,15 @@ public class Instance
 	{
 		this.devices = devices;
 	}
+	
+	public void checkInterfacesOfDevices()
+	{
+		for(Device device: getDevices())
+		{
+			for(Interface interf: device.getInterfaces())
+			{
+				
+			}
+		}
+	}
 }

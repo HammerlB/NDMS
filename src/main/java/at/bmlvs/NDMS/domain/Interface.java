@@ -15,7 +15,7 @@ public class Interface
 	
 	public Interface(String portid)
 	{
-		
+		setPortid(portid);
 	}
 
 	public String getPortid()
@@ -116,5 +116,20 @@ public class Interface
 	public void setVlan(int vlan)
 	{
 		this.vlan = vlan;
+	}
+	
+	public void setAll(String portidshort, String portname, String type, 
+			boolean portstatus, boolean trunkstatus, boolean cdpstatus, 
+			boolean cdpneighbor, boolean port_8021X, int vlan)
+	{
+		setPortidshort(portidshort);
+		setPortname(portname);
+		setType(type);
+		setPortstatus(portstatus);
+		setTrunkstatus(trunkstatus);
+		setCdpstatus(cdpstatus);
+		setCdpneighbor(cdpneighbor);
+		setPort_8021X(port_8021X);
+		setVlan(vlan);
 	}
 }
