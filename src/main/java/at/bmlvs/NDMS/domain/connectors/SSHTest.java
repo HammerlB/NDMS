@@ -13,6 +13,7 @@ public class SSHTest {
 				+ "gwd_2014\n"
 				+ "show run | include interface\n"
 				+ "      ");
+		ssh.createOutput(new byte[1024], 1001);
 		ssh.disconnect();
 		th.interrupt();
 		System.out.println(ssh.getOutput());

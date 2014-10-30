@@ -125,6 +125,7 @@ public class SSHConnector extends TerminalConnector implements Runnable {
 		return this.outputfinal;
 	}
 
+	@Override
 	public void connect() {
 		try {
 			ssh.connect(host, new ConsoleKnownHostsKeyVerification());
@@ -153,6 +154,7 @@ public class SSHConnector extends TerminalConnector implements Runnable {
 		}
 	}
 
+	@Override
 	public void disconnect() {
 		try {
 			session.close();
@@ -169,7 +171,8 @@ public class SSHConnector extends TerminalConnector implements Runnable {
 			// outputfinal = "";
 			// for (int i=0;(read = in.read(buffer)) > 0&&i<maxn;i++) {
 			String output = new String(buffer, 0, read);
-			outputfinal += output;
+//			outputfinal += output;
+			System.out.println(output);
 			// }
 		} catch (IOException e) {
 			e.printStackTrace();
