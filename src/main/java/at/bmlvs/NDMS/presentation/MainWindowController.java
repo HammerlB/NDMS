@@ -107,7 +107,6 @@ public class MainWindowController extends VBox
 	{
 
     	tabPane.getTabs().add(new Tab("asdfadf"));
-    	tabPane.getTabs().add(sd);
     	
     	//tabPane.getTabs().add(new Tab("asdfadf"));
 
