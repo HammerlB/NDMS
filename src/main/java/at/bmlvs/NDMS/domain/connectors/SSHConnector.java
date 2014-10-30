@@ -107,15 +107,16 @@ public class SSHConnector extends TerminalConnector implements Runnable {
 		}
 	}
 
-	public void createOutput(byte[] buffer, int maxn) {
+	public void createOutput(byte[] buffer) {
 		int read;
 		try {
 			read = in.read(buffer);
 			outputfinal = "";
-			for (int i = 0; (read = in.read(buffer)) > 0 && i < maxn; i++) {
-				String output = new String(buffer, 0, read);
-				outputfinal += output;
-			}
+//			for (int i = 0; (read = in.read(buffer)) > 0 && i < maxn; i++) {
+			String output = new String(buffer, 0, read);
+			System.out.println(output);
+//			outputfinal += output;
+//			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -173,8 +174,8 @@ public class SSHConnector extends TerminalConnector implements Runnable {
 //			outputfinal += output;
 			System.out.println(output);
 			// }
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (IOException | NullPointerException e) {
+			System.out.println("Nothing to print!");
 		}
 	}
 

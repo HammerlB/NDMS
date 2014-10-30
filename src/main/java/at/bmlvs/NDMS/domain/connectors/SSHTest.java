@@ -7,16 +7,13 @@ public class SSHTest {
 //		System.out.println(ssh.getSshFingerprint());
 		
 		Thread th = new Thread(ssh);
-		th.start();
+//		th.start();
 		ssh.connect();
-		ssh.sendCmd("enable\n"
-				+ "gwd_2014\n"
-				+ "show run | include interface\n"
-				+ "      ");
-		ssh.createOutput(new byte[1024], 1001);
+		ssh.sendCmd("ping 192.168.1.12\n");
+		ssh.createOutput(new byte[16384]);
 		ssh.disconnect();
-		th.interrupt();
-		System.out.println(ssh.getOutput());
+//		th.interrupt();
+//		System.out.println(ssh.getOutput());
 	}
 
 }
