@@ -1,4 +1,4 @@
-package at.bmlvs.NDMS.presentation;
+package at.bmlvs.NDMS.presentation.elements;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;

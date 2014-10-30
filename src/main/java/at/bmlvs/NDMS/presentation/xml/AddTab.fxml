@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
-<?import at.bmlvs.NDMS.presentation.*?>
+<?import at.bmlvs.NDMS.presentation.elements.*?>
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="542.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.bmlvs.NDMS.presentation.AddTabController">
    <children>

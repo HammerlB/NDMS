@@ -36,7 +36,7 @@ public class MainWindowController extends VBox
 	public MainWindowController()
 	{
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
-				"MainWindow.fxml"));
+				"xml/MainWindow.fxml"));
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);
 
@@ -66,7 +66,7 @@ public class MainWindowController extends VBox
 	{
 
 		stage = new Stage();
-		Parent root = FXMLLoader.load(getClass().getResource("AddTab.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("xml/AddTab.fxml"));
 		Scene scene = new Scene(root);
 		stage.setTitle("Verbinden zu...");
 		stage.getIcons().add(new Image("file:icons/ndms.png"));

@@ -2,6 +2,7 @@ package at.bmlvs.NDMS.presentation;
 
 import java.io.IOException;
 
+import at.bmlvs.NDMS.presentation.elements.RestrictiveTextField;
 import at.bmlvs.NDMS.service.PresentationService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,12 +12,15 @@ import javafx.scene.control.ToggleGroup;
 
 public class AddTabController
 {
+	private String tabname = "";
 	@FXML
 	private ToggleGroup radiotoggle;
 	@FXML
 	private RadioButton rbaddress;
 	@FXML
 	private RadioButton rbrange;
+	@FXML
+	private RadioButton rboffline;
 	@FXML
 	private RestrictiveTextField ipaddress1;
 	@FXML
@@ -45,17 +49,22 @@ public class AddTabController
 	@FXML
 	private void startconnection(ActionEvent event) throws IOException
 	{
+    	if(rbaddress.isSelected())
+    	{
+    		tabname = ipaddress1.getText() + "." + ipaddress2.getText() + "." + ipaddress3.getText() + "." + ipaddress4.getText();
+    	}
+    	else if(rbrange.isSelected())
+    	{
+    		tabname = iprange1.getText() + "." + iprange2.getText() + "." + iprange3.getText() + "." + iprange4.getText() + " - " + iprange5.getText() + "." + iprange6.getText() + "." + iprange7.getText() + "." + iprange8.getText();
+    	}
 
-    	PresentationService.getMainWindowController().getTabPane().getTabs().add(new Tab("asdfadf"));
-
+    	PresentationService.getMainWindowController().getTabPane().getTabs().add(new Tab(tabname));
 	}
 
 	@FXML
 	private void startoffline(ActionEvent event) throws IOException
 	{
-
-		PresentationService.getMainWindowController().getTabPane().getTabs().add(new Tab("asdfadf"));
-    	
+		PresentationService.getMainWindowController().getTabPane().getTabs().add(new Tab("Offline"));
 	}
 
 	@FXML

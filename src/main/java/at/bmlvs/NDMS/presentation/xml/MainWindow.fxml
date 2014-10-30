@@ -16,7 +16,7 @@
                      <graphic>
                         <ImageView>
                            <image>
-                              <Image url="@../../../../../../icons/smallnew.png" />
+                              <Image url="@../../../../../../../icons/smallnew.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -26,7 +26,7 @@
                      <graphic>
                         <ImageView>
                            <image>
-                              <Image url="@../../../../../../icons/smallimport.png" />
+                              <Image url="@../../../../../../../icons/smallimport.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -35,7 +35,7 @@
                      <graphic>
                         <ImageView>
                            <image>
-                              <Image url="@../../../../../../icons/smallexport.png" />
+                              <Image url="@../../../../../../../icons/smallexport.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -45,7 +45,7 @@
                      <graphic>
                         <ImageView>
                            <image>
-                              <Image url="@../../../../../../icons/smallsettings.png" />
+                              <Image url="@../../../../../../../icons/smallsettings.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -55,7 +55,7 @@
                      <graphic>
                         <ImageView>
                            <image>
-                              <Image url="@../../../../../../icons/smallclose.png" />
+                              <Image url="@../../../../../../../icons/smallclose.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -68,7 +68,7 @@
                      <graphic>
                         <ImageView>
                            <image>
-                              <Image url="@../../../../../../icons/smallportkonf.png" />
+                              <Image url="@../../../../../../../icons/smallportkonf.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -78,7 +78,7 @@
                      <graphic>
                         <ImageView>
                            <image>
-                              <Image url="@../../../../../../icons/smallvorlagen.png" />
+                              <Image url="@../../../../../../../icons/smallvorlagen.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -91,7 +91,7 @@
                      <graphic>
                         <ImageView>
                            <image>
-                              <Image url="@../../../../../../icons/smallresetstandart.png" />
+                              <Image url="@../../../../../../../icons/smallresetstandart.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -101,7 +101,7 @@
                      <graphic>
                         <ImageView>
                            <image>
-                              <Image url="@../../../../../../icons/smalldiag.png" />
+                              <Image url="@../../../../../../../icons/smalldiag.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -114,7 +114,7 @@
                      <graphic>
                         <ImageView>
                            <image>
-                              <Image url="@../../../../../../icons/smallbook.png" />
+                              <Image url="@../../../../../../../icons/smallbook.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -124,7 +124,7 @@
                      <graphic>
                         <ImageView>
                            <image>
-                              <Image url="@../../../../../../icons/smallabout.png" />
+                              <Image url="@../../../../../../../icons/smallabout.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -139,7 +139,7 @@
                <graphic>
                   <ImageView>
                      <image>
-                        <Image url="@../../../../../../icons/new.png" />
+                        <Image url="@../../../../../../../icons/new.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -149,7 +149,7 @@
                <graphic>
                   <ImageView>
                      <image>
-                        <Image url="@../../../../../../icons/import.png" />
+                        <Image url="@../../../../../../../icons/import.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -158,26 +158,7 @@
                <graphic>
                   <ImageView>
                      <image>
-                        <Image url="@../../../../../../icons/export.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Separator orientation="VERTICAL" prefHeight="20.0" />
-            <Button contentDisplay="CENTER" focusTraversable="false" mnemonicParsing="false">
-               <graphic>
-                  <ImageView>
-                     <image>
-                        <Image url="@../../../../../../icons/portkonf.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button contentDisplay="CENTER" focusTraversable="false" mnemonicParsing="false">
-               <graphic>
-                  <ImageView>
-                     <image>
-                        <Image url="@../../../../../../icons/vorlagen.png" />
+                        <Image url="@../../../../../../../icons/export.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -187,7 +168,7 @@
                <graphic>
                   <ImageView>
                      <image>
-                        <Image url="@../../../../../../icons/resetstandart.png" />
+                        <Image url="@../../../../../../../icons/portkonf.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -196,7 +177,26 @@
                <graphic>
                   <ImageView>
                      <image>
-                        <Image url="@../../../../../../icons/diag.png" />
+                        <Image url="@../../../../../../../icons/vorlagen.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Separator orientation="VERTICAL" prefHeight="20.0" />
+            <Button contentDisplay="CENTER" focusTraversable="false" mnemonicParsing="false">
+               <graphic>
+                  <ImageView>
+                     <image>
+                        <Image url="@../../../../../../../icons/resetstandart.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button contentDisplay="CENTER" focusTraversable="false" mnemonicParsing="false">
+               <graphic>
+                  <ImageView>
+                     <image>
+                        <Image url="@../../../../../../../icons/diag.png" />
                      </image>
                   </ImageView>
                </graphic>
