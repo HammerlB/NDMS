@@ -65,14 +65,10 @@ public class SshExample {
 	}
 	
 	public static void disconnect(){
-		public static void send(String cmd) {
-			OutputStream out = session.getOutputStream();
-			InputStream in = session.getInputStream();
-			try {
-				out.write(cmd.getBytes());
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+		try {
+			session.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
