@@ -49,6 +49,7 @@ public class MainWindowExample extends Application {
         stage.setWidth(800);
         stage.setHeight(700);
         stage.show();
+        
     }
     
     public static void main(String[] args) {

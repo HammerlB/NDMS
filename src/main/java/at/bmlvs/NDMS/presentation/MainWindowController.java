@@ -94,8 +94,10 @@ public class MainWindowController extends VBox
 		stage.setScene(scene);
 		stage.setResizable(false);
 
-		// stage.initModality(Modality.WINDOW_MODAL);
-		// stage.initOwner(((Node)event.getSource()).getScene().getWindow() );
+        //stage.initModality(Modality.WINDOW_MODAL);
+        //stage.initOwner(((Node)event.getSource()).getScene().getWindow() );
+        
+        //tabPane.getTabs().add(new Tab("asdfadf"));
 
 		stage.show();
 	}
@@ -104,7 +106,10 @@ public class MainWindowController extends VBox
 	private void startconnection(ActionEvent event) throws IOException
 	{
 
-		tabPane.getTabs().add(new Tab("asdfadf"));
+    	tabPane.getTabs().add(new Tab("asdfadf"));
+    	tabPane.getTabs().add(sd);
+    	
+    	//tabPane.getTabs().add(new Tab("asdfadf"));
 
 	}
 
@@ -113,6 +118,7 @@ public class MainWindowController extends VBox
 	{
 
 		tabPane.getTabs().add(new Tab("asdfadf"));
+    	
 	}
 
 	@FXML
