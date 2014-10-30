@@ -3,8 +3,9 @@
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
+<?import at.bmlvs.NDMS.presentation.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="542.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.bmlvs.NDMS.presentation.MainWindowController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="542.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.bmlvs.NDMS.presentation.AddTabController">
    <children>
       <GridPane>
         <columnConstraints>
@@ -44,19 +45,19 @@
                   <ToggleGroup fx:id="radiotoggle" />
                </toggleGroup></RadioButton>
             <RadioButton id="rbrange" fx:id="rbrange" mnemonicParsing="false" onAction="#rangetoggle" text="IP-Range" toggleGroup="$radiotoggle" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" /> 
-            <TextField id="ipaddress1" fx:id="ipaddress1" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-            <TextField id="ipaddress2" fx:id="ipaddress2" GridPane.columnIndex="5" GridPane.rowIndex="1" />
-            <TextField id="ipaddress3" fx:id="ipaddress3" GridPane.columnIndex="7" GridPane.rowIndex="1" />
-            <TextField id="ipaddress4" fx:id="ipaddress4" GridPane.columnIndex="9" GridPane.rowIndex="1" />
-            <TextField id="iprange1" fx:id="iprange1" disable="true" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-            <TextField id="iprange2" fx:id="iprange2" disable="true" GridPane.columnIndex="5" GridPane.rowIndex="3" />
-            <TextField id="iprange3" fx:id="iprange3" disable="true" GridPane.columnIndex="7" GridPane.rowIndex="3" />
-            <TextField id="iprange4" fx:id="iprange4" disable="true" GridPane.columnIndex="9" GridPane.rowIndex="3" />
-            <TextField id="iprange5" fx:id="iprange5" disable="true" GridPane.columnIndex="11" GridPane.rowIndex="3" />
-            <TextField id="iprange6" fx:id="iprange6" disable="true" GridPane.columnIndex="13" GridPane.rowIndex="3" />
-            <TextField id="iprange7" fx:id="iprange7" disable="true" GridPane.columnIndex="15" GridPane.rowIndex="3" />
-            <TextField id="iprange8" fx:id="iprange8" disable="true" GridPane.columnIndex="17" GridPane.rowIndex="3" />
-            <Label alignment="CENTER" contentDisplay="CENTER" text="." textAlignment="CENTER" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+            <RestrictiveTextField id="ipaddress1" fx:id="ipaddress1" GridPane.columnIndex="3" GridPane.rowIndex="1" maxLength="3" restrict="[0-9]"/>
+            <RestrictiveTextField id="ipaddress2" fx:id="ipaddress2" GridPane.columnIndex="5" GridPane.rowIndex="1" maxLength="3" restrict="[0-9]"/>
+            <RestrictiveTextField id="ipaddress3" fx:id="ipaddress3" GridPane.columnIndex="7" GridPane.rowIndex="1" maxLength="3" restrict="[0-9]"/>
+            <RestrictiveTextField id="ipaddress4" fx:id="ipaddress4" GridPane.columnIndex="9" GridPane.rowIndex="1" maxLength="3" restrict="[0-9]"/>
+            <RestrictiveTextField id="iprange1" fx:id="iprange1" disable="true" GridPane.columnIndex="3" GridPane.rowIndex="3" maxLength="3" restrict="[0-9]"/>
+            <RestrictiveTextField id="iprange2" fx:id="iprange2" disable="true" GridPane.columnIndex="5" GridPane.rowIndex="3" maxLength="3" restrict="[0-9]"/>
+            <RestrictiveTextField id="iprange3" fx:id="iprange3" disable="true" GridPane.columnIndex="7" GridPane.rowIndex="3" maxLength="3" restrict="[0-9]"/>
+            <RestrictiveTextField id="iprange4" fx:id="iprange4" disable="true" GridPane.columnIndex="9" GridPane.rowIndex="3" maxLength="3" restrict="[0-9]"/>
+            <RestrictiveTextField id="iprange5" fx:id="iprange5" disable="true" GridPane.columnIndex="11" GridPane.rowIndex="3" maxLength="3" restrict="[0-9]"/>
+            <RestrictiveTextField id="iprange6" fx:id="iprange6" disable="true" GridPane.columnIndex="13" GridPane.rowIndex="3" maxLength="3" restrict="[0-9]"/>
+            <RestrictiveTextField id="iprange7" fx:id="iprange7" disable="true" GridPane.columnIndex="15" GridPane.rowIndex="3" maxLength="3" restrict="[0-9]"/>
+            <RestrictiveTextField id="iprange8" fx:id="iprange8" disable="true" GridPane.columnIndex="17" GridPane.rowIndex="3" maxLength="3" restrict="[0-9]"/>
+            <Label alignment="CENTER" contentDisplay="CENTER" text="." textAlignment="CENTER" GridPane.columnIndex="4" GridPane.rowIndex="1"/>
             <Label text="." GridPane.columnIndex="8" GridPane.rowIndex="1" />
             <Label text="." GridPane.columnIndex="6" GridPane.rowIndex="1" />
             <Label text="." GridPane.columnIndex="4" GridPane.rowIndex="3" />
@@ -67,7 +68,7 @@
             <Label text="." GridPane.columnIndex="14" GridPane.rowIndex="3" />
             <Label text="." GridPane.columnIndex="16" GridPane.rowIndex="3" />
             <Button mnemonicParsing="false" onAction="#startconnection" text="Verbinden..." GridPane.columnIndex="15" GridPane.columnSpan="3" GridPane.rowIndex="5" />
-            <Button mnemonicParsing="false" onAction="#startoffline" text="Offline Sessiion" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="6" />
+            <Button mnemonicParsing="false" onAction="#startoffline" text="Offline Session" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="6" />
          </children>
       </GridPane>
    </children>
