@@ -8,10 +8,10 @@ public class SSHTest {
 		
 //		Thread th = new Thread(ssh);
 		ssh.connect();
-//		ssh.sendCmd("enable\n"
-//				+ "gwd_2014\n"
-//				+ "conf t\n"
-//				+ "hostname test\n");
+		ssh.sendCmd("enable\n"
+				+ "gwd_2014\n"
+				+ "conf t\n"
+				+ "hostname test123\n");
 //		th.start();
 //		ssh.createOutput(new byte[16384]);
 //		ssh.disconnect();

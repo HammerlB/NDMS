@@ -9,7 +9,6 @@ import com.sshtools.j2ssh.authentication.AuthenticationProtocolState;
 import com.sshtools.j2ssh.authentication.PasswordAuthenticationClient;
 import com.sshtools.j2ssh.session.SessionChannelClient;
 import com.sshtools.j2ssh.transport.ConsoleKnownHostsKeyVerification;
-import com.sshtools.j2ssh.transport.InvalidHostFileException;
 
 /**
  * 
@@ -25,7 +24,7 @@ public class SSHConnector extends TerminalConnector {
 	private String host;
 	private String user;
 	private String pass;
-	// private InputStream in;
+	private InputStream in;
 	private OutputStream out;
 
 	// private String outputfinal;
@@ -60,34 +59,23 @@ public class SSHConnector extends TerminalConnector {
 
 	public void sendCmd(String cmd) {
 		try {
-			OutputStream out = session.getOutputStream();
 			out.write(cmd.getBytes());
-			out.close();
+			byte buffer[] = new byte[100];
+			int read =0;
+			for (int i=0;i<100;i++){
+				System.out.println("control");
+				read = in.read(buffer);
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	// public void createOutput(byte[] buffer) {
-	// int read;
-	// try {
-	// read = in.read(buffer);
-	// outputfinal = "";
-	// // for (int i = 0; (read = in.read(buffer)) > 0 && i < maxn; i++) {
-	// String output = new String(buffer, 0, read);
-	// System.out.println(output);
-	// // outputfinal += output;
-	// // }
-	// } catch (IOException e) {
-	// e.printStackTrace();
-	// }
-	// }
-
 	@Override
 	public void connect() {
 		SshClient ssh = new SshClient();
 		try {
-			ssh.connect("192.168.1.12", new ConsoleKnownHostsKeyVerification());
+			ssh.connect(host, new ConsoleKnownHostsKeyVerification());
 
 			PasswordAuthenticationClient pwd = new PasswordAuthenticationClient();
 
@@ -109,16 +97,12 @@ public class SSHConnector extends TerminalConnector {
 			SessionChannelClient session = ssh.openSessionChannel();
 			session.startShell();
 			// COMMANDS
-			OutputStream out = session.getOutputStream();
-			InputStream in = session.getInputStream();
-			String cmd = "enable\n" + "gwd_2014\n" + "conf t\n"
-					+ "hostname test1\n";
-			out.write(cmd.getBytes());
-			byte buffer[] = new byte[1024];
-			int read = 0;
-			String outputfinal="Incoming:";
-			int z=0;
-			System.out.println(ssh.getServerHostKey().getFingerprint());
+			out = session.getOutputStream();
+			in = session.getInputStream();
+//			String cmd = "enable\n" + "gwd_2014\n" + "conf t\n"
+//					+ "hostname test1\n";
+//			out.write(cmd.getBytes());
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

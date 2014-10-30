@@ -5,7 +5,6 @@ package at.bmlvs.NDMS.domain.connectors;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.regex.Pattern;
 
 import com.sshtools.j2ssh.SshClient;
 import com.sshtools.j2ssh.authentication.AuthenticationProtocolState;
@@ -15,10 +14,9 @@ import com.sshtools.j2ssh.transport.ConsoleKnownHostsKeyVerification;
 
 public class SshExample {
 	// private static BufferedReader reader = new BufferedReader(
-	// new InputStreamReader(System.in));
-	private static SessionChannelClient session;
+	// new InputStreamReader(System.in))
 
-	public static void connect() {
+	public static void main(String args[]) throws IOException {
 		try {
 			SshClient ssh = new SshClient();
 			ssh.connect("192.168.1.12", new ConsoleKnownHostsKeyVerification());
@@ -46,58 +44,34 @@ public class SshExample {
 
 			if (result == AuthenticationProtocolState.COMPLETE)
 				System.out.println("The authentication is complete");
-			session = ssh.openSessionChannel();
+			SessionChannelClient session = ssh.openSessionChannel();
 			session.startShell();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 
-	}
-	
-	public static void send(String cmd) {
-		OutputStream out = session.getOutputStream();
-		InputStream in = session.getInputStream();
-		try {
+			OutputStream out = session.getOutputStream();
+			InputStream in = session.getInputStream();
+			String cmd = "enable\n" + "gwd_2014\n" + "conf t\n"
+					+ "hostname test\n";
 			out.write(cmd.getBytes());
+
+			// OUTPUT
+			byte buffer[] = new byte[1024];
+			String outputfinal = "Incoming:";
+			System.out.println(ssh.getServerHostKey().getFingerprint());
+			int read;
+			while ((read = in.read(buffer)) >= 0) {
+				String output = new String(buffer, 0, read);
+				outputfinal += output;
+				// System.out.println(output);
+				// if(output==" ")
+				// break;
+			}
+//			System.out.println(outputfinal);
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-	
-	public static void disconnect(){
-		try {
-			session.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public static void main(String args[]) throws IOException {
-		connect();
-		send("enable\n"
-			+ "gwd_2014\n"
-			+ "conf t\n"
-			+ "hostname test\n");
-		
-
-		// // OUTPUT
-		// byte buffer[] = new byte[1024];
-		// int read = 0;
-		// String outputfinal = "Incoming:";
-		// int z = 0;
-		// System.out.println(ssh.getServerHostKey().getFingerprint());
-		// while ((read = in.read(buffer)) >= 0) {
-		// String output = new String(buffer, 0, read);
-		// outputfinal += output;
-		// // System.out.println(output);
-		// // if(output==" ")
-		// // break;
-		// }
-		// System.out.println(outputfinal);
-		// // System.out.println("Input String matches regex - "+
-		// // Pattern.compile(".xx.").matcher("MxxY").matches());
-
-		
-
 	}
 }
+
+// System.out.println("Input String matches regex - "+
+// Pattern.compile(".xx.").matcher("MxxY").matches());
