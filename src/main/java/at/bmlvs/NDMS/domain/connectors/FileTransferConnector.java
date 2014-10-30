@@ -22,4 +22,8 @@ public abstract class FileTransferConnector
 	abstract void connect();
 	
 	abstract void disconnect();
+	
+	abstract void send();
+	
+	abstract void receive();
 }

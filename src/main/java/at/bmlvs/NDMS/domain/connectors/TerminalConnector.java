@@ -1,6 +1,6 @@
 package at.bmlvs.NDMS.domain.connectors;
 
-public class TerminalConnector
+public abstract class TerminalConnector
 {
 	private String host;
 	private String username;
@@ -17,6 +17,10 @@ public class TerminalConnector
 		setUsername(username);
 		setPassword(password);
 	}
+	
+	abstract void connect();
+	
+	abstract void disconnect();
 
 	public String getHost()
 	{
