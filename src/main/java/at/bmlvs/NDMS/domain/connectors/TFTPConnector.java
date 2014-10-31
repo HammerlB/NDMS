@@ -66,14 +66,15 @@ public class TFTPConnector extends FileTransferConnector
 	public TFTPConnector(String host, String localfile, String remotefile)
 	{
 		super(host);
-
+		setLocalfile(localfile);
+		setRemotefile(remotefile);
 		setTftpc(new TFTPClient());
-		setTransfermode(TFTP.BINARY_MODE);
+		setTransfermode(TFTP.ASCII_MODE);
 		setTimeout(60000);
 	}
 
 	@Override
-	void connect()
+	public void connect()
 	{
 		tftpc.setDefaultTimeout(getTimeout());
 
@@ -91,13 +92,13 @@ public class TFTPConnector extends FileTransferConnector
 	}
 
 	@Override
-	void disconnect()
+	public void disconnect()
 	{
 		tftpc.close();
 	}
 
 	@Override
-	void send()
+	public void send()
 	{
 		// We haven't closed the local file yet.
 		boolean closed = false;
@@ -164,14 +165,13 @@ public class TFTPConnector extends FileTransferConnector
 	}
 
 	@Override
-	void receive()
+	public void receive()
 	{
 		// We haven't closed the local file yet.
 		boolean closed = false;
 
 		FileOutputStream output = null;
 		File file;
-
 		file = new File(getLocalfile());
 
 		// If file exists, don't overwrite it.

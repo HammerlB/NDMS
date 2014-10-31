@@ -1,4 +1,6 @@
-package at.bmlvs.NDMS.domain.connectors;
+package at.bmlvs.NDMS.domain.connectors.testers;
+
+import at.bmlvs.NDMS.domain.connectors.SSHConnector;
 
 public class SSHTest {
 

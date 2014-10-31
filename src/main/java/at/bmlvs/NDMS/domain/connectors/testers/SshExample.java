@@ -1,4 +1,4 @@
-package at.bmlvs.NDMS.domain.connectors;
+package at.bmlvs.NDMS.domain.connectors.testers;
 
 //import java.io.InputStream;
 //import java.io.OutputStream;
