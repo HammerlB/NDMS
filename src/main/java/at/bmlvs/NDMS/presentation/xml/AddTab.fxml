@@ -22,22 +22,19 @@
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="40.0" minWidth="40.0" prefWidth="40.0" />
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="40.0" minWidth="40.0" prefWidth="40.0" />
+			<ColumnConstraints hgrow="SOMETIMES" maxWidth="40.0" minWidth="40.0" prefWidth="40.0" />
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="40.0" minWidth="40.0" prefWidth="40.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="40.0" minWidth="40.0" prefWidth="40.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="41.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="46.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="15.0" minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <RadioButton id="rbaddress" fx:id="rbaddress" mnemonicParsing="false" onAction="#iptoggle" selected="true" text="IP-Addresse" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
@@ -45,30 +42,34 @@
                   <ToggleGroup fx:id="radiotoggle" />
                </toggleGroup></RadioButton>
             <RadioButton id="rbrange" fx:id="rbrange" mnemonicParsing="false" onAction="#rangetoggle" text="IP-Range" toggleGroup="$radiotoggle" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" /> 
-            <RestrictiveTextField id="ipaddress1" fx:id="ipaddress1" GridPane.columnIndex="3" GridPane.rowIndex="1" maxLength="3" restrict="[0-9]"/>
-            <RestrictiveTextField id="ipaddress2" fx:id="ipaddress2" GridPane.columnIndex="5" GridPane.rowIndex="1" maxLength="3" restrict="[0-9]"/>
-            <RestrictiveTextField id="ipaddress3" fx:id="ipaddress3" GridPane.columnIndex="7" GridPane.rowIndex="1" maxLength="3" restrict="[0-9]"/>
-            <RestrictiveTextField id="ipaddress4" fx:id="ipaddress4" GridPane.columnIndex="9" GridPane.rowIndex="1" maxLength="3" restrict="[0-9]"/>
-            <RestrictiveTextField id="iprange1" fx:id="iprange1" disable="true" GridPane.columnIndex="3" GridPane.rowIndex="3" maxLength="3" restrict="[0-9]"/>
-            <RestrictiveTextField id="iprange2" fx:id="iprange2" disable="true" GridPane.columnIndex="5" GridPane.rowIndex="3" maxLength="3" restrict="[0-9]"/>
-            <RestrictiveTextField id="iprange3" fx:id="iprange3" disable="true" GridPane.columnIndex="7" GridPane.rowIndex="3" maxLength="3" restrict="[0-9]"/>
-            <RestrictiveTextField id="iprange4" fx:id="iprange4" disable="true" GridPane.columnIndex="9" GridPane.rowIndex="3" maxLength="3" restrict="[0-9]"/>
-            <RestrictiveTextField id="iprange5" fx:id="iprange5" disable="true" GridPane.columnIndex="11" GridPane.rowIndex="3" maxLength="3" restrict="[0-9]"/>
-            <RestrictiveTextField id="iprange6" fx:id="iprange6" disable="true" GridPane.columnIndex="13" GridPane.rowIndex="3" maxLength="3" restrict="[0-9]"/>
-            <RestrictiveTextField id="iprange7" fx:id="iprange7" disable="true" GridPane.columnIndex="15" GridPane.rowIndex="3" maxLength="3" restrict="[0-9]"/>
-            <RestrictiveTextField id="iprange8" fx:id="iprange8" disable="true" GridPane.columnIndex="17" GridPane.rowIndex="3" maxLength="3" restrict="[0-9]"/>
-            <Label alignment="CENTER" contentDisplay="CENTER" text="." textAlignment="CENTER" GridPane.columnIndex="4" GridPane.rowIndex="1"/>
+            <RadioButton id="rboff" fx:id="rboff" mnemonicParsing="false" onAction="#offtoggle" text="Offline Session" toggleGroup="$radiotoggle" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6" />
+            <RestrictiveTextField id="ipaddress1" fx:id="ipaddress1" maxLength="3" restrict="[0-9]" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+            <RestrictiveTextField id="ipaddress2" fx:id="ipaddress2" maxLength="3" restrict="[0-9]" GridPane.columnIndex="7" GridPane.rowIndex="1" />
+            <RestrictiveTextField id="ipaddress3" fx:id="ipaddress3" maxLength="3" restrict="[0-9]" GridPane.columnIndex="9" GridPane.rowIndex="1" />
+            <RestrictiveTextField id="ipaddress4" fx:id="ipaddress4" maxLength="3" restrict="[0-9]" GridPane.columnIndex="11" GridPane.rowIndex="1" />       
+            <RestrictiveTextField id="iprange1" fx:id="iprange1" disable="true" maxLength="3" restrict="[0-9]" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+            <RestrictiveTextField id="iprange2" fx:id="iprange2" disable="true" maxLength="3" restrict="[0-9]" GridPane.columnIndex="7" GridPane.rowIndex="3" />
+            <RestrictiveTextField id="iprange3" fx:id="iprange3" disable="true" maxLength="3" restrict="[0-9]" GridPane.columnIndex="9" GridPane.rowIndex="3" />
+            <RestrictiveTextField id="iprange4" fx:id="iprange4" disable="true" maxLength="3" restrict="[0-9]" GridPane.columnIndex="11" GridPane.rowIndex="3" />
+            <RestrictiveTextField id="iprange5" fx:id="iprange5" disable="true" maxLength="3" restrict="[0-9]" GridPane.columnIndex="5" GridPane.rowIndex="4" />
+            <RestrictiveTextField id="iprange6" fx:id="iprange6" disable="true" maxLength="3" restrict="[0-9]" GridPane.columnIndex="7" GridPane.rowIndex="4" />
+            <RestrictiveTextField id="iprange7" fx:id="iprange7" disable="true" maxLength="3" restrict="[0-9]" GridPane.columnIndex="9" GridPane.rowIndex="4" />
+            <RestrictiveTextField id="iprange8" fx:id="iprange8" disable="true" maxLength="3" restrict="[0-9]" GridPane.columnIndex="11" GridPane.rowIndex="4" />
+            <Label alignment="CENTER" contentDisplay="CENTER" text="." textAlignment="CENTER" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+            <Label text="." GridPane.columnIndex="10" GridPane.rowIndex="1" />
             <Label text="." GridPane.columnIndex="8" GridPane.rowIndex="1" />
-            <Label text="." GridPane.columnIndex="6" GridPane.rowIndex="1" />
-            <Label text="." GridPane.columnIndex="4" GridPane.rowIndex="3" />
             <Label text="." GridPane.columnIndex="6" GridPane.rowIndex="3" />
             <Label text="." GridPane.columnIndex="8" GridPane.rowIndex="3" />
-            <Label text="-" GridPane.columnIndex="10" GridPane.rowIndex="3" />
-            <Label text="." GridPane.columnIndex="12" GridPane.rowIndex="3" />
-            <Label text="." GridPane.columnIndex="14" GridPane.rowIndex="3" />
-            <Label text="." GridPane.columnIndex="16" GridPane.rowIndex="3" />
-            <Button mnemonicParsing="false" onAction="#startconnection" text="Verbinden..." GridPane.columnIndex="15" GridPane.columnSpan="3" GridPane.rowIndex="5" />
-            <Button mnemonicParsing="false" onAction="#startoffline" text="Offline Session" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="6" />
+            <Label text="." GridPane.columnIndex="10" GridPane.rowIndex="3" />
+            <Label text="." GridPane.columnIndex="6" GridPane.rowIndex="4" />
+            <Label text="." GridPane.columnIndex="8" GridPane.rowIndex="4" />
+            <Label text="." GridPane.columnIndex="10" GridPane.rowIndex="4" />
+            <Button mnemonicParsing="false" onAction="#startconnection" text="Verbinden..." GridPane.columnIndex="9" GridPane.columnSpan="3" GridPane.halignment="RIGHT" GridPane.rowIndex="7" />
+            <Label alignment="TOP_RIGHT" contentDisplay="RIGHT" disable="true" text="Von:" textAlignment="RIGHT" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+            <Label disable="true" text="Bis:" textAlignment="RIGHT" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
+            <TextField id="offline1" fx:id="offline1" disable="true" GridPane.columnIndex="5" GridPane.columnSpan="7" GridPane.rowIndex="6" />
+            <Label disable="true" text="Name:" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
+            <Label id="errorlabel" fx:id="errorlabel" textFill="RED" GridPane.columnIndex="2" GridPane.columnSpan="6" GridPane.rowIndex="7" />
          </children>
       </GridPane>
    </children>

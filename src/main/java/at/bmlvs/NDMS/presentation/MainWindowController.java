@@ -61,6 +61,16 @@ public class MainWindowController extends VBox
 		this.tabPane = tabPane;
 	}
 
+	public Stage getStage()
+	{
+		return stage;
+	}
+
+	public void setStage(Stage stage)
+	{
+		this.stage = stage;
+	}
+
 	@FXML
 	private void addnew(ActionEvent event) throws IOException
 	{
@@ -70,6 +80,8 @@ public class MainWindowController extends VBox
 		Scene scene = new Scene(root);
 		stage.setTitle("Verbinden zu...");
 		stage.getIcons().add(new Image("file:icons/ndms.png"));
+		stage.initModality(Modality.WINDOW_MODAL);
+		stage.initOwner(this.getScene().getWindow());
 		stage.setScene(scene);
 		stage.setResizable(false);
 
