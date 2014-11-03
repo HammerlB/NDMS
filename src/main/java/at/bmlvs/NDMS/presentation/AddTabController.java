@@ -3,7 +3,6 @@ package at.bmlvs.NDMS.presentation;
 import java.io.IOException;
 
 import at.bmlvs.NDMS.domain.connectors.SSHConnector;
-import at.bmlvs.NDMS.domain.helper.UUIDGenerator;
 import at.bmlvs.NDMS.presentation.elements.RestrictiveTextField;
 import at.bmlvs.NDMS.service.PresentationService;
 import javafx.event.ActionEvent;
@@ -17,8 +16,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 public class AddTabController
 {
@@ -239,24 +236,19 @@ public class AddTabController
 
 		portview.setPadding(new Insets(5, 0, 5, 0));
 
-		portview.setVgap(10);
-		portview.setHgap(0);
+		//portview.setVgap(10);
+		//portview.setHgap(0);
 		portview.setPrefRows(2);
 		portview.setMaxWidth(800);
 
 		for (int i = 0; i < ports; i++)
 		{
-			if (i == 8)
-			{
-				portview.setHgap(0);
-				portview.getChildren().add(portid, new Button("df"));
 
-			}
-			else
-			{
-				// portview.setHgap(0);
-				portview.getChildren().add(portid, new Button("df"));
-			}
+			portview.setHgap(10);
+			portview.getChildren().add(portid, new Button("df"));
+			portview.setHgap(0);
+			portview.getChildren().add(portid, new Button("df"));
+
 		}
 
 		// Add something in Tab
