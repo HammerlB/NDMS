@@ -8,18 +8,22 @@ import at.bmlvs.NDMS.service.PresentationService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class AddTabController
 {
 	private String tabname = "";
+	private int tabcount = 0;
+	
 	@FXML
 	private ToggleGroup radiotoggle;
 	@FXML
@@ -57,19 +61,26 @@ public class AddTabController
 	@FXML
 	private Label errorlabel;
 	
+	public int getTabcount()
+	{
+		return tabcount;
+	}
+
+	public void setTabcount(int tabcount)
+	{
+		this.tabcount = tabcount;
+	}
+
 	@FXML
 	private void startconnection(ActionEvent event) throws IOException
 	{
-		
-		final String id = UUIDGenerator.generateUUID();
 		
     	if(rbaddress.isSelected())
     	{
     		if((!ipaddress1.getText().equals("")) && (!ipaddress2.getText().equals("")) && (!ipaddress3.getText().equals("")) && (!ipaddress4.getText().equals("")))
     		{
     			tabname = ipaddress1.getText() + "." + ipaddress2.getText() + "." + ipaddress3.getText() + "." + ipaddress4.getText();
-    			PresentationService.getMainWindowController().getTabPane().getTabs().add(new Tab(tabname));
-    			PresentationService.getMainWindowController().getStage().close();
+    			addTab(tabname);
     			
     		} else {
     			errorlabel.setText("Geben Sie alle Felder der IP-Addresse an!");
@@ -80,8 +91,7 @@ public class AddTabController
     		if((!iprange1.getText().equals("")) && (!iprange2.getText().equals("")) && (!iprange3.getText().equals("")) && (!iprange4.getText().equals("")) && (!iprange5.getText().equals("")) && (!iprange6.getText().equals("")) && (!iprange7.getText().equals("")) && (!iprange8.getText().equals("")))
     		{
     			tabname = iprange1.getText() + "." + iprange2.getText() + "." + iprange3.getText() + "." + iprange4.getText() + " - " + iprange5.getText() + "." + iprange6.getText() + "." + iprange7.getText() + "." + iprange8.getText();
-    			PresentationService.getMainWindowController().getTabPane().getTabs().add(1, new Tab(tabname));
-    			PresentationService.getMainWindowController().getStage().close();
+    			addTab(tabname);
     			
     		} else {
     			errorlabel.setText("Geben Sie alle Felder der IP-Range an!");
@@ -92,29 +102,9 @@ public class AddTabController
     		if(!offline1.getText().equals(""))
     		{
     			tabname = offline1.getText();
-    			PresentationService.getMainWindowController().getTabPane().getTabs().add(new Tab(tabname));
-    			PresentationService.getMainWindowController().getStage().close();
+    			addTab(tabname);
     			
-    			TilePane portview = new TilePane();
-
-    			portview.setPadding(new Insets(5, 0, 5, 0));
-
-    			portview.setVgap(3);
-    			portview.setHgap(3);
-
-    			portview.setPrefColumns(2);
-
-    			for (int i = 0; i < 33; i++)
-    			{
-    				String[] days = { "", "", "1", "2", "3", "4", "5", "6", "7", "8",
-    						"9", "10", "11", "12", "13", "14", "15", "16", "17", "18",
-    						"19", "20", "21", "22", "23", "24", "25", "26", "27", "28",
-    						"29", "30", "31" };
-    				portview.getChildren().add(new Text(days[i]));
-
-    			}
-    			
-    			
+ 			
     		} else {
     			errorlabel.setText("Geben Sie einen Namen an!");
     		}
@@ -214,4 +204,40 @@ public class AddTabController
 		ipaddress3.setText("");
 		ipaddress4.setText("");
 	}
+	
+	private void addTab(String tabname)
+	{
+		PresentationService.getMainWindowController().getTabPane().getTabs().add(getTabcount(), new Tab(tabname));
+		portview(getTabcount());
+		setTabcount(getTabcount() + 1);
+		PresentationService.getMainWindowController().getStage().close();
+	}
+	
+	private void portview(int id)
+	{
+		TilePane portview = new TilePane();
+		
+		int ports = 40;
+		
+		portview.setPadding(new Insets(5, 0, 5, 0));
+
+		portview.setVgap(50);
+		portview.setHgap(50);
+
+		portview.setPrefColumns(2);
+
+		for (int i = 0; i < ports; i++)
+		{
+			portview.getChildren().add();
+
+		}
+		
+	      //Add something in Tab
+	      VBox tabbox = new VBox();
+	      tabbox.getChildren().addAll(portview);
+	      PresentationService.getMainWindowController().getTabPane().getTabs().get(id).setContent(tabbox);
+	      PresentationService.getMainWindowController().getTabPane().getTabs().add(PresentationService.getMainWindowController().getTabPane().getTabs().get(id));
+	     
+	}
+	
 }
