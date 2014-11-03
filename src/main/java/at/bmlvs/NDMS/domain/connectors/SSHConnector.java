@@ -10,6 +10,7 @@ import com.sshtools.j2ssh.authentication.AuthenticationProtocolState;
 import com.sshtools.j2ssh.authentication.PasswordAuthenticationClient;
 import com.sshtools.j2ssh.session.SessionChannelClient;
 import com.sshtools.j2ssh.transport.ConsoleKnownHostsKeyVerification;
+import com.sshtools.j2ssh.transport.IgnoreHostKeyVerification;
 
 /**
  * 
@@ -76,8 +77,7 @@ public class SSHConnector extends TerminalConnector {
 	public void connect() {
 		SshClient ssh = new SshClient();
 		try {
-			ssh.connect(host, new ConsoleHostKeyVerification());
-
+			ssh.connect(host, new IgnoreHostKeyVerification());
 			PasswordAuthenticationClient pwd = new PasswordAuthenticationClient();
 
 			pwd.setUsername(user);
