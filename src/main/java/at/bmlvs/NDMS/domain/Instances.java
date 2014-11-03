@@ -39,7 +39,7 @@ public class Instances
 		Instance instance = new Instance(name);
 		instance.getSshConnector().connect();
 		
-		System.out.println(instance.getSshConnector().getSshFingerprint());
+		System.out.println(instance.getSshConnector().getSSHFingerprint());
 		
 //		instance.getDevices().add(new Device(instance.getSshConnector().getSshFingerprint(), name));
 		getInstances().add(instance);
