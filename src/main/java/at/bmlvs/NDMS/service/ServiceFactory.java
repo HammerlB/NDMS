@@ -4,6 +4,8 @@ public class ServiceFactory
 {
 	private static PersistenceService persistenceService;
 	private static PresentationService presentationService;
+	private static DomainService domainService;
+	
 	private static AppConfig appConfig;
 
 	public static PersistenceService getPersistenceService()
@@ -24,6 +26,16 @@ public class ServiceFactory
 	public static void setPresentationService(PresentationService presentationService)
 	{
 		ServiceFactory.presentationService = presentationService;
+	}
+
+	public static DomainService getDomainService()
+	{
+		return domainService;
+	}
+
+	public static void setDomainService(DomainService domainService)
+	{
+		ServiceFactory.domainService = domainService;
 	}
 
 	public static AppConfig getAppConfig()

@@ -3,10 +3,12 @@ package at.bmlvs.NDMS.domain;
 import java.util.ArrayList;
 
 import at.bmlvs.NDMS.domain.helper.UUIDGenerator;
+import at.bmlvs.NDMS.presentation.elements.InstanceTab;
 
 public class Instance
 {
 	private String UUID;
+	private InstanceTab instanceTab;
 	
 	private ArrayList<Device> devices;
 
@@ -26,6 +28,16 @@ public class Instance
 		UUID = uUID;
 	}
 
+	public InstanceTab getInstanceTab()
+	{
+		return instanceTab;
+	}
+
+	public void setInstanceTab(InstanceTab instanceTab)
+	{
+		this.instanceTab = instanceTab;
+	}
+
 	public ArrayList<Device> getDevices()
 	{
 		return devices;
@@ -35,7 +47,8 @@ public class Instance
 	{
 		this.devices = devices;
 	}
-	
+
+	@SuppressWarnings("unused")
 	public void checkInterfacesOfDevices()
 	{
 		for(Device device: getDevices())

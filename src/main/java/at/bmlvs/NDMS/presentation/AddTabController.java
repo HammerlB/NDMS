@@ -122,8 +122,6 @@ public class AddTabController
 			}
 
 		}
-		PortViewController pv = new PortViewController();
-		pv.buildview();
 	}
 
 	@FXML
