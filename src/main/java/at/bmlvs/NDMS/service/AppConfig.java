@@ -12,11 +12,13 @@ public class AppConfig implements Serializable
 	private String NDMS_DEFAULT_PATH_TEMPLATE_DIRECTORY;//da
 	private String NDMS_DEFAULT_PATH_CONFIG_DIRECTORY;//herkel
 	private String NDMS_DEFAULT_PATH_BACKUP_DIRECTORY;//desdo
+	private String NDMS_DEFAULT_PATH_SNAPSHOT_DIRECTORY;
 	private String NDMS_DEFAULT_XML_FILE_EXTENSION;
 	private String NDMS_DEFAULT_TXT_FILE_EXTENSION;
 
 	private ArrayList<String> NDMS_DEFAULT_PATH_TEMPLATES;
 	private ArrayList<String> NDMS_DEFAULT_PATH_CONFIGS;
+	private ArrayList<String> NDMS_DEFAULT_PATH_SNAPSHOTS;
 
 	public AppConfig()
 	{
@@ -77,6 +79,15 @@ public class AppConfig implements Serializable
 		NDMS_DEFAULT_PATH_BACKUP_DIRECTORY = nDMS_DEFAULT_PATH_BACKUP_DIRECTORY;
 	}
 
+	public String getNDMS_DEFAULT_PATH_SNAPSHOT_DIRECTORY() {
+		return NDMS_DEFAULT_PATH_SNAPSHOT_DIRECTORY;
+	}
+
+	public void setNDMS_DEFAULT_PATH_SNAPSHOT_DIRECTORY(
+			String nDMS_DEFAULT_PATH_SNAPSHOT_DIRECTORY) {
+		NDMS_DEFAULT_PATH_SNAPSHOT_DIRECTORY = nDMS_DEFAULT_PATH_SNAPSHOT_DIRECTORY;
+	}
+
 	public String getNDMS_DEFAULT_XML_FILE_EXTENSION()
 	{
 		return NDMS_DEFAULT_XML_FILE_EXTENSION;
@@ -121,6 +132,15 @@ public class AppConfig implements Serializable
 		NDMS_DEFAULT_PATH_CONFIGS = nDMS_DEFAULT_PATH_CONFIGS;
 	}
 
+	public ArrayList<String> getNDMS_DEFAULT_PATH_SNAPSHOTS() {
+		return NDMS_DEFAULT_PATH_SNAPSHOTS;
+	}
+
+	public void setNDMS_DEFAULT_PATH_SNAPSHOTS(
+			ArrayList<String> nDMS_DEFAULT_PATH_SNAPSHOTS) {
+		NDMS_DEFAULT_PATH_SNAPSHOTS = nDMS_DEFAULT_PATH_SNAPSHOTS;
+	}
+
 	/**
 	 * Serialization default-configuration
 	 */
@@ -131,10 +151,12 @@ public class AppConfig implements Serializable
 		setNDMS_DEFAULT_PATH_TEMPLATE_DIRECTORY("templates");
 		setNDMS_DEFAULT_PATH_CONFIG_DIRECTORY("configs");
 		setNDMS_DEFAULT_PATH_BACKUP_DIRECTORY("backup");
+		setNDMS_DEFAULT_PATH_SNAPSHOT_DIRECTORY("snapshots");
 		setNDMS_DEFAULT_XML_FILE_EXTENSION(".xml");
 		setNDMS_DEFAULT_TXT_FILE_EXTENSION(".txt");
 
 		setNDMS_DEFAULT_PATH_TEMPLATES(new ArrayList<String>());
 		setNDMS_DEFAULT_PATH_CONFIGS(new ArrayList<String>());
+		setNDMS_DEFAULT_PATH_SNAPSHOTS(new ArrayList<String>());
 	}
 }
