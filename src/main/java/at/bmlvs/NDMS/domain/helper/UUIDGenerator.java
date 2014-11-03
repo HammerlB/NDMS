@@ -1,5 +1,6 @@
 package at.bmlvs.NDMS.domain.helper;
 
+import java.util.Random;
 import java.util.UUID;
 
 public class UUIDGenerator
@@ -18,5 +19,13 @@ public class UUIDGenerator
 		}
 
 		return uuid;
+	}
+	
+	public static int generateIntegerUUID()
+	{
+		Random rand = new Random();
+		int randomNum = rand.nextInt();
+		
+		return randomNum;
 	}
 }
