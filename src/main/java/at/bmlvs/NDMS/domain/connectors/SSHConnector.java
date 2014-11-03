@@ -4,12 +4,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import com.sshtools.common.hosts.ConsoleHostKeyVerification;
 import com.sshtools.j2ssh.SshClient;
 import com.sshtools.j2ssh.authentication.AuthenticationProtocolState;
 import com.sshtools.j2ssh.authentication.PasswordAuthenticationClient;
 import com.sshtools.j2ssh.session.SessionChannelClient;
-import com.sshtools.j2ssh.transport.ConsoleKnownHostsKeyVerification;
 import com.sshtools.j2ssh.transport.IgnoreHostKeyVerification;
 
 /**
@@ -21,7 +19,6 @@ public class SSHConnector extends TerminalConnector {
 	private String version;
 	private int port;
 	private SshClient ssh;
-	// private PasswordAuthenticationClient pwd;
 	private SessionChannelClient session;
 	private String host;
 	private String user;
@@ -29,25 +26,22 @@ public class SSHConnector extends TerminalConnector {
 	private InputStream in;
 	private OutputStream out;
 
-	// private String outputfinal;
-	// private byte[] buffer = new byte[1024];
+//	public SSHConnector() {
+//		super();
+//		this.ssh = new SshClient();
+//		// this.pwd = new PasswordAuthenticationClient();
+//		this.version = "";
+//		this.port = 0;
+//		this.host = "192.168.1.12";
+//		this.user = "Herkel";
+//		this.pass = "gwdH_2014";
+//	}
 
-	public SSHConnector() {
-		super();
-		this.ssh = new SshClient();
-		// this.pwd = new PasswordAuthenticationClient();
-		this.version = "";
-		this.port = 0;
-		this.host = "192.168.1.12";
-		this.user = "Herkel";
-		this.pass = "gwdH_2014";
-	}
-
-	public SSHConnector(String host, String user, String pass, String version,
-			int port) {
+	public SSHConnector(String host, String user, String pass
+//			,String version,int port
+			) {
 		super(host, user, pass);
 		this.ssh = new SshClient();
-		// this.pwd = new PasswordAuthenticationClient();
 		this.version = version;
 		this.port = port;
 		this.host = host;
@@ -84,7 +78,6 @@ public class SSHConnector extends TerminalConnector {
 			pwd.setPassword(pass);
 
 			int result = ssh.authenticate(pwd);
-			ssh.getServerHostKey();
 
 			if (result == AuthenticationProtocolState.FAILED)
 				System.out.println("The authentication failed");
@@ -100,9 +93,7 @@ public class SSHConnector extends TerminalConnector {
 			// COMMANDS
 			out = session.getOutputStream();
 			in = session.getInputStream();
-//			String cmd = "enable\n" + "gwd_2014\n" + "conf t\n"
-//					+ "hostname test1\n";
-//			out.write(cmd.getBytes());
+
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -127,8 +118,7 @@ public class SSHConnector extends TerminalConnector {
 	// // for (int i=0;(read = in.read(buffer)) > 0&&i<maxn;i++) {
 	// String output = new String(buffer, 0, read);
 	// // outputfinal += output;
-	// System.out.println(output);
-	// // }
+	// System.out.println(output);	// // }
 	// } catch (IOException | NullPointerException e) {
 	// System.out.println("Nothing to print!");
 	// }
