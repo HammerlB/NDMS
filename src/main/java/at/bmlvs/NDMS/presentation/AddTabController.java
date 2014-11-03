@@ -23,6 +23,9 @@ public class AddTabController
 {
 	private String tabname = "";
 	
+	private int tabid;
+	private int portid;
+	
 	@FXML
 	private ToggleGroup radiotoggle;
 	@FXML
@@ -194,12 +197,33 @@ public class AddTabController
 		ipaddress4.setText("");
 	}
 	
+	public int getTabid()
+	{
+		return tabid;
+	}
+
+	public void setTabid(int tabid)
+	{
+		this.tabid = tabid;
+	}
+
+	public int getPortid()
+	{
+		return portid;
+	}
+
+	public void setPortid(int portid)
+	{
+		this.portid = portid;
+	}
+	
 	private void addTab(String tabname)
 	{
-		int tabid = 1;
-		PresentationService.getMainWindowController().getTabPane().getTabs().add(tabid, new Tab(tabname));
-		portview(tabid);
+		PresentationService.getMainWindowController().getTabPane().getTabs().add(getTabid(), new Tab(tabname));
+		portview(getTabid());
 		PresentationService.getMainWindowController().getStage().close();
+		
+		setTabid(getTabid() + 1);
 	}
 	
 	private void portview(int id)
@@ -207,7 +231,6 @@ public class AddTabController
 		TilePane portview = new TilePane();
 		
 		int ports = 1;
-		int portid = 0;
 		
 		portview.setPadding(new Insets(5, 0, 5, 0));
 
