@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import com.sshtools.common.hosts.ConsoleHostKeyVerification;
 import com.sshtools.j2ssh.SshClient;
 import com.sshtools.j2ssh.authentication.AuthenticationProtocolState;
 import com.sshtools.j2ssh.authentication.PasswordAuthenticationClient;
@@ -75,7 +76,7 @@ public class SSHConnector extends TerminalConnector {
 	public void connect() {
 		SshClient ssh = new SshClient();
 		try {
-			ssh.connect(host, new ConsoleKnownHostsKeyVerification());
+			ssh.connect(host, new ConsoleHostKeyVerification());
 
 			PasswordAuthenticationClient pwd = new PasswordAuthenticationClient();
 
