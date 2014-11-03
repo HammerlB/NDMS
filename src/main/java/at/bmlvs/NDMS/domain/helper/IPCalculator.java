@@ -5,7 +5,10 @@ import java.net.UnknownHostException;
 
 public class IPCalculator {
 	
-	public static boolean isValidRange(InetAddress ipStart,InetAddress ipEnd){
-		
+	public static boolean isValidRange(String ipStart,String ipEnd){
+		boolean isValid = true;
+		String[] ip1 = ipStart.split(".");
+		String[] ip2 = ipEnd.split(".");
+		return false;
 	}
 }
