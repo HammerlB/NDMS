@@ -59,7 +59,7 @@ public class AddTabController
 	@FXML
 	private Label errorlabel;
 
-	private SSHConnector shc;
+//	private SSHConnector shc;
 	
 	@FXML
 	private void startconnection(ActionEvent event) throws IOException
@@ -80,8 +80,8 @@ public class AddTabController
 				
 				addTab(ServiceFactory.getDomainService().getInstances().getInstances().get(index).getInstanceTab());
 				
-				shc = new SSHConnector(tabname, "Herkel", "gwdH_2014", "", 1);
-				shc.connect();
+//				shc = new SSHConnector(tabname, "Herkel", "gwdH_2014");
+//				shc.connect();
 			}
 			else
 			{
@@ -266,14 +266,14 @@ public class AddTabController
 
 	}
 
-	public SSHConnector getShc()
-	{
-		return shc;
-	}
-
-	public void setShc(SSHConnector shc)
-	{
-		this.shc = shc;
-	}
+//	public SSHConnector getShc()
+//	{
+//		return shc;
+//	}
+//
+//	public void setShc(SSHConnector shc)
+//	{
+//		this.shc = shc;
+//	}
 
 }

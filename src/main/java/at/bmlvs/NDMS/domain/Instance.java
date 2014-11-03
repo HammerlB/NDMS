@@ -20,7 +20,7 @@ public class Instance
 	{
 		setUUID(UUIDGenerator.generateUUID());
 		setName(name);
-		setSshConnector(new SSHConnector());
+		setSshConnector(new SSHConnector("192.168.1.12", "Herkel", "gwdH_2014"));
 		setDevices(new ArrayList<Device>());
 		
 		setInstanceTab(new Tab());
