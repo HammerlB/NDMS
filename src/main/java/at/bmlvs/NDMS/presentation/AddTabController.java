@@ -196,7 +196,7 @@ public class AddTabController
 	
 	private void addTab(String tabname)
 	{
-		int tabid = 0;
+		int tabid = 1;
 		PresentationService.getMainWindowController().getTabPane().getTabs().add(tabid, new Tab(tabname));
 		portview(tabid);
 		PresentationService.getMainWindowController().getStage().close();
@@ -206,7 +206,7 @@ public class AddTabController
 	{
 		TilePane portview = new TilePane();
 		
-		int ports = 40;
+		int ports = 1;
 		int portid = 0;
 		
 		portview.setPadding(new Insets(5, 0, 5, 0));
