@@ -12,7 +12,7 @@
          <menus>
             <Menu mnemonicParsing="false" text="Datei">
               <items>
-                <MenuItem mnemonicParsing="false" text="Neu">
+                <MenuItem mnemonicParsing="false" text="Neu" onAction="#addnew">
                      <graphic>
                         <ImageView>
                            <image>

@@ -2,15 +2,19 @@ package at.bmlvs.NDMS.presentation;
 
 import java.io.IOException;
 
+import at.bmlvs.NDMS.domain.helper.UUIDGenerator;
 import at.bmlvs.NDMS.presentation.elements.RestrictiveTextField;
 import at.bmlvs.NDMS.service.PresentationService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.TilePane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class AddTabController
@@ -53,10 +57,11 @@ public class AddTabController
 	@FXML
 	private Label errorlabel;
 	
-	
 	@FXML
 	private void startconnection(ActionEvent event) throws IOException
 	{
+		
+		final String id = UUIDGenerator.generateUUID();
 		
     	if(rbaddress.isSelected())
     	{
@@ -65,6 +70,7 @@ public class AddTabController
     			tabname = ipaddress1.getText() + "." + ipaddress2.getText() + "." + ipaddress3.getText() + "." + ipaddress4.getText();
     			PresentationService.getMainWindowController().getTabPane().getTabs().add(new Tab(tabname));
     			PresentationService.getMainWindowController().getStage().close();
+    			
     		} else {
     			errorlabel.setText("Geben Sie alle Felder der IP-Addresse an!");
     		}
@@ -74,7 +80,7 @@ public class AddTabController
     		if((!iprange1.getText().equals("")) && (!iprange2.getText().equals("")) && (!iprange3.getText().equals("")) && (!iprange4.getText().equals("")) && (!iprange5.getText().equals("")) && (!iprange6.getText().equals("")) && (!iprange7.getText().equals("")) && (!iprange8.getText().equals("")))
     		{
     			tabname = iprange1.getText() + "." + iprange2.getText() + "." + iprange3.getText() + "." + iprange4.getText() + " - " + iprange5.getText() + "." + iprange6.getText() + "." + iprange7.getText() + "." + iprange8.getText();
-    			PresentationService.getMainWindowController().getTabPane().getTabs().add(new Tab(tabname));
+    			PresentationService.getMainWindowController().getTabPane().getTabs().add(1, new Tab(tabname));
     			PresentationService.getMainWindowController().getStage().close();
     			
     		} else {
@@ -89,11 +95,32 @@ public class AddTabController
     			PresentationService.getMainWindowController().getTabPane().getTabs().add(new Tab(tabname));
     			PresentationService.getMainWindowController().getStage().close();
     			
+    			TilePane portview = new TilePane();
+
+    			portview.setPadding(new Insets(5, 0, 5, 0));
+
+    			portview.setVgap(3);
+    			portview.setHgap(3);
+
+    			portview.setPrefColumns(2);
+
+    			for (int i = 0; i < 33; i++)
+    			{
+    				String[] days = { "", "", "1", "2", "3", "4", "5", "6", "7", "8",
+    						"9", "10", "11", "12", "13", "14", "15", "16", "17", "18",
+    						"19", "20", "21", "22", "23", "24", "25", "26", "27", "28",
+    						"29", "30", "31" };
+    				portview.getChildren().add(new Text(days[i]));
+
+    			}
+    			
+    			
     		} else {
     			errorlabel.setText("Geben Sie einen Namen an!");
     		}
     	}
-	    	
+    	PortViewController pv = new PortViewController();
+    	pv.buildview();
 	}
 
 	@FXML
