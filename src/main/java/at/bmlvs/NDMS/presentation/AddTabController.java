@@ -243,12 +243,17 @@ public class AddTabController
 
 		for (int i = 0; i < ports; i++)
 		{
-
-			portview.getChildren().add(portid, new Button("df"));
-			//portview.getChildren().add(portid, new Button("df"));
-
+			if((i == 8))
+			{
+				portview.getChildren().add(portid, new Button(""));
+				portview.getChildren().add(portid, new Button("df"));
+				
+			} else
+			{
+				portview.getChildren().add(portid, new Button("df"));
+			}
 		}
-
+		
 		// Add something in Tab
 		VBox tabbox = new VBox();
 		tabbox.getChildren().addAll(portview);
