@@ -2,6 +2,7 @@ package at.bmlvs.NDMS;
 
 import javax.swing.UIManager;
 
+import at.bmlvs.NDMS.domain.helper.UUIDGenerator;
 import at.bmlvs.NDMS.presentation.MainWindowController;
 import at.bmlvs.NDMS.service.PersistenceService;
 import at.bmlvs.NDMS.service.PresentationService;
@@ -26,6 +27,9 @@ public class Main extends Application
 		catch (Exception e)
 		{
 		}
+		
+		int test =  UUIDGenerator.generateIntegerUUID();
+		System.out.println(test);
 
 		ServiceFactory.setPersistenceService(new PersistenceService());
 		ServiceFactory.setAppConfig(ServiceFactory.getPersistenceService()

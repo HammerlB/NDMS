@@ -24,7 +24,7 @@ public class UUIDGenerator
 	public static int generateIntegerUUID()
 	{
 		Random rand = new Random();
-		int randomNum = rand.nextInt();
+		int randomNum = rand.nextInt(Integer.MAX_VALUE) + 1;
 		
 		return randomNum;
 	}
