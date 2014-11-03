@@ -20,6 +20,8 @@ import javafx.stage.Stage;
 public class AddTabController
 {
 	private String tabname = "";
+	private int tabcount = 0;
+	
 	@FXML
 	private ToggleGroup radiotoggle;
 	@FXML
@@ -57,6 +59,16 @@ public class AddTabController
 	@FXML
 	private Label errorlabel;
 	
+	public int getTabcount()
+	{
+		return tabcount;
+	}
+
+	public void setTabcount(int tabcount)
+	{
+		this.tabcount = tabcount;
+	}
+
 	@FXML
 	private void startconnection(ActionEvent event) throws IOException
 	{
@@ -214,4 +226,12 @@ public class AddTabController
 		ipaddress3.setText("");
 		ipaddress4.setText("");
 	}
+	
+	private void addTab(String tabname)
+	{
+		PresentationService.getMainWindowController().getTabPane().getTabs().add(getTabcount(), new Tab(tabname));
+		setTabcount(getTabcount() + 1);
+	}
+	
+	
 }
