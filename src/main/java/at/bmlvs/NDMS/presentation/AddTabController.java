@@ -236,18 +236,16 @@ public class AddTabController
 
 		portview.setPadding(new Insets(5, 0, 5, 0));
 
-		//portview.setVgap(10);
-		//portview.setHgap(0);
+		portview.setVgap(5);
+		portview.setHgap(0);
 		portview.setPrefRows(2);
 		portview.setMaxWidth(800);
 
 		for (int i = 0; i < ports; i++)
 		{
 
-			portview.setHgap(10);
 			portview.getChildren().add(portid, new Button("df"));
-			portview.setHgap(0);
-			portview.getChildren().add(portid, new Button("df"));
+			//portview.getChildren().add(portid, new Button("df"));
 
 		}
 
