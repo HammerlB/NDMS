@@ -27,9 +27,6 @@ public class Main extends Application
 		catch (Exception e)
 		{
 		}
-		
-		int test =  UUIDGenerator.generateIntegerUUID();
-		System.out.println(test);
 
 		ServiceFactory.setPersistenceService(new PersistenceService());
 		ServiceFactory.setAppConfig(ServiceFactory.getPersistenceService()
