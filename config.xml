@@ -4,8 +4,10 @@
   <NDMS__DEFAULT__PATH__TEMPLATE__DIRECTORY>C:\Dokumente und Einstellungen\Alex\workspacerino\NDMS\C:\Dokumente und Einstellungen\Alex\workspacerino\NDMS\templates</NDMS__DEFAULT__PATH__TEMPLATE__DIRECTORY>
   <NDMS__DEFAULT__PATH__CONFIG__DIRECTORY>C:\Dokumente und Einstellungen\Alex\workspacerino\NDMS\C:\Dokumente und Einstellungen\Alex\workspacerino\NDMS\C:\Dokumente und Einstellungen\Alex\workspacerino\NDMS\konfig</NDMS__DEFAULT__PATH__CONFIG__DIRECTORY>
   <NDMS__DEFAULT__PATH__BACKUP__DIRECTORY>C:\Dokumente und Einstellungen\Alex\workspacerino\NDMS\C:\Dokumente und Einstellungen\Alex\workspacerino\NDMS\backup</NDMS__DEFAULT__PATH__BACKUP__DIRECTORY>
+  <NDMS__DEFAULT__PATH__SNAPSHOT__DIRECTORY>snapshots</NDMS__DEFAULT__PATH__SNAPSHOT__DIRECTORY>
   <NDMS__DEFAULT__XML__FILE__EXTENSION>.xml</NDMS__DEFAULT__XML__FILE__EXTENSION>
   <NDMS__DEFAULT__TXT__FILE__EXTENSION>.txt</NDMS__DEFAULT__TXT__FILE__EXTENSION>
   <NDMS__DEFAULT__PATH__TEMPLATES/>
   <NDMS__DEFAULT__PATH__CONFIGS/>
+  <NDMS__DEFAULT__PATH__SNAPSHOTS/>
 </appconfig>

@@ -22,7 +22,6 @@ import javafx.stage.Stage;
 public class AddTabController
 {
 	private String tabname = "";
-	private int tabcount = 0;
 	
 	@FXML
 	private ToggleGroup radiotoggle;
@@ -61,16 +60,6 @@ public class AddTabController
 	@FXML
 	private Label errorlabel;
 	
-	public int getTabcount()
-	{
-		return tabcount;
-	}
-
-	public void setTabcount(int tabcount)
-	{
-		this.tabcount = tabcount;
-	}
-
 	@FXML
 	private void startconnection(ActionEvent event) throws IOException
 	{
@@ -207,9 +196,9 @@ public class AddTabController
 	
 	private void addTab(String tabname)
 	{
-		PresentationService.getMainWindowController().getTabPane().getTabs().add(getTabcount(), new Tab(tabname));
-		portview(getTabcount());
-		setTabcount(getTabcount() + 1);
+		int tabid = 0;
+		PresentationService.getMainWindowController().getTabPane().getTabs().add(tabid, new Tab(tabname));
+		portview(tabid);
 		PresentationService.getMainWindowController().getStage().close();
 	}
 	
@@ -218,6 +207,7 @@ public class AddTabController
 		TilePane portview = new TilePane();
 		
 		int ports = 40;
+		int portid = 0;
 		
 		portview.setPadding(new Insets(5, 0, 5, 0));
 
@@ -225,12 +215,13 @@ public class AddTabController
 		portview.setHgap(50);
 
 		portview.setPrefColumns(2);
-
-		for (int i = 0; i < ports; i++)
+		portview.getChildren().add(portid,new Button("asdfasdf"));
+		
+		/*for (int i = 0; i < ports - 1; i++)
 		{
-			portview.getChildren().add();
+			portview.getChildren().add(portid,new Button("" + i));
 
-		}
+		}*/
 		
 	      //Add something in Tab
 	      VBox tabbox = new VBox();
