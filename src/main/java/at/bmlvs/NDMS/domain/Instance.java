@@ -2,20 +2,28 @@ package at.bmlvs.NDMS.domain;
 
 import java.util.ArrayList;
 
+import javafx.scene.control.Tab;
+import at.bmlvs.NDMS.domain.connectors.SSHConnector;
 import at.bmlvs.NDMS.domain.helper.UUIDGenerator;
-import at.bmlvs.NDMS.presentation.elements.InstanceTab;
 
 public class Instance
 {
 	private String UUID;
-	private InstanceTab instanceTab;
+	private String name;
+	
+	private SSHConnector sshConnector;
+	private Tab instanceTab;
 	
 	private ArrayList<Device> devices;
 
-	public Instance()
+	public Instance(String name)
 	{
 		setUUID(UUIDGenerator.generateUUID());
+		setName(name);
+		setSshConnector(new SSHConnector());
 		setDevices(new ArrayList<Device>());
+		
+		setInstanceTab(new Tab());
 	}
 
 	public String getUUID()
@@ -28,12 +36,32 @@ public class Instance
 		UUID = uUID;
 	}
 
-	public InstanceTab getInstanceTab()
+	public String getName()
+	{
+		return name;
+	}
+
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+
+	public SSHConnector getSshConnector()
+	{
+		return sshConnector;
+	}
+
+	public void setSshConnector(SSHConnector sshConnector)
+	{
+		this.sshConnector = sshConnector;
+	}
+
+	public Tab getInstanceTab()
 	{
 		return instanceTab;
 	}
 
-	public void setInstanceTab(InstanceTab instanceTab)
+	public void setInstanceTab(Tab instanceTab)
 	{
 		this.instanceTab = instanceTab;
 	}

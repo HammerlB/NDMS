@@ -2,6 +2,7 @@ package at.bmlvs.NDMS;
 
 import javax.swing.UIManager;
 
+import at.bmlvs.NDMS.domain.Instances;
 import at.bmlvs.NDMS.domain.helper.UUIDGenerator;
 import at.bmlvs.NDMS.presentation.MainWindowController;
 import at.bmlvs.NDMS.service.DomainService;
@@ -33,6 +34,7 @@ public class Main extends Application
 		ServiceFactory.setAppConfig(ServiceFactory.getPersistenceService()
 				.getAppconfig().getElement());
 		ServiceFactory.setDomainService(new DomainService());
+		ServiceFactory.getDomainService().setInstances(new Instances());;
 		ServiceFactory.setPresentationService(new PresentationService());
 		ServiceFactory.getPersistenceService().saveAppConfig();
 

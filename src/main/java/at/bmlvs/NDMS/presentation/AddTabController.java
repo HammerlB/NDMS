@@ -5,6 +5,7 @@ import java.io.IOException;
 import at.bmlvs.NDMS.domain.connectors.SSHConnector;
 import at.bmlvs.NDMS.presentation.elements.RestrictiveTextField;
 import at.bmlvs.NDMS.service.PresentationService;
+import at.bmlvs.NDMS.service.ServiceFactory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -74,7 +75,10 @@ public class AddTabController
 				tabname = ipaddress1.getText() + "." + ipaddress2.getText()
 						+ "." + ipaddress3.getText() + "."
 						+ ipaddress4.getText();
-				addTab(tabname);
+				
+				int index = ServiceFactory.getDomainService().getInstances().addSingleOnlineInstance(tabname);
+				
+				addTab(ServiceFactory.getDomainService().getInstances().getInstances().get(index).getInstanceTab());
 				
 				shc = new SSHConnector(tabname, "Herkel", "gwdH_2014", "", 1);
 				shc.connect();
@@ -100,8 +104,7 @@ public class AddTabController
 						+ iprange3.getText() + "." + iprange4.getText() + " - "
 						+ iprange5.getText() + "." + iprange6.getText() + "."
 						+ iprange7.getText() + "." + iprange8.getText();
-				addTab(tabname);
-
+				addTab(ServiceFactory.getDomainService().getInstances().getInstances().get(ServiceFactory.getDomainService().getInstances().addMultipleOnlineInstances(tabname)).getInstanceTab());
 			}
 			else
 			{
@@ -113,8 +116,7 @@ public class AddTabController
 			if (!offline1.getText().equals(""))
 			{
 				tabname = offline1.getText();
-				addTab(tabname);
-
+				addTab(ServiceFactory.getDomainService().getInstances().getInstances().get(ServiceFactory.getDomainService().getInstances().addSingleOfflineInstance(tabname)).getInstanceTab());
 			}
 			else
 			{
@@ -216,12 +218,10 @@ public class AddTabController
 		ipaddress4.setText("");
 	}
 
-	private void addTab(String tabname)
+	private void addTab(Tab tab)
 	{
-		int tabid = 0;
 		PresentationService.getMainWindowController().getTabPane().getTabs()
-				.add(tabid, new Tab(tabname));
-		portview(tabid);
+				.add(tab);
 		PresentationService.getMainWindowController().getStage().close();
 	}
 
