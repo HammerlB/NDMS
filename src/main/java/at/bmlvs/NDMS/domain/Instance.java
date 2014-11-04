@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javafx.scene.control.Tab;
 import at.bmlvs.NDMS.domain.connectors.SSHConnector;
 import at.bmlvs.NDMS.domain.helper.UUIDGenerator;
+import at.bmlvs.NDMS.service.ServiceFactory;
 
 public class Instance
 {
