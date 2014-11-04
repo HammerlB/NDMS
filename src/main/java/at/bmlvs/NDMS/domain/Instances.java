@@ -2,8 +2,6 @@ package at.bmlvs.NDMS.domain;
 
 import java.util.ArrayList;
 
-import at.bmlvs.NDMS.domain.connectors.SSHConnector;
-
 public class Instances
 {
 	private ArrayList<Instance> instances;
@@ -25,17 +23,18 @@ public class Instances
 	
 	public int addSingleOfflineInstance(String name)
 	{
+		/*
 		Instance instance = new Instance(name);
 		instance.setSshConnector(null);
-		
-		instance.getDevices().add(new Device(name, null));
 		getInstances().add(instance);
+		*/
 		
 		return 0;
 	}
 	
 	public int addSingleOnlineInstance(String name)
 	{
+		/*
 		Instance instance = new Instance(name);
 		instance.getSshConnector().connect();
 		
@@ -45,6 +44,9 @@ public class Instances
 		getInstances().add(instance);
 		
 		return getInstances().indexOf(instance);
+		*/
+		
+		return 0;
 	}
 	
 	public int addMultipleOnlineInstances(String name)

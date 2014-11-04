@@ -2,7 +2,7 @@ package at.bmlvs.NDMS.domain;
 
 import javafx.scene.control.Button;
 
-public class Interface
+public class Interface extends Button
 {
 	private String portid;
 	private String portidshort;
@@ -14,8 +14,6 @@ public class Interface
 	private boolean cdpneighbor;
 	private boolean port_8021X;
 	private int vlan;
-	
-	private Button interfaceButton;
 	
 	public Interface(String portid)
 	{
@@ -122,16 +120,6 @@ public class Interface
 		this.vlan = vlan;
 	}
 	
-	public Button getInterfaceButton()
-	{
-		return interfaceButton;
-	}
-
-	public void setInterfaceButton(Button interfaceButton)
-	{
-		this.interfaceButton = interfaceButton;
-	}
-
 	public void setAll(String portidshort, String portname, String type, 
 			boolean portstatus, boolean trunkstatus, boolean cdpstatus, 
 			boolean cdpneighbor, boolean port_8021X, int vlan)

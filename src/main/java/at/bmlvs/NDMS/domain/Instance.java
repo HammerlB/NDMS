@@ -5,26 +5,27 @@ import java.util.ArrayList;
 import javafx.scene.control.Tab;
 import at.bmlvs.NDMS.domain.connectors.SSHConnector;
 import at.bmlvs.NDMS.domain.helper.UUIDGenerator;
-import at.bmlvs.NDMS.service.ServiceFactory;
 
-public class Instance
+public class Instance extends Tab
 {
 	private String UUID;
 	private String name;
+	private String fingerprint;
+	private String management_ip;
 	
 	private SSHConnector sshConnector;
-	private Tab instanceTab;
 	
-	private ArrayList<Device> devices;
-
-	public Instance(String name)
+	private ArrayList<Interface> interfaces;
+	
+	public Instance(String name, String fingerprint, String management_ip, SSHConnector sshConnector)
 	{
 		setUUID(UUIDGenerator.generateUUID());
 		setName(name);
-		setSshConnector(new SSHConnector("192.168.1.12", "Herkel", "gwdH_2014"));
-		setDevices(new ArrayList<Device>());
+		setFingerprint(fingerprint);
+		setManagement_ip(management_ip);
+		setSshConnector(sshConnector);
 		
-		setInstanceTab(new Tab());
+		setInterfaces(new ArrayList<Interface>());
 	}
 
 	public String getUUID()
@@ -47,6 +48,36 @@ public class Instance
 		this.name = name;
 	}
 
+	public String getFingerprint()
+	{
+		return fingerprint;
+	}
+
+	public void setFingerprint(String fingerprint)
+	{
+		this.fingerprint = fingerprint;
+	}
+
+	public String getManagement_ip()
+	{
+		return management_ip;
+	}
+
+	public void setManagement_ip(String management_ip)
+	{
+		this.management_ip = management_ip;
+	}
+
+	public ArrayList<Interface> getInterfaces()
+	{
+		return interfaces;
+	}
+
+	public void setInterfaces(ArrayList<Interface> interfaces)
+	{
+		this.interfaces = interfaces;
+	}
+
 	public SSHConnector getSshConnector()
 	{
 		return sshConnector;
@@ -55,37 +86,5 @@ public class Instance
 	public void setSshConnector(SSHConnector sshConnector)
 	{
 		this.sshConnector = sshConnector;
-	}
-
-	public Tab getInstanceTab()
-	{
-		return instanceTab;
-	}
-
-	public void setInstanceTab(Tab instanceTab)
-	{
-		this.instanceTab = instanceTab;
-	}
-
-	public ArrayList<Device> getDevices()
-	{
-		return devices;
-	}
-
-	public void setDevices(ArrayList<Device> devices)
-	{
-		this.devices = devices;
-	}
-
-	@SuppressWarnings("unused")
-	public void checkInterfacesOfDevices()
-	{
-		for(Device device: getDevices())
-		{
-			for(Interface interf: device.getInterfaces())
-			{
-				
-			}
-		}
 	}
 }

@@ -78,7 +78,9 @@ public class AddTabController
 				
 				int index = ServiceFactory.getDomainService().getInstances().addSingleOnlineInstance(tabname);
 				
-				addTab(ServiceFactory.getDomainService().getInstances().getInstances().get(index).getInstanceTab());
+				ServiceFactory.getDomainService().getInstances().addSingleOnlineInstance("");    //HIER SO BENUTZEN MIT ALEX WEGEN METHODE REDEN!!!
+				
+//				addTab(ServiceFactory.getDomainService().getInstances().getInstances().get(index).getInstanceTab());
 				
 //				shc = new SSHConnector(tabname, "Herkel", "gwdH_2014");
 //				shc.connect();
@@ -104,7 +106,7 @@ public class AddTabController
 						+ iprange3.getText() + "." + iprange4.getText() + " - "
 						+ iprange5.getText() + "." + iprange6.getText() + "."
 						+ iprange7.getText() + "." + iprange8.getText();
-				addTab(ServiceFactory.getDomainService().getInstances().getInstances().get(ServiceFactory.getDomainService().getInstances().addMultipleOnlineInstances(tabname)).getInstanceTab());
+//				addTab(ServiceFactory.getDomainService().getInstances().getInstances().get(ServiceFactory.getDomainService().getInstances().addMultipleOnlineInstances(tabname)).getInstanceTab());
 			}
 			else
 			{
@@ -116,7 +118,7 @@ public class AddTabController
 			if (!offline1.getText().equals(""))
 			{
 				tabname = offline1.getText();
-				addTab(ServiceFactory.getDomainService().getInstances().getInstances().get(ServiceFactory.getDomainService().getInstances().addSingleOfflineInstance(tabname)).getInstanceTab());
+//				addTab(ServiceFactory.getDomainService().getInstances().getInstances().get(ServiceFactory.getDomainService().getInstances().addSingleOfflineInstance(tabname)).getInstanceTab());
 			}
 			else
 			{
