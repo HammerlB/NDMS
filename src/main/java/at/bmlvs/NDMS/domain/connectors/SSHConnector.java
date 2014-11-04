@@ -8,6 +8,7 @@ import com.sshtools.j2ssh.SshClient;
 import com.sshtools.j2ssh.authentication.AuthenticationProtocolState;
 import com.sshtools.j2ssh.authentication.PasswordAuthenticationClient;
 import com.sshtools.j2ssh.session.SessionChannelClient;
+import com.sshtools.j2ssh.transport.ConsoleKnownHostsKeyVerification;
 import com.sshtools.j2ssh.transport.IgnoreHostKeyVerification;
 
 /**
@@ -23,6 +24,7 @@ public class SSHConnector extends TerminalConnector {
 	private String host;
 	private String user;
 	private String pass;
+	private String fingerprint;
 	private InputStream in;
 	private OutputStream out;
 
@@ -49,8 +51,12 @@ public class SSHConnector extends TerminalConnector {
 		this.pass = pass;
 	}
 
-	public String getSshFingerprint() {
-		return ssh.getServerHostKey().getFingerprint();
+	public String getSSHFingerprint() {
+		return fingerprint;
+	}
+	
+	public void setSSHFingerprint(String fingerprint) {
+		this.fingerprint=fingerprint;
 	}
 
 	public void sendCmd(String cmd) {
@@ -71,12 +77,12 @@ public class SSHConnector extends TerminalConnector {
 	public void connect() {
 		SshClient ssh = new SshClient();
 		try {
-			ssh.connect(host, new IgnoreHostKeyVerification());
+			ssh.connect(host, new ConsoleKnownHostsKeyVerification());
 			PasswordAuthenticationClient pwd = new PasswordAuthenticationClient();
 
 			pwd.setUsername(user);
 			pwd.setPassword(pass);
-
+			setSSHFingerprint(ssh.getServerHostKey().getFingerprint());
 			int result = ssh.authenticate(pwd);
 
 			if (result == AuthenticationProtocolState.FAILED)
