@@ -166,7 +166,7 @@ public class SNMPConnector
 						{
 							String val = "" + varBinding.getOid();
 							String[] parts = val.split("\\.");
-							toreturn.add(parts[parts.length-1] + " : " + varBinding.getVariable());
+							toreturn.add(parts[parts.length-1] + ":" + varBinding.getVariable());
 						}
 						else
 						{

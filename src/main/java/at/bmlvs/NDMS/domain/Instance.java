@@ -1,6 +1,5 @@
 package at.bmlvs.NDMS.domain;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import javafx.scene.control.Tab;
@@ -119,11 +118,34 @@ public class Instance extends Tab
 	{
 		try
 		{
-			getSnmpConnector().walk(".1.3.6.1.2.1.2.2.1.1", true, false);
+			for(String value: getSnmpConnector().walk(".1.3.6.1.2.1.2.2.1.1", false, true))
+			{
+				if(!value.contains("Null") && !value.equals("1"))
+				{
+					getInterfaces().add(new Interface(value));
+				}
+			}
+			
+			for(String value: getSnmpConnector().walk(".1.3.6.1.2.1.2.2.1.2", true, false))
+			{
+				for(Interface inter: getInterfaces())
+				{
+					if(value.equals(inter.getPortid()))
+					{
+						
+					}
+				}
+			}
+			
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
+		}
+		
+		for(Interface ifer: getInterfaces())
+		{
+			System.out.println(ifer.getPortid());
 		}
 	}
 	
