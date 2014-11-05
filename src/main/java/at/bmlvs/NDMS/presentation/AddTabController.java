@@ -8,6 +8,7 @@ import at.bmlvs.NDMS.presentation.elements.RestrictiveTextField;
 import at.bmlvs.NDMS.service.PresentationService;
 import at.bmlvs.NDMS.service.ServiceFactory;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -16,6 +17,8 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 
@@ -65,7 +68,6 @@ public class AddTabController
 	@FXML
 	private void startconnection(ActionEvent event) throws IOException
 	{
-
 		if (rbaddress.isSelected())
 		{
 			if ((!ipaddress1.getText().equals(""))
@@ -76,7 +78,6 @@ public class AddTabController
 				tabname = ipaddress1.getText() + "." + ipaddress2.getText()
 						+ "." + ipaddress3.getText() + "."
 						+ ipaddress4.getText();
-
 
 				try
 				{
@@ -92,9 +93,10 @@ public class AddTabController
 				}
 				catch (Exception e)
 				{
-					errorlabel.setText("Verbindung war nicht erfolgreich!");
+					errorlabel.setText("Verbindung war nicht erfolgreich! \n("
+							+ e.getMessage() + ")");
 				}
-				
+
 			}
 			else
 			{
@@ -128,6 +130,7 @@ public class AddTabController
 			if (!offline1.getText().equals(""))
 			{
 				tabname = offline1.getText();
+				addTab(new Tab(tabname));
 			}
 			else
 			{
@@ -170,11 +173,33 @@ public class AddTabController
 
 		offline1.setDisable(false);
 
+		offline1.setOnKeyPressed(new EventHandler<KeyEvent>()
+		{
+			@Override
+			public void handle(KeyEvent ke)
+			{
+				if (ke.getCode().equals(KeyCode.ENTER))
+				{
+					try
+					{
+						startconnection(event);
+					}
+					catch (IOException e)
+					{
+					}
+				}
+			}
+		});
+
 	}
 
 	@FXML
 	private void iptoggle(ActionEvent event) throws IOException
 	{
+		dotListener(ipaddress1, ipaddress2);
+		dotListener(ipaddress2, ipaddress3);
+		dotListener(ipaddress3, ipaddress4);
+
 		iprange1.setDisable(true);
 		iprange2.setDisable(true);
 		iprange3.setDisable(true);
@@ -201,11 +226,37 @@ public class AddTabController
 		ipaddress3.setDisable(false);
 		ipaddress4.setDisable(false);
 
+		ipaddress4.setOnKeyPressed(new EventHandler<KeyEvent>()
+		{
+			@Override
+			public void handle(KeyEvent ke)
+			{
+				if (ke.getCode().equals(KeyCode.ENTER))
+				{
+					try
+					{
+						startconnection(event);
+					}
+					catch (IOException e)
+					{
+					}
+				}
+			}
+		});
+
 	}
 
 	@FXML
 	private void rangetoggle(ActionEvent event) throws IOException
 	{
+		dotListener(iprange1, iprange2);
+		dotListener(iprange2, iprange3);
+		dotListener(iprange3, iprange4);
+
+		dotListener(iprange5, iprange6);
+		dotListener(iprange6, iprange7);
+		dotListener(iprange7, iprange8);
+
 		iprange1.setDisable(false);
 		iprange2.setDisable(false);
 		iprange3.setDisable(false);
@@ -227,6 +278,24 @@ public class AddTabController
 		ipaddress2.setText("");
 		ipaddress3.setText("");
 		ipaddress4.setText("");
+
+		iprange8.setOnKeyPressed(new EventHandler<KeyEvent>()
+		{
+			@Override
+			public void handle(KeyEvent ke)
+			{
+				if (ke.getCode().equals(KeyCode.ENTER))
+				{
+					try
+					{
+						startconnection(event);
+					}
+					catch (IOException e)
+					{
+					}
+				}
+			}
+		});
 	}
 
 	private void addTab(Tab tab)
@@ -278,14 +347,19 @@ public class AddTabController
 
 	}
 
-	// public SSHConnector getShc()
-	// {
-	// return shc;
-	// }
-	//
-	// public void setShc(SSHConnector shc)
-	// {
-	// this.shc = shc;
-	// }
+	private void dotListener(TextField tf1, TextField tf2)
+	{
+		tf1.setOnKeyPressed(new EventHandler<KeyEvent>()
+		{
+			@Override
+			public void handle(KeyEvent ke)
+			{
+				if (ke.getCode().equals(KeyCode.PERIOD))
+				{
+					tf2.requestFocus();
+				}
+			}
+		});
+	}
 
 }

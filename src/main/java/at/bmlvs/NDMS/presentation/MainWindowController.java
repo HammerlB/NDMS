@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.swing.event.ChangeListener;
 
+import at.bmlvs.NDMS.service.PresentationService;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -30,7 +31,7 @@ public class MainWindowController extends VBox
 {
 	@FXML
 	private TabPane tabPane;
-
+	AddTabController togglord = new AddTabController();
 	private Stage stage;
 
 	public MainWindowController()
@@ -84,7 +85,6 @@ public class MainWindowController extends VBox
 		stage.initOwner(this.getScene().getWindow());
 		stage.setScene(scene);
 		stage.setResizable(false);
-
 		stage.show();
 	}
 }
