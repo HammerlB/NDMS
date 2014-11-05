@@ -41,6 +41,9 @@ public class MainWindowController extends VBox
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);
 
+		
+		
+		
 		try
 		{
 			fxmlLoader.load();

@@ -12,7 +12,7 @@
          <menus>
             <Menu mnemonicParsing="false" text="Datei">
               <items>
-                <MenuItem mnemonicParsing="false" text="Neu" onAction="#addnew">
+                <MenuItem mnemonicParsing="false" onAction="#addnew" text="Neu">
                      <graphic>
                         <ImageView>
                            <image>
@@ -173,15 +173,8 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button contentDisplay="CENTER" focusTraversable="false" mnemonicParsing="false">
-               <graphic>
-                  <ImageView>
-                     <image>
-                        <Image url="@../../../../../../../icons/vorlagen.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
+            <ComboBox id="TemplateBox" fx:id="TemplateBox" focusTraversable="false" >
+            </ComboBox>
             <Separator orientation="VERTICAL" prefHeight="20.0" />
             <Button contentDisplay="CENTER" focusTraversable="false" mnemonicParsing="false">
                <graphic>
@@ -203,7 +196,7 @@
             </Button>
         </items>
       </ToolBar>
-      <TabPane fx:id="tabPane" id="tabPane" focusTraversable="false" prefHeight="730.0" prefWidth="1280.0" tabClosingPolicy="ALL_TABS">
+      <TabPane id="tabPane" fx:id="tabPane" focusTraversable="false" prefHeight="730.0" prefWidth="1280.0" tabClosingPolicy="ALL_TABS">
       </TabPane>
   </children>
 </fx:root>

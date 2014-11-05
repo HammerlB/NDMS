@@ -1,14 +1,8 @@
 package at.bmlvs.NDMS.domain.connectors;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
 public class ThreadSSH extends Thread {
 
 	private SSHConnector ssh;
-	private InputStream in;
-	private OutputStream out;
 	private boolean isConnected;
 	private boolean somethingToSend;
 	private String cmdToSend;
@@ -29,7 +23,7 @@ public class ThreadSSH extends Thread {
 					ssh.connect();
 					setConnected(true);
 				} catch (Exception e) {
-					System.out.println("ThreadConnectionError: " + e.getMessage());
+					System.out.println("SSH: " + e.getMessage()+"\n"+"Reason: "+ e.getCause());
 				}
 			}
 			if (somethingToSend){
@@ -39,7 +33,7 @@ public class ThreadSSH extends Thread {
 				setSomethingToSend(false);
 			}
 		} catch (InterruptedException e) {
-			System.out.println("ThreadInterrupted: " + e.getMessage());
+			System.out.println("SSH: " + e.getMessage()+"\n"+"Reason: "+ e.getCause());
 		}
 	}
 
