@@ -18,33 +18,39 @@ public class ThreadSSH extends Thread {
 
 	@Override
 	public void run() {
-		if (!isConnected) {
-			try {
-				ssh.connect();
-				setConnected(true);
-			} catch (Exception e) {
-				System.out.println("SSH: " + e.getMessage() + "\n" + "Reason: "
-						+ e.getCause());
+		while (true) {
+			if (!isConnected) {
+				try {
+					ssh.connect();
+					setConnected(true);
+				} catch (Exception e) {
+					System.out.println("SSH: " + e.getMessage() + "\n"
+							+ "Reason: " + e.getCause());
+				}
 			}
-		}
-		if (somethingToSend) {
-			try {
-				sendCMD(cmdToSend);
-				t.start();
-				sleep(100);
-				setSomethingToSend(false);
-			} catch (Exception e) {
-				System.out.println("SSH: " + e.getMessage() + "\n" + "Reason: "
-						+ e.getCause());
+			if (somethingToSend) {
+				try {
+					sendCMD(cmdToSend);
+					t.start();
+					setSomethingToSend(false);
+				} catch (Exception e) {
+					System.out.println("SSH: " + e.getMessage() + "\n"
+							+ "Reason: " + e.getCause());
+				}
 			}
-		}
-		if (disconnect) {
-			t.stop();
+			if (disconnect) {
+				t.stop();
+				try {
+					ssh.disconnect();
+				} catch (Exception e) {
+					System.out.println("SSH: " + e.getMessage() + "\n"
+							+ "Reason: " + e.getCause());
+				}
+			}
 			try {
-				ssh.disconnect();
-			} catch (Exception e) {
-				System.out.println("SSH: " + e.getMessage() + "\n" + "Reason: "
-						+ e.getCause());
+				sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
 		}
 	}

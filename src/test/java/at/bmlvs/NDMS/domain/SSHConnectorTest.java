@@ -12,11 +12,11 @@ public class SSHConnectorTest {
 			e.printStackTrace();
 		}
 		
-		System.out.println(ssh.getSSHFingerprint());
-		ssh.sendCmd("enable\n"
-				+ "gwd_2014\n"
-				+ "conf t\n"
-				+ "hostname test123\n");
+//		System.out.println(ssh.getSSHFingerprint());
+//		ssh.sendCmd("enable\n"
+//				+ "gwd_2014\n"
+//				+ "conf t\n"
+//				+ "hostname test123\n");
 
 	}
 
