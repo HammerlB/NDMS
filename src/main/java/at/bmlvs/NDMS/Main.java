@@ -1,9 +1,14 @@
 package at.bmlvs.NDMS;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 
 import javax.swing.UIManager;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.snmp4j.smi.OID;
 
 import at.bmlvs.NDMS.domain.Instances;
@@ -23,6 +28,13 @@ public class Main extends Application
 	@SuppressWarnings("static-access")
 	public static void main(String[] args)
 	{
+		//KILL THE LOGGERS!!!
+		List<Logger> loggers = Collections.<Logger>list(LogManager.getCurrentLoggers());
+		loggers.add(LogManager.getRootLogger());
+		for ( Logger logger : loggers ) {
+		    logger.setLevel(Level.OFF);
+		}
+		
 		// Presentation
 		// TODO Auto-generated method stub
 		// Set the look and feel to users OS LaF.
