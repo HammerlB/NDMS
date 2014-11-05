@@ -16,7 +16,7 @@ import com.sshtools.j2ssh.transport.IgnoreHostKeyVerification;
  * @author GWDH
  *
  */
-public class SSHConnector extends TerminalConnector {
+public class SSHConnector extends TerminalConnector implements Runnable{
 	private String version;
 	private int port;
 	private SshClient ssh;
@@ -27,6 +27,8 @@ public class SSHConnector extends TerminalConnector {
 	private String fingerprint;
 	private InputStream in;
 	private OutputStream out;
+	private byte buffer[] = new byte[1024];
+	private int read = 0;
 
 	// public SSHConnector() {
 	// super();
@@ -62,11 +64,11 @@ public class SSHConnector extends TerminalConnector {
 	public void sendCmd(String cmd) {
 		try {
 			out.write(cmd.getBytes());
-			byte buffer[] = new byte[cmd.getBytes().length];
-			int read = 0;
-			for (int i = 0; i < 100; i++) {
-				read = in.read(buffer);
-			}
+//			byte buffer[] = new byte[cmd.getBytes().length];
+//			int read = 0;
+//			for (int i = 0; i < 100; i++) {
+//				read = in.read(buffer);
+//			}
 		} catch (IOException e) {
 			System.out.println("SendCMD: "+e.getMessage());
 		}
@@ -120,6 +122,15 @@ public class SSHConnector extends TerminalConnector {
 
 	public void setOut(OutputStream out) {
 		this.out = out;
+	}
+
+	@Override
+	public void run() {
+		try {
+			read = in.read(buffer);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	// @Override
