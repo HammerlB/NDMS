@@ -108,7 +108,6 @@ public class SSHConnector extends TerminalConnector implements Runnable {
 			// COMMANDS
 			out = session.getOutputStream();
 			in = session.getInputStream();
-			return true;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
