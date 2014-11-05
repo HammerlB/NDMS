@@ -60,12 +60,12 @@ public class AddTabController
 	@FXML
 	private Label errorlabel;
 
-//	private SSHConnector shc;
-	
+	// private SSHConnector shc;
+
 	@FXML
 	private void startconnection(ActionEvent event) throws IOException
 	{
-		
+
 		if (rbaddress.isSelected())
 		{
 			if ((!ipaddress1.getText().equals(""))
@@ -76,22 +76,25 @@ public class AddTabController
 				tabname = ipaddress1.getText() + "." + ipaddress2.getText()
 						+ "." + ipaddress3.getText() + "."
 						+ ipaddress4.getText();
-				
-				//ALEX MACHEN!!!
-				SSHConnector sshc = new SSHConnector(tabname, "Herkel", "gwdH_2014");
-				
-				try{
+
+
+				try
+				{
+					SSHConnector sshc = new SSHConnector(tabname, "Herkel",
+							"gwdH_2014");
 					sshc.connect();
-					Instance inst = new Instance(tabname, sshc.getSSHFingerprint(), tabname, sshc);
-					ServiceFactory.getDomainService().getInstances().addSingleOnlineInstance(inst);
+					Instance inst = new Instance(tabname,
+							sshc.getSSHFingerprint(), tabname, sshc);
+					ServiceFactory.getDomainService().getInstances()
+							.addSingleOnlineInstance(inst);
 					addTab(inst);
-					
-				} catch(Exception e)
+
+				}
+				catch (Exception e)
 				{
 					errorlabel.setText("Verbindung war nicht erfolgreich!");
 				}
 				
-
 			}
 			else
 			{
@@ -239,27 +242,28 @@ public class AddTabController
 
 		int ports = 42;
 		int portid = 0;
-		
+
 		portview.setPadding(new Insets(5, 0, 5, 0));
-		
+
 		portview.setVgap(5);
 		portview.setHgap(0);
 		portview.setPrefRows(2);
 		portview.setMaxWidth(800);
-		
+
 		for (int i = 0; i < ports; i++)
 		{
-			if((i == 8))
+			if ((i == 8))
 			{
 				portview.getChildren().add(portid, new Button(""));
 				portview.getChildren().add(portid, new Button("df"));
-				
-			} else
+
+			}
+			else
 			{
 				portview.getChildren().add(portid, new Button("df"));
 			}
 		}
-		
+
 		// Add something in Tab
 		VBox tabbox = new VBox();
 		tabbox.getChildren().addAll(portview);
@@ -271,17 +275,17 @@ public class AddTabController
 				.getTabs()
 				.add(PresentationService.getMainWindowController().getTabPane()
 						.getTabs().get(id));
-		
+
 	}
 
-//	public SSHConnector getShc()
-//	{
-//		return shc;
-//	}
-//
-//	public void setShc(SSHConnector shc)
-//	{
-//		this.shc = shc;
-//	}
+	// public SSHConnector getShc()
+	// {
+	// return shc;
+	// }
+	//
+	// public void setShc(SSHConnector shc)
+	// {
+	// this.shc = shc;
+	// }
 
 }

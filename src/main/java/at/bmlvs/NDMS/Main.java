@@ -49,7 +49,7 @@ public class Main extends Application
 	public void start(Stage stage) throws Exception
 	{
 		stage.setScene(new Scene(ServiceFactory.getPresentationService().getMainWindowController()));
-		stage.setTitle("NDSM");
+		stage.setTitle("NDMS");
 		stage.getIcons().add(new Image("file:icons/ndms.png"));
 		stage.setWidth(800);
 		stage.setHeight(700);
