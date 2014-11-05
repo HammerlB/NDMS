@@ -1,4 +1,4 @@
-package at.bmlvs.NDMS.domain.connectors.testers;
+package at.bmlvs.NDMS.domain;
 
 //import java.io.InputStream;
 //import java.io.OutputStream;
@@ -12,7 +12,7 @@ import com.sshtools.j2ssh.authentication.PasswordAuthenticationClient;
 import com.sshtools.j2ssh.session.SessionChannelClient;
 import com.sshtools.j2ssh.transport.ConsoleKnownHostsKeyVerification;
 
-public class SshExample {
+public class ExampleWithSSHTools {
 	// private static BufferedReader reader = new BufferedReader(
 	// new InputStreamReader(System.in))
 

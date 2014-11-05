@@ -1,12 +1,16 @@
-package at.bmlvs.NDMS.domain.connectors.testers;
+package at.bmlvs.NDMS.domain;
 
 import at.bmlvs.NDMS.domain.connectors.SSHConnector;
 
-public class SSHTest {
+public class SSHConnectorTest {
 
 	public static void main(String[] args) {
 		SSHConnector ssh = new SSHConnector("192.168.1.12", "Herkel", "gwdH_2014");
-		ssh.connect();
+		try {
+			ssh.connect();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		System.out.println(ssh.getSSHFingerprint());
 //		ssh.sendCmd("enable\n"
