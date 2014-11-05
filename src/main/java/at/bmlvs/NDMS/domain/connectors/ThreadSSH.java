@@ -7,6 +7,7 @@ public class ThreadSSH extends Thread {
 	private boolean somethingToSend;
 	private String cmdToSend;
 	private Thread t;
+	private boolean disconnect;
 
 	public ThreadSSH(String host, String user, String pass) {
 		ssh = new SSHConnector(host, user, pass);
@@ -17,39 +18,50 @@ public class ThreadSSH extends Thread {
 
 	@Override
 	public void run() {
-		try {
-			if (!isConnected) {
-				try {
-					ssh.connect();
-					setConnected(true);
-				} catch (Exception e) {
-					System.out.println("SSH: " + e.getMessage()+"\n"+"Reason: "+ e.getCause());
-				}
+		if (!isConnected) {
+			try {
+				ssh.connect();
+				setConnected(true);
+			} catch (Exception e) {
+				System.out.println("SSH: " + e.getMessage() + "\n" + "Reason: "
+						+ e.getCause());
 			}
-			if (somethingToSend){
+		}
+		if (somethingToSend) {
+			try {
 				sendCMD(cmdToSend);
 				t.start();
 				sleep(100);
 				setSomethingToSend(false);
+			} catch (Exception e) {
+				System.out.println("SSH: " + e.getMessage() + "\n" + "Reason: "
+						+ e.getCause());
 			}
-		} catch (InterruptedException e) {
-			System.out.println("SSH: " + e.getMessage()+"\n"+"Reason: "+ e.getCause());
+		}
+		if (disconnect) {
+			t.stop();
+			try {
+				ssh.disconnect();
+			} catch (Exception e) {
+				System.out.println("SSH: " + e.getMessage() + "\n" + "Reason: "
+						+ e.getCause());
+			}
 		}
 	}
 
-	public void sendCMD(String cmd) {
+	private void sendCMD(String cmd) {
 		ssh.sendCmd(cmd);
-//		try {
-//			out.write(cmd.getBytes());
-//
-//			byte[] buffer = new byte[cmd.getBytes().length];
-//			int read = 0;
-//			for (int i = 0; i < 100; i++) {
-//				read = in.read(buffer);
-//			}
-//		} catch (IOException e) {
-//			System.out.println("sendCMD: " + e.getMessage());
-//		}
+		// try {
+		// out.write(cmd.getBytes());
+		//
+		// byte[] buffer = new byte[cmd.getBytes().length];
+		// int read = 0;
+		// for (int i = 0; i < 100; i++) {
+		// read = in.read(buffer);
+		// }
+		// } catch (IOException e) {
+		// System.out.println("sendCMD: " + e.getMessage());
+		// }
 	}
 
 	public String getFingerprint() {
@@ -78,5 +90,14 @@ public class ThreadSSH extends Thread {
 
 	public void setCmdToSend(String cmdToSend) {
 		this.cmdToSend = cmdToSend;
+	}
+
+	public void doSendCMD(String cmd) {
+		this.somethingToSend = true;
+		this.cmdToSend = cmd;
+	}
+
+	public void doDisconnect() {
+		this.disconnect = true;
 	}
 }

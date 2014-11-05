@@ -1,75 +1,131 @@
 package at.bmlvs.NDMS.domain.connectors;
 
-public class ThreadSNMP extends Thread{
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.snmp4j.PDU;
+import org.snmp4j.event.ResponseEvent;
+import org.snmp4j.event.ResponseListener;
+import org.snmp4j.smi.OID;
+
+public class ThreadSNMP extends Thread {
 
 	private SNMPConnector snmp;
-	private boolean isConnected;
-	private boolean somethingToSend;
-	private String cmdToSend;
+	private String host, communityString, oids;
+	private boolean isCreated;
+	private boolean disconnect;
+	private boolean somethingToWalk;
+	private boolean showonlylastoidoctet, showonlyvalue;
 
 	public ThreadSNMP(String host, String communityString) {
-		snmp = new SNMPConnector(host, communityString);
-		isConnected = false;
-		somethingToSend = false;
+		this.host = host;
+		this.communityString = communityString;
+		this.isCreated = false;
+		this.disconnect = false;
 	}
 
 	public void run() {
 		try {
-			if (!isConnected) {
+			if (!isCreated) {
 				try {
-					snmp.connect();
-					setConnected(true);
+					snmp = new SNMPConnector(host, communityString);
+					setCreated(true);
 				} catch (Exception e) {
-					System.out.println("SNMP: " + e.getMessage()+"\n"+"Reason: "+ e.getCause());
+					System.out.println("SNMP: " + e.getMessage() + "\n"
+							+ "Reason: " + e.getCause());
 				}
 			}
-//			if (somethingToSend){
-//				sendCMD(cmdToSend);
-//				sleep(100);
-//				setSomethingToSend(false);
-//			}
-			
+
+			if (somethingToWalk) {
+				try {
+					walk(oids, showonlylastoidoctet, showonlyvalue);
+				} catch (IOException e) {
+					System.out.println("SNMP: " + e.getMessage() + "\n"
+							+ "Reason: " + e.getCause());
+				} finally {
+					somethingToWalk = false;
+				}
+			}
+
+			if (disconnect) {
+				try {
+					snmp.disconnect();
+				} catch (Exception e) {
+					System.out.println("SNMP: " + e.getMessage() + "\n"
+							+ "Reason: " + e.getCause());
+				}
+			}
+			sleep(100);
+
 		} catch (InterruptedException e) {
-			System.out.println("SNMP: " + e.getMessage()+"\n"+"Reason: "+ e.getCause());
+			System.out.println("SNMP: " + e.getMessage() + "\n" + "Reason: "
+					+ e.getCause());
 		}
 	}
 
-	public void sendCMD(String cmd) {
-		snmp.sendCmd(cmd);
-//		try {
-//			out.write(cmd.getBytes());
-//
-//			byte[] buffer = new byte[cmd.getBytes().length];
-//			int read = 0;
-//			for (int i = 0; i < 100; i++) {
-//				read = in.read(buffer);
-//			}
-//		} catch (IOException e) {
-//			System.out.println("sendCMD: " + e.getMessage());
-//		}
+	public String getHost() {
+		return host;
 	}
 
-	public boolean isConnected() {
-		return isConnected;
+	public void setHost(String host) {
+		this.host = host;
 	}
 
-	public void setConnected(boolean isConnected) {
-		this.isConnected = isConnected;
+	public String getCommunityString() {
+		return communityString;
 	}
 
-	public boolean isSomethingToSend() {
-		return somethingToSend;
+	public void setCommunityString(String communityString) {
+		this.communityString = communityString;
 	}
 
-	public void setSomethingToSend(boolean somethingToSend) {
-		this.somethingToSend = somethingToSend;
+	public boolean isDisconnect() {
+		return disconnect;
 	}
 
-	public String getCmdToSend() {
-		return cmdToSend;
+	public void setDisconnect(boolean disconnect) {
+		this.disconnect = disconnect;
 	}
 
-	public void setCmdToSend(String cmdToSend) {
-		this.cmdToSend = cmdToSend;
+	public boolean isCreated() {
+		return isCreated;
+	}
+
+	public void setCreated(boolean isCreated) {
+		this.isCreated = isCreated;
+	}
+
+	public String getAsString(OID oid) throws IOException {
+		return snmp.getAsString(oid);
+	}
+
+	public void getAsString(OID oids, ResponseListener listener) {
+		snmp.getAsString(oids, listener);
+	}
+
+	private ArrayList<String> walk(String oids, boolean showonlylastoidoctet,
+			boolean showonlyvalue) throws IOException {
+		return snmp.walk(oids, showonlylastoidoctet, showonlyvalue);
+	}
+
+	public ResponseEvent get(OID oids[]) throws IOException {
+		return snmp.get(oids);
+	}
+
+	public List<List<String>> getTableAsStrings(OID[] oids) {
+		return snmp.getTableAsStrings(oids);
+	}
+
+	public String extractSingleString(ResponseEvent event) {
+		return snmp.extractSingleString(event);
+	}
+
+	public void doWalk(String oids, boolean showonlylastoidoctet,
+			boolean showonlyvalue) {
+		this.somethingToWalk = true;
+		this.oids = oids;
+		this.showonlylastoidoctet = showonlylastoidoctet;
+		this.showonlyvalue = showonlyvalue;
 	}
 }

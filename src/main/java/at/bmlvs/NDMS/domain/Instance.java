@@ -132,4 +132,17 @@ public class Instance extends Tab
 		populateInstance();
 		populateInterfaces();
 	}
+	
+//	public void checkInterfaces()
+//	{
+//		Thread t = new Thread()
+//		{
+//		     public void run()
+//		     {
+//		        // put whatever code you want to run inside the thread here.
+//		     }
+//		};
+//		
+//		t.start();
+//	}
 }
