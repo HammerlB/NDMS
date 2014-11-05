@@ -12,13 +12,13 @@ public class ThreadSSH extends Thread {
 	private boolean isConnected;
 	private boolean somethingToSend;
 	private String cmdToSend;
+	private Thread t;
 
 	public ThreadSSH(String host, String user, String pass) {
 		ssh = new SSHConnector(host, user, pass);
 		isConnected = false;
 		somethingToSend = false;
-//		in = ssh.getIn();
-//		out = ssh.getOut();
+		t = new Thread(ssh);
 	}
 
 	@Override
@@ -28,14 +28,13 @@ public class ThreadSSH extends Thread {
 				try {
 					ssh.connect();
 					setConnected(true);
-					in = ssh.getIn();
-					out = ssh.getOut();
 				} catch (Exception e) {
 					System.out.println("ThreadConnectionError: " + e.getMessage());
 				}
 			}
 			if (somethingToSend){
 				sendCMD(cmdToSend);
+				t.start();
 				sleep(100);
 				setSomethingToSend(false);
 			}

@@ -8,7 +8,7 @@ public class ThreadSSHTest {
 		ThreadSSH ssh = new ThreadSSH("192.168.1.12","Herkel","gwdH_2014");
 		ssh.start();
 		ssh.setCmdToSend("enable\n" + "gwd_2014\n" + "conf t\n"
-					+ "hostname test\n");
+					+ "hostname SW1\n");
 		ssh.setSomethingToSend(true);
 	}
 
