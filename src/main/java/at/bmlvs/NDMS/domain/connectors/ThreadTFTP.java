@@ -6,7 +6,6 @@ public class ThreadTFTP extends Thread{
 		
 	}
 
-	@Override
 	public void run() {
 		
 	}

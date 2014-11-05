@@ -3,6 +3,7 @@ package at.bmlvs.NDMS.presentation;
 import java.io.IOException;
 
 import at.bmlvs.NDMS.domain.Instance;
+import at.bmlvs.NDMS.domain.connectors.SNMPConnector;
 import at.bmlvs.NDMS.domain.connectors.SSHConnector;
 import at.bmlvs.NDMS.presentation.elements.RestrictiveTextField;
 import at.bmlvs.NDMS.service.PresentationService;
@@ -65,6 +66,7 @@ public class AddTabController
 
 	// private SSHConnector shc;
 
+	@SuppressWarnings("static-access")
 	@FXML
 	private void startconnection(ActionEvent event) throws IOException
 	{
@@ -84,8 +86,11 @@ public class AddTabController
 					SSHConnector sshc = new SSHConnector(tabname, "Herkel",
 							"gwdH_2014");
 					sshc.connect();
+					SNMPConnector snmpc = new SNMPConnector("udp:" + tabname + "/161", "gwdSNMP_2014");
 					Instance inst = new Instance(tabname,
-							sshc.getSSHFingerprint(), tabname, sshc);
+							sshc.getSSHFingerprint(), tabname, sshc, snmpc);
+					inst.populateInstance();
+					inst.populateInterfaces();
 					ServiceFactory.getDomainService().getInstances()
 							.addSingleOnlineInstance(inst);
 					addTab(inst);
@@ -141,7 +146,7 @@ public class AddTabController
 	}
 
 	@FXML
-	private void offtoggle(ActionEvent event) throws IOException
+	private void offtoggle(final ActionEvent event) throws IOException
 	{
 		iprange1.setDisable(true);
 		iprange2.setDisable(true);
@@ -175,7 +180,6 @@ public class AddTabController
 
 		offline1.setOnKeyPressed(new EventHandler<KeyEvent>()
 		{
-			@Override
 			public void handle(KeyEvent ke)
 			{
 				if (ke.getCode().equals(KeyCode.ENTER))
@@ -194,7 +198,7 @@ public class AddTabController
 	}
 
 	@FXML
-	private void iptoggle(ActionEvent event) throws IOException
+	private void iptoggle(final ActionEvent event) throws IOException
 	{
 		dotListener(ipaddress1, ipaddress2);
 		dotListener(ipaddress2, ipaddress3);
@@ -228,7 +232,6 @@ public class AddTabController
 
 		ipaddress4.setOnKeyPressed(new EventHandler<KeyEvent>()
 		{
-			@Override
 			public void handle(KeyEvent ke)
 			{
 				if (ke.getCode().equals(KeyCode.ENTER))
@@ -247,7 +250,7 @@ public class AddTabController
 	}
 
 	@FXML
-	private void rangetoggle(ActionEvent event) throws IOException
+	private void rangetoggle(final ActionEvent event) throws IOException
 	{
 		dotListener(iprange1, iprange2);
 		dotListener(iprange2, iprange3);
@@ -281,7 +284,6 @@ public class AddTabController
 
 		iprange8.setOnKeyPressed(new EventHandler<KeyEvent>()
 		{
-			@Override
 			public void handle(KeyEvent ke)
 			{
 				if (ke.getCode().equals(KeyCode.ENTER))
@@ -305,6 +307,7 @@ public class AddTabController
 		PresentationService.getMainWindowController().getStage().close();
 	}
 
+	@SuppressWarnings("unused")
 	private void portview(int id)
 	{
 		TilePane portview = new TilePane();
@@ -347,11 +350,10 @@ public class AddTabController
 
 	}
 
-	private void dotListener(TextField tf1, TextField tf2)
+	private void dotListener(TextField tf1, final TextField tf2)
 	{
 		tf1.setOnKeyPressed(new EventHandler<KeyEvent>()
 		{
-			@Override
 			public void handle(KeyEvent ke)
 			{
 				if (ke.getCode().equals(KeyCode.PERIOD))

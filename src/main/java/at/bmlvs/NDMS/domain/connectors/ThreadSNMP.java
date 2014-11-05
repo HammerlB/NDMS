@@ -13,7 +13,6 @@ public class ThreadSNMP extends Thread{
 		somethingToSend = false;
 	}
 
-	@Override
 	public void run() {
 		try {
 			if (!isConnected) {

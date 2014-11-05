@@ -1,9 +1,14 @@
 package at.bmlvs.NDMS;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 
 import javax.swing.UIManager;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.snmp4j.smi.OID;
 
 import at.bmlvs.NDMS.domain.Instances;
@@ -23,6 +28,13 @@ public class Main extends Application
 	@SuppressWarnings("static-access")
 	public static void main(String[] args)
 	{
+		//KILL THE LOGGERS!!!
+		List<Logger> loggers = Collections.<Logger>list(LogManager.getCurrentLoggers());
+		loggers.add(LogManager.getRootLogger());
+		for ( Logger logger : loggers ) {
+		    logger.setLevel(Level.OFF);
+		}
+		
 		// Presentation
 		// TODO Auto-generated method stub
 		// Set the look and feel to users OS LaF.
@@ -34,18 +46,6 @@ public class Main extends Application
 		{
 		}
 		
-		try
-		{
-			SNMPConnector snmpc = new SNMPConnector("udp:192.168.1.12/161", "gwdSNMP_2014");
-			//System.out.println(snmpc.getAsString(new OID(".1.3.6.1.2.1.1.5.0")));
-			snmpc.walk(".1.3.6.1.2.1.1.5", false, true);
-			snmpc.walk(".1.3.6.1.2.1.2.2.1.1", true, false);
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-
 		ServiceFactory.setPersistenceService(new PersistenceService());
 		ServiceFactory.setAppConfig(ServiceFactory.getPersistenceService()
 				.getAppconfig().getElement());
