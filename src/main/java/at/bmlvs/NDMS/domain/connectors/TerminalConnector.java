@@ -1,5 +1,7 @@
 package at.bmlvs.NDMS.domain.connectors;
 
+import java.io.IOException;
+
 public abstract class TerminalConnector
 {
 	private String host;
@@ -18,9 +20,9 @@ public abstract class TerminalConnector
 		setPassword(password);
 	}
 	
-	abstract void connect();
+	abstract void connect() throws Exception;
 	
-	abstract void disconnect();
+	abstract void disconnect() throws Exception;
 
 	public String getHost()
 	{

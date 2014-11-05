@@ -28,20 +28,20 @@ public class SSHConnector extends TerminalConnector {
 	private InputStream in;
 	private OutputStream out;
 
-//	public SSHConnector() {
-//		super();
-//		this.ssh = new SshClient();
-//		// this.pwd = new PasswordAuthenticationClient();
-//		this.version = "";
-//		this.port = 0;
-//		this.host = "192.168.1.12";
-//		this.user = "Herkel";
-//		this.pass = "gwdH_2014";
-//	}
+	// public SSHConnector() {
+	// super();
+	// this.ssh = new SshClient();
+	// // this.pwd = new PasswordAuthenticationClient();
+	// this.version = "";
+	// this.port = 0;
+	// this.host = "192.168.1.12";
+	// this.user = "Herkel";
+	// this.pass = "gwdH_2014";
+	// }
 
 	public SSHConnector(String host, String user, String pass
-//			,String version,int port
-			) {
+	// ,String version,int port
+	) {
 		super(host, user, pass);
 		this.ssh = new SshClient();
 		this.version = version;
@@ -54,66 +54,56 @@ public class SSHConnector extends TerminalConnector {
 	public String getSSHFingerprint() {
 		return fingerprint;
 	}
-	
+
 	public void setSSHFingerprint(String fingerprint) {
-		this.fingerprint=fingerprint;
+		this.fingerprint = fingerprint;
 	}
 
 	public void sendCmd(String cmd) {
 		try {
 			out.write(cmd.getBytes());
 			byte buffer[] = new byte[100];
-			int read =0;
-			for (int i=0;i<100;i++){
-				System.out.println("control");
+			int read = 0;
+			for (int i = 0; i < 100; i++) {
 				read = in.read(buffer);
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("SendCMD: "+e.getMessage());
 		}
 	}
 
 	@Override
-	public void connect() {
+	public void connect() throws Exception {
 		SshClient ssh = new SshClient();
 
-		try {
-			ssh.connect(host, new IgnoreHostKeyVerification());
-			PasswordAuthenticationClient pwd = new PasswordAuthenticationClient();
+		ssh.connect(host, new IgnoreHostKeyVerification());
+		PasswordAuthenticationClient pwd = new PasswordAuthenticationClient();
 
-			pwd.setUsername(user);
-			pwd.setPassword(pass);
-			setSSHFingerprint(ssh.getServerHostKey().getFingerprint());
-			int result = ssh.authenticate(pwd);
+		pwd.setUsername(user);
+		pwd.setPassword(pass);
+		setSSHFingerprint(ssh.getServerHostKey().getFingerprint());
+		int result = ssh.authenticate(pwd);
 
-			if (result == AuthenticationProtocolState.FAILED)
-				System.out.println("The authentication failed");
+		if (result == AuthenticationProtocolState.FAILED)
+			System.out.println("The authentication failed");
 
-			if (result == AuthenticationProtocolState.PARTIAL)
-				System.out.println("The authentication succeeded but another"
-						+ "authentication is required");
+		if (result == AuthenticationProtocolState.PARTIAL)
+			System.out.println("The authentication succeeded but another"
+					+ "authentication is required");
 
-			if (result == AuthenticationProtocolState.COMPLETE)
-				System.out.println("The authentication is complete");
-			SessionChannelClient session = ssh.openSessionChannel();
-			session.startShell();
-			// COMMANDS
-			out = session.getOutputStream();
-			in = session.getInputStream();
+		if (result == AuthenticationProtocolState.COMPLETE)
+			System.out.println("The authentication is complete");
+		SessionChannelClient session = ssh.openSessionChannel();
+		session.startShell();
+		// COMMANDS
+		out = session.getOutputStream();
+		in = session.getInputStream();
 
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	@Override
-	public void disconnect() {
-		try {
-			session.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public void disconnect() throws Exception {
+		session.close();
 	}
 
 	// @Override
@@ -125,7 +115,7 @@ public class SSHConnector extends TerminalConnector {
 	// // for (int i=0;(read = in.read(buffer)) > 0&&i<maxn;i++) {
 	// String output = new String(buffer, 0, read);
 	// // outputfinal += output;
-	// System.out.println(output);	// // }
+	// System.out.println(output); // // }
 	// } catch (IOException | NullPointerException e) {
 	// System.out.println("Nothing to print!");
 	// }
