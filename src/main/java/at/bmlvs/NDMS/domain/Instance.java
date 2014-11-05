@@ -24,7 +24,7 @@ public class Instance extends Tab
 		setFingerprint(fingerprint);
 		setManagement_ip(management_ip);
 		setSshConnector(sshConnector);
-		
+		setText(getName());
 		setInterfaces(new ArrayList<Interface>());
 	}
 

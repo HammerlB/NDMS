@@ -32,7 +32,7 @@ public class Instances
 		return 0;
 	}
 	
-	public int addSingleOnlineInstance(String name)
+	public int addSingleOnlineInstance(Instance instance)
 	{
 		/*
 		Instance instance = new Instance(name);

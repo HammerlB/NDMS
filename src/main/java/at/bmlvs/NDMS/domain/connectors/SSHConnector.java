@@ -76,8 +76,9 @@ public class SSHConnector extends TerminalConnector {
 	@Override
 	public void connect() {
 		SshClient ssh = new SshClient();
+
 		try {
-			ssh.connect(host, new ConsoleKnownHostsKeyVerification());
+			ssh.connect(host, new IgnoreHostKeyVerification());
 			PasswordAuthenticationClient pwd = new PasswordAuthenticationClient();
 
 			pwd.setUsername(user);
