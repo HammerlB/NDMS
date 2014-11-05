@@ -106,6 +106,22 @@ public class SSHConnector extends TerminalConnector {
 		session.close();
 	}
 
+	public InputStream getIn() {
+		return in;
+	}
+
+	public void setIn(InputStream in) {
+		this.in = in;
+	}
+
+	public OutputStream getOut() {
+		return out;
+	}
+
+	public void setOut(OutputStream out) {
+		this.out = out;
+	}
+
 	// @Override
 	// public void run() {
 	// int read;

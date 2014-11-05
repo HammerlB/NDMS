@@ -15,6 +15,10 @@ public class ThreadSSH extends Thread {
 
 	public ThreadSSH(String host, String user, String pass) {
 		ssh = new SSHConnector(host, user, pass);
+		isConnected = false;
+		somethingToSend = false;
+		ssh.setIn(in);
+		ssh.setOut(out);
 	}
 
 	@Override
@@ -23,6 +27,7 @@ public class ThreadSSH extends Thread {
 			if (!isConnected) {
 				try {
 					ssh.connect();
+					setConnected(true);
 				} catch (Exception e) {
 					System.out.println("ThreadConnectionError: " + e.getMessage());
 				}
