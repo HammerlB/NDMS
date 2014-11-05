@@ -14,24 +14,31 @@ import org.snmp4j.event.ResponseListener;
 import org.snmp4j.mp.SnmpConstants;
 import org.snmp4j.smi.Address;
 import org.snmp4j.smi.GenericAddress;
+import org.snmp4j.smi.Integer32;
+import org.snmp4j.smi.Null;
 import org.snmp4j.smi.OID;
 import org.snmp4j.smi.OctetString;
+import org.snmp4j.smi.UdpAddress;
 import org.snmp4j.smi.VariableBinding;
 import org.snmp4j.transport.DefaultUdpTransportMapping;
 import org.snmp4j.util.DefaultPDUFactory;
 import org.snmp4j.util.TableEvent;
 import org.snmp4j.util.TableUtils;
+import org.snmp4j.util.TreeEvent;
+import org.snmp4j.util.TreeUtils;
 
 public class SNMPConnector
 {
 	private String host;
+	private String communityString;
 
 	private Snmp SNMPClient;
 
-	public SNMPConnector(String host)
+	public SNMPConnector(String host, String communityString)
 	{
 		setHost(host);
-		
+		setCommunityString(communityString);
+
 		try
 		{
 			connect();
@@ -50,6 +57,16 @@ public class SNMPConnector
 	public void setHost(String host)
 	{
 		this.host = host;
+	}
+
+	public String getCommunityString()
+	{
+		return communityString;
+	}
+
+	public void setCommunityString(String communityString)
+	{
+		this.communityString = communityString;
 	}
 
 	public Snmp getSNMPClient()
@@ -97,6 +114,70 @@ public class SNMPConnector
 		}
 	}
 
+	@SuppressWarnings("unchecked")
+	public void walk(String oids, boolean showonlylastoidoctet, boolean showonlyvalue) throws IOException
+	{
+		OID oid = null;
+		try
+		{
+			oid = new OID(oids);
+		}
+		catch (RuntimeException ex)
+		{
+			System.out.println("OID is not specified correctly.");
+			System.exit(1);
+		}
+
+		TreeUtils treeUtils = new TreeUtils(SNMPClient, new DefaultPDUFactory());
+		List<TreeEvent> events = treeUtils.getSubtree(getTarget(), oid);
+		if (events == null || events.size() == 0)
+		{
+			System.out.println("No result returned.");
+			System.exit(1);
+		}
+
+		// Get snmpwalk result.
+		for (TreeEvent event : events)
+		{
+			if (event != null)
+			{
+				if (event.isError())
+				{
+					System.err.println("oid [" + oid + "] "
+							+ event.getErrorMessage());
+				}
+
+				VariableBinding[] varBindings = event.getVariableBindings();
+				if (varBindings == null || varBindings.length == 0)
+				{
+					System.out.println("No result returned.");
+				}
+				for (VariableBinding varBinding : varBindings)
+				{
+					if(showonlyvalue == true)
+					{
+						System.out.println(varBinding.getVariable());
+					}
+					else
+					{
+						if(showonlylastoidoctet == true)
+						{
+							String val = "" + varBinding.getOid();
+							String[] parts = val.split("\\.");
+							System.out.println(parts[parts.length-1] + " : " + varBinding.getVariable());
+						}
+						else
+						{
+							System.out.println(varBinding.getOid() + " : "
+									+ varBinding.getVariable().getSyntaxString()
+									+ " : " + varBinding.getVariable());
+						}
+					}
+				}
+			}
+		}
+	}
+
 	private PDU getPDU(OID oids[])
 	{
 		PDU pdu = new PDU();
@@ -123,9 +204,9 @@ public class SNMPConnector
 	{
 		Address targetAddress = GenericAddress.parse(getHost());
 		CommunityTarget target = new CommunityTarget();
-		target.setCommunity(new OctetString("public"));
+		target.setCommunity(new OctetString(getCommunityString()));
 		target.setAddress(targetAddress);
-		target.setRetries(2);
+		target.setRetries(3);
 		target.setTimeout(1500);
 		target.setVersion(SnmpConstants.version2c);
 		return target;
