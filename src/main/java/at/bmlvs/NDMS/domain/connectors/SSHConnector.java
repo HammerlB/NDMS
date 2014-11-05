@@ -62,7 +62,7 @@ public class SSHConnector extends TerminalConnector {
 	public void sendCmd(String cmd) {
 		try {
 			out.write(cmd.getBytes());
-			byte buffer[] = new byte[100];
+			byte buffer[] = new byte[cmd.getBytes().length];
 			int read = 0;
 			for (int i = 0; i < 100; i++) {
 				read = in.read(buffer);

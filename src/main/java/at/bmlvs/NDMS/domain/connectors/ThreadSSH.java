@@ -17,8 +17,8 @@ public class ThreadSSH extends Thread {
 		ssh = new SSHConnector(host, user, pass);
 		isConnected = false;
 		somethingToSend = false;
-		ssh.setIn(in);
-		ssh.setOut(out);
+//		in = ssh.getIn();
+//		out = ssh.getOut();
 	}
 
 	@Override
@@ -28,6 +28,8 @@ public class ThreadSSH extends Thread {
 				try {
 					ssh.connect();
 					setConnected(true);
+					in = ssh.getIn();
+					out = ssh.getOut();
 				} catch (Exception e) {
 					System.out.println("ThreadConnectionError: " + e.getMessage());
 				}
@@ -43,17 +45,18 @@ public class ThreadSSH extends Thread {
 	}
 
 	public void sendCMD(String cmd) {
-		try {
-			out.write(cmd.getBytes());
-
-			byte[] buffer = new byte[cmd.getBytes().length];
-			int read = 0;
-			for (int i = 0; i < 100; i++) {
-				read = in.read(buffer);
-			}
-		} catch (IOException e) {
-			System.out.println("sendCMD: " + e.getMessage());
-		}
+		ssh.sendCmd(cmd);
+//		try {
+//			out.write(cmd.getBytes());
+//
+//			byte[] buffer = new byte[cmd.getBytes().length];
+//			int read = 0;
+//			for (int i = 0; i < 100; i++) {
+//				read = in.read(buffer);
+//			}
+//		} catch (IOException e) {
+//			System.out.println("sendCMD: " + e.getMessage());
+//		}
 	}
 
 	public String getFingerprint() {

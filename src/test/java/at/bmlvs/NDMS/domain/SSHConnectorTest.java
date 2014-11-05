@@ -13,10 +13,10 @@ public class SSHConnectorTest {
 		}
 		
 		System.out.println(ssh.getSSHFingerprint());
-//		ssh.sendCmd("enable\n"
-//				+ "gwd_2014\n"
-//				+ "conf t\n"
-//				+ "hostname test123\n");
+		ssh.sendCmd("enable\n"
+				+ "gwd_2014\n"
+				+ "conf t\n"
+				+ "hostname test123\n");
 
 	}
 
