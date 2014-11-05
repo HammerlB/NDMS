@@ -173,8 +173,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <ComboBox id="TemplateBox" fx:id="TemplateBox" focusTraversable="false" >
-            </ComboBox>
+            <ComboBox id="templateBox" fx:id="templateBox" prefWidth="150.0" promptText="Templates" visibleRowCount="5" />
             <Separator orientation="VERTICAL" prefHeight="20.0" />
             <Button contentDisplay="CENTER" focusTraversable="false" mnemonicParsing="false">
                <graphic>
