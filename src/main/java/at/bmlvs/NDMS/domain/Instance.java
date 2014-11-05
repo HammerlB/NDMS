@@ -106,7 +106,8 @@ public class Instance extends Tab
 	{
 		try
 		{
-			getSnmpConnector().walk(".1.3.6.1.2.1.1.5", false, true);
+			setName(getSnmpConnector().walk(".1.3.6.1.2.1.1.5", false, true).get(0));
+			setText(getName());
 		}
 		catch (Exception e)
 		{

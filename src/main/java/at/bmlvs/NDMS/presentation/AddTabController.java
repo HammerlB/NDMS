@@ -89,6 +89,7 @@ public class AddTabController
 					SNMPConnector snmpc = new SNMPConnector("udp:" + tabname + "/161", "gwdSNMP_2014");
 					Instance inst = new Instance(tabname,
 							sshc.getSSHFingerprint(), tabname, sshc, snmpc);
+					inst.populateInstance();
 					inst.populateInterfaces();
 					ServiceFactory.getDomainService().getInstances()
 							.addSingleOnlineInstance(inst);

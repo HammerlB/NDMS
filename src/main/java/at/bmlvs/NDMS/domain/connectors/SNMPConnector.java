@@ -115,8 +115,10 @@ public class SNMPConnector
 	}
 
 	@SuppressWarnings("unchecked")
-	public void walk(String oids, boolean showonlylastoidoctet, boolean showonlyvalue) throws IOException
+	public ArrayList<String> walk(String oids, boolean showonlylastoidoctet, boolean showonlyvalue) throws IOException
 	{
+		ArrayList<String> toreturn = new ArrayList<String>();
+		
 		OID oid = null;
 		try
 		{
@@ -150,13 +152,13 @@ public class SNMPConnector
 				VariableBinding[] varBindings = event.getVariableBindings();
 				if (varBindings == null || varBindings.length == 0)
 				{
-					System.out.println("No result returned.");
+					toreturn.add("No result returned.");
 				}
 				for (VariableBinding varBinding : varBindings)
 				{
 					if(showonlyvalue == true)
 					{
-						System.out.println(varBinding.getVariable());
+						toreturn.add("" + varBinding.getVariable());
 					}
 					else
 					{
@@ -164,11 +166,11 @@ public class SNMPConnector
 						{
 							String val = "" + varBinding.getOid();
 							String[] parts = val.split("\\.");
-							System.out.println(parts[parts.length-1] + " : " + varBinding.getVariable());
+							toreturn.add(parts[parts.length-1] + " : " + varBinding.getVariable());
 						}
 						else
 						{
-							System.out.println(varBinding.getOid() + " : "
+							toreturn.add(varBinding.getOid() + " : "
 									+ varBinding.getVariable().getSyntaxString()
 									+ " : " + varBinding.getVariable());
 						}
@@ -176,6 +178,8 @@ public class SNMPConnector
 				}
 			}
 		}
+		
+		return toreturn;
 	}
 
 	private PDU getPDU(OID oids[])
