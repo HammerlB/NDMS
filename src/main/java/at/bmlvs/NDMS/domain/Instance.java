@@ -1,10 +1,13 @@
 package at.bmlvs.NDMS.domain;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javafx.scene.control.Tab;
 import at.bmlvs.NDMS.domain.connectors.SNMPConnector;
 import at.bmlvs.NDMS.domain.connectors.SSHConnector;
+import at.bmlvs.NDMS.domain.connectors.ThreadSNMP;
+import at.bmlvs.NDMS.domain.connectors.ThreadSSH;
 import at.bmlvs.NDMS.domain.helper.UUIDGenerator;
 
 public class Instance extends Tab
@@ -145,7 +148,7 @@ public class Instance extends Tab
 		
 		for(Interface ifer: getInterfaces())
 		{
-			System.out.println(ifer.getPortid());
+			//System.out.println(ifer.getPortid());
 		}
 	}
 	
@@ -155,16 +158,26 @@ public class Instance extends Tab
 		populateInterfaces();
 	}
 	
-//	public void checkInterfaces()
-//	{
-//		Thread t = new Thread()
-//		{
-//		     public void run()
-//		     {
-//		        // put whatever code you want to run inside the thread here.
-//		     }
-//		};
-//		
-//		t.start();
-//	}
+	public void checkInterfaces()
+	{
+		Thread t = new Thread()
+		{
+		     public void run()
+		     {
+		    	while(true)
+		    	{
+		    		try
+					{
+						System.out.println("CHECKIF: " + getSnmpConnector().walk(".1.3.6.1.2.1.2.2.1.1", false, true));
+					}
+					catch (IOException e)
+					{
+						e.printStackTrace();
+					}
+		    	}
+		     }
+		};
+		
+		t.start();
+	}
 }

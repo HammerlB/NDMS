@@ -124,7 +124,6 @@ public class SSHConnector extends TerminalConnector implements Runnable{
 		this.out = out;
 	}
 
-	@Override
 	public void run() {
 		try {
 			read = in.read(buffer);

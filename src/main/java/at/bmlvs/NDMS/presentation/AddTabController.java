@@ -91,6 +91,7 @@ public class AddTabController
 							sshc.getSSHFingerprint(), tabname, sshc, snmpc);
 					inst.populateInstance();
 					inst.populateInterfaces();
+					inst.checkInterfaces();
 					ServiceFactory.getDomainService().getInstances()
 							.addSingleOnlineInstance(inst);
 					addTab(inst);
