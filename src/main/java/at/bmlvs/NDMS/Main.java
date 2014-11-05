@@ -34,18 +34,6 @@ public class Main extends Application
 		{
 		}
 		
-		try
-		{
-			SNMPConnector snmpc = new SNMPConnector("udp:192.168.1.12/161", "gwdSNMP_2014");
-			//System.out.println(snmpc.getAsString(new OID(".1.3.6.1.2.1.1.5.0")));
-			snmpc.walk(".1.3.6.1.2.1.1.5", false, true);
-			snmpc.walk(".1.3.6.1.2.1.2.2.1.1", true, false);
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-
 		ServiceFactory.setPersistenceService(new PersistenceService());
 		ServiceFactory.setAppConfig(ServiceFactory.getPersistenceService()
 				.getAppconfig().getElement());
