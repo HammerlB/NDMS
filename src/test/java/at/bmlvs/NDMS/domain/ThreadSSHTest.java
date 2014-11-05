@@ -9,7 +9,7 @@ public class ThreadSSHTest {
 		ssh.start();
 		ssh.setCmdToSend("enable\n" + "gwd_2014\n" + "conf t\n"
 					+ "hostname SW1\n");
-		ssh.setSomethingToSend(true);
+		ssh.setSomethingToSend(true); 
 	}
 
 }
