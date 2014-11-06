@@ -86,9 +86,9 @@
 			<version>1.10.1</version>
 		</dependency>
 		<dependency>
-			<groupId>ch.ethz.ganymed</groupId>
-			<artifactId>ganymed-ssh2</artifactId>
-			<version>262</version>
+			<groupId>com.jcabi</groupId>
+			<artifactId>jcabi-ssh</artifactId>
+			<version>1.2</version>
 		</dependency>
 	</dependencies>
 </project>
