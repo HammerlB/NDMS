@@ -1,6 +1,7 @@
 package at.bmlvs.NDMS.presentation;
 
 import java.io.IOException;
+import java.util.Collections;
 
 import at.bmlvs.NDMS.domain.Instance;
 import at.bmlvs.NDMS.domain.connectors.SNMPConnector;
@@ -95,6 +96,7 @@ public class AddTabController
 					ServiceFactory.getDomainService().getInstances()
 							.addSingleOnlineInstance(inst);
 					addTab(inst);
+					portview(ServiceFactory.getDomainService().getInstances().getInstances().indexOf(inst));
 
 				}
 				catch (Exception e)
@@ -137,6 +139,7 @@ public class AddTabController
 			{
 				tabname = offline1.getText();
 				addTab(new Tab(tabname));
+				
 			}
 			else
 			{
@@ -308,7 +311,6 @@ public class AddTabController
 		PresentationService.getMainWindowController().getStage().close();
 	}
 
-	@SuppressWarnings("unused")
 	private void portview(int id)
 	{
 		TilePane portview = new TilePane();
@@ -320,34 +322,31 @@ public class AddTabController
 
 		portview.setVgap(5);
 		portview.setHgap(0);
-		portview.setPrefRows(2);
+		portview.setPrefRows(5);
+		portview.setPrefColumns(5);
 		portview.setMaxWidth(800);
 
 		for (int i = 0; i < ports; i++)
 		{
-			if ((i == 8))
+			if ((i % 6) == 0)
 			{
-				portview.getChildren().add(portid, new Button(""));
+				portview.getChildren().add(new Label("   "));
 				portview.getChildren().add(portid, new Button("df"));
 
 			}
 			else
 			{
-				portview.getChildren().add(portid, new Button("df"));
+				portview.getChildren().add(new Button("df"));
 			}
 		}
-
+		
+		
+		
 		// Add something in Tab
 		VBox tabbox = new VBox();
 		tabbox.getChildren().addAll(portview);
-		PresentationService.getMainWindowController().getTabPane().getTabs()
-				.get(id).setContent(tabbox);
-		PresentationService
-				.getMainWindowController()
-				.getTabPane()
-				.getTabs()
-				.add(PresentationService.getMainWindowController().getTabPane()
-						.getTabs().get(id));
+		PresentationService.getMainWindowController().getTabPane().getTabs().get(id).setContent(tabbox);
+		PresentationService.getMainWindowController().getTabPane().getTabs().add(PresentationService.getMainWindowController().getTabPane().getTabs().get(id));
 
 	}
 

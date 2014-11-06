@@ -34,6 +34,8 @@ public class Instances
 	
 	public int addSingleOnlineInstance(Instance instance)
 	{
+		getInstances().add(instance);
+		
 		/*
 		Instance instance = new Instance(name);
 		instance.getSshConnector().connect();
