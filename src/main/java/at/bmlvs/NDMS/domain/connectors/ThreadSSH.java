@@ -20,20 +20,21 @@ public class ThreadSSH extends Thread {
 
 	@Override
 	public void run() {
-		while (true) {
-			if (!isConnected) {
-				try {
-					ssh.connect();
-					setConnected(true);
-					System.out.println("Connected!");
-				} catch (Exception e) {
-					System.out.println("SSH: " + e.getMessage() + "\n"
-							+ "Reason: " + e.getCause());
-				}
+		if (!isConnected) {
+			try {
+				ssh.connect();
+				setConnected(true);
+				System.out.println("Connected!");
+			} catch (Exception e) {
+				System.out.println("SSH: " + e.getMessage() + "\n"
+						+ "Reason: " + e.getCause());
 			}
+		}
+		while (true) {
 			if (somethingToSend) {
 				try {
 					sendCMD(cmdToSend);
+					System.out.println("Sended!!");
 					if (!readerStarted){
 						t.start();
 						System.out.println("Reader Started!");
@@ -55,11 +56,6 @@ public class ThreadSSH extends Thread {
 					System.out.println("SSH: " + e.getMessage() + "\n"
 							+ "Reason: " + e.getCause());
 				}
-			}
-			try {
-				sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
 			}
 		}
 	}
