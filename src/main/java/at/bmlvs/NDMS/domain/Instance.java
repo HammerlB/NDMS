@@ -2,6 +2,7 @@ package at.bmlvs.NDMS.domain;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javafx.scene.control.Tab;
 import at.bmlvs.NDMS.domain.connectors.SNMPConnector;
@@ -9,6 +10,7 @@ import at.bmlvs.NDMS.domain.connectors.SSHConnector;
 import at.bmlvs.NDMS.domain.connectors.ThreadSNMP;
 import at.bmlvs.NDMS.domain.connectors.ThreadSSH;
 import at.bmlvs.NDMS.domain.helper.UUIDGenerator;
+import at.bmlvs.NDMS.service.ServiceFactory;
 
 public class Instance extends Tab
 {
@@ -108,7 +110,7 @@ public class Instance extends Tab
 	{
 		try
 		{
-			setName(getSnmpConnector().walk(".1.3.6.1.2.1.1.5", false, true).get(0));
+			setName(getSnmpConnector().walk(ServiceFactory.getPersistenceService().getAppconfig().getElement().getSNMP_SWNAME(), false, true).get(0));
 			setText(getName());
 		}
 		catch (Exception e)
@@ -121,21 +123,29 @@ public class Instance extends Tab
 	{
 		try
 		{
-			for(String value: getSnmpConnector().walk(".1.3.6.1.2.1.2.2.1.1", false, true))
+			for(String output: getSnmpConnector().walk(ServiceFactory.getPersistenceService().getAppconfig().getElement().getSNMP_BRIDGEIFDESCR(), true, false))
 			{
-				if(!value.contains("Null") && !value.equals("1"))
+				String[] parts = output.split("\\:");
+				
+				if(!parts[1].contains("Null") && !parts[1].equals("1") && !parts[1].contains("Vlan"))
 				{
-					getInterfaces().add(new Interface(value));
+					Interface interf = new Interface(parts[0]);
+					interf.setPortname(parts[1]);
+					getInterfaces().add(interf);
 				}
 			}
 			
-			for(String value: getSnmpConnector().walk(".1.3.6.1.2.1.2.2.1.2", true, false))
+			Collections.reverse(getInterfaces());
+			
+			for(String output: getSnmpConnector().walk(ServiceFactory.getPersistenceService().getAppconfig().getElement().getSNMP_BRIDGEIFSTATUS(), true, false))
 			{
-				for(Interface inter: getInterfaces())
+				String[] parts = output.split("\\:");
+				
+				for(Interface interf: getInterfaces())
 				{
-					if(value.equals(inter.getPortid()))
+					if(interf.getPortid().equals(parts[0]))
 					{
-						
+						interf.setPortstatus(parts[1]);
 					}
 				}
 			}
@@ -144,11 +154,6 @@ public class Instance extends Tab
 		catch (Exception e)
 		{
 			e.printStackTrace();
-		}
-		
-		for(Interface ifer: getInterfaces())
-		{
-			//System.out.println(ifer.getPortid());
 		}
 	}
 	
@@ -179,5 +184,12 @@ public class Instance extends Tab
 		};
 		
 		t.start();
+	}
+
+	@Override
+	public String toString()
+	{
+		return "Instance [UUID=" + UUID + ", name=" + name + ", fingerprint="
+				+ fingerprint + ", management_ip=" + management_ip + "]";
 	}
 }
