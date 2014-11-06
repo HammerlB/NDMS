@@ -13,20 +13,20 @@ public class ThreadSSHTest {
 		ssh.doSendCMD("enable\n" + "gwd_2014\n" + "conf t\n"
 					+ "hostname test32423\n"
 					+ "hostname test123\n"
-					+ "hostname 45545aassa\n"
+					+ "hostname asd45545aassa\n"
 					+ "exit\n");
 		ssh.doSendCMD("enable\n" + "gwd_2014\n" + "conf t\n"
 				+ "hostname tesqwrwqt32423\n"
 				+ "hostname testqweqwer123\n"
-				+ "hostname 4554qwe5\n"
+				+ "hostname asd4554qwe5\n"
 				+ "exit\n");
 		ssh.doSendCMD("enable\n" + "gwd_2014\n" + "conf t\n"
 				+ "hostname testqwe32423\n"
 				+ "hostname testqw123\n"
-				+ "hostname 723847\n"
+				+ "hostname da723asd847\n"
 				+ "exit\n");
-		ssh.doSendCMDCongigMode("hostname 123\n", "gwd_2014\n");
-		ssh.doDisconnect();
+		ssh.doSendCMDConfigMode("hostname GWD-SW3\n", "gwd_2014");
+//		ssh.doDisconnect();
 	}
 
 }

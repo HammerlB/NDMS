@@ -70,52 +70,48 @@ public class SSHConnector extends TerminalConnector implements Runnable {
 			System.out.println("SendCMD: " + e.getMessage());
 		}
 
-//		byte buffer[] = new byte[cmd.getBytes().length];
-//		int read = 0;
-//		for (int i = 0; i < 100; i++) {
-//			try {
-//				read = in.read(buffer);
-//			} catch (IOException e) {
-//				System.out.println("ReadCMD: " + e.getMessage());
-//			}
-//		}
+		// byte buffer[] = new byte[cmd.getBytes().length];
+		// int read = 0;
+		// for (int i = 0; i < 100; i++) {
+		// try {
+		// read = in.read(buffer);
+		// } catch (IOException e) {
+		// System.out.println("ReadCMD: " + e.getMessage());
+		// }
+		// }
 	}
 
 	@Override
 	public void connect() throws Exception {
-		try {
-			SshClient ssh = new SshClient();
+		SshClient ssh = new SshClient();
 
-			ssh.connect(host, new IgnoreHostKeyVerification());
-			PasswordAuthenticationClient pwd = new PasswordAuthenticationClient();
+		ssh.connect(host, new IgnoreHostKeyVerification());
+		PasswordAuthenticationClient pwd = new PasswordAuthenticationClient();
 
-			pwd.setUsername(user);
-			pwd.setPassword(pass);
-			setSSHFingerprint(ssh.getServerHostKey().getFingerprint());
-			int result = ssh.authenticate(pwd);
+		pwd.setUsername(user);
+		pwd.setPassword(pass);
+		setSSHFingerprint(ssh.getServerHostKey().getFingerprint());
+		int result = ssh.authenticate(pwd);
 
-			if (result == AuthenticationProtocolState.FAILED)
-				System.out.println("The authentication failed");
+		if (result == AuthenticationProtocolState.FAILED)
+			System.out.println("The authentication failed");
 
-			if (result == AuthenticationProtocolState.PARTIAL)
-				System.out.println("The authentication succeeded but another"
-						+ "authentication is required");
+		if (result == AuthenticationProtocolState.PARTIAL)
+			System.out.println("The authentication succeeded but another"
+					+ "authentication is required");
 
-			if (result == AuthenticationProtocolState.COMPLETE)
-				System.out.println("The authentication is complete");
-			SessionChannelClient session = ssh.openSessionChannel();
-			session.startShell();
-			// COMMANDS
-			out = session.getOutputStream();
-			in = session.getInputStream();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		if (result == AuthenticationProtocolState.COMPLETE)
+			System.out.println("The authentication is complete");
+		SessionChannelClient session = ssh.openSessionChannel();
+		session.startShell();
+		// COMMANDS
+		out = session.getOutputStream();
+		in = session.getInputStream();
 	}
 
 	@Override
 	public void disconnect() throws Exception {
-//		session.close();
+		// session.close();
 		ssh.disconnect();
 	}
 
@@ -137,7 +133,7 @@ public class SSHConnector extends TerminalConnector implements Runnable {
 
 	public void run() {
 		try {
-			while(true){
+			while (true) {
 				read = in.read(buffer);
 			}
 		} catch (IOException e) {
