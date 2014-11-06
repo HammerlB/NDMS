@@ -7,6 +7,7 @@ public class Interface extends Button
 	private String portid;
 	private String portidshort;
 	private String portname;
+	private String portnameshort;
 	private String type;
 	private String portstatus;
 	private boolean trunkstatus;
@@ -48,6 +49,16 @@ public class Interface extends Button
 	public void setPortname(String portname)
 	{
 		this.portname = portname;
+	}
+
+	public String getPortnameshort()
+	{
+		return portnameshort;
+	}
+
+	public void setPortnameshort(String portnameshort)
+	{
+		this.portnameshort = portnameshort;
 	}
 
 	public String getType()
@@ -120,26 +131,11 @@ public class Interface extends Button
 		this.vlan = vlan;
 	}
 	
-	public void setAll(String portidshort, String portname, String type, 
-			String portstatus, boolean trunkstatus, boolean cdpstatus, 
-			boolean cdpneighbor, boolean port_8021X, int vlan)
-	{
-		setPortidshort(portidshort);
-		setPortname(portname);
-		setType(type);
-		setPortstatus(portstatus);
-		setTrunkstatus(trunkstatus);
-		setCdpstatus(cdpstatus);
-		setCdpneighbor(cdpneighbor);
-		setPort_8021X(port_8021X);
-		setVlan(vlan);
-	}
-
 	@Override
 	public String toString()
 	{
 		return "Interface [portid=" + portid + ", portidshort=" + portidshort
-				+ ", portname=" + portname + ", type=" + type + ", portstatus="
+				+ ", portname=" + portname + ", portnameshort=" + portnameshort + ", type=" + type + ", portstatus="
 				+ portstatus + ", trunkstatus=" + trunkstatus + ", cdpstatus="
 				+ cdpstatus + ", cdpneighbor=" + cdpneighbor + ", port_8021X="
 				+ port_8021X + ", vlan=" + vlan + "]";

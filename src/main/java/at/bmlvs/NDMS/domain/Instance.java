@@ -9,6 +9,7 @@ import at.bmlvs.NDMS.domain.connectors.SNMPConnector;
 import at.bmlvs.NDMS.domain.connectors.SSHConnector;
 import at.bmlvs.NDMS.domain.connectors.ThreadSNMP;
 import at.bmlvs.NDMS.domain.connectors.ThreadSSH;
+import at.bmlvs.NDMS.domain.helper.SNMPParser;
 import at.bmlvs.NDMS.domain.helper.UUIDGenerator;
 import at.bmlvs.NDMS.service.ServiceFactory;
 
@@ -135,6 +136,7 @@ public class Instance extends Tab
 						{
 							Interface interf = new Interface(parts[0]);
 							interf.setPortname(parts[1]);
+							interf.setPortnameshort(SNMPParser.convertPortnameToPortshortname(parts[1]));
 							getInterfaces().add(interf);
 						}
 					}
