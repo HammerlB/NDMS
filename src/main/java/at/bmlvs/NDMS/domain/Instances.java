@@ -42,7 +42,7 @@ public class Instances
 		
 		System.out.println(instance.getSshConnector().getSSHFingerprint());
 		
-//		instance.getDevices().add(new Device(instance.getSshConnector().getSshFingerprint(), name));
+		instance.getDevices().add(new Device(instance.getSshConnector().getSshFingerprint(), name));
 		getInstances().add(instance);
 		
 		return getInstances().indexOf(instance);

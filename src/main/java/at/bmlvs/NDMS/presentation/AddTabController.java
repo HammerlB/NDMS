@@ -14,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -66,7 +67,6 @@ public class AddTabController
 	@FXML
 	private Label errorlabel;
 
-	// private SSHConnector shc;
 
 	@SuppressWarnings("static-access")
 	@FXML
@@ -311,14 +311,15 @@ public class AddTabController
 		PresentationService.getMainWindowController().getStage().close();
 	}
 
+	@SuppressWarnings("static-access")
 	private void portview(int id)
 	{
 		TilePane portview1 = new TilePane();
 
 		int counter = 0;
 		
-		//portview1.setPadding(new Insets(5, 0, 5, 0));
-
+		portview1.setPadding(new Insets(5, 0, 5, 0));
+		
 		portview1.setVgap(0);
 		portview1.setHgap(0);
 
