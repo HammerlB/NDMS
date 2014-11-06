@@ -2,9 +2,13 @@ package at.bmlvs.NDMS.presentation;
 
 import java.io.IOException;
 
+import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import at.bmlvs.NDMS.service.PresentationService;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -12,6 +16,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -27,22 +37,22 @@ import javafx.stage.Stage;
  * Sample custom control hosting a text field and a button.
  */
 @SuppressWarnings("unused")
+
 public class MainWindowController extends VBox
 {
 	@FXML
 	private TabPane tabPane;
 	AddTabController togglord = new AddTabController();
 	private Stage stage;
-
+	@FXML
+	private ComboBox<String> templateBox;
+	
 	public MainWindowController()
 	{
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
 				"xml/MainWindow.fxml"));
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);
-
-		
-		
 		
 		try
 		{
@@ -52,7 +62,34 @@ public class MainWindowController extends VBox
 		{
 			throw new RuntimeException(exception);
 		}
+		templatusBox();
+	}
+	
+	@FXML
+	private void addnew(ActionEvent event) throws IOException
+	{
 
+		stage = new Stage();
+		Parent root = FXMLLoader.load(getClass().getResource("xml/AddTab.fxml"));
+		Scene scene = new Scene(root);
+		stage.setTitle("Verbinden zu...");
+		stage.getIcons().add(new Image("file:icons/ndms.png"));
+		stage.initModality(Modality.WINDOW_MODAL);
+		stage.initOwner(this.getScene().getWindow());
+		stage.setScene(scene);
+		stage.setResizable(false);
+		stage.show();
+	}
+	@FXML
+	private void templatusBox()
+	{
+		ObservableList<String> items =FXCollections.observableArrayList (
+			    "Single", "Double", "Suite", "Family App", "fredlkind","herkelkind");
+		templateBox.setItems(items);
+		
+		templateBox.setOnAction((event) -> {
+		    System.out.println(templateBox.getSelectionModel().getSelectedItem());
+		});	
 	}
 	
 	public TabPane getTabPane()
@@ -73,21 +110,5 @@ public class MainWindowController extends VBox
 	public void setStage(Stage stage)
 	{
 		this.stage = stage;
-	}
-
-	@FXML
-	private void addnew(ActionEvent event) throws IOException
-	{
-
-		stage = new Stage();
-		Parent root = FXMLLoader.load(getClass().getResource("xml/AddTab.fxml"));
-		Scene scene = new Scene(root);
-		stage.setTitle("Verbinden zu...");
-		stage.getIcons().add(new Image("file:icons/ndms.png"));
-		stage.initModality(Modality.WINDOW_MODAL);
-		stage.initOwner(this.getScene().getWindow());
-		stage.setScene(scene);
-		stage.setResizable(false);
-		stage.show();
 	}
 }
