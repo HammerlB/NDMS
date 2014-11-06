@@ -352,12 +352,18 @@ public class AddTabController
 				
 				portview1.getChildren().add(new Label(""));
 				portview1.getChildren().add(new Label(""));
-				//counter = counter + 11;
 			}
 			
-			portview1.getChildren().add(new Button(interf.getPortid()));
+			if(counter < 9)
+			{
+				portview1.getChildren().add(new Button(" " + interf.getPortnameshort() + " "));
+			}else{
+				portview1.getChildren().add(new Button(interf.getPortnameshort()));
+			}
+			
 			counter++;
 		}
+		
 		//id stuff to int: Integer.parseInt(interf.getPortid()), 
 		
 		// Add something in Tab
