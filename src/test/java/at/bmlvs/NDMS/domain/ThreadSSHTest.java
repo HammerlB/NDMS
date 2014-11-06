@@ -7,15 +7,26 @@ public class ThreadSSHTest {
 	public static void main(String[] args) {
 		ThreadSSH ssh = new ThreadSSH("192.168.1.12","Herkel","gwdH_2014");
 		ssh.start();
-		ssh.doSendCMD("enable\n" + "gwd_2014\n" + "conf t\n"
-					+ "hostname test5\n");
-//		ssh.doSendCMD("hostname test2\n");
-		
-		for(int i = 0;i<2000000;i++){
-			if (i==1999999)
-				ssh.interrupt();
+		while(!ssh.isConnected()){
+			System.out.println("Waiting to connect!");
 		}
-//		ssh.doDisconnect();
+		ssh.doSendCMD("enable\n" + "gwd_2014\n" + "conf t\n"
+					+ "hostname test32423\n"
+					+ "hostname test123\n"
+					+ "hostname 45545aassa\n"
+					+ "exit\n");
+		ssh.doSendCMD("enable\n" + "gwd_2014\n" + "conf t\n"
+				+ "hostname tesqwrwqt32423\n"
+				+ "hostname testqweqwer123\n"
+				+ "hostname 4554qwe5\n"
+				+ "exit\n");
+		ssh.doSendCMD("enable\n" + "gwd_2014\n" + "conf t\n"
+				+ "hostname testqwe32423\n"
+				+ "hostname testqw123\n"
+				+ "hostname 723847\n"
+				+ "exit\n");
+		ssh.doSendCMDCongigMode("hostname 123\n", "gwd_2014\n");
+		ssh.doDisconnect();
 	}
 
 }

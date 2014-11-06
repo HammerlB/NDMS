@@ -115,7 +115,8 @@ public class SSHConnector extends TerminalConnector implements Runnable {
 
 	@Override
 	public void disconnect() throws Exception {
-		session.close();
+//		session.close();
+		ssh.disconnect();
 	}
 
 	public InputStream getIn() {
