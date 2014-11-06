@@ -135,8 +135,6 @@ public class Instance extends Tab
 				}
 			}
 			
-			Collections.reverse(getInterfaces());
-			
 			for(String output: getSnmpConnector().walk(ServiceFactory.getPersistenceService().getAppconfig().getElement().getSNMP_BRIDGEIFSTATUS(), true, false))
 			{
 				String[] parts = output.split("\\:");
