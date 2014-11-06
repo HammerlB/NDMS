@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Collections;
 
 import at.bmlvs.NDMS.domain.Instance;
+import at.bmlvs.NDMS.domain.Interface;
 import at.bmlvs.NDMS.domain.connectors.SNMPConnector;
 import at.bmlvs.NDMS.domain.connectors.SSHConnector;
 import at.bmlvs.NDMS.presentation.elements.RestrictiveTextField;
@@ -81,7 +82,7 @@ public class AddTabController
 				tabname = ipaddress1.getText() + "." + ipaddress2.getText()
 						+ "." + ipaddress3.getText() + "."
 						+ ipaddress4.getText();
-
+				 
 				try
 				{
 					SSHConnector sshc = new SSHConnector(tabname, "Herkel",
@@ -90,11 +91,9 @@ public class AddTabController
 					SNMPConnector snmpc = new SNMPConnector("udp:" + tabname + "/161", "gwdSNMP_2014");
 					Instance inst = new Instance(tabname,
 							sshc.getSSHFingerprint(), tabname, sshc, snmpc);
-					inst.populateInstance();
-					inst.populateInterfaces();
-					inst.checkInterfaces();
-					ServiceFactory.getDomainService().getInstances()
-							.addSingleOnlineInstance(inst);
+					inst.populateAll();
+					//inst.checkInterfaces();
+					ServiceFactory.getDomainService().getInstances().addSingleOnlineInstance(inst);
 					addTab(inst);
 					portview(ServiceFactory.getDomainService().getInstances().getInstances().indexOf(inst));
 
@@ -104,7 +103,8 @@ public class AddTabController
 					errorlabel.setText("Verbindung war nicht erfolgreich! \n("
 							+ e.getMessage() + ")");
 				}
-
+				
+				
 			}
 			else
 			{
@@ -313,38 +313,56 @@ public class AddTabController
 
 	private void portview(int id)
 	{
-		TilePane portview = new TilePane();
+		TilePane portview1 = new TilePane();
 
-		int ports = 42;
-		int portid = 0;
+		int counter = 0;
+		
+		//portview1.setPadding(new Insets(5, 0, 5, 0));
 
-		portview.setPadding(new Insets(5, 0, 5, 0));
+		portview1.setVgap(0);
+		portview1.setHgap(0);
 
-		portview.setVgap(5);
-		portview.setHgap(0);
-		portview.setPrefRows(5);
-		portview.setPrefColumns(5);
-		portview.setMaxWidth(800);
+		portview1.setMaxWidth(700);
 
-		for (int i = 0; i < ports; i++)
+		for (Interface interf : ServiceFactory.getDomainService().getInstances().getInstances().get(id).getInterfaces())
 		{
-			if ((i % 6) == 0)
+			if((counter % 6) == 0)
 			{
-				portview.getChildren().add(new Label("   "));
-				portview.getChildren().add(portid, new Button("df"));
+				portview1.getChildren().add(new Label(""));
+				
+			} 
+			
+			if(((counter % 24) == 0) && (counter != 0)){
+				
+				portview1.getChildren().add(new Label(""));
+				portview1.getChildren().add(new Label(""));
+				portview1.getChildren().add(new Label(""));
 
+				portview1.getChildren().add(new Label(""));
+				portview1.getChildren().add(new Label(""));
+				portview1.getChildren().add(new Label(""));	
+				
+				portview1.getChildren().add(new Label(""));
+				portview1.getChildren().add(new Label(""));
+				portview1.getChildren().add(new Label(""));
+
+				portview1.getChildren().add(new Label(""));
+				portview1.getChildren().add(new Label(""));
+				portview1.getChildren().add(new Label(""));
+				
+				portview1.getChildren().add(new Label(""));
+				portview1.getChildren().add(new Label(""));
+				//counter = counter + 11;
 			}
-			else
-			{
-				portview.getChildren().add(new Button("df"));
-			}
+			
+			portview1.getChildren().add(new Button(interf.getPortid()));
+			counter++;
 		}
-		
-		
+		//id stuff to int: Integer.parseInt(interf.getPortid()), 
 		
 		// Add something in Tab
 		VBox tabbox = new VBox();
-		tabbox.getChildren().addAll(portview);
+		tabbox.getChildren().addAll(portview1);
 		PresentationService.getMainWindowController().getTabPane().getTabs().get(id).setContent(tabbox);
 		PresentationService.getMainWindowController().getTabPane().getTabs().add(PresentationService.getMainWindowController().getTabPane().getTabs().get(id));
 
