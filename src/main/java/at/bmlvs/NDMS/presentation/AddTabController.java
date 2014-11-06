@@ -306,8 +306,7 @@ public class AddTabController
 
 	private void addTab(Tab tab)
 	{
-		PresentationService.getMainWindowController().getTabPane().getTabs()
-				.add(tab);
+		PresentationService.getMainWindowController().getTabPane().getTabs().add(tab);
 		PresentationService.getMainWindowController().getStage().close();
 	}
 
@@ -371,7 +370,8 @@ public class AddTabController
 		VBox tabbox = new VBox();
 		tabbox.getChildren().addAll(portview1);
 		PresentationService.getMainWindowController().getTabPane().getTabs().get(id).setContent(tabbox);
-		PresentationService.getMainWindowController().getTabPane().getTabs().add(PresentationService.getMainWindowController().getTabPane().getTabs().get(id));
+		
+		//PresentationService.getMainWindowController().getTabPane().getTabs().add(PresentationService.getMainWindowController().getTabPane().getTabs().get(id));
 
 	}
 

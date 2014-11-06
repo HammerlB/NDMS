@@ -2,7 +2,9 @@ package at.bmlvs.NDMS.domain;
 
 import java.util.ArrayList;
 
-public class Instances
+import javafx.scene.control.TabPane;
+
+public class Instances extends TabPane
 {
 	private ArrayList<Instance> instances;
 
@@ -21,38 +23,22 @@ public class Instances
 		this.instances = instances;
 	}
 	
-	public int addSingleOfflineInstance(String name)
+	public void addSingleOfflineInstance(String name)
 	{
-		/*
-		Instance instance = new Instance(name);
-		instance.setSshConnector(null);
-		getInstances().add(instance);
-		*/
 		
-		return 0;
 	}
 	
-	public int addSingleOnlineInstance(Instance instance)
+	public void addSingleOnlineInstance(Instance instance)
 	{
 		getInstances().add(instance);
-		
-		/*
-		Instance instance = new Instance(name);
-		instance.getSshConnector().connect();
-		
-		System.out.println(instance.getSshConnector().getSSHFingerprint());
-		
-		instance.getDevices().add(new Device(instance.getSshConnector().getSshFingerprint(), name));
-		getInstances().add(instance);
-		
-		return getInstances().indexOf(instance);
-		*/
-		
-		return 0;
+		getTabs().add(getInstances().indexOf(instance), getInstances().get(getInstances().indexOf(instance)));
 	}
 	
-	public int addMultipleOnlineInstances(String name)
+	public void addMultipleOnlineInstances(Instance[] instances)
 	{
-		return 0;
+		for(Instance inst: instances)
+		{
+			addSingleOnlineInstance(inst);
+		}
 	}
 }
