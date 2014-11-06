@@ -125,31 +125,131 @@ public class Instance extends Tab
 		{
 			for(String output: getSnmpConnector().walk(ServiceFactory.getPersistenceService().getAppconfig().getElement().getSNMP_BRIDGEIFDESCR(), true, false))
 			{
-				String[] parts = output.split("\\:");
-				
-				if(!parts[1].contains("Null") && !parts[1].equals("1") && !parts[1].contains("Vlan"))
+				try
 				{
-					Interface interf = new Interface(parts[0]);
-					interf.setPortname(parts[1]);
-					getInterfaces().add(interf);
+					String[] parts = output.split("\\:");
+					
+					if(parts.length > 1)
+					{
+						if(!parts[1].contains("Null") && !parts[1].equals("1") && !parts[1].contains("Vlan"))
+						{
+							Interface interf = new Interface(parts[0]);
+							interf.setPortname(parts[1]);
+							getInterfaces().add(interf);
+						}
+					}
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace();
 				}
 			}
-			
-			Collections.reverse(getInterfaces());
 			
 			for(String output: getSnmpConnector().walk(ServiceFactory.getPersistenceService().getAppconfig().getElement().getSNMP_BRIDGEIFSTATUS(), true, false))
 			{
-				String[] parts = output.split("\\:");
-				
-				for(Interface interf: getInterfaces())
+				try
 				{
-					if(interf.getPortid().equals(parts[0]))
+					String[] parts = output.split("\\:");
+					
+					for(Interface interf: getInterfaces())
 					{
-						interf.setPortstatus(parts[1]);
+						if(parts.length > 1)
+						{
+							if(interf.getPortid().equals(parts[0]))
+							{
+								interf.setPortstatus(parts[1]);
+							}
+						}
 					}
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace();
 				}
 			}
 			
+			for(String output: getSnmpConnector().walk(ServiceFactory.getPersistenceService().getAppconfig().getElement().getSNMP_VLANTRUNKPORTDYNAMICSTATUS(), true, false))
+			{
+				try
+				{
+					String[] parts = output.split("\\:");
+					
+					for(Interface interf: getInterfaces())
+					{
+						if(parts.length > 1)
+						{
+							if(interf.getPortid().equals(parts[0]))
+							{
+								if(parts[1].contains("1"))
+								{
+									interf.setTrunkstatus(true);
+								}
+								else
+								{
+									interf.setTrunkstatus(false);
+								}
+							}
+						}
+					}
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace();
+				}
+			}
+			
+			for(String output: getSnmpConnector().walk(ServiceFactory.getPersistenceService().getAppconfig().getElement().getSNMP_CDPINTERFACEENABLE(), true, false))
+			{
+				try
+				{
+					String[] parts = output.split("\\:");
+					
+					for(Interface interf: getInterfaces())
+					{
+						if(parts.length > 1)
+						{
+							if(interf.getPortid().equals(parts[0]))
+							{
+								if(parts[1].contains("1"))
+								{
+									interf.setCdpstatus(true);
+								}
+								else
+								{
+									interf.setCdpstatus(false);
+								}
+							}
+						}
+					}
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace();
+				}
+			}
+			
+			for(String output: getSnmpConnector().walk(ServiceFactory.getPersistenceService().getAppconfig().getElement().getSNMP_DOT1DBASEPORTIFINDEX(), true, false))
+			{
+				try
+				{
+					String[] parts = output.split("\\:");
+					
+					for(Interface interf: getInterfaces())
+					{
+						if(parts.length > 1)
+						{
+							if(interf.getPortid().equals(parts[1]))
+							{
+								interf.setPortidshort(parts[0]);
+							}
+						}
+					}
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+			}
 		}
 		catch (Exception e)
 		{
