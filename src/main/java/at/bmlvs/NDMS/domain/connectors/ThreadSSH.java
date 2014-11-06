@@ -8,11 +8,13 @@ public class ThreadSSH extends Thread {
 	private String cmdToSend;
 	private Thread t;
 	private boolean disconnect;
+	private boolean readerStarted;
 
 	public ThreadSSH(String host, String user, String pass) {
 		ssh = new SSHConnector(host, user, pass);
 		isConnected = false;
 		somethingToSend = false;
+		readerStarted = false;
 		t = new Thread(ssh);
 	}
 
@@ -23,6 +25,7 @@ public class ThreadSSH extends Thread {
 				try {
 					ssh.connect();
 					setConnected(true);
+					System.out.println("Connected!");
 				} catch (Exception e) {
 					System.out.println("SSH: " + e.getMessage() + "\n"
 							+ "Reason: " + e.getCause());
@@ -31,8 +34,12 @@ public class ThreadSSH extends Thread {
 			if (somethingToSend) {
 				try {
 					sendCMD(cmdToSend);
-					t.start();
+					if (!readerStarted){
+						t.start();
+						System.out.println("Reader Started!");
+					}
 					setSomethingToSend(false);
+					readerStarted=true;
 				} catch (Exception e) {
 					System.out.println("SSH: " + e.getMessage() + "\n"
 							+ "Reason: " + e.getCause());
@@ -42,9 +49,12 @@ public class ThreadSSH extends Thread {
 				t.stop();
 				try {
 					ssh.disconnect();
+					disconnect=false;
+					break;
 				} catch (Exception e) {
-					System.out.println("SSH: " + e.getMessage() + "\n"
-							+ "Reason: " + e.getCause());
+//					System.out.println("SSH: " + e.getMessage() + "\n"
+//							+ "Reason: " + e.getCause());
+					e.printStackTrace();
 				}
 			}
 			try {
@@ -101,6 +111,10 @@ public class ThreadSSH extends Thread {
 	public void doSendCMD(String cmd) {
 		this.somethingToSend = true;
 		this.cmdToSend = cmd;
+	}
+	
+	public void doSendCMDCongigMode(String cmd,String enablePass){
+		doSendCMD("enable\n"+enablePass+"conf t\n"+this.cmdToSend+"exit\n");
 	}
 
 	public void doDisconnect() {
