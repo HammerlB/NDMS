@@ -2,13 +2,10 @@ package at.bmlvs.NDMS.domain;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 
 import javafx.scene.control.Tab;
 import at.bmlvs.NDMS.domain.connectors.SNMPConnector;
 import at.bmlvs.NDMS.domain.connectors.SSHConnector;
-import at.bmlvs.NDMS.domain.connectors.ThreadSNMP;
-import at.bmlvs.NDMS.domain.connectors.ThreadSSH;
 import at.bmlvs.NDMS.domain.helper.SNMPParser;
 import at.bmlvs.NDMS.domain.helper.UUIDGenerator;
 import at.bmlvs.NDMS.service.ServiceFactory;
