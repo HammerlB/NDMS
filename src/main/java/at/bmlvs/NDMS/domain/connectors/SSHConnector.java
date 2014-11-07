@@ -24,7 +24,7 @@ public class SSHConnector extends TerminalConnector implements Runnable {
 	private String host;
 	private String user;
 	private String pass;
-	private String fingerprint;
+	private static String fingerprint;
 	private InputStream in;
 	private OutputStream out;
 	private boolean connected;
@@ -55,7 +55,7 @@ public class SSHConnector extends TerminalConnector implements Runnable {
 		connected = false;
 	}
 
-	public String getSSHFingerprint() {
+	public static String getSSHFingerprint() {
 		return fingerprint;
 	}
 

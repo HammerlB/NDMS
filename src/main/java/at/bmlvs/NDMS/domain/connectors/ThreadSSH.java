@@ -1,17 +1,13 @@
 package at.bmlvs.NDMS.domain.connectors;
 
-import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ThreadSSH extends Thread {
-
 	private SSHConnector ssh;
-	private boolean isConnected;
-	private boolean somethingToSend;
+	private boolean isConnected, somethingToSend, disconnect, readerStarted;
+	private int progress;
 	private String cmdToSend;
-	private Thread t;
-	private boolean disconnect;
-	private boolean readerStarted;
+	private Thread reader;
 	private CopyOnWriteArrayList<String> cmd;
 
 	public ThreadSSH(String host, String user, String pass) {
@@ -20,7 +16,7 @@ public class ThreadSSH extends Thread {
 		somethingToSend = false;
 		readerStarted = false;
 		cmd = new CopyOnWriteArrayList<String>();
-		t = new Thread(ssh);
+		reader = new Thread(ssh);
 	}
 
 	@Override
@@ -40,13 +36,14 @@ public class ThreadSSH extends Thread {
 				try {
 					for (int i = 0; i < cmd.size(); i++) {
 						sendCMD(cmd.get(i));
+						checkProgress(i);
 						System.out.println("Sended!!");
 						sleep(1000);
 					}
 					cmd.clear();
 
 					if (!readerStarted) {
-						t.start();
+						reader.start();
 						System.out.println("Reader Started!");
 						readerStarted = true;
 					}
@@ -60,7 +57,7 @@ public class ThreadSSH extends Thread {
 				try {
 					System.out.println("Trying to disconnect...");
 					sleep(3000);
-					t.interrupt();
+					reader.interrupt();
 					ssh.disconnect();
 					System.out.println("Disconnected!");
 					break;
@@ -74,21 +71,6 @@ public class ThreadSSH extends Thread {
 
 	private void sendCMD(String cmd) {
 		ssh.sendCmd(cmd);
-		// try {
-		// out.write(cmd.getBytes());
-		//
-		// byte[] buffer = new byte[cmd.getBytes().length];
-		// int read = 0;
-		// for (int i = 0; i < 100; i++) {
-		// read = in.read(buffer);
-		// }
-		// } catch (IOException e) {
-		// System.out.println("sendCMD: " + e.getMessage());
-		// }
-	}
-
-	public String getFingerprint() {
-		return ssh.getSSHFingerprint();
 	}
 
 	public boolean isConnected() {
@@ -115,8 +97,15 @@ public class ThreadSSH extends Thread {
 		this.cmdToSend = cmdToSend;
 	}
 
-	public void doSendCMD(String cmd) {
+	public int getProgress() {
+		return progress;
+	}
 
+	public void setProgress(int progress) {
+		this.progress = progress;
+	}
+
+	public void doSendCMD(String cmd) {
 		this.cmd.add(cmd);
 		this.somethingToSend = true;
 
@@ -131,5 +120,9 @@ public class ThreadSSH extends Thread {
 
 	public void doDisconnect() {
 		this.disconnect = true;
+	}
+	
+	public void checkProgress(int i){
+		this.progress = 100/cmd.size()*i;
 	}
 }
