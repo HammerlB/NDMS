@@ -13,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import at.bmlvs.NDMS.domain.connectors.SNMPConnector;
 import at.bmlvs.NDMS.domain.connectors.SSHConnector;
+import at.bmlvs.NDMS.domain.connectors.ThreadSSH;
 import at.bmlvs.NDMS.service.PersistenceService;
 import at.bmlvs.NDMS.service.ServiceFactory;
 
@@ -35,8 +36,8 @@ public class InstanceTest extends Application
 			ServiceFactory.setAppConfig(ServiceFactory.getPersistenceService()
 					.getAppconfig().getElement());
 			
-			SSHConnector sshc = new SSHConnector(tabname, "Herkel", "gwdH_2014");
-			sshc.connect();
+			ThreadSSH sshc = new ThreadSSH(tabname, "Herkel", "gwdH_2014");
+			sshc.start();
 			
 			Instance inst = new Instance(tabname, sshc.getSSHFingerprint(), tabname, sshc, new SNMPConnector("udp:" + tabname + "/161", "gwdSNMP_2014"));
 			inst.populateAll();
