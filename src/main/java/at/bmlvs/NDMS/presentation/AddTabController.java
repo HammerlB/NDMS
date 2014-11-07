@@ -93,7 +93,7 @@ public class AddTabController
 					Instance inst = new Instance(tabname,
 							sshc.getSSHFingerprint(), tabname, sshc, snmpc);
 					inst.populateAll();
-					//inst.checkInterfaces();
+					//inst.checkInterfaces(); holadoadororo
 					ServiceFactory.getDomainService().getInstances().addSingleOnlineInstance(inst);
 					addTab(inst);
 					portview(ServiceFactory.getDomainService().getInstances().getInstances().indexOf(inst));
@@ -329,9 +329,12 @@ public class AddTabController
 
 		for (Interface interf : ServiceFactory.getDomainService().getInstances().getInstances().get(id).getInterfaces())
 		{
-			
-			portview1.add(new Button(interf.getPortnameshort()),countercolumn, counterrow);	
-			
+
+			if(countercolumn != 7)
+			{
+				
+				portview1.add(new Button(interf.getPortnameshort()),countercolumn, counterrow);	
+				
 				if (counterrow == 2)
 				{
 					counterrow--;
@@ -340,11 +343,17 @@ public class AddTabController
 				} else {
 					counterrow++;
 				}
+			} else {
 				
+				portview1.add(new Label("space"),countercolumn, counterrow);
+				counterrow++;
+				portview1.add(new Label("space"),countercolumn, counterrow);
 				
+				portview1.add(new Button(interf.getPortnameshort()),countercolumn, counterrow);	
 				
-
-
+				countercolumn ++;
+				
+			}
 		}
 		
 		//id stuff to int: Integer.parseInt(interf.getPortid()), 
