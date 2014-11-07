@@ -137,7 +137,7 @@ public class SSHConnector extends TerminalConnector implements Runnable {
 				read = in.read(buffer);
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Reader has stopped!");
 		}
 	}
 

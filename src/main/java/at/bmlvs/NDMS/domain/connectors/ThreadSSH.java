@@ -1,5 +1,8 @@
 package at.bmlvs.NDMS.domain.connectors;
 
+import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 public class ThreadSSH extends Thread {
 
 	private SSHConnector ssh;
@@ -9,12 +12,14 @@ public class ThreadSSH extends Thread {
 	private Thread t;
 	private boolean disconnect;
 	private boolean readerStarted;
+	private CopyOnWriteArrayList<String> cmd;
 
 	public ThreadSSH(String host, String user, String pass) {
 		ssh = new SSHConnector(host, user, pass);
 		isConnected = false;
 		somethingToSend = false;
 		readerStarted = false;
+		cmd = new CopyOnWriteArrayList<String>();
 		t = new Thread(ssh);
 	}
 
@@ -26,19 +31,24 @@ public class ThreadSSH extends Thread {
 				setConnected(true);
 				System.out.println("Connected!");
 			} catch (Exception e) {
-				System.out.println("SSH: " + e.getMessage() + "\n"
-						+ "Reason: " + e.getCause());
+				System.out.println("SSH: " + e.getMessage() + "\n" + "Reason: "
+						+ e.getCause());
 			}
 		}
 		while (true) {
 			if (somethingToSend) {
 				try {
-					sendCMD(cmdToSend);
-					System.out.println("Sended!!");
-					if (!readerStarted){
+					for (int i = 0; i < cmd.size(); i++) {
+						sendCMD(cmd.get(i));
+						System.out.println("Sended!!");
+						sleep(1000);
+					}
+					cmd.clear();
+
+					if (!readerStarted) {
 						t.start();
 						System.out.println("Reader Started!");
-						readerStarted=true;
+						readerStarted = true;
 					}
 					setSomethingToSend(false);
 				} catch (Exception e) {
@@ -47,10 +57,12 @@ public class ThreadSSH extends Thread {
 				}
 			}
 			if (disconnect) {
-				t.stop();
 				try {
+					System.out.println("Trying to disconnect...");
+					sleep(3000);
+					t.interrupt();
 					ssh.disconnect();
-					disconnect=false;
+					System.out.println("Disconnected!");
 					break;
 				} catch (Exception e) {
 					System.out.println("SSH: " + e.getMessage() + "\n"
@@ -104,14 +116,17 @@ public class ThreadSSH extends Thread {
 	}
 
 	public void doSendCMD(String cmd) {
-		this.cmdToSend = cmd;
+
+		this.cmd.add(cmd);
 		this.somethingToSend = true;
+
 	}
-	
-	public void doSendCMDConfigMode(String cmd,String enablePass){
-		this.cmdToSend = "enable\n"+enablePass+"\n"+"conf t\n"+cmd+"exit\n";
+
+	public void doSendCMDConfigMode(String cmd, String enablePass) {
+		this.cmd.add("enable\n" + enablePass + "\n" + "conf t\n" + cmd + "\n"
+				+ "exit\n");
 		this.somethingToSend = true;
-		
+
 	}
 
 	public void doDisconnect() {
