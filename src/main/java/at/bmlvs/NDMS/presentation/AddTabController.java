@@ -318,7 +318,7 @@ public class AddTabController
 		portview1 = new GridPane();
 		
 		int counterrow = 1;
-		int countercolumn = 0;
+		int countercolumn = 1;
 		
 		portview1.setPadding(new Insets(5, 0, 5, 0));
 		
@@ -329,16 +329,19 @@ public class AddTabController
 
 		for (Interface interf : ServiceFactory.getDomainService().getInstances().getInstances().get(id).getInterfaces())
 		{
-							
+			
+			portview1.add(new Button(interf.getPortnameshort()),countercolumn, counterrow);	
+			
 				if (counterrow == 2)
 				{
 					counterrow--;
 					countercolumn ++;
+					
 				} else {
-					countercolumn ++;
+					counterrow++;
 				}
 				
-				portview1.add(new Button(interf.getPortnameshort()),countercolumn, counterrow);
+				
 				
 
 
