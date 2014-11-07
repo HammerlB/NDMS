@@ -1,7 +1,6 @@
 package at.bmlvs.NDMS.presentation;
 
 import java.io.IOException;
-import java.util.Collections;
 
 import at.bmlvs.NDMS.domain.Instance;
 import at.bmlvs.NDMS.domain.Interface;
@@ -14,7 +13,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -66,6 +64,8 @@ public class AddTabController
 	private TextField offline1;
 	@FXML
 	private Label errorlabel;
+	
+	private TilePane portview1;
 
 
 	@SuppressWarnings("static-access")
@@ -102,6 +102,7 @@ public class AddTabController
 				{
 					errorlabel.setText("Verbindung war nicht erfolgreich! \n("
 							+ e.getMessage() + ")");
+					e.printStackTrace();
 				}
 				
 				
@@ -313,9 +314,10 @@ public class AddTabController
 	@SuppressWarnings("static-access")
 	private void portview(int id)
 	{
-		TilePane portview1 = new TilePane();
-
+		portview1 = new TilePane();
+		
 		int counter = 0;
+		
 		
 		portview1.setPadding(new Insets(5, 0, 5, 0));
 		
@@ -329,36 +331,28 @@ public class AddTabController
 			if((counter % 6) == 0)
 			{
 				portview1.getChildren().add(new Label(""));
-				
 			} 
 			
 			if(((counter % 24) == 0) && (counter != 0)){
 				
-				portview1.getChildren().add(new Label(""));
-				portview1.getChildren().add(new Label(""));
-				portview1.getChildren().add(new Label(""));
-
-				portview1.getChildren().add(new Label(""));
-				portview1.getChildren().add(new Label(""));
-				portview1.getChildren().add(new Label(""));	
-				
-				portview1.getChildren().add(new Label(""));
-				portview1.getChildren().add(new Label(""));
-				portview1.getChildren().add(new Label(""));
-
-				portview1.getChildren().add(new Label(""));
-				portview1.getChildren().add(new Label(""));
-				portview1.getChildren().add(new Label(""));
-				
-				portview1.getChildren().add(new Label(""));
-				portview1.getChildren().add(new Label(""));
+				for(int i = 0; i < 14; i++)
+				{
+					portview1.getChildren().add(new Label(""));
+				}
 			}
 			
-			if(counter < 9)
+			switch (interf.getPortstatus())
 			{
-				portview1.getChildren().add(new Button(" " + interf.getPortnameshort() + " "));
-			}else{
-				portview1.getChildren().add(new Button(interf.getPortnameshort()));
+				case "1":
+					portview1.getChildren().add(Integer.parseInt(interf.getPortidshort()), new Button(interf.getPortnameshort()));
+					portview1.getChildren().get(Integer.parseInt(interf.getPortidshort())).setStyle("-fx-base: #b6e7c9;");
+					break;
+				case "2":
+					portview1.getChildren().add(Integer.parseInt(interf.getPortidshort()), new Button(interf.getPortnameshort()));
+					break;
+				default:
+					System.out.println(interf.toString());
+					break;
 			}
 			
 			counter++;
@@ -371,8 +365,6 @@ public class AddTabController
 		tabbox.getChildren().addAll(portview1);
 		PresentationService.getMainWindowController().getTabPane().getTabs().get(id).setContent(tabbox);
 		
-		//PresentationService.getMainWindowController().getTabPane().getTabs().add(PresentationService.getMainWindowController().getTabPane().getTabs().get(id));
-
 	}
 
 	private void dotListener(TextField tf1, final TextField tf2)
