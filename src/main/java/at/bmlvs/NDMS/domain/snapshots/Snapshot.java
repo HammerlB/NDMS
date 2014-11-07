@@ -7,7 +7,7 @@ public class Snapshot {
 	private String switchtype;
 	
 	public Snapshot(){
-		this.sshKey = SSHConnector.getSSHFingerprint();
+		
 	}
 	
 	public void createSnapshot(){
