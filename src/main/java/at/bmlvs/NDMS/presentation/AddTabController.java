@@ -21,6 +21,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 
@@ -65,7 +66,7 @@ public class AddTabController
 	@FXML
 	private Label errorlabel;
 	
-	private TilePane portview1;
+	private GridPane portview1;
 
 
 	@SuppressWarnings("static-access")
@@ -314,48 +315,33 @@ public class AddTabController
 	@SuppressWarnings("static-access")
 	private void portview(int id)
 	{
-		portview1 = new TilePane();
+		portview1 = new GridPane();
 		
-		int counter = 0;
-		
+		int counterrow = 1;
+		int countercolumn = 0;
 		
 		portview1.setPadding(new Insets(5, 0, 5, 0));
 		
-		portview1.setVgap(0);
-		portview1.setHgap(0);
+		//portview1.setVgap(0);
+		//portview1.setHgap(0);
 
-		portview1.setMaxWidth(700);
+		//portview1.setMaxWidth(700);
 
 		for (Interface interf : ServiceFactory.getDomainService().getInstances().getInstances().get(id).getInterfaces())
 		{
-			if((counter % 6) == 0)
-			{
-				portview1.getChildren().add(new Label(""));
-			} 
-			
-			if(((counter % 24) == 0) && (counter != 0)){
-				
-				for(int i = 0; i < 14; i++)
+							
+				if (counterrow == 2)
 				{
-					portview1.getChildren().add(new Label(""));
+					counterrow--;
+					countercolumn ++;
+				} else {
+					countercolumn ++;
 				}
-			}
-			
-			switch (interf.getPortstatus())
-			{
-				case "1":
-					portview1.getChildren().add(Integer.parseInt(interf.getPortidshort()), new Button(interf.getPortnameshort()));
-					portview1.getChildren().get(Integer.parseInt(interf.getPortidshort())).setStyle("-fx-base: #b6e7c9;");
-					break;
-				case "2":
-					portview1.getChildren().add(Integer.parseInt(interf.getPortidshort()), new Button(interf.getPortnameshort()));
-					break;
-				default:
-					System.out.println(interf.toString());
-					break;
-			}
-			
-			counter++;
+				
+				portview1.add(new Button(interf.getPortnameshort()),countercolumn, counterrow);
+				
+
+
 		}
 		
 		//id stuff to int: Integer.parseInt(interf.getPortid()), 
