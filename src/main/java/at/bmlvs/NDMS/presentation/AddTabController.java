@@ -1,6 +1,8 @@
 package at.bmlvs.NDMS.presentation;
 
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import at.bmlvs.NDMS.domain.Instance;
 import at.bmlvs.NDMS.domain.Interface;
@@ -9,6 +11,12 @@ import at.bmlvs.NDMS.domain.connectors.SSHConnector;
 import at.bmlvs.NDMS.presentation.elements.RestrictiveTextField;
 import at.bmlvs.NDMS.service.PresentationService;
 import at.bmlvs.NDMS.service.ServiceFactory;
+import javafx.animation.Animation;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -65,9 +73,8 @@ public class AddTabController
 	private TextField offline1;
 	@FXML
 	private Label errorlabel;
-	
-	private GridPane portview1;
 
+	private GridPane portview1;
 
 	@SuppressWarnings("static-access")
 	@FXML
@@ -83,19 +90,57 @@ public class AddTabController
 				tabname = ipaddress1.getText() + "." + ipaddress2.getText()
 						+ "." + ipaddress3.getText() + "."
 						+ ipaddress4.getText();
-				 
+
 				try
 				{
-					SSHConnector sshc = new SSHConnector(tabname, "Herkel", "gwdH_2014");
+					SSHConnector sshc = new SSHConnector(tabname, "Herkel",
+							"gwdH_2014");
 					sshc.start();
-					
-					Instance inst = new Instance(tabname, sshc.getSSHFingerprint(), tabname, sshc, new SNMPConnector("udp:" + tabname + "/161", "gwdSNMP_2014"));
-					inst.populateAll();
-					//inst.checkInterfaces(); holadoadororo
-					ServiceFactory.getDomainService().getInstances().addSingleOnlineInstance(inst);
-					addTab(inst);
-					portview(ServiceFactory.getDomainService().getInstances().getInstances().indexOf(inst));
 
+					Instance inst = new Instance(tabname,
+							sshc.getSSHFingerprint(), tabname, sshc,
+							new SNMPConnector("udp:" + tabname + "/161",
+									"gwdSNMP_2014"));
+
+					inst.populateAll();
+
+					inst.nameProperty().addListener(
+							new ChangeListener<Object>()
+							{
+								@Override
+								public void changed(
+										ObservableValue<? extends Object> arg0,
+										Object arg1, Object arg2)
+								{
+									Platform.runLater(new Runnable()
+									{
+										public void run()
+										{
+											inst.setText(inst.getName());
+										}
+									});
+								}
+							});
+
+					Timer timer = new Timer();
+
+					timer.scheduleAtFixedRate(new TimerTask()
+					{
+						public void run()
+						{
+							inst.checkInstance();
+							// checkInterfaces();
+						}
+					}, 1000, 5000);
+
+					// Platform.runLater(inst);
+
+					// inst.checkInterfaces(); holadoadororo
+					ServiceFactory.getDomainService().getInstances()
+							.addSingleOnlineInstance(inst);
+					addTab(inst);
+					portview(ServiceFactory.getDomainService().getInstances()
+							.getInstances().indexOf(inst));
 				}
 				catch (Exception e)
 				{
@@ -103,8 +148,7 @@ public class AddTabController
 							+ e.getMessage() + ")");
 					e.printStackTrace();
 				}
-				
-				
+
 			}
 			else
 			{
@@ -139,7 +183,7 @@ public class AddTabController
 			{
 				tabname = offline1.getText();
 				addTab(new Tab(tabname));
-				
+
 			}
 			else
 			{
@@ -306,7 +350,8 @@ public class AddTabController
 
 	private void addTab(Tab tab)
 	{
-		PresentationService.getMainWindowController().getTabPane().getTabs().add(tab);
+		PresentationService.getMainWindowController().getTabPane().getTabs()
+				.add(tab);
 		PresentationService.getMainWindowController().getStage().close();
 	}
 
@@ -314,66 +359,75 @@ public class AddTabController
 	private void portview(int id)
 	{
 		portview1 = new GridPane();
-		
+
 		int counterrow = 1;
 		int countercolumn = 1;
-		
+
 		portview1.setPadding(new Insets(5, 0, 5, 0));
-		
-		//portview1.setVgap(0);
-		//portview1.setHgap(0);
 
-		//portview1.setMaxWidth(700);
+		// portview1.setVgap(0);
+		// portview1.setHgap(0);
 
-		for (Interface interf : ServiceFactory.getDomainService().getInstances().getInstances().get(id).getInterfaces())
+		// portview1.setMaxWidth(700);
+
+		for (Interface interf : ServiceFactory.getDomainService()
+				.getInstances().getInstances().get(id).getInterfaces())
 		{
 
-			if((countercolumn == 7))
+			if ((countercolumn == 7))
 			{
-				portview1.add(new Label("    "),countercolumn, counterrow);
+				portview1.add(new Label("    "), countercolumn, counterrow);
 				counterrow++;
-				portview1.add(new Label("    "),countercolumn, counterrow);
-				countercolumn ++;
+				portview1.add(new Label("    "), countercolumn, counterrow);
+				countercolumn++;
 				counterrow--;
-				portview1.add(new Button(interf.getPortnameshort()),countercolumn, counterrow);	
+				portview1.add(new Button(interf.getPortnameshort()),
+						countercolumn, counterrow);
 				counterrow++;
 
-			} else if((countercolumn == 14))
+			}
+			else if ((countercolumn == 14))
 			{
 				countercolumn = 1;
 				counterrow = counterrow + 2;
 				for (int i = 0; i < 14; i++)
 				{
-					portview1.add(new Label("    "),countercolumn, counterrow);
+					portview1.add(new Label("    "), countercolumn, counterrow);
 					countercolumn++;
 				}
 				countercolumn = 1;
 				counterrow++;
-				portview1.add(new Button(interf.getPortnameshort()),countercolumn, counterrow);	
+				portview1.add(new Button(interf.getPortnameshort()),
+						countercolumn, counterrow);
 				counterrow++;
 			}
-			else {
+			else
+			{
 
-				portview1.add(new Button(interf.getPortnameshort()),countercolumn, counterrow);	
-				
+				portview1.add(new Button(interf.getPortnameshort()),
+						countercolumn, counterrow);
+
 				if ((counterrow == 2) || (counterrow == 5))
 				{
 					counterrow--;
-					countercolumn ++;
-					
-				} else {
+					countercolumn++;
+
+				}
+				else
+				{
 					counterrow++;
 				}
 			}
 		}
-		
-		//id stuff to int: Integer.parseInt(interf.getPortid()), 
-		
+
+		// id stuff to int: Integer.parseInt(interf.getPortid()),
+
 		// Add something in Tab
 		VBox tabbox = new VBox();
 		tabbox.getChildren().addAll(portview1);
-		PresentationService.getMainWindowController().getTabPane().getTabs().get(id).setContent(tabbox);
-		
+		PresentationService.getMainWindowController().getTabPane().getTabs()
+				.get(id).setContent(tabbox);
+
 	}
 
 	private void dotListener(TextField tf1, final TextField tf2)

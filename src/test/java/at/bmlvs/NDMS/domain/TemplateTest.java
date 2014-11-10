@@ -53,7 +53,6 @@ public class TemplateTest
 	}
 	
 	@SuppressWarnings("static-access")
-	@Override
 	public void start(Stage stage) throws Exception
 	{
 		stage.setScene(new Scene(ServiceFactory.getPresentationService().getMainWindowController()));

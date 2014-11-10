@@ -132,6 +132,24 @@ public class Interface extends Button
 		this.vlan = vlan;
 	}
 	
+	public String checkAndSetWhatType()
+	{
+		String type = "Unknown";
+		
+		if(isPort_8021X())
+		{
+			type = "Client";
+		}
+		else if(isTrunkstatus())
+		{
+			type = "Network";
+		}
+		
+		setType(type);
+		
+		return type;
+	}
+	
 	@Override
 	public String toString()
 	{

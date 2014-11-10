@@ -3,6 +3,13 @@ package at.bmlvs.NDMS.domain;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.scene.control.Tab;
 import at.bmlvs.NDMS.domain.connectors.SNMPConnector;
 import at.bmlvs.NDMS.domain.connectors.SSHConnector;
@@ -12,78 +19,139 @@ import at.bmlvs.NDMS.service.ServiceFactory;
 
 public class Instance extends Tab
 {
-	private String UUID;
-	private String name;
-	private String fingerprint;
-	private String management_ip;
-	
+	private StringProperty uuid;
+	private StringProperty name;
+	private StringProperty fingerprint;
+	private StringProperty management_ip;
+
 	private SSHConnector sshConnector;
 	private SNMPConnector snmpConnector;
-	
-	private ArrayList<Interface> interfaces;
-	
-	public Instance(String name, String fingerprint, String management_ip, SSHConnector sshConnector, SNMPConnector snmpConnector)
+
+	private ObservableList<Interface> interfaces;
+
+	public Instance(String name, String fingerprint, String management_ip,
+			SSHConnector sshConnector, SNMPConnector snmpConnector)
 	{
 		setUUID(UUIDGenerator.generateUUID());
 		setName(name);
 		setFingerprint(fingerprint);
-		setManagement_ip(management_ip);
+		setManagement_IP(management_ip);
 		setSshConnector(sshConnector);
 		setSnmpConnector(snmpConnector);
 		setText(getName());
-		setInterfaces(new ArrayList<Interface>());
+		setInterfaces(FXCollections.observableArrayList());
 	}
 
-	public String getUUID()
+	public final String getUUID()
 	{
-		return UUID;
+		if (uuid != null)
+		{
+			return uuid.get();
+		}
+
+		return null;
 	}
 
-	public void setUUID(String uUID)
+	public final void setUUID(String uuid)
 	{
-		UUID = uUID;
+		this.uuidProperty().set(uuid);
 	}
 
-	public String getName()
+	public final StringProperty uuidProperty()
 	{
+		if (uuid == null)
+		{
+			uuid = new SimpleStringProperty(null);
+		}
+
+		return uuid;
+	}
+
+	public final String getName()
+	{
+		if (name != null)
+		{
+			return name.get();
+		}
+
+		return null;
+	}
+
+	public final void setName(String name)
+	{
+		this.nameProperty().set(name);
+	}
+
+	public final StringProperty nameProperty()
+	{
+		if (name == null)
+		{
+			name = new SimpleStringProperty(null);
+		}
+
 		return name;
 	}
 
-	public void setName(String name)
+	public final String getFingerprint()
 	{
-		this.name = name;
+		if (fingerprint != null)
+		{
+			return fingerprint.get();
+		}
+
+		return null;
 	}
 
-	public String getFingerprint()
+	public final void setFingerprint(String fingerprint)
 	{
+		this.fingerprintProperty().set(fingerprint);
+	}
+
+	public final StringProperty fingerprintProperty()
+	{
+		if (fingerprint == null)
+		{
+			fingerprint = new SimpleStringProperty(null);
+		}
+
 		return fingerprint;
 	}
 
-	public void setFingerprint(String fingerprint)
+	public final String getManagement_IP()
 	{
-		this.fingerprint = fingerprint;
+		if (management_ip != null)
+		{
+			return management_ip.get();
+		}
+
+		return null;
 	}
 
-	public String getManagement_ip()
+	public final void setManagement_IP(String management_ip)
 	{
+		this.management_ipProperty().set(management_ip);
+	}
+
+	public final StringProperty management_ipProperty()
+	{
+		if (management_ip == null)
+		{
+			management_ip = new SimpleStringProperty(null);
+		}
+
 		return management_ip;
 	}
 
-	public void setManagement_ip(String management_ip)
-	{
-		this.management_ip = management_ip;
-	}
-
-	public ArrayList<Interface> getInterfaces()
+	public ObservableList<Interface> getInterfaces()
 	{
 		return interfaces;
 	}
 
-	public void setInterfaces(ArrayList<Interface> interfaces)
+	public void setInterfaces(ObservableList<Interface> interfaces)
 	{
 		this.interfaces = interfaces;
 	}
-	
+
 	public SNMPConnector getSnmpConnector()
 	{
 		return snmpConnector;
@@ -94,11 +162,13 @@ public class Instance extends Tab
 		this.snmpConnector = snmpConnector;
 	}
 
-	public SSHConnector getSshConnector() {
+	public SSHConnector getSshConnector()
+	{
 		return sshConnector;
 	}
 
-	public void setSshConnector(SSHConnector sshConnector) {
+	public void setSshConnector(SSHConnector sshConnector)
+	{
 		this.sshConnector = sshConnector;
 	}
 
@@ -106,7 +176,9 @@ public class Instance extends Tab
 	{
 		try
 		{
-			setName(getSnmpConnector().walk(ServiceFactory.getPersistenceService().getAppconfig().getElement().getSNMP_SWNAME(), false, true).get(0));
+			setName(getSnmpConnector().walk(
+					ServiceFactory.getPersistenceService().getAppconfig()
+							.getElement().getSNMP_SWNAME(), false, true).get(0));
 			setText(getName());
 		}
 		catch (Exception e)
@@ -114,20 +186,39 @@ public class Instance extends Tab
 			e.printStackTrace();
 		}
 	}
-	
+
+	public void checkInstance()
+	{
+		try
+		{
+			String name = getSnmpConnector().walk(
+					ServiceFactory.getPersistenceService().getAppconfig()
+							.getElement().getSNMP_SWNAME(), false, true).get(0);
+			setName(name);
+			System.out.println(name);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+
 	public void populateInterfaces()
 	{
 		ArrayList<String> vlans = new ArrayList<String>();
-		
+
 		try
 		{
-			for(String output: getSnmpConnector().walk(ServiceFactory.getPersistenceService().getAppconfig().getElement().getSNMP_ALLVLANINFORMATION(), true, false))
+			for (String output : getSnmpConnector().walk(
+					ServiceFactory.getPersistenceService().getAppconfig()
+							.getElement().getSNMP_ALLVLANINFORMATION(), true,
+					false))
 			{
 				try
 				{
 					String[] parts = output.split("\\:");
-					
-					if(parts.length > 1)
+
+					if (parts.length > 1)
 					{
 						vlans.add(parts[0]);
 					}
@@ -137,20 +228,24 @@ public class Instance extends Tab
 					e.printStackTrace();
 				}
 			}
-			
-			for(String output: getSnmpConnector().walk(ServiceFactory.getPersistenceService().getAppconfig().getElement().getSNMP_BRIDGEIFDESCR(), true, false))
+
+			for (String output : getSnmpConnector().walk(
+					ServiceFactory.getPersistenceService().getAppconfig()
+							.getElement().getSNMP_BRIDGEIFDESCR(), true, false))
 			{
 				try
 				{
 					String[] parts = output.split("\\:");
-					
-					if(parts.length > 1)
+
+					if (parts.length > 1)
 					{
-						if(!parts[1].contains("Null") && !parts[1].equals("1") && !parts[1].contains("Vlan"))
+						if (!parts[1].contains("Null") && !parts[1].equals("1")
+								&& !parts[1].contains("Vlan"))
 						{
 							Interface interf = new Interface(parts[0]);
 							interf.setPortname(parts[1]);
-							interf.setPortnameshort(SNMPParser.convertPortnameToPortshortname(parts[1]));
+							interf.setPortnameshort(SNMPParser
+									.convertPortnameToPortshortname(parts[1]));
 							getInterfaces().add(interf);
 						}
 					}
@@ -160,18 +255,20 @@ public class Instance extends Tab
 					e.printStackTrace();
 				}
 			}
-			
-			for(String output: getSnmpConnector().walk(ServiceFactory.getPersistenceService().getAppconfig().getElement().getSNMP_BRIDGEIFSTATUS(), true, false))
+
+			for (String output : getSnmpConnector()
+					.walk(ServiceFactory.getPersistenceService().getAppconfig()
+							.getElement().getSNMP_BRIDGEIFSTATUS(), true, false))
 			{
 				try
 				{
 					String[] parts = output.split("\\:");
-					
-					for(Interface interf: getInterfaces())
+
+					for (Interface interf : getInterfaces())
 					{
-						if(parts.length > 1)
+						if (parts.length > 1)
 						{
-							if(interf.getPortid().equals(parts[0]))
+							if (interf.getPortid().equals(parts[0]))
 							{
 								interf.setPortstatus(parts[1]);
 							}
@@ -183,20 +280,23 @@ public class Instance extends Tab
 					e.printStackTrace();
 				}
 			}
-			
-			for(String output: getSnmpConnector().walk(ServiceFactory.getPersistenceService().getAppconfig().getElement().getSNMP_VLANTRUNKPORTDYNAMICSTATUS(), true, false))
+
+			for (String output : getSnmpConnector().walk(
+					ServiceFactory.getPersistenceService().getAppconfig()
+							.getElement().getSNMP_VLANTRUNKPORTDYNAMICSTATUS(),
+					true, false))
 			{
 				try
 				{
 					String[] parts = output.split("\\:");
-					
-					for(Interface interf: getInterfaces())
+
+					for (Interface interf : getInterfaces())
 					{
-						if(parts.length > 1)
+						if (parts.length > 1)
 						{
-							if(interf.getPortid().equals(parts[0]))
+							if (interf.getPortid().equals(parts[0]))
 							{
-								if(parts[1].contains("1"))
+								if (parts[1].contains("1"))
 								{
 									interf.setTrunkstatus(true);
 								}
@@ -213,20 +313,23 @@ public class Instance extends Tab
 					e.printStackTrace();
 				}
 			}
-			
-			for(String output: getSnmpConnector().walk(ServiceFactory.getPersistenceService().getAppconfig().getElement().getSNMP_CDPINTERFACEENABLE(), true, false))
+
+			for (String output : getSnmpConnector().walk(
+					ServiceFactory.getPersistenceService().getAppconfig()
+							.getElement().getSNMP_CDPINTERFACEENABLE(), true,
+					false))
 			{
 				try
 				{
 					String[] parts = output.split("\\:");
-					
-					for(Interface interf: getInterfaces())
+
+					for (Interface interf : getInterfaces())
 					{
-						if(parts.length > 1)
+						if (parts.length > 1)
 						{
-							if(interf.getPortid().equals(parts[0]))
+							if (interf.getPortid().equals(parts[0]))
 							{
-								if(parts[1].contains("1"))
+								if (parts[1].contains("1"))
 								{
 									interf.setCdpstatus(true);
 								}
@@ -243,24 +346,30 @@ public class Instance extends Tab
 					e.printStackTrace();
 				}
 			}
-			
-			for(String vlan: vlans)
+
+			for (String vlan : vlans)
 			{
-				for(String output: getSnmpConnector().walkWithDynamicCommunityString(ServiceFactory.getPersistenceService().getAppconfig().getElement().getSNMP_DOT1DBASEPORTIFINDEX(), getSnmpConnector().getCommunityString() + "@" + vlan, true, false))
+				for (String output : getSnmpConnector()
+						.walkWithDynamicCommunityString(
+								ServiceFactory.getPersistenceService()
+										.getAppconfig().getElement()
+										.getSNMP_DOT1DBASEPORTIFINDEX(),
+								getSnmpConnector().getCommunityString() + "@"
+										+ vlan, true, false))
 				{
 					try
 					{
 						String[] parts = output.split("\\:");
-						
-						for(Interface interf: getInterfaces())
+
+						for (Interface interf : getInterfaces())
 						{
-							if(parts.length > 1)
+							if (parts.length > 1)
 							{
-								if(interf.getPortid().equals(parts[1]))
+								if (interf.getPortid().equals(parts[1]))
 								{
 									interf.setPortidshort(parts[0]);
-									
-									if(interf.isTrunkstatus() != true)
+
+									if (interf.isTrunkstatus() != true)
 									{
 										interf.setVlan(vlan);
 									}
@@ -272,7 +381,7 @@ public class Instance extends Tab
 							}
 						}
 					}
-					catch(Exception e)
+					catch (Exception e)
 					{
 						e.printStackTrace();
 					}
@@ -284,40 +393,196 @@ public class Instance extends Tab
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void populateAll()
 	{
 		populateInstance();
 		populateInterfaces();
 	}
-	
+
 	public void checkInterfaces()
 	{
-		Thread t = new Thread()
+		ArrayList<String> vlans = new ArrayList<String>();
+
+		try
 		{
-		     public void run()
-		     {
-		    	while(true)
-		    	{
-		    		try
+			for (String output : getSnmpConnector().walk(
+					ServiceFactory.getPersistenceService().getAppconfig()
+							.getElement().getSNMP_ALLVLANINFORMATION(), true,
+					false))
+			{
+				try
+				{
+					String[] parts = output.split("\\:");
+
+					if (parts.length > 1)
 					{
-						System.out.println("CHECKIF: " + getSnmpConnector().walk(".1.3.6.1.2.1.2.2.1.1", false, true));
+						vlans.add(parts[0]);
 					}
-					catch (IOException e)
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace();
+				}
+			}
+
+			for (String output : getSnmpConnector()
+					.walk(ServiceFactory.getPersistenceService().getAppconfig()
+							.getElement().getSNMP_BRIDGEIFSTATUS(), true, false))
+			{
+				try
+				{
+					String[] parts = output.split("\\:");
+
+					for (Interface interf : getInterfaces())
+					{
+						if (parts.length > 1)
+						{
+							if (interf.getPortid().equals(parts[0]))
+							{
+								interf.setPortstatus(parts[1]);
+							}
+						}
+					}
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace();
+				}
+			}
+
+			for (String output : getSnmpConnector().walk(
+					ServiceFactory.getPersistenceService().getAppconfig()
+							.getElement().getSNMP_VLANTRUNKPORTDYNAMICSTATUS(),
+					true, false))
+			{
+				try
+				{
+					String[] parts = output.split("\\:");
+
+					for (Interface interf : getInterfaces())
+					{
+						if (parts.length > 1)
+						{
+							if (interf.getPortid().equals(parts[0]))
+							{
+								if (parts[1].contains("1"))
+								{
+									interf.setTrunkstatus(true);
+								}
+								else
+								{
+									interf.setTrunkstatus(false);
+								}
+							}
+						}
+					}
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace();
+				}
+			}
+
+			for (String output : getSnmpConnector().walk(
+					ServiceFactory.getPersistenceService().getAppconfig()
+							.getElement().getSNMP_CDPINTERFACEENABLE(), true,
+					false))
+			{
+				try
+				{
+					String[] parts = output.split("\\:");
+
+					for (Interface interf : getInterfaces())
+					{
+						if (parts.length > 1)
+						{
+							if (interf.getPortid().equals(parts[0]))
+							{
+								if (parts[1].contains("1"))
+								{
+									interf.setCdpstatus(true);
+								}
+								else
+								{
+									interf.setCdpstatus(false);
+								}
+							}
+						}
+					}
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace();
+				}
+			}
+
+			for (String vlan : vlans)
+			{
+				for (String output : getSnmpConnector()
+						.walkWithDynamicCommunityString(
+								ServiceFactory.getPersistenceService()
+										.getAppconfig().getElement()
+										.getSNMP_DOT1DBASEPORTIFINDEX(),
+								getSnmpConnector().getCommunityString() + "@"
+										+ vlan, true, false))
+				{
+					try
+					{
+						String[] parts = output.split("\\:");
+
+						for (Interface interf : getInterfaces())
+						{
+							if (parts.length > 1)
+							{
+								if (interf.getPortid().equals(parts[1]))
+								{
+									interf.setPortidshort(parts[0]);
+
+									if (interf.isTrunkstatus() != true)
+									{
+										interf.setVlan(vlan);
+									}
+									else
+									{
+										interf.setVlan("All");
+									}
+								}
+							}
+						}
+					}
+					catch (Exception e)
 					{
 						e.printStackTrace();
 					}
-		    	}
-		     }
-		};
-		
-		t.start();
+				}
+			}
+
+			for (Interface interf : getInterfaces())
+			{
+				interf.checkAndSetWhatType();
+			}
+		}
+		catch (IOException e1)
+		{
+			e1.printStackTrace();
+		}
+
+		/*
+		 * Thread t = new Thread() { public void run() { while(true) { try {
+		 * System.out.println("CHECKIF: " +
+		 * getSnmpConnector().walk(".1.3.6.1.2.1.2.2.1.1", false, true)); }
+		 * catch (IOException e) { e.printStackTrace(); } } } };
+		 * 
+		 * t.start();
+		 */
 	}
+
 
 	@Override
 	public String toString()
 	{
-		return "Instance [UUID=" + UUID + ", name=" + name + ", fingerprint="
+		return "Instance [UUID=" + uuid + ", name=" + name + ", fingerprint="
 				+ fingerprint + ", management_ip=" + management_ip + "]";
 	}
 }
