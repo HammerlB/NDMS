@@ -6,6 +6,7 @@ import at.bmlvs.NDMS.domain.Instance;
 import at.bmlvs.NDMS.domain.Interface;
 import at.bmlvs.NDMS.domain.connectors.SNMPConnector;
 import at.bmlvs.NDMS.domain.connectors.SSHConnector;
+import at.bmlvs.NDMS.domain.connectors.ThreadSSH;
 import at.bmlvs.NDMS.presentation.elements.RestrictiveTextField;
 import at.bmlvs.NDMS.service.PresentationService;
 import at.bmlvs.NDMS.service.ServiceFactory;
@@ -86,14 +87,14 @@ public class AddTabController
 				 
 				try
 				{
-					SSHConnector sshc = new SSHConnector(tabname, "Herkel",
+					ThreadSSH sshc = new ThreadSSH(tabname, "Herkel",
 							"gwdH_2014");
-					sshc.connect();
+					sshc.start();
 					SNMPConnector snmpc = new SNMPConnector("udp:" + tabname + "/161", "gwdSNMP_2014");
 					Instance inst = new Instance(tabname,
 							sshc.getSSHFingerprint(), tabname, sshc, snmpc);
 					inst.populateAll();
-					//inst.checkInterfaces();
+					//inst.checkInterfaces(); holadoadororo
 					ServiceFactory.getDomainService().getInstances().addSingleOnlineInstance(inst);
 					addTab(inst);
 					portview(ServiceFactory.getDomainService().getInstances().getInstances().indexOf(inst));
@@ -329,9 +330,12 @@ public class AddTabController
 
 		for (Interface interf : ServiceFactory.getDomainService().getInstances().getInstances().get(id).getInterfaces())
 		{
-			
-			portview1.add(new Button(interf.getPortnameshort()),countercolumn, counterrow);	
-			
+
+			if(countercolumn != 7)
+			{
+				
+				portview1.add(new Button(interf.getPortnameshort()),countercolumn, counterrow);	
+				
 				if (counterrow == 2)
 				{
 					counterrow--;
@@ -340,11 +344,17 @@ public class AddTabController
 				} else {
 					counterrow++;
 				}
+			} else {
 				
+				portview1.add(new Label("space"),countercolumn, counterrow);
+				counterrow++;
+				portview1.add(new Label("space"),countercolumn, counterrow);
 				
+				portview1.add(new Button(interf.getPortnameshort()),countercolumn, counterrow);	
 				
-
-
+				countercolumn ++;
+				
+			}
 		}
 		
 		//id stuff to int: Integer.parseInt(interf.getPortid()), 

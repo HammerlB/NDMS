@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javafx.scene.control.Tab;
 import at.bmlvs.NDMS.domain.connectors.SNMPConnector;
 import at.bmlvs.NDMS.domain.connectors.SSHConnector;
+import at.bmlvs.NDMS.domain.connectors.ThreadSSH;
 import at.bmlvs.NDMS.domain.helper.SNMPParser;
 import at.bmlvs.NDMS.domain.helper.UUIDGenerator;
 import at.bmlvs.NDMS.service.ServiceFactory;
@@ -17,12 +18,12 @@ public class Instance extends Tab
 	private String fingerprint;
 	private String management_ip;
 	
-	private SSHConnector sshConnector;
+	private ThreadSSH sshConnector;
 	private SNMPConnector snmpConnector;
 	
 	private ArrayList<Interface> interfaces;
 	
-	public Instance(String name, String fingerprint, String management_ip, SSHConnector sshConnector, SNMPConnector snmpConnector)
+	public Instance(String name, String fingerprint, String management_ip, ThreadSSH sshConnector, SNMPConnector snmpConnector)
 	{
 		setUUID(UUIDGenerator.generateUUID());
 		setName(name);
@@ -83,16 +84,6 @@ public class Instance extends Tab
 	{
 		this.interfaces = interfaces;
 	}
-
-	public SSHConnector getSshConnector()
-	{
-		return sshConnector;
-	}
-
-	public void setSshConnector(SSHConnector sshConnector)
-	{
-		this.sshConnector = sshConnector;
-	}
 	
 	public SNMPConnector getSnmpConnector()
 	{
@@ -102,6 +93,14 @@ public class Instance extends Tab
 	public void setSnmpConnector(SNMPConnector snmpConnector)
 	{
 		this.snmpConnector = snmpConnector;
+	}
+
+	public ThreadSSH getSshConnector() {
+		return sshConnector;
+	}
+
+	public void setSshConnector(ThreadSSH sshConnector) {
+		this.sshConnector = sshConnector;
 	}
 
 	public void populateInstance()

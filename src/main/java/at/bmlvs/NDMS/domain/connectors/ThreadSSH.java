@@ -125,4 +125,8 @@ public class ThreadSSH extends Thread {
 	public void checkProgress(int i){
 		this.progress = 100/cmd.size()*i;
 	}
+	
+	public String getSSHFingerprint(){
+		return ssh.getSSHFingerprint();
+	}
 }
