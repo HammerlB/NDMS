@@ -246,7 +246,7 @@ public class Instance extends Tab
 			
 			for(String vlan: vlans)
 			{
-				for(String output: getSnmpConnector().walkWithDynamicCommunityString(ServiceFactory.getPersistenceService().getAppconfig().getElement().getSNMP_DOT1DBASEPORTIFINDEX(), getSnmpConnector().getCommunityString() + "\\@" + vlan, true, false))
+				for(String output: getSnmpConnector().walkWithDynamicCommunityString(ServiceFactory.getPersistenceService().getAppconfig().getElement().getSNMP_DOT1DBASEPORTIFINDEX(), getSnmpConnector().getCommunityString() + "@" + vlan, true, false))
 				{
 					try
 					{
