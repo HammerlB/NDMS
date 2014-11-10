@@ -1,11 +1,12 @@
 package at.bmlvs.NDMS.domain;
 
-import at.bmlvs.NDMS.domain.connectors.ThreadSSH;
+import at.bmlvs.NDMS.domain.connectors.SSHConnector;
+
 
 public class ThreadSSHTest {
 
 	public static void main(String[] args) {
-		ThreadSSH ssh = new ThreadSSH("192.168.1.12", "Herkel", "gwdH_2014");
+		SSHConnector ssh = new SSHConnector("192.168.1.12", "Herkel", "gwdH_2014");
 		ssh.start();
 //		while (!ssh.isConnected()) {
 //			try {
@@ -14,10 +15,10 @@ public class ThreadSSHTest {
 //			    Thread.currentThread().interrupt();
 //			}
 //		}
-		ssh.doSendCMDConfigMode("hostname haha", "gwd_2014");
-		ssh.doSendCMDConfigMode("hostname trorlrol", "gwd_2014");
-		ssh.doSendCMDConfigMode("hostname trorlrll", "gwd_2014");
-		ssh.doSendCMDConfigMode("hostname sadsdsa", "gwd_2014");
+		ssh.doSendSingleCMDConfigMode("hostname haha", "gwd_2014");
+		ssh.doSendSingleCMDConfigMode("hostname trorlrol", "gwd_2014");
+		ssh.doSendSingleCMDConfigMode("hostname trorlrll", "gwd_2014");
+		ssh.doSendSingleCMDConfigMode("hostname sadsdsa", "gwd_2014");
 //		for(int i = 0;i<100;i++){
 //			ssh.doSendCMDConfigMode("hostname sadsdsa"+i, "gwd_2014");
 //		}
@@ -25,25 +26,25 @@ public class ThreadSSHTest {
 		for(int i = 1;i<=48;i++){
 			cmd+="int f0/"+i+"\ndesc f0/"+i+"\n";
 		}
-		ssh.doSendCMDConfigMode(cmd,"gwd_2014");
+		ssh.doSendSingleCMDConfigMode(cmd,"gwd_2014");
 		try {
 		    Thread.sleep(3000);                 //1000 milliseconds is one second.
 		} catch(InterruptedException ex) {
 		    Thread.currentThread().interrupt();
 		}
-		ssh.doSendCMDConfigMode("int f0/48\ndesc tralala","gwd_2014");
+		ssh.doSendSingleCMDConfigMode("int f0/48\ndesc tralala","gwd_2014");
 		try {
 		    Thread.sleep(10000);                 //1000 milliseconds is one second.
 		} catch(InterruptedException ex) {
 		    Thread.currentThread().interrupt();
 		}
-		ssh.doSendCMDConfigMode("int f0/45\ndesc geh bitte","gwd_2014");
+		ssh.doSendSingleCMDConfigMode("int f0/45\ndesc geh bitte","gwd_2014");
 		try {
 		    Thread.sleep(5000);                 //1000 milliseconds is one second.
 		} catch(InterruptedException ex) {
 		    Thread.currentThread().interrupt();
 		}
-		ssh.doSendCMDConfigMode("int f0/40\ndesc zumama","gwd_2014");
+		ssh.doSendSingleCMDConfigMode("int f0/40\ndesc zumama","gwd_2014");
 		try {
 		    Thread.sleep(5000);                 //1000 milliseconds is one second.
 		} catch(InterruptedException ex) {
