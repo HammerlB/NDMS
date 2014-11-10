@@ -1,11 +1,11 @@
 package at.bmlvs.NDMS.domain;
 
-import at.bmlvs.NDMS.domain.connectors.SSHConnector;
+import at.bmlvs.NDMS.domain.connectors.ConnectionSSH;
 
 public class SSHConnectorTest {
 
 	public static void main(String[] args) {
-		SSHConnector ssh = new SSHConnector("192.168.1.12", "Herkel", "gwdH_2014");
+		ConnectionSSH ssh = new ConnectionSSH("192.168.1.12", "Herkel", "gwdH_2014");
 		try {
 			ssh.connect();
 		} catch (Exception e) {
