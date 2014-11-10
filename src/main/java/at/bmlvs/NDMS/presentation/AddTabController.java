@@ -87,7 +87,7 @@ public class AddTabController
 				 
 				try
 				{
-					ThreadSSH sshc = new ThreadSSH(tabname, "Herkel",
+					SSHConnector sshc = new SSHConnector(tabname, "Herkel",
 							"gwdH_2014");
 					sshc.start();
 					SNMPConnector snmpc = new SNMPConnector("udp:" + tabname + "/161", "gwdSNMP_2014");
