@@ -5,11 +5,15 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class SSHConnector extends Thread {
 	private ConnectionSSH ssh;
-	private boolean isConnected, somethingToSend, disconnect, readerStarted;
+	private volatile boolean isConnected;
+	private boolean somethingToSend, disconnect, readerStarted,
+			wantFingerprint;
 	private int progress;
-	private String cmdToSend;
+	private String cmdToSend, fingerprint;
 	private Thread reader;
 	private CopyOnWriteArrayList<String> cmd;
+	private final Object lock = new Object();
+
 
 	public SSHConnector(String host, String user, String pass) {
 		ssh = new ConnectionSSH(host, user, pass);
@@ -117,41 +121,41 @@ public class SSHConnector extends Thread {
 				+ "end\n");
 		this.somethingToSend = true;
 	}
-	
+
 	public void doSetConfigMode(String enablePass) {
 		this.cmd.add("enable\n" + enablePass + "\n" + "conf t\n");
 		this.somethingToSend = true;
 	}
-	
+
 	public void doSetEnableMode(String enablePass) {
 		this.cmd.add("enable\n" + enablePass + "\n" + "conf t\n");
 		this.somethingToSend = true;
 	}
-	
-	public void doSendMultipleCMD(ArrayList<String> cmds,String enablePass){
-		for(String cmd : cmds){
+
+	public void doSendMultipleCMD(ArrayList<String> cmds, String enablePass) {
+		for (String cmd : cmds) {
 			doSetConfigMode(enablePass);
 			doSendCMD(cmd);
 		}
 	}
-	
-	public void doReloadWithoutWrite(String enablePass){
+
+	public void doReloadWithoutWrite(String enablePass) {
 		this.cmd.add("enable\n" + enablePass + "\n" + "do reload\nno\n\n");
 	}
-	
-	public void doReloadWithWrite(String enablePass){
+
+	public void doReloadWithWrite(String enablePass) {
 		this.cmd.add("enable\n" + enablePass + "\n" + "do reload\nyes\n\n");
 	}
 
 	public void doDisconnect() {
 		this.disconnect = true;
 	}
-	
-	public void checkProgress(int i){
-		this.progress = 100/cmd.size()*i;
+
+	public void checkProgress(int i) {
+		this.progress = 100 / cmd.size() * i;
 	}
-	
-	public String getSSHFingerprint(){
+
+	public String getSSHFingerprint() {
 		return ssh.getSSHFingerprint();
 	}
 }
