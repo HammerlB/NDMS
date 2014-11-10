@@ -130,7 +130,7 @@ public class Instance extends Tab
 					
 					if(parts.length > 1)
 					{
-						System.out.println(parts[0] + " | " + parts[1]);
+						vlans.add(parts[0]);
 					}
 				}
 				catch (Exception e)
