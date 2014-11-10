@@ -190,6 +190,8 @@ public class SNMPConnector
 			boolean showonlyvalue) throws IOException
 	{
 		ArrayList<String> toreturn = new ArrayList<String>();
+		
+		System.out.println(communityString);
 
 		OID oid = null;
 		try

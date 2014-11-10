@@ -245,26 +245,38 @@ public class Instance extends Tab
 				}
 			}
 			
-			for(String output: getSnmpConnector().walk(ServiceFactory.getPersistenceService().getAppconfig().getElement().getSNMP_DOT1DBASEPORTIFINDEX(), true, false))
+			for(String vlan: vlans)
 			{
-				try
+				for(String output: getSnmpConnector().walkWithDynamicCommunityString(ServiceFactory.getPersistenceService().getAppconfig().getElement().getSNMP_DOT1DBASEPORTIFINDEX(), getSnmpConnector().getCommunityString() + "\\@" + vlan, true, false))
 				{
-					String[] parts = output.split("\\:");
-					
-					for(Interface interf: getInterfaces())
+					try
 					{
-						if(parts.length > 1)
+						String[] parts = output.split("\\:");
+						
+						for(Interface interf: getInterfaces())
 						{
-							if(interf.getPortid().equals(parts[1]))
+							if(parts.length > 1)
 							{
-								interf.setPortidshort(parts[0]);
+								if(interf.getPortid().equals(parts[1]))
+								{
+									interf.setPortidshort(parts[0]);
+									
+									if(interf.isTrunkstatus() != true)
+									{
+										interf.setVlan(vlan);
+									}
+									else
+									{
+										interf.setVlan("All");
+									}
+								}
 							}
 						}
 					}
-				}
-				catch(Exception e)
-				{
-					e.printStackTrace();
+					catch(Exception e)
+					{
+						e.printStackTrace();
+					}
 				}
 			}
 		}

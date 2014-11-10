@@ -14,7 +14,7 @@ public class Interface extends Button
 	private boolean cdpstatus;
 	private boolean cdpneighbor;
 	private boolean port_8021X;
-	private int vlan;
+	private String vlan;
 	
 	public Interface(String portid)
 	{
@@ -121,12 +121,12 @@ public class Interface extends Button
 		port_8021X = port_8021x;
 	}
 
-	public int getVlan()
+	public String getVlan()
 	{
 		return vlan;
 	}
 
-	public void setVlan(int vlan)
+	public void setVlan(String vlan)
 	{
 		this.vlan = vlan;
 	}
