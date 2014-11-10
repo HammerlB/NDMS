@@ -130,13 +130,7 @@ public class Instance extends Tab
 					
 					if(parts.length > 1)
 					{
-						if(!parts[1].contains("Null") && !parts[1].equals("1") && !parts[1].contains("Vlan"))
-						{
-							Interface interf = new Interface(parts[0]);
-							interf.setPortname(parts[1]);
-							interf.setPortnameshort(SNMPParser.convertPortnameToPortshortname(parts[1]));
-							getInterfaces().add(interf);
-						}
+						System.out.println(parts[0] + " | " + parts[1]);
 					}
 				}
 				catch (Exception e)

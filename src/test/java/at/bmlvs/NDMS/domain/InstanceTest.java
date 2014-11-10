@@ -22,11 +22,12 @@ public class InstanceTest extends Application
 	public static void main(String[] args)
 	{
 		//KILL THE LOGGERS!!!
+		/*
 		List<Logger> loggers = Collections.<Logger>list(LogManager.getCurrentLoggers());
 		loggers.add(LogManager.getRootLogger());
 		for ( Logger logger : loggers ) {
 		    logger.setLevel(Level.OFF);
-		}
+		}*/
 		
 		String tabname = "192.168.1.12";
 		
