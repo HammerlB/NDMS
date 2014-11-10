@@ -102,8 +102,8 @@ public class SNMPConnector
 	{
 		try
 		{
-			SNMPClient.send(getPDU(new OID[] { oids }), getTarget(), null,
-					listener);
+			SNMPClient.send(getPDU(new OID[] { oids }),
+					getTarget(getCommunityString()), null, listener);
 		}
 		catch (IOException e)
 		{
@@ -112,10 +112,11 @@ public class SNMPConnector
 	}
 
 	@SuppressWarnings("unchecked")
-	public ArrayList<String> walk(String oids, boolean showonlylastoidoctet, boolean showonlyvalue) throws IOException
+	public ArrayList<String> walk(String oids, boolean showonlylastoidoctet,
+			boolean showonlyvalue) throws IOException
 	{
 		ArrayList<String> toreturn = new ArrayList<String>();
-		
+
 		OID oid = null;
 		try
 		{
@@ -128,7 +129,8 @@ public class SNMPConnector
 		}
 
 		TreeUtils treeUtils = new TreeUtils(SNMPClient, new DefaultPDUFactory());
-		List<TreeEvent> events = treeUtils.getSubtree(getTarget(), oid);
+		List<TreeEvent> events = treeUtils.getSubtree(
+				getTarget(getCommunityString()), oid);
 		if (events == null || events.size() == 0)
 		{
 			System.out.println("No result returned.");
@@ -153,29 +155,106 @@ public class SNMPConnector
 				}
 				for (VariableBinding varBinding : varBindings)
 				{
-					if(showonlyvalue == true)
+					if (showonlyvalue == true)
 					{
 						toreturn.add("" + varBinding.getVariable());
 					}
 					else
 					{
-						if(showonlylastoidoctet == true)
+						if (showonlylastoidoctet == true)
 						{
 							String val = "" + varBinding.getOid();
 							String[] parts = val.split("\\.");
-							toreturn.add(parts[parts.length-1] + ":" + varBinding.getVariable());
+							toreturn.add(parts[parts.length - 1] + ":"
+									+ varBinding.getVariable());
 						}
 						else
 						{
-							toreturn.add(varBinding.getOid() + " : "
-									+ varBinding.getVariable().getSyntaxString()
-									+ " : " + varBinding.getVariable());
+							toreturn.add(varBinding.getOid()
+									+ " : "
+									+ varBinding.getVariable()
+											.getSyntaxString() + " : "
+									+ varBinding.getVariable());
 						}
 					}
 				}
 			}
 		}
-		
+
+		return toreturn;
+	}
+
+	@SuppressWarnings("unchecked")
+	public ArrayList<String> walkWithDynamicCommunityString(String oids,
+			String communityString, boolean showonlylastoidoctet,
+			boolean showonlyvalue) throws IOException
+	{
+		ArrayList<String> toreturn = new ArrayList<String>();
+
+		OID oid = null;
+		try
+		{
+			oid = new OID(oids);
+		}
+		catch (RuntimeException ex)
+		{
+			System.out.println("OID is not specified correctly.");
+			System.exit(1);
+		}
+
+		TreeUtils treeUtils = new TreeUtils(SNMPClient, new DefaultPDUFactory());
+		List<TreeEvent> events = treeUtils.getSubtree(
+				getTarget(communityString), oid);
+		if (events == null || events.size() == 0)
+		{
+			System.out.println("No result returned.");
+			System.exit(1);
+		}
+
+		// Get snmpwalk result.
+		for (TreeEvent event : events)
+		{
+			if (event != null)
+			{
+				if (event.isError())
+				{
+					System.err.println("oid [" + oid + "] "
+							+ event.getErrorMessage());
+				}
+
+				VariableBinding[] varBindings = event.getVariableBindings();
+				if (varBindings == null || varBindings.length == 0)
+				{
+					toreturn.add("No result returned.");
+				}
+				for (VariableBinding varBinding : varBindings)
+				{
+					if (showonlyvalue == true)
+					{
+						toreturn.add("" + varBinding.getVariable());
+					}
+					else
+					{
+						if (showonlylastoidoctet == true)
+						{
+							String val = "" + varBinding.getOid();
+							String[] parts = val.split("\\.");
+							toreturn.add(parts[parts.length - 1] + ":"
+									+ varBinding.getVariable());
+						}
+						else
+						{
+							toreturn.add(varBinding.getOid()
+									+ " : "
+									+ varBinding.getVariable()
+											.getSyntaxString() + " : "
+									+ varBinding.getVariable());
+						}
+					}
+				}
+			}
+		}
+
 		return toreturn;
 	}
 
@@ -193,7 +272,8 @@ public class SNMPConnector
 
 	public ResponseEvent get(OID oids[]) throws IOException
 	{
-		ResponseEvent event = SNMPClient.send(getPDU(oids), getTarget(), null);
+		ResponseEvent event = SNMPClient.send(getPDU(oids),
+				getTarget(getCommunityString()), null);
 		if (event != null)
 		{
 			return event;
@@ -201,11 +281,11 @@ public class SNMPConnector
 		throw new RuntimeException("GET timed out");
 	}
 
-	private Target getTarget()
+	private Target getTarget(String communityString)
 	{
 		Address targetAddress = GenericAddress.parse(getHost());
 		CommunityTarget target = new CommunityTarget();
-		target.setCommunity(new OctetString(getCommunityString()));
+		target.setCommunity(new OctetString(communityString));
 		target.setAddress(targetAddress);
 		target.setRetries(3);
 		target.setTimeout(1500);
@@ -221,8 +301,8 @@ public class SNMPConnector
 		TableUtils tUtils = new TableUtils(SNMPClient, new DefaultPDUFactory());
 
 		@SuppressWarnings("unchecked")
-		List<TableEvent> events = tUtils
-				.getTable(getTarget(), oids, null, null);
+		List<TableEvent> events = tUtils.getTable(
+				getTarget(getCommunityString()), oids, null, null);
 
 		List<List<String>> list = new ArrayList<List<String>>();
 		for (TableEvent event : events)

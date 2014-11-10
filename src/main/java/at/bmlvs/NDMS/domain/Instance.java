@@ -119,8 +119,33 @@ public class Instance extends Tab
 	
 	public void populateInterfaces()
 	{
+		ArrayList<String> vlans = new ArrayList<String>();
+		
 		try
 		{
+			for(String output: getSnmpConnector().walk(ServiceFactory.getPersistenceService().getAppconfig().getElement().getSNMP_ALLVLANINFORMATION(), true, false))
+			{
+				try
+				{
+					String[] parts = output.split("\\:");
+					
+					if(parts.length > 1)
+					{
+						if(!parts[1].contains("Null") && !parts[1].equals("1") && !parts[1].contains("Vlan"))
+						{
+							Interface interf = new Interface(parts[0]);
+							interf.setPortname(parts[1]);
+							interf.setPortnameshort(SNMPParser.convertPortnameToPortshortname(parts[1]));
+							getInterfaces().add(interf);
+						}
+					}
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace();
+				}
+			}
+			
 			for(String output: getSnmpConnector().walk(ServiceFactory.getPersistenceService().getAppconfig().getElement().getSNMP_BRIDGEIFDESCR(), true, false))
 			{
 				try
