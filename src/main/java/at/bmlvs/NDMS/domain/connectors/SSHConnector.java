@@ -6,10 +6,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class SSHConnector extends Thread {
 	private ConnectionSSH ssh;
 	private volatile boolean isConnected;
-	private boolean somethingToSend, disconnect, readerStarted,
-			wantFingerprint;
+	private boolean somethingToSend, disconnect, readerStarted;
 	private int progress;
-	private String cmdToSend, fingerprint;
+	private String cmdToSend;
 	private Thread reader;
 	private CopyOnWriteArrayList<String> cmd;
 	private final Object lock = new Object();
