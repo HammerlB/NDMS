@@ -19,6 +19,7 @@ public class Interface extends Button
 	public Interface(String portid)
 	{
 		setPortid(portid);
+		setType("Unknown");
 	}
 
 	public String getPortid()

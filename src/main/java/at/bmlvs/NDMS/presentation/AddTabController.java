@@ -6,7 +6,6 @@ import at.bmlvs.NDMS.domain.Instance;
 import at.bmlvs.NDMS.domain.Interface;
 import at.bmlvs.NDMS.domain.connectors.SNMPConnector;
 import at.bmlvs.NDMS.domain.connectors.SSHConnector;
-import at.bmlvs.NDMS.domain.connectors.ThreadSSH;
 import at.bmlvs.NDMS.presentation.elements.RestrictiveTextField;
 import at.bmlvs.NDMS.service.PresentationService;
 import at.bmlvs.NDMS.service.ServiceFactory;
@@ -87,12 +86,10 @@ public class AddTabController
 				 
 				try
 				{
-					ThreadSSH sshc = new ThreadSSH(tabname, "Herkel",
-							"gwdH_2014");
+					SSHConnector sshc = new SSHConnector(tabname, "Herkel", "gwdH_2014");
 					sshc.start();
-					SNMPConnector snmpc = new SNMPConnector("udp:" + tabname + "/161", "gwdSNMP_2014");
-					Instance inst = new Instance(tabname,
-							sshc.getSSHFingerprint(), tabname, sshc, snmpc);
+					
+					Instance inst = new Instance(tabname, sshc.getSSHFingerprint(), tabname, sshc, new SNMPConnector("udp:" + tabname + "/161", "gwdSNMP_2014"));
 					inst.populateAll();
 					//inst.checkInterfaces(); holadoadororo
 					ServiceFactory.getDomainService().getInstances().addSingleOnlineInstance(inst);

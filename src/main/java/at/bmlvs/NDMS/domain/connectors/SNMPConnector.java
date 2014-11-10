@@ -191,8 +191,6 @@ public class SNMPConnector
 	{
 		ArrayList<String> toreturn = new ArrayList<String>();
 		
-		System.out.println(communityString);
-
 		OID oid = null;
 		try
 		{
