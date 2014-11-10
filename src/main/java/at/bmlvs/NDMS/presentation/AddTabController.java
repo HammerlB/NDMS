@@ -331,12 +331,34 @@ public class AddTabController
 		for (Interface interf : ServiceFactory.getDomainService().getInstances().getInstances().get(id).getInterfaces())
 		{
 
-			if(countercolumn != 7)
+			if((countercolumn == 7))
 			{
-				
+				portview1.add(new Label("space"),countercolumn, counterrow);
+				counterrow++;
+				portview1.add(new Label("space"),countercolumn, counterrow);
+				countercolumn ++;
+				counterrow--;
+				portview1.add(new Button(interf.getPortnameshort()),countercolumn, counterrow);	
+				counterrow++;
+
+			} else if((countercolumn == 14))
+			{
+				countercolumn = 1;
+				counterrow = counterrow + 3;
+				for (int i = 0; i < 14; i++)
+				{
+					portview1.add(new Label("space"),countercolumn, counterrow);
+					countercolumn++;
+				}
+				countercolumn = 1;
+				counterrow++;
+				portview1.add(new Button(interf.getPortnameshort()),countercolumn, counterrow);	
+			}
+			else {
+
 				portview1.add(new Button(interf.getPortnameshort()),countercolumn, counterrow);	
 				
-				if (counterrow == 2)
+				if ((counterrow == 2) || (counterrow == 5))
 				{
 					counterrow--;
 					countercolumn ++;
@@ -344,16 +366,6 @@ public class AddTabController
 				} else {
 					counterrow++;
 				}
-			} else {
-				
-				portview1.add(new Label("space"),countercolumn, counterrow);
-				counterrow++;
-				portview1.add(new Label("space"),countercolumn, counterrow);
-				
-				portview1.add(new Button(interf.getPortnameshort()),countercolumn, counterrow);	
-				
-				countercolumn ++;
-				
 			}
 		}
 		
