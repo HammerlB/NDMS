@@ -13,6 +13,10 @@ import org.apache.log4j.Logger;
 
 import at.bmlvs.NDMS.domain.connectors.SNMPConnector;
 import at.bmlvs.NDMS.domain.connectors.SSHConnector;
+import at.bmlvs.NDMS.domain.templates.Command;
+import at.bmlvs.NDMS.domain.templates.Datatype;
+import at.bmlvs.NDMS.domain.templates.Parameter;
+import at.bmlvs.NDMS.domain.templates.Section;
 import at.bmlvs.NDMS.domain.templates.Snippet;
 import at.bmlvs.NDMS.domain.templates.Template;
 import at.bmlvs.NDMS.domain.templates.Templates;
@@ -45,6 +49,17 @@ public class TemplateTest
 			Snippet snippetBasic = new Snippet("Basic-Snippet", "None", "Interface-Snippet");
 			Snippet snippetInterfaces = new Snippet("Interface-Snippet", "Basic-Snippet", "None");
 			
+			Section sectionBasicDeviceConfigurations = new Section("Basic Device Configurations");
+			
+			Command commandSetHostname = new Command("hostname");
+			
+			Datatype textDatatype = new Datatype();
+			
+			Parameter parameterSetHostname = new Parameter(0, "Hostname", textDatatype, "GWDSWITCH");
+			
+			Section sectionSNMPConfiguration = new Section("SNMP Configuration");
+			
+			Section sectionAllInterfaces = new Section("Interface Configuration");
 		}
 		catch (Exception e)
 		{

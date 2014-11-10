@@ -60,4 +60,9 @@ public class Template implements Serializable
 	{
 		this.snippets = snippets;
 	}
+	
+	public void sortSnippets()
+	{
+		//Needs to be implemented.
+	}
 }
