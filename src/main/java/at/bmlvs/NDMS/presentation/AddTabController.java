@@ -330,9 +330,9 @@ public class AddTabController
 
 			if((countercolumn == 7))
 			{
-				portview1.add(new Label("space"),countercolumn, counterrow);
+				portview1.add(new Label("    "),countercolumn, counterrow);
 				counterrow++;
-				portview1.add(new Label("space"),countercolumn, counterrow);
+				portview1.add(new Label("    "),countercolumn, counterrow);
 				countercolumn ++;
 				counterrow--;
 				portview1.add(new Button(interf.getPortnameshort()),countercolumn, counterrow);	
@@ -341,15 +341,16 @@ public class AddTabController
 			} else if((countercolumn == 14))
 			{
 				countercolumn = 1;
-				counterrow = counterrow + 3;
+				counterrow = counterrow + 2;
 				for (int i = 0; i < 14; i++)
 				{
-					portview1.add(new Label("space"),countercolumn, counterrow);
+					portview1.add(new Label("    "),countercolumn, counterrow);
 					countercolumn++;
 				}
 				countercolumn = 1;
 				counterrow++;
 				portview1.add(new Button(interf.getPortnameshort()),countercolumn, counterrow);	
+				counterrow++;
 			}
 			else {
 
