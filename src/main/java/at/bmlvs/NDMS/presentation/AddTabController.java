@@ -96,6 +96,10 @@ public class AddTabController
 					SSHConnector sshc = new SSHConnector(tabname, "Herkel",
 							"gwdH_2014");
 					sshc.start();
+					
+					while(sshc.getSSHFingerprint() == null) {
+						Thread.sleep(100);
+					}
 
 					Instance inst = new Instance(tabname,
 							sshc.getSSHFingerprint(), tabname, sshc,
