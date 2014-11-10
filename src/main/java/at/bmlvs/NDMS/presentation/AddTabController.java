@@ -2,6 +2,13 @@ package at.bmlvs.NDMS.presentation;
 
 import java.io.IOException;
 
+import at.bmlvs.NDMS.domain.Instance;
+import at.bmlvs.NDMS.domain.Interface;
+import at.bmlvs.NDMS.domain.connectors.SNMPConnector;
+import at.bmlvs.NDMS.domain.connectors.SSHConnector;
+import at.bmlvs.NDMS.presentation.elements.RestrictiveTextField;
+import at.bmlvs.NDMS.service.PresentationService;
+import at.bmlvs.NDMS.service.ServiceFactory;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -15,14 +22,8 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
-import at.bmlvs.NDMS.domain.Instance;
-import at.bmlvs.NDMS.domain.Interface;
-import at.bmlvs.NDMS.domain.connectors.SNMPConnector;
-import at.bmlvs.NDMS.domain.connectors.SSHConnector;
-import at.bmlvs.NDMS.presentation.elements.RestrictiveTextField;
-import at.bmlvs.NDMS.service.PresentationService;
-import at.bmlvs.NDMS.service.ServiceFactory;
 
 public class AddTabController
 {
@@ -85,12 +86,10 @@ public class AddTabController
 				 
 				try
 				{
-					SSHConnector sshc = new SSHConnector(tabname, "Herkel",
-							"gwdH_2014");
+					SSHConnector sshc = new SSHConnector(tabname, "Herkel", "gwdH_2014");
 					sshc.start();
-					SNMPConnector snmpc = new SNMPConnector("udp:" + tabname + "/161", "gwdSNMP_2014");
-					Instance inst = new Instance(tabname,
-							sshc.getSSHFingerprint(), tabname, sshc, snmpc);
+					
+					Instance inst = new Instance(tabname, sshc.getSSHFingerprint(), tabname, sshc, new SNMPConnector("udp:" + tabname + "/161", "gwdSNMP_2014"));
 					inst.populateAll();
 					//inst.checkInterfaces(); holadoadororo
 					ServiceFactory.getDomainService().getInstances().addSingleOnlineInstance(inst);
@@ -331,9 +330,9 @@ public class AddTabController
 
 			if((countercolumn == 7))
 			{
-				portview1.add(new Label("space"),countercolumn, counterrow);
+				portview1.add(new Label("    "),countercolumn, counterrow);
 				counterrow++;
-				portview1.add(new Label("space"),countercolumn, counterrow);
+				portview1.add(new Label("    "),countercolumn, counterrow);
 				countercolumn ++;
 				counterrow--;
 				portview1.add(new Button(interf.getPortnameshort()),countercolumn, counterrow);	
@@ -342,15 +341,16 @@ public class AddTabController
 			} else if((countercolumn == 14))
 			{
 				countercolumn = 1;
-				counterrow = counterrow + 3;
+				counterrow = counterrow + 2;
 				for (int i = 0; i < 14; i++)
 				{
-					portview1.add(new Label("space"),countercolumn, counterrow);
+					portview1.add(new Label("    "),countercolumn, counterrow);
 					countercolumn++;
 				}
 				countercolumn = 1;
 				counterrow++;
 				portview1.add(new Button(interf.getPortnameshort()),countercolumn, counterrow);	
+				counterrow++;
 			}
 			else {
 
