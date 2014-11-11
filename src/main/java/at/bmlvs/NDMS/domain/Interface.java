@@ -1,17 +1,22 @@
 package at.bmlvs.NDMS.domain;
 
+import at.bmlvs.NDMS.domain.helper.UUIDGenerator;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tooltip;
+import javafx.scene.text.Font;
 
 public class Interface extends Button
 {
+	private StringProperty uuid;
 	private StringProperty portid;
 	private StringProperty portidshort;
 	private StringProperty portname;
 	private StringProperty portnameshort;
+	private StringProperty portnameshortDisplay;
 	private StringProperty type;
 	private StringProperty portstatus;
 	private StringProperty vlan;
@@ -22,8 +27,39 @@ public class Interface extends Button
 	
 	public Interface(String portid)
 	{
+		setUUID(UUIDGenerator.generateUUID());
 		setPortid(portid);
 		setType("Unknown");
+		setId(getUUID());
+		setText(getPortnameshort());
+		
+		setTooltip(new Tooltip());
+		setTextForTooltip();
+	}
+	
+	public final String getUUID()
+	{
+		if (uuid != null)
+		{
+			return uuid.get();
+		}
+
+		return null;
+	}
+
+	public final void setUUID(String uuid)
+	{
+		this.uuidProperty().set(uuid);
+	}
+
+	public final StringProperty uuidProperty()
+	{
+		if (uuid == null)
+		{
+			uuid = new SimpleStringProperty(null);
+		}
+
+		return uuid;
 	}
 	
 	public final String getPortid()
@@ -89,6 +125,7 @@ public class Interface extends Button
 	public final void setPortname(String portname)
 	{
 		this.portnameProperty().set(portname);
+		setTextForTooltip();
 	}
 
 	public final StringProperty portnameProperty()
@@ -114,6 +151,15 @@ public class Interface extends Button
 	public final void setPortnameshort(String portnameshort)
 	{
 		this.portnameshortProperty().set(portnameshort);
+		
+		if(portnameshort.length() <= 5)
+		{
+			setPortnameshortDisplay(" " + portnameshort + " ");
+		}
+		else
+		{
+			setPortnameshortDisplay(portnameshort);
+		}
 	}
 
 	public final StringProperty portnameshortProperty()
@@ -124,6 +170,32 @@ public class Interface extends Button
 		}
 
 		return portnameshort;
+	}
+	
+	public final String getPortnameshortDisplay()
+	{
+		if (portnameshortDisplay != null)
+		{
+			return portnameshortDisplay.get();
+		}
+
+		return null;
+	}
+
+	public final void setPortnameshortDisplay(String portnameshortDisplay)
+	{
+		this.portnameshortDisplayProperty().set(portnameshortDisplay);
+		setText(getPortnameshortDisplay());
+	}
+
+	public final StringProperty portnameshortDisplayProperty()
+	{
+		if (portnameshortDisplay == null)
+		{
+			portnameshortDisplay = new SimpleStringProperty(null);
+		}
+
+		return portnameshortDisplay;
 	}
 	
 	public final String getType()
@@ -139,6 +211,7 @@ public class Interface extends Button
 	public final void setType(String type)
 	{
 		this.typeProperty().set(type);
+		setTextForTooltip();
 	}
 
 	public final StringProperty typeProperty()
@@ -164,6 +237,7 @@ public class Interface extends Button
 	public final void setPortstatus(String portstatus)
 	{
 		this.portstatusProperty().set(portstatus);
+		setTextForTooltip();
 	}
 
 	public final StringProperty portstatusProperty()
@@ -189,6 +263,7 @@ public class Interface extends Button
 	public final void setVlan(String vlan)
 	{
 		this.vlanProperty().set(vlan);
+		setTextForTooltip();
 	}
 
 	public final StringProperty vlanProperty()
@@ -317,6 +392,14 @@ public class Interface extends Button
 		setType(type);
 		
 		return type;
+	}
+	
+	public void setTextForTooltip()
+	{
+		if(getTooltip() != null)
+		{
+			getTooltip().setText("Portname: " + getPortname() + "\nType: " + getType() + "\nStatus: " + getPortstatus() + "\nVlan: " + getVlan());
+		}
 	}
 	
 	@Override

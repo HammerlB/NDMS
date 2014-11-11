@@ -160,7 +160,7 @@ public class AddTabController
 						public void run()
 						{
 							inst.checkInstance();
-							// checkInterfaces();
+							inst.checkInterfaces();
 						}
 					}, 1000, 5000);
 
@@ -400,7 +400,59 @@ public class AddTabController
 		for (Interface interf : ServiceFactory.getDomainService()
 				.getInstances().getInstances().get(id).getInterfaces())
 		{
+			interf.typeProperty().addListener(
+					new ChangeListener<Object>()
+					{
+						@Override
+						public void changed(
+								ObservableValue<? extends Object> arg0,
+								Object arg1, Object arg2)
+						{
+							Platform.runLater(new Runnable()
+							{
+								public void run()
+								{
+									interf.setTextForTooltip();
+								}
+							});
+						}
+					});
 			
+			interf.portstatusProperty().addListener(
+					new ChangeListener<Object>()
+					{
+						@Override
+						public void changed(
+								ObservableValue<? extends Object> arg0,
+								Object arg1, Object arg2)
+						{
+							Platform.runLater(new Runnable()
+							{
+								public void run()
+								{
+									interf.setTextForTooltip();
+								}
+							});
+						}
+					});
+			
+			interf.vlanProperty().addListener(
+					new ChangeListener<Object>()
+					{
+						@Override
+						public void changed(
+								ObservableValue<? extends Object> arg0,
+								Object arg1, Object arg2)
+						{
+							Platform.runLater(new Runnable()
+							{
+								public void run()
+								{
+									interf.setTextForTooltip();
+								}
+							});
+						}
+					});
 			
 			if ((countercolumn == 7))
 			{
@@ -409,9 +461,7 @@ public class AddTabController
 				portview1.add(new Label("    "), countercolumn, counterrow);
 				countercolumn++;
 				counterrow--;
-				portbtn = new Button(interf.getPortnameshort());
-				portbtn.setId(interf.getPortidshort());
-				portview1.add(portbtn, countercolumn, counterrow);
+				portview1.add(interf, countercolumn, counterrow);
 				counterrow++;
 
 			}
@@ -426,17 +476,13 @@ public class AddTabController
 				}
 				countercolumn = 1;
 				counterrow++;
-				portbtn = new Button(interf.getPortnameshort());
-				portbtn.setId(interf.getPortidshort());
-				portview1.add(portbtn, countercolumn, counterrow);
+				portview1.add(interf, countercolumn, counterrow);
 				counterrow++;
 			}
 			else
 			{
 
-				portbtn = new Button(interf.getPortnameshort());
-				portbtn.setId(interf.getPortidshort());
-				portview1.add(portbtn, countercolumn, counterrow);
+				portview1.add(interf, countercolumn, counterrow);
 
 				if ((counterrow == 2) || (counterrow == 5))
 				{
@@ -449,12 +495,6 @@ public class AddTabController
 					counterrow++;
 				}
 			}
-			
-			if(Integer.parseInt(portbtn.getId()) < 10)
-			{
-				portbtn.setText(" " + interf.getPortnameshort() + " ");
-			}
-			
 		}
 
 		// id stuff to int: Integer.parseInt(interf.getPortid()),

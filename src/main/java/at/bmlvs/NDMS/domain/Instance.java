@@ -195,7 +195,6 @@ public class Instance extends Tab
 					ServiceFactory.getPersistenceService().getAppconfig()
 							.getElement().getSNMP_SWNAME(), false, true).get(0);
 			setName(name);
-			System.out.println(name);
 		}
 		catch (Exception e)
 		{
