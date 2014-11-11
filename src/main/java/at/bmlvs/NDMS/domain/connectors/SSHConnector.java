@@ -6,8 +6,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class SSHConnector extends Thread {
 	private ConnectionSSH ssh;
 	private volatile boolean connected;
-	private boolean somethingToSend, disconnect, readerStarted, reload,
-			running, fPause;
+	private boolean somethingToSend, disconnect, readerStarted, reload;
 	private int progress, counter;
 	private String cmdToSend, enablePass;
 	private volatile String connectionException;
@@ -22,8 +21,6 @@ public class SSHConnector extends Thread {
 		somethingToSend = false;
 		readerStarted = false;
 		reload = false;
-		running = true;
-		fPause = false;
 		counter = 1;
 		disconnect = false;
 		cmd = new CopyOnWriteArrayList<String>();
@@ -274,14 +271,5 @@ public class SSHConnector extends Thread {
 
 	public void setReader(Thread reader) {
 		this.reader = reader;
-	}
-
-	public void pause() {
-		fPause = true;
-	}
-
-	public void proceed() {
-		fPause = false;
-		notify();
 	}
 }
