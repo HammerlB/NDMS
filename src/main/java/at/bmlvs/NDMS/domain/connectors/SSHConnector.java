@@ -7,7 +7,7 @@ public class SSHConnector extends Thread {
 	private ConnectionSSH ssh;
 	private volatile boolean connected;
 	private boolean somethingToSend, disconnect, readerStarted, reload,
-			running;
+			running, fPause;
 	private int progress, counter;
 	private String cmdToSend, enablePass;
 	private volatile String connectionException;
@@ -23,6 +23,7 @@ public class SSHConnector extends Thread {
 		readerStarted = false;
 		reload = false;
 		running = true;
+		fPause = false;
 		counter = 1;
 		disconnect = false;
 		cmd = new CopyOnWriteArrayList<String>();
@@ -75,6 +76,11 @@ public class SSHConnector extends Thread {
 				} catch (Exception e) {
 					System.err.println("SSH: " + e.getMessage());
 				}
+			}
+			try {
+				sleep(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
 		}
 	}
@@ -268,5 +274,14 @@ public class SSHConnector extends Thread {
 
 	public void setReader(Thread reader) {
 		this.reader = reader;
+	}
+
+	public void pause() {
+		fPause = true;
+	}
+
+	public void proceed() {
+		fPause = false;
+		notify();
 	}
 }

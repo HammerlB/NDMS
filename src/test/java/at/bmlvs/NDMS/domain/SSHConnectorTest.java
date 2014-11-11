@@ -21,15 +21,19 @@ public class SSHConnectorTest {
 			a.add("int f0/"+i+"\ndesc trololol");
 		}
 		ssh.doSendMultipleCMD(a);
-		
 //		try {
-//			Thread.sleep(3000); // 1000 milliseconds is one second.
+//			Thread.sleep(10000); // 1000 milliseconds is one second.
+//		} catch (InterruptedException ex) {
+//			Thread.currentThread().interrupt();
+//		}
+//		try {
+//			Thread.sleep(5000); // 1000 milliseconds is one second.
 //		} catch (InterruptedException ex) {
 //			Thread.currentThread().interrupt();
 //		}
 		
 //		ssh.doReloadWithoutWrite();
-		ssh.doDisconnect();
+//		ssh.doDisconnect();
 	}
 
 }
