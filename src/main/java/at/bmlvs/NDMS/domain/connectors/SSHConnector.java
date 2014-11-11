@@ -9,6 +9,7 @@ public class SSHConnector extends Thread {
 	private boolean somethingToSend, disconnect, readerStarted, reload;
 	private int progress, counter;
 	private String cmdToSend,enablePass;
+	private volatile String connectionException;
 	private Thread reader;
 	private CopyOnWriteArrayList<String> cmd;
 
@@ -85,6 +86,7 @@ public class SSHConnector extends Thread {
 			} catch (Exception e) {
 				System.out.println("SSH: " + e.getMessage() + "\n" + "Reason: "
 						+ e.getCause());
+				connectionException=e.getMessage();
 			}
 		}
 	}
@@ -222,6 +224,46 @@ public class SSHConnector extends Thread {
 
 	public Thread getReader() {
 		return reader;
+	}
+
+	public ConnectionSSH getSsh() {
+		return ssh;
+	}
+
+	public void setSsh(ConnectionSSH ssh) {
+		this.ssh = ssh;
+	}
+
+	public boolean isReload() {
+		return reload;
+	}
+
+	public void setReload(boolean reload) {
+		this.reload = reload;
+	}
+
+	public int getCounter() {
+		return counter;
+	}
+
+	public void setCounter(int counter) {
+		this.counter = counter;
+	}
+
+	public String getEnablePass() {
+		return enablePass;
+	}
+
+	public void setEnablePass(String enablePass) {
+		this.enablePass = enablePass;
+	}
+
+	public String getConnectionException() {
+		return connectionException;
+	}
+
+	public void setConnectionException(String connectionException) {
+		this.connectionException = connectionException;
 	}
 
 	public void setReader(Thread reader) {
