@@ -35,7 +35,7 @@ public class SSHConnector extends Thread {
 	}
 
 	public void checkMainThread() {
-		while (running) {
+		while (true) {
 			if (somethingToSend) {
 				try {
 					for (int i = 0; i < cmd.size(); i++) {
@@ -61,20 +61,20 @@ public class SSHConnector extends Thread {
 					this.somethingToSend = false;
 				} catch (Exception e) {
 					System.err.println("SSH: " + e.getMessage());
-					running = false;
+					break;
 				}
 			}
-
-		}
-		if (disconnect) {
-			try {
-				System.out.println("Trying to disconnect...");
-				sleep(5000);
-				reader.interrupt();
-				ssh.disconnect();
-				System.out.println("Disconnected!");
-			} catch (Exception e) {
-				System.err.println("SSH: " + e.getMessage());
+			if (disconnect) {
+				try {
+					System.out.println("Trying to disconnect...");
+					sleep(5000);
+					reader.interrupt();
+					ssh.disconnect();
+					System.out.println("Disconnected!");
+					break;
+				} catch (Exception e) {
+					System.err.println("SSH: " + e.getMessage());
+				}
 			}
 		}
 	}
