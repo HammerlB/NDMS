@@ -21,19 +21,30 @@ public class SSHConnector extends Thread {
 		readerStarted = false;
 		reload = false;
 		counter=1;
+		disconnect=false;
 		cmd = new CopyOnWriteArrayList<String>();
 		reader = new Thread(ssh);
 	}
 
 	@Override
 	public void run() {
-		this.checkConnected();
+		if (!connected) {
+			try {
+				ssh.connect();
+				this.connected = true;
+				System.out.println("Connected!");
+			} catch (Exception e) {
+				System.err.println("SSH: " + e.getMessage());
+				interrupt();
+//				System.exit(0);
+			}
+		}
 		this.checkMainThread();
 	}
 
 	public void checkMainThread() {
 		while (true) {
-			if (somethingToSend) {
+			if (somethingToSend&&connected==true) {
 				try {
 					for (int i = 0; i < cmd.size(); i++) {
 						sendCMD(cmd.get(i));
@@ -58,6 +69,7 @@ public class SSHConnector extends Thread {
 					this.somethingToSend = false;
 				} catch (Exception e) {
 					System.err.println("SSH: " + e.getMessage());
+					break;
 				}
 			}
 			if (disconnect) {
@@ -70,7 +82,7 @@ public class SSHConnector extends Thread {
 					break;
 				} catch (Exception e) {
 					System.err.println("SSH: " + e.getMessage());
-					this.interrupt();
+					interrupt();
 				}
 			}
 		}
@@ -153,7 +165,8 @@ public class SSHConnector extends Thread {
 	}
 
 	public void doDisconnect() {
-		this.disconnect = true;
+		if(isConnected())
+			this.disconnect = true;
 	}
 
 	public void checkProgress(int i) {
