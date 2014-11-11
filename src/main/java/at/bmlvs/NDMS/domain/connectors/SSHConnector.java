@@ -6,7 +6,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class SSHConnector extends Thread {
 	private ConnectionSSH ssh;
 	private volatile boolean connected;
-	private boolean somethingToSend, disconnect, readerStarted, reload;
+	private boolean somethingToSend, disconnect, readerStarted, reload, running;
 	private int progress, counter;
 	private String cmdToSend,enablePass;
 	private volatile String connectionException;
@@ -20,6 +20,7 @@ public class SSHConnector extends Thread {
 		somethingToSend = false;
 		readerStarted = false;
 		reload = false;
+		running = true;
 		counter=1;
 		disconnect=false;
 		cmd = new CopyOnWriteArrayList<String>();
@@ -35,15 +36,15 @@ public class SSHConnector extends Thread {
 				System.out.println("Connected!");
 			} catch (Exception e) {
 				System.err.println("SSH: " + e.getMessage());
-				interrupt();
-				System.exit(0);
+				running = false;
+//				System.exit(0);
 			}
 		}
 		this.checkMainThread();
 	}
 
 	public void checkMainThread() {
-		while (true) {
+		while (running) {
 			if (somethingToSend&&connected==true) {
 				try {
 					for (int i = 0; i < cmd.size(); i++) {
@@ -72,18 +73,17 @@ public class SSHConnector extends Thread {
 					break;
 				}
 			}
-			if (disconnect) {
-				try {
-					System.out.println("Trying to disconnect...");
-					sleep(5000);
-					reader.interrupt();
-					ssh.disconnect();
-					System.out.println("Disconnected!");
-					break;
-				} catch (Exception e) {
-					System.err.println("SSH: " + e.getMessage());
-					interrupt();
-				}
+			
+		}
+		if (disconnect) {
+			try {
+				System.out.println("Trying to disconnect...");
+				sleep(5000);
+				reader.interrupt();
+				ssh.disconnect();
+				System.out.println("Disconnected!");
+			} catch (Exception e) {
+				System.err.println("SSH: " + e.getMessage());
 			}
 		}
 	}
