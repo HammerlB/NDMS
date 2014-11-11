@@ -8,6 +8,7 @@ import at.bmlvs.NDMS.domain.Instance;
 import at.bmlvs.NDMS.domain.Interface;
 import at.bmlvs.NDMS.domain.connectors.SNMPConnector;
 import at.bmlvs.NDMS.domain.connectors.SSHConnector;
+import at.bmlvs.NDMS.domain.helper.UUIDGenerator;
 import at.bmlvs.NDMS.presentation.elements.RestrictiveTextField;
 import at.bmlvs.NDMS.service.PresentationService;
 import at.bmlvs.NDMS.service.ServiceFactory;
@@ -366,18 +367,18 @@ public class AddTabController
 
 		int counterrow = 1;
 		int countercolumn = 1;
-
+		
+		Button portbtn;
+		
+		
 		portview1.setPadding(new Insets(5, 0, 5, 0));
 
-		// portview1.setVgap(0);
-		// portview1.setHgap(0);
-
-		// portview1.setMaxWidth(700);
 
 		for (Interface interf : ServiceFactory.getDomainService()
 				.getInstances().getInstances().get(id).getInterfaces())
 		{
-
+			
+			
 			if ((countercolumn == 7))
 			{
 				portview1.add(new Label("    "), countercolumn, counterrow);
@@ -385,8 +386,9 @@ public class AddTabController
 				portview1.add(new Label("    "), countercolumn, counterrow);
 				countercolumn++;
 				counterrow--;
-				portview1.add(new Button(interf.getPortnameshort()),
-						countercolumn, counterrow);
+				portbtn = new Button(interf.getPortnameshort());
+				portbtn.setId(interf.getPortidshort());
+				portview1.add(portbtn, countercolumn, counterrow);
 				counterrow++;
 
 			}
@@ -401,15 +403,17 @@ public class AddTabController
 				}
 				countercolumn = 1;
 				counterrow++;
-				portview1.add(new Button(interf.getPortnameshort()),
-						countercolumn, counterrow);
+				portbtn = new Button(interf.getPortnameshort());
+				portbtn.setId(interf.getPortidshort());
+				portview1.add(portbtn, countercolumn, counterrow);
 				counterrow++;
 			}
 			else
 			{
 
-				portview1.add(new Button(interf.getPortnameshort()),
-						countercolumn, counterrow);
+				portbtn = new Button(interf.getPortnameshort());
+				portbtn.setId(interf.getPortidshort());
+				portview1.add(portbtn, countercolumn, counterrow);
 
 				if ((counterrow == 2) || (counterrow == 5))
 				{
@@ -422,6 +426,9 @@ public class AddTabController
 					counterrow++;
 				}
 			}
+			
+			
+			
 		}
 
 		// id stuff to int: Integer.parseInt(interf.getPortid()),
@@ -431,7 +438,10 @@ public class AddTabController
 		tabbox.getChildren().addAll(portview1);
 		PresentationService.getMainWindowController().getTabPane().getTabs()
 				.get(id).setContent(tabbox);
+		
+		//_____________________
 
+		
 	}
 
 	private void dotListener(TextField tf1, final TextField tf2)
