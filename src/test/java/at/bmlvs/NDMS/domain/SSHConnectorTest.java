@@ -9,6 +9,12 @@ public class SSHConnectorTest {
 
 	public static void main(String[] args) {
 		SSHConnector ssh = new SSHConnector("192.168.1.13", "Herkel", "gwdH_2014", "gwd_2014");
+		try {
+			ssh.connect();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		ArrayList<String> a = new ArrayList<String>();
 		ssh.start();
 		for(int i = 1;i<=48;i++){

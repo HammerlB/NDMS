@@ -6,40 +6,31 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class SSHConnector extends Thread {
 	private ConnectionSSH ssh;
 	private volatile boolean connected;
-	private boolean somethingToSend, disconnect, readerStarted, reload, running;
+	private boolean somethingToSend, disconnect, readerStarted, reload,
+			running;
 	private int progress, counter;
-	private String cmdToSend,enablePass;
+	private String cmdToSend, enablePass;
 	private volatile String connectionException;
 	private Thread reader;
 	private CopyOnWriteArrayList<String> cmd;
 
-	public SSHConnector(String host, String user, String sshPass, String enablePass) {
+	public SSHConnector(String host, String user, String sshPass,
+			String enablePass) {
 		ssh = new ConnectionSSH(host, user, sshPass);
-		this.enablePass=enablePass;
+		this.enablePass = enablePass;
 		connected = false;
 		somethingToSend = false;
 		readerStarted = false;
 		reload = false;
 		running = true;
-		counter=1;
-		disconnect=false;
+		counter = 1;
+		disconnect = false;
 		cmd = new CopyOnWriteArrayList<String>();
 		reader = new Thread(ssh);
 	}
 
 	@Override
 	public void run() {
-		if (!connected) {
-			try {
-				ssh.connect();
-				this.connected = true;
-				System.out.println("Connected!");
-			} catch (Exception e) {
-				System.err.println("SSH: " + e.getMessage());
-				running = false;
-//				System.exit(0);
-			}
-		}
 		this.checkMainThread();
 	}
 
@@ -55,12 +46,12 @@ public class SSHConnector extends Thread {
 							readerStarted = true;
 						}
 						checkProgress(i);
-						System.err.println("Sended!!"+"("+counter+")");
-//						System.out.println("Command:"+cmd.get(i));
+						System.err.println("Sended!!" + "(" + counter + ")");
+						// System.out.println("Command:"+cmd.get(i));
 						counter++;
 						if (reload) {
 							System.out.println("Reload Requested!");
-							reload=false;
+							reload = false;
 							sleep(10000);
 						} else {
 							sleep(1000);
@@ -70,10 +61,10 @@ public class SSHConnector extends Thread {
 					this.somethingToSend = false;
 				} catch (Exception e) {
 					System.err.println("SSH: " + e.getMessage());
-					break;
+					running = false;
 				}
 			}
-			
+
 		}
 		if (disconnect) {
 			try {
@@ -88,17 +79,15 @@ public class SSHConnector extends Thread {
 		}
 	}
 
-	public void checkConnected() {
+	public void connect() throws Exception {
 		if (!connected) {
-			try {
-				ssh.connect();
-				this.connected = true;
-				System.out.println("Connected!");
-			} catch (Exception e) {
-				System.err.println("SSH: " + e.getMessage());
-				this.interrupt();
-			}
+			ssh.connect();
+			this.connected = true;
+			System.out.println("Connected!");
+		} else {
+			System.out.println("Already connected!");
 		}
+
 	}
 
 	public CopyOnWriteArrayList<String> getCmd() {
@@ -135,37 +124,37 @@ public class SSHConnector extends Thread {
 	}
 
 	public void doSendMultipleCMD(ArrayList<String> cmds) {
-		String cmd="";
+		String cmd = "";
 		doSetConfigMode();
 		for (String txt : cmds) {
-			cmd+=txt+"\n";
+			cmd += txt + "\n";
 		}
 		doSendCMD(cmd);
 		doSendEnd();
-		this.somethingToSend=true;
+		this.somethingToSend = true;
 	}
-	
-	public void doSendEnd(){
+
+	public void doSendEnd() {
 		this.cmd.add("end\n");
-		this.somethingToSend=true;
+		this.somethingToSend = true;
 	}
 
 	public void doReloadWithoutWrite() {
-//		this.cmd.add("RELOAD1");
+		// this.cmd.add("RELOAD1");
 		this.cmd.add("enable\n" + enablePass + "\n" + "reload\nno\n\n");
-		this.somethingToSend=true;
-		this.reload=true;
+		this.somethingToSend = true;
+		this.reload = true;
 	}
 
 	public void doReloadWithWrite() {
-//		this.cmd.add("RELOAD2");
+		// this.cmd.add("RELOAD2");
 		this.cmd.add("enable\n" + enablePass + "\n" + "reload\nyes\n\n");
-		this.somethingToSend=true;
-		this.reload=true;
+		this.somethingToSend = true;
+		this.reload = true;
 	}
 
 	public void doDisconnect() {
-		if(isConnected())
+		if (isConnected())
 			this.disconnect = true;
 	}
 
@@ -176,7 +165,7 @@ public class SSHConnector extends Thread {
 	public String getSSHFingerprint() {
 		return ssh.getSSHFingerprint();
 	}
-	
+
 	public ConnectionSSH getSSHConnection() {
 		return ssh;
 	}
