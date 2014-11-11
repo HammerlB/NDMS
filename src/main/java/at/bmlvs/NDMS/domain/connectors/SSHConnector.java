@@ -36,7 +36,7 @@ public class SSHConnector extends Thread {
 			} catch (Exception e) {
 				System.err.println("SSH: " + e.getMessage());
 				interrupt();
-//				System.exit(0);
+				System.exit(0);
 			}
 		}
 		this.checkMainThread();
