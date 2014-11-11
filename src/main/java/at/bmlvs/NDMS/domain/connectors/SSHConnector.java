@@ -57,8 +57,7 @@ public class SSHConnector extends Thread {
 					cmd.clear();
 					this.somethingToSend = false;
 				} catch (Exception e) {
-					System.out.println("SSH: " + e.getMessage() + "\n"
-							+ "Reason: " + e.getCause());
+					System.err.println("SSH: " + e.getMessage());
 				}
 			}
 			if (disconnect) {
@@ -70,8 +69,8 @@ public class SSHConnector extends Thread {
 					System.out.println("Disconnected!");
 					break;
 				} catch (Exception e) {
-					System.out.println("SSH: " + e.getMessage() + "\n"
-							+ "Reason: " + e.getCause());
+					System.err.println("SSH: " + e.getMessage());
+					this.interrupt();
 				}
 			}
 		}
@@ -84,8 +83,7 @@ public class SSHConnector extends Thread {
 				this.connected = true;
 				System.out.println("Connected!");
 			} catch (Exception e) {
-				System.out.println("SSH: " + e.getMessage() + "\n" + "Reason: "
-						+ e.getCause());
+				System.err.println("SSH: " + e.getMessage());
 				this.interrupt();
 			}
 		}
