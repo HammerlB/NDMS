@@ -8,21 +8,16 @@ import at.bmlvs.NDMS.domain.Instance;
 import at.bmlvs.NDMS.domain.Interface;
 import at.bmlvs.NDMS.domain.connectors.SNMPConnector;
 import at.bmlvs.NDMS.domain.connectors.SSHConnector;
-import at.bmlvs.NDMS.domain.helper.UUIDGenerator;
 import at.bmlvs.NDMS.presentation.elements.RestrictiveTextField;
 import at.bmlvs.NDMS.service.PresentationService;
 import at.bmlvs.NDMS.service.ServiceFactory;
-import javafx.animation.Animation;
-import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tab;
@@ -31,7 +26,6 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 
 public class AddTabController
@@ -101,28 +95,6 @@ public class AddTabController
 					
 					sshc.start();
 					
-					while(sshc.getConnectionException() == null)
-					{
-						try
-						{
-							Thread.sleep(1000);
-						}
-						catch (Exception e)
-						{
-							e.printStackTrace();
-						}
-						if (sshc.isConnected())
-						{
-							break;
-						} 
-
-					}
-					
-					if(sshc.getConnectionException() != null)
-					{
-						errorlabel.setText("Verbindung war nicht erfolgreich! \n("
-								+ sshc.getConnectionException() + ")");
-					}
 					
 					while(sshc.getSSHFingerprint() == null) {
 						Thread.sleep(100);
@@ -152,7 +124,7 @@ public class AddTabController
 									});
 								}
 							});
-
+					
 					Timer timer = new Timer();
 
 					timer.scheduleAtFixedRate(new TimerTask()
@@ -417,25 +389,7 @@ public class AddTabController
 							});
 						}
 					});
-			
-			interf.portstatusProperty().addListener(
-					new ChangeListener<Object>()
-					{
-						@Override
-						public void changed(
-								ObservableValue<? extends Object> arg0,
-								Object arg1, Object arg2)
-						{
-							Platform.runLater(new Runnable()
-							{
-								public void run()
-								{
-									interf.setTextForTooltip();
-								}
-							});
-						}
-					});
-			
+
 			interf.vlanProperty().addListener(
 					new ChangeListener<Object>()
 					{
@@ -453,6 +407,30 @@ public class AddTabController
 							});
 						}
 					});
+			
+			interf.portstatusProperty().addListener(
+					new ChangeListener<Object>()
+					{
+						@Override
+						public void changed(
+								ObservableValue<? extends Object> arg0,
+								Object arg1, Object arg2)
+						{
+							Platform.runLater(new Runnable()
+							{
+								public void run()
+								{
+									interf.setTextForTooltip();
+									
+								}
+							});
+						}
+					});
+			
+			if (interf.getPortstatus() == "1")
+			{
+				interf.setStyle("-fx-base: #b6e7c9;");
+			}
 			
 			if ((countercolumn == 7))
 			{
