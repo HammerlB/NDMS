@@ -14,6 +14,7 @@ public class SSHConnector extends Thread {
 
 	public SSHConnector(String host, String user, String sshPass, String enablePass) {
 		ssh = new ConnectionSSH(host, user, sshPass);
+		this.enablePass=enablePass;
 		connected = false;
 		somethingToSend = false;
 		readerStarted = false;
@@ -34,19 +35,15 @@ public class SSHConnector extends Thread {
 			if (somethingToSend) {
 				try {
 					for (int i = 0; i < cmd.size(); i++) {
-//						if(cmd.get(i)=="RELOAD1"){
-//							sendCMD("enable\n" + enablePass + "\n" + "do reload\nno\n\n");
-//							doDisconnect();
-//							break;
-//						}
-//						if(cmd.get(i)=="RELOAD2"){
-//							sendCMD("enable\n" + enablePass + "\n" + "do reload\nyes\n\n");
-//							doDisconnect();
-//							break;
-//						}
 						sendCMD(cmd.get(i));
+						if (!readerStarted) {
+							reader.start();
+							System.out.println("Reader Started!");
+							readerStarted = true;
+						}
 						checkProgress(i);
-						System.err.println("Sended!!"+"("+counter+")\nCommand:"+cmd.get(i));
+						System.err.println("Sended!!"+"("+counter+")");
+//						System.out.println("Command:"+cmd.get(i));
 						counter++;
 						if (reload) {
 							System.out.println("Reload Requested!");
@@ -57,12 +54,6 @@ public class SSHConnector extends Thread {
 						}
 					}
 					cmd.clear();
-
-					if (!readerStarted) {
-						reader.start();
-						System.out.println("Reader Started!");
-						readerStarted = true;
-					}
 					this.somethingToSend = false;
 				} catch (Exception e) {
 					System.out.println("SSH: " + e.getMessage() + "\n"
@@ -72,7 +63,7 @@ public class SSHConnector extends Thread {
 			if (disconnect) {
 				try {
 					System.out.println("Trying to disconnect...");
-					sleep(3000);
+					sleep(5000);
 					reader.interrupt();
 					ssh.disconnect();
 					System.out.println("Disconnected!");
@@ -119,7 +110,6 @@ public class SSHConnector extends Thread {
 		this.cmd.add("enable\n" + enablePass + "\n" + "conf t\n" + cmd + "\n"
 				+ "end\n");
 		this.somethingToSend = true;
-		this.reload = true;
 	}
 
 	public void doSetConfigMode() {
@@ -128,7 +118,7 @@ public class SSHConnector extends Thread {
 	}
 
 	public void doSetEnableMode() {
-		this.cmd.add("enable\n" + enablePass + "\n" + "conf t\n");
+		this.cmd.add("enable\n" + enablePass + "\n");
 		this.somethingToSend = true;
 	}
 
@@ -140,21 +130,25 @@ public class SSHConnector extends Thread {
 		}
 		doSendCMD(cmd);
 		doSendEnd();
+		this.somethingToSend=true;
 	}
 	
 	public void doSendEnd(){
 		this.cmd.add("end\n");
+		this.somethingToSend=true;
 	}
 
 	public void doReloadWithoutWrite() {
 //		this.cmd.add("RELOAD1");
 		this.cmd.add("enable\n" + enablePass + "\n" + "reload\nno\n\n");
+		this.somethingToSend=true;
 		this.reload=true;
 	}
 
 	public void doReloadWithWrite() {
 //		this.cmd.add("RELOAD2");
 		this.cmd.add("enable\n" + enablePass + "\n" + "reload\nyes\n\n");
+		this.somethingToSend=true;
 		this.reload=true;
 	}
 
