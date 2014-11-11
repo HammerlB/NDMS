@@ -15,6 +15,7 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -94,17 +95,12 @@ public class AddTabController
 					
 					sshc.connect();
 					sshc.start();
-					
-					
-					while(sshc.getSSHFingerprint() == null) {
-						Thread.sleep(100);
-					}
 
 					Instance inst = new Instance(tabname,
 							sshc.getSSHFingerprint(), tabname, sshc,
 							new SNMPConnector("udp:" + tabname + "/161",
 									"gwdSNMP_2014"));
-
+					
 					inst.populateAll();
 
 					inst.nameProperty().addListener(

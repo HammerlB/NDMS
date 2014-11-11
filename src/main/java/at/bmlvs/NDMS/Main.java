@@ -19,9 +19,11 @@ import at.bmlvs.NDMS.service.PersistenceService;
 import at.bmlvs.NDMS.service.PresentationService;
 import at.bmlvs.NDMS.service.ServiceFactory;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class Main extends Application
 {
@@ -70,5 +72,14 @@ public class Main extends Application
 		stage.setWidth(800);
 		stage.setHeight(700);
 		stage.show();
+		
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            public void handle(WindowEvent we) {
+            	System.exit(0);
+                System.out.println("Stage is closing");
+            }
+        });        
+        //stage.close();
+          
 	}
 }

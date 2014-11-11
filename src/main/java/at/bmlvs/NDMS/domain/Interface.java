@@ -384,7 +384,7 @@ public class Interface extends Button
 		if(getPortstatus().equals("2"))
 		{
 			type = "Offline";
-			setStyle("-fx-base: #575689;");
+			setStyle("-fx-base: #FFB2B2;");
 		}
 		else
 		{
@@ -396,12 +396,12 @@ public class Interface extends Button
 			else if(getPort_8021X() == false && getVlan().equals(10))
 			{
 				type = "Client";
-				setStyle("-fx-base: #b621135;");
+				setStyle("-fx-base: #3399FF;");
 			}
 			else if(getTrunkstatus())
 			{
 				type = "Network";
-				setStyle("-fx-base: #345345;");
+				setStyle("-fx-base: #CCFF99;");
 			}
 		}
 		

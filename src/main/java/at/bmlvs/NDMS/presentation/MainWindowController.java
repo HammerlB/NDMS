@@ -32,6 +32,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  * Sample custom control hosting a text field and a button.
@@ -53,7 +54,9 @@ public class MainWindowController extends VBox
 				"xml/MainWindow.fxml"));
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);
+
 		
+	          
 		try
 		{
 			fxmlLoader.load();
@@ -65,6 +68,7 @@ public class MainWindowController extends VBox
 		templatusBox();
 	}
 	
+        
 	@FXML
 	private void addnew(ActionEvent event) throws IOException
 	{
