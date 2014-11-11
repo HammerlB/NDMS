@@ -77,6 +77,7 @@ public class AddTabController
 	private void startconnection(ActionEvent event) throws IOException
 	{
 		
+		
 		if (rbaddress.isSelected())
 		{
 			if ((!ipaddress1.getText().equals(""))
@@ -90,6 +91,7 @@ public class AddTabController
 
 				try
 				{
+					
 					SSHConnector sshc = new SSHConnector(tabname, "Herkel",
 							"gwdH_2014", "gwd_2014");
 					
