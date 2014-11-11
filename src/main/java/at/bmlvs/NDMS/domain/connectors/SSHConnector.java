@@ -86,7 +86,7 @@ public class SSHConnector extends Thread {
 			} catch (Exception e) {
 				System.out.println("SSH: " + e.getMessage() + "\n" + "Reason: "
 						+ e.getCause());
-				connectionException=e.getMessage();
+				throw new RuntimeException();
 			}
 		}
 	}
