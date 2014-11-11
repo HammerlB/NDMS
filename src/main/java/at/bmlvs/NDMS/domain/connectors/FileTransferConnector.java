@@ -19,11 +19,11 @@ public abstract class FileTransferConnector
 		this.host = host;
 	}
 	
-	abstract void connect();
+	abstract void connect() throws Exception;
 	
-	abstract void disconnect();
+	abstract void disconnect() throws Exception;
 	
-	abstract void send();
+	abstract void send() throws Exception;
 	
-	abstract void receive();
+	abstract void receive() throws Exception;
 }
