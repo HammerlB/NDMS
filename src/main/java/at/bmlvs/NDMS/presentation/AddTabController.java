@@ -81,6 +81,7 @@ public class AddTabController
 	@FXML
 	private void startconnection(ActionEvent event) throws IOException
 	{
+		
 		if (rbaddress.isSelected())
 		{
 			if ((!ipaddress1.getText().equals(""))
@@ -96,7 +97,32 @@ public class AddTabController
 				{
 					SSHConnector sshc = new SSHConnector(tabname, "Herkel",
 							"gwdH_2014", "gwd_2014");
+					
+					
 					sshc.start();
+					
+					while(sshc.getConnectionException() == null)
+					{
+						try
+						{
+							Thread.sleep(1000);
+						}
+						catch (Exception e)
+						{
+							e.printStackTrace();
+						}
+						if (sshc.isConnected())
+						{
+							break;
+						} 
+
+					}
+					
+					if(sshc.getConnectionException() != null)
+					{
+						errorlabel.setText("Verbindung war nicht erfolgreich! \n("
+								+ sshc.getConnectionException() + ")");
+					}
 					
 					while(sshc.getSSHFingerprint() == null) {
 						Thread.sleep(100);
