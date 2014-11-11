@@ -3,6 +3,7 @@ package at.bmlvs.NDMS.domain;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.property.SimpleStringProperty;
@@ -386,6 +387,17 @@ public class Instance extends Tab
 					}
 				}
 			}
+			
+			for (Interface interf : getInterfaces())
+			{
+				Platform.runLater(new Runnable()
+				{
+					public void run()
+					{
+						interf.checkAndSetWhatType();
+					}
+				});
+			}
 		}
 		catch (Exception e)
 		{
@@ -559,7 +571,13 @@ public class Instance extends Tab
 
 			for (Interface interf : getInterfaces())
 			{
-				interf.checkAndSetWhatType();
+				Platform.runLater(new Runnable()
+				{
+					public void run()
+					{
+						interf.checkAndSetWhatType();
+					}
+				});
 			}
 		}
 		catch (IOException e1)

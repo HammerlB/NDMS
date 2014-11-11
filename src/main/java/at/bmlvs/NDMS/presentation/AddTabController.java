@@ -92,7 +92,7 @@ public class AddTabController
 					SSHConnector sshc = new SSHConnector(tabname, "Herkel",
 							"gwdH_2014", "gwd_2014");
 					
-					
+					sshc.connect();
 					sshc.start();
 					
 					
@@ -138,7 +138,7 @@ public class AddTabController
 
 					// Platform.runLater(inst);
 
-					// inst.checkInterfaces(); holadoadororo
+					// inst.checkInterfaces();
 					ServiceFactory.getDomainService().getInstances()
 							.addSingleOnlineInstance(inst);
 					addTab(inst);
@@ -149,7 +149,7 @@ public class AddTabController
 				{
 					errorlabel.setText("Verbindung war nicht erfolgreich! \n("
 							+ e.getMessage() + ")");
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 
 			}

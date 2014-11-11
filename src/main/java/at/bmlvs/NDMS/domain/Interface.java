@@ -1,6 +1,7 @@
 package at.bmlvs.NDMS.domain;
 
 import at.bmlvs.NDMS.domain.helper.UUIDGenerator;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -380,13 +381,28 @@ public class Interface extends Button
 	{
 		String type = "Unknown";
 		
-		if(getPort_8021X())
+		if(getPortstatus().equals(2))
 		{
-			type = "Client";
+			type = "Offline";
+			setStyle("-fx-base: #575689;");
 		}
-		else if(getTrunkstatus())
+		else
 		{
-			type = "Network";
+			if(getPort_8021X())
+			{
+				type = "802.1X-Client";
+				setStyle("-fx-base: #b6e7c9;");
+			}
+			else if(getPort_8021X() == false && getVlan().equals(10))
+			{
+				type = "Client";
+				setStyle("-fx-base: #b621135;");
+			}
+			else if(getTrunkstatus())
+			{
+				type = "Network";
+				setStyle("-fx-base: #345345;");
+			}
 		}
 		
 		setType(type);
@@ -396,10 +412,16 @@ public class Interface extends Button
 	
 	public void setTextForTooltip()
 	{
-		if(getTooltip() != null)
+		Platform.runLater(new Runnable()
 		{
-			getTooltip().setText("Portname: " + getPortname() + "\nType: " + getType() + "\nStatus: " + getPortstatus() + "\nVlan: " + getVlan());
-		}
+			public void run()
+			{
+				if(getTooltip() != null)
+				{
+					getTooltip().setText("Portname: " + getPortname() + "\nType: " + getType() + "\nStatus: " + getPortstatus() + "\nVlan: " + getVlan());
+				}
+			}
+		});
 	}
 	
 	@Override
