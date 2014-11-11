@@ -5,44 +5,56 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class SSHConnector extends Thread {
 	private ConnectionSSH ssh;
-	private volatile boolean isConnected;
-	private boolean somethingToSend, disconnect, readerStarted;
-	private int progress;
-	private String cmdToSend;
+	private volatile boolean connected;
+	private boolean somethingToSend, disconnect, readerStarted, reload;
+	private int progress, counter;
+	private String cmdToSend,enablePass;
 	private Thread reader;
 	private CopyOnWriteArrayList<String> cmd;
-	private final Object lock = new Object();
 
-
-	public SSHConnector(String host, String user, String pass) {
-		ssh = new ConnectionSSH(host, user, pass);
-		isConnected = false;
+	public SSHConnector(String host, String user, String sshPass, String enablePass) {
+		ssh = new ConnectionSSH(host, user, sshPass);
+		connected = false;
 		somethingToSend = false;
 		readerStarted = false;
+		reload = false;
+		counter=1;
 		cmd = new CopyOnWriteArrayList<String>();
 		reader = new Thread(ssh);
 	}
 
 	@Override
 	public void run() {
-		if (!isConnected) {
-			try {
-				ssh.connect();
-				setConnected(true);
-				System.out.println("Connected!");
-			} catch (Exception e) {
-				System.out.println("SSH: " + e.getMessage() + "\n" + "Reason: "
-						+ e.getCause());
-			}
-		}
+		this.checkConnected();
+		this.checkMainThread();
+	}
+
+	public void checkMainThread() {
 		while (true) {
 			if (somethingToSend) {
 				try {
 					for (int i = 0; i < cmd.size(); i++) {
+//						if(cmd.get(i)=="RELOAD1"){
+//							sendCMD("enable\n" + enablePass + "\n" + "do reload\nno\n\n");
+//							doDisconnect();
+//							break;
+//						}
+//						if(cmd.get(i)=="RELOAD2"){
+//							sendCMD("enable\n" + enablePass + "\n" + "do reload\nyes\n\n");
+//							doDisconnect();
+//							break;
+//						}
 						sendCMD(cmd.get(i));
 						checkProgress(i);
-						System.out.println("Sended!!");
-						sleep(1000);
+						System.err.println("Sended!!"+"("+counter+")\nCommand:"+cmd.get(i));
+						counter++;
+						if (reload) {
+							System.out.println("Reload Requested!");
+							reload=false;
+							sleep(10000);
+						} else {
+							sleep(1000);
+						}
 					}
 					cmd.clear();
 
@@ -51,7 +63,7 @@ public class SSHConnector extends Thread {
 						System.out.println("Reader Started!");
 						readerStarted = true;
 					}
-					setSomethingToSend(false);
+					this.somethingToSend = false;
 				} catch (Exception e) {
 					System.out.println("SSH: " + e.getMessage() + "\n"
 							+ "Reason: " + e.getCause());
@@ -73,77 +85,77 @@ public class SSHConnector extends Thread {
 		}
 	}
 
+	public void checkConnected() {
+		if (!connected) {
+			try {
+				ssh.connect();
+				this.connected = true;
+				System.out.println("Connected!");
+			} catch (Exception e) {
+				System.out.println("SSH: " + e.getMessage() + "\n" + "Reason: "
+						+ e.getCause());
+			}
+		}
+	}
+
+	public CopyOnWriteArrayList<String> getCmd() {
+		return cmd;
+	}
+
+	public void setCmd(CopyOnWriteArrayList<String> cmd) {
+		this.cmd = cmd;
+	}
+
 	private void sendCMD(String cmd) {
 		ssh.sendCmd(cmd);
-	}
-
-	public boolean isConnected() {
-		return isConnected;
-	}
-
-	public void setConnected(boolean isConnected) {
-		this.isConnected = isConnected;
-	}
-
-	public boolean isSomethingToSend() {
-		return somethingToSend;
-	}
-
-	public void setSomethingToSend(boolean somethingToSend) {
-		this.somethingToSend = somethingToSend;
-	}
-
-	public String getCmdToSend() {
-		return cmdToSend;
-	}
-
-	public void setCmdToSend(String cmdToSend) {
-		this.cmdToSend = cmdToSend;
-	}
-
-	public int getProgress() {
-		return progress;
-	}
-
-	public void setProgress(int progress) {
-		this.progress = progress;
 	}
 
 	public void doSendCMD(String cmd) {
 		this.cmd.add(cmd);
 		this.somethingToSend = true;
-
 	}
 
-	public void doSendSingleCMDConfigMode(String cmd, String enablePass) {
+	public void doSendSingleCMDConfigMode(String cmd) {
 		this.cmd.add("enable\n" + enablePass + "\n" + "conf t\n" + cmd + "\n"
 				+ "end\n");
 		this.somethingToSend = true;
+		this.reload = true;
 	}
 
-	public void doSetConfigMode(String enablePass) {
+	public void doSetConfigMode() {
 		this.cmd.add("enable\n" + enablePass + "\n" + "conf t\n");
 		this.somethingToSend = true;
 	}
 
-	public void doSetEnableMode(String enablePass) {
+	public void doSetEnableMode() {
 		this.cmd.add("enable\n" + enablePass + "\n" + "conf t\n");
 		this.somethingToSend = true;
 	}
 
-	public void doSendMultipleCMD(ArrayList<String> cmds, String enablePass) {
-		for (String cmd : cmds) {
-			doSetConfigMode(enablePass);
-			doSendCMD(cmd);
+	public void doSendMultipleCMD(ArrayList<String> cmds) {
+		String cmd="";
+		doSetConfigMode();
+		for (String txt : cmds) {
+			cmd+=txt+"\n";
 		}
+		doSendCMD(cmd);
+		doSendEnd();
+	}
+	
+	public void doSendEnd(){
+		this.cmd.add("end\n");
 	}
 
-	public void doReloadWithoutWrite(String enablePass) {
-		this.cmd.add("enable\n" + enablePass + "\n" + "do reload\nno\n\n");
+	public void doReloadWithoutWrite() {
+//		this.cmd.add("RELOAD1");
+		this.cmd.add("enable\n" + enablePass + "\n" + "reload\nno\n\n");
+		this.reload=true;
 	}
 
-	public void doReloadWithWrite(String enablePass) {
-		this.cmd.add("enable\n" + enablePass + "\n" + "do reload\nyes\n\n");
+	public void doReloadWithWrite() {
+//		this.cmd.add("RELOAD2");
+		this.cmd.add("enable\n" + enablePass + "\n" + "reload\nyes\n\n");
+		this.reload=true;
 	}
 
 	public void doDisconnect() {
@@ -156,5 +168,69 @@ public class SSHConnector extends Thread {
 
 	public String getSSHFingerprint() {
 		return ssh.getSSHFingerprint();
+	}
+	
+	public ConnectionSSH getSSHConnection() {
+		return ssh;
+	}
+
+	public void setSSHConnection(ConnectionSSH ssh) {
+		this.ssh = ssh;
+	}
+
+	public boolean isConnected() {
+		return connected;
+	}
+
+	public void setConnected(boolean connected) {
+		this.connected = connected;
+	}
+
+	public boolean isSomethingToSend() {
+		return somethingToSend;
+	}
+
+	public void setSomethingToSend(boolean somethingToSend) {
+		this.somethingToSend = somethingToSend;
+	}
+
+	public boolean isDisconnect() {
+		return disconnect;
+	}
+
+	public void setDisconnect(boolean disconnect) {
+		this.disconnect = disconnect;
+	}
+
+	public boolean isReaderStarted() {
+		return readerStarted;
+	}
+
+	public void setReaderStarted(boolean readerStarted) {
+		this.readerStarted = readerStarted;
+	}
+
+	public int getProgress() {
+		return progress;
+	}
+
+	public void setProgress(int progress) {
+		this.progress = progress;
+	}
+
+	public String getCmdToSend() {
+		return cmdToSend;
+	}
+
+	public void setCmdToSend(String cmdToSend) {
+		this.cmdToSend = cmdToSend;
+	}
+
+	public Thread getReader() {
+		return reader;
+	}
+
+	public void setReader(Thread reader) {
+		this.reader = reader;
 	}
 }

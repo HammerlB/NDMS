@@ -424,7 +424,10 @@ public class AddTabController
 				}
 			}
 			
-			
+			if(Integer.parseInt(portbtn.getId()) < 10)
+			{
+				portbtn.setText(" " + interf.getPortnameshort() + " ");
+			}
 			
 		}
 
