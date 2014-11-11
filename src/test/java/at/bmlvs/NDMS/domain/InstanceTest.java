@@ -35,7 +35,7 @@ public class InstanceTest extends Application
 			ServiceFactory.setAppConfig(ServiceFactory.getPersistenceService()
 					.getAppconfig().getElement());
 			
-			SSHConnector sshc = new SSHConnector(tabname, "Herkel", "gwdH_2014");
+			SSHConnector sshc = new SSHConnector(tabname, "Herkel", "gwdH_2014","gwd_2014");
 			sshc.start();
 			
 			Instance inst = new Instance(tabname, sshc.getSSHFingerprint(), tabname, sshc, new SNMPConnector("udp:" + tabname + "/161", "gwdSNMP_2014"));
