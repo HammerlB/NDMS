@@ -369,7 +369,7 @@ public class Instance extends Tab
 								{
 									interf.setPortidshort(parts[0]);
 
-									if (interf.isTrunkstatus() != true)
+									if (interf.getTrunkstatus() != true)
 									{
 										interf.setVlan(vlan);
 									}
@@ -539,7 +539,7 @@ public class Instance extends Tab
 								{
 									interf.setPortidshort(parts[0]);
 
-									if (interf.isTrunkstatus() != true)
+									if (interf.getTrunkstatus() != true)
 									{
 										interf.setVlan(vlan);
 									}
