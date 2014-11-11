@@ -45,7 +45,7 @@ public class SSHConnector extends Thread {
 
 	public void checkMainThread() {
 		while (running) {
-			if (somethingToSend&&connected==true) {
+			if (somethingToSend) {
 				try {
 					for (int i = 0; i < cmd.size(); i++) {
 						sendCMD(cmd.get(i));
