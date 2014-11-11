@@ -381,7 +381,7 @@ public class Interface extends Button
 	{
 		String type = "Unknown";
 		
-		if(getPortstatus().equals(2))
+		if(getPortstatus().equals("2"))
 		{
 			type = "Offline";
 			setStyle("-fx-base: #575689;");

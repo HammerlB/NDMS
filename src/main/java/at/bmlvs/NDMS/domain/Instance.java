@@ -452,6 +452,11 @@ public class Instance extends Tab
 							if (interf.getPortid().equals(parts[0]))
 							{
 								interf.setPortstatus(parts[1]);
+								
+								if(interf.getPortstatus().equals("2"))
+								{
+									interf.setVlan("None");
+								}
 							}
 						}
 					}
