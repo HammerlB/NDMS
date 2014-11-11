@@ -94,52 +94,72 @@ public class AddTabController
 							"gwdH_2014", "gwd_2014");
 					
 					sshc.connect();
-					sshc.start();
-
-					Instance inst = new Instance(tabname,
-							sshc.getSSHFingerprint(), tabname, sshc,
-							new SNMPConnector("udp:" + tabname + "/161",
-									"gwdSNMP_2014"));
 					
-					inst.populateAll();
-
-					inst.nameProperty().addListener(
-							new ChangeListener<Object>()
-							{
-								@Override
-								public void changed(
-										ObservableValue<? extends Object> arg0,
-										Object arg1, Object arg2)
-								{
-									Platform.runLater(new Runnable()
-									{
-										public void run()
-										{
-											inst.setText(inst.getName());
-										}
-									});
-								}
-							});
+					boolean alreadyfound = false;
 					
-					Timer timer = new Timer();
-
-					timer.scheduleAtFixedRate(new TimerTask()
+					for(Instance inst: ServiceFactory.getDomainService().getInstances().getInstances())
 					{
-						public void run()
+						if(sshc.getSSHFingerprint().equals(inst.getFingerprint()))
 						{
-							inst.checkInstance();
-							inst.checkInterfaces();
+							alreadyfound = true;
+							break;
 						}
-					}, 1000, 5000);
+					}
+					
+					if(alreadyfound == false)
+					{
+						sshc.start();
 
-					// Platform.runLater(inst);
+						Instance inst = new Instance(tabname,
+								sshc.getSSHFingerprint(), tabname, sshc,
+								new SNMPConnector("udp:" + tabname + "/161",
+										"gwdSNMP_2014"));
+						
+						inst.populateAll();
 
-					// inst.checkInterfaces();
-					ServiceFactory.getDomainService().getInstances()
-							.addSingleOnlineInstance(inst);
-					addTab(inst);
-					portview(ServiceFactory.getDomainService().getInstances()
-							.getInstances().indexOf(inst));
+						inst.nameProperty().addListener(
+								new ChangeListener<Object>()
+								{
+									@Override
+									public void changed(
+											ObservableValue<? extends Object> arg0,
+											Object arg1, Object arg2)
+									{
+										Platform.runLater(new Runnable()
+										{
+											public void run()
+											{
+												inst.setText(inst.getName());
+											}
+										});
+									}
+								});
+						
+						Timer timer = new Timer();
+
+						timer.scheduleAtFixedRate(new TimerTask()
+						{
+							public void run()
+							{
+								inst.checkInstance();
+								inst.checkInterfaces();
+							}
+						}, 1000, 5000);
+
+						// Platform.runLater(inst);
+
+						// inst.checkInterfaces();
+						ServiceFactory.getDomainService().getInstances()
+								.addSingleOnlineInstance(inst);
+						addTab(inst);
+						portview(ServiceFactory.getDomainService().getInstances()
+								.getInstances().indexOf(inst));
+					}
+					else
+					{
+						sshc.getSSHConnection().disconnect();
+						errorlabel.setText("Es besteht bereits eine Verbindung\nzu dieser Netzwerkkomponente!");
+					}
 				}
 				catch (Exception e)
 				{

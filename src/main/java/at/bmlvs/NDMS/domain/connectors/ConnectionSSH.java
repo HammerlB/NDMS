@@ -113,6 +113,7 @@ public class ConnectionSSH extends TerminalConnector implements Runnable {
 	public void disconnect() throws Exception {
 		// session.close();
 		ssh.disconnect();
+		System.out.println("Disconnected!");
 	}
 
 	public InputStream getIn() {
