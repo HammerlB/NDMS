@@ -368,9 +368,6 @@ public class AddTabController
 		int counterrow = 1;
 		int countercolumn = 1;
 		
-		Button portbtn;
-		
-		
 		portview1.setPadding(new Insets(5, 0, 5, 0));
 
 

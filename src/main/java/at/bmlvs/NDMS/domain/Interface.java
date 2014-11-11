@@ -1,146 +1,315 @@
 package at.bmlvs.NDMS.domain;
 
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.scene.control.Button;
 
 public class Interface extends Button
 {
-	private String portid;
-	private String portidshort;
-	private String portname;
-	private String portnameshort;
-	private String type;
-	private String portstatus;
-	private boolean trunkstatus;
-	private boolean cdpstatus;
-	private boolean cdpneighbor;
-	private boolean port_8021X;
-	private String vlan;
+	private StringProperty portid;
+	private StringProperty portidshort;
+	private StringProperty portname;
+	private StringProperty portnameshort;
+	private StringProperty type;
+	private StringProperty portstatus;
+	private StringProperty vlan;
+	private BooleanProperty trunkstatus;
+	private BooleanProperty cdpstatus;
+	private BooleanProperty cdpneighbor;
+	private BooleanProperty port_8021X;
 	
 	public Interface(String portid)
 	{
 		setPortid(portid);
 		setType("Unknown");
 	}
-
-	public String getPortid()
+	
+	public final String getPortid()
 	{
+		if (portid != null)
+		{
+			return portid.get();
+		}
+
+		return null;
+	}
+
+	public final void setPortid(String portid)
+	{
+		this.portidProperty().set(portid);
+	}
+
+	public final StringProperty portidProperty()
+	{
+		if (portid == null)
+		{
+			portid = new SimpleStringProperty(null);
+		}
+
 		return portid;
 	}
-
-	public void setPortid(String portid)
+	
+	public final String getPortidshort()
 	{
-		this.portid = portid;
+		if (portidshort != null)
+		{
+			return portidshort.get();
+		}
+
+		return null;
 	}
 
-	public String getPortidshort()
+	public final void setPortidshort(String portidshort)
 	{
+		this.portidshortProperty().set(portidshort);
+	}
+
+	public final StringProperty portidshortProperty()
+	{
+		if (portidshort == null)
+		{
+			portidshort = new SimpleStringProperty(null);
+		}
+
 		return portidshort;
 	}
-
-	public void setPortidshort(String portidshort)
+	
+	public final String getPortname()
 	{
-		this.portidshort = portidshort;
+		if (portname != null)
+		{
+			return portname.get();
+		}
+
+		return null;
 	}
 
-	public String getPortname()
+	public final void setPortname(String portname)
 	{
+		this.portnameProperty().set(portname);
+	}
+
+	public final StringProperty portnameProperty()
+	{
+		if (portname == null)
+		{
+			portname = new SimpleStringProperty(null);
+		}
+
 		return portname;
 	}
-
-	public void setPortname(String portname)
+	
+	public final String getPortnameshort()
 	{
-		this.portname = portname;
+		if (portnameshort != null)
+		{
+			return portnameshort.get();
+		}
+
+		return null;
 	}
 
-	public String getPortnameshort()
+	public final void setPortnameshort(String portnameshort)
 	{
+		this.portnameshortProperty().set(portnameshort);
+	}
+
+	public final StringProperty portnameshortProperty()
+	{
+		if (portnameshort == null)
+		{
+			portnameshort = new SimpleStringProperty(null);
+		}
+
 		return portnameshort;
 	}
-
-	public void setPortnameshort(String portnameshort)
+	
+	public final String getType()
 	{
-		this.portnameshort = portnameshort;
+		if (type != null)
+		{
+			return type.get();
+		}
+
+		return null;
 	}
 
-	public String getType()
+	public final void setType(String type)
 	{
+		this.typeProperty().set(type);
+	}
+
+	public final StringProperty typeProperty()
+	{
+		if (type == null)
+		{
+			type = new SimpleStringProperty(null);
+		}
+
 		return type;
 	}
-
-	public void setType(String type)
+	
+	public final String getPortstatus()
 	{
-		this.type = type;
+		if (portstatus != null)
+		{
+			return portstatus.get();
+		}
+
+		return null;
 	}
 
-	public String getPortstatus()
+	public final void setPortstatus(String portstatus)
 	{
+		this.portstatusProperty().set(portstatus);
+	}
+
+	public final StringProperty portstatusProperty()
+	{
+		if (portstatus == null)
+		{
+			portstatus = new SimpleStringProperty(null);
+		}
+
 		return portstatus;
 	}
-
-	public void setPortstatus(String portstatus)
+	
+	public final String getVlan()
 	{
-		this.portstatus = portstatus;
+		if (vlan != null)
+		{
+			return vlan.get();
+		}
+
+		return null;
 	}
 
-	public boolean isTrunkstatus()
+	public final void setVlan(String vlan)
 	{
-		return trunkstatus;
+		this.vlanProperty().set(vlan);
 	}
 
-	public void setTrunkstatus(boolean trunkstatus)
+	public final StringProperty vlanProperty()
 	{
-		this.trunkstatus = trunkstatus;
-	}
+		if (vlan == null)
+		{
+			vlan = new SimpleStringProperty(null);
+		}
 
-	public boolean isCdpstatus()
-	{
-		return cdpstatus;
-	}
-
-	public void setCdpstatus(boolean cdpstatus)
-	{
-		this.cdpstatus = cdpstatus;
-	}
-
-	public boolean isCdpneighbor()
-	{
-		return cdpneighbor;
-	}
-
-	public void setCdpneighbor(boolean cdpneighbor)
-	{
-		this.cdpneighbor = cdpneighbor;
-	}
-
-	public boolean isPort_8021X()
-	{
-		return port_8021X;
-	}
-
-	public void setPort_8021X(boolean port_8021x)
-	{
-		port_8021X = port_8021x;
-	}
-
-	public String getVlan()
-	{
 		return vlan;
 	}
-
-	public void setVlan(String vlan)
+	
+	public final boolean getTrunkstatus()
 	{
-		this.vlan = vlan;
+		if (trunkstatus != null)
+		{
+			return trunkstatus.get();
+		}
+
+		return false;
+	}
+
+	public final void setTrunkstatus(boolean trunkstatus)
+	{
+		this.trunkstatusProperty().set(trunkstatus);
+	}
+
+	public final BooleanProperty trunkstatusProperty()
+	{
+		if (trunkstatus == null)
+		{
+			trunkstatus = new SimpleBooleanProperty();
+		}
+
+		return trunkstatus;
+	}
+	
+	public final boolean getCdpstatus()
+	{
+		if (cdpstatus != null)
+		{
+			return cdpstatus.get();
+		}
+
+		return false;
+	}
+
+	public final void setCdpstatus(boolean cdpstatus)
+	{
+		this.cdpstatusProperty().set(cdpstatus);
+	}
+
+	public final BooleanProperty cdpstatusProperty()
+	{
+		if (cdpstatus == null)
+		{
+			cdpstatus = new SimpleBooleanProperty();
+		}
+
+		return cdpstatus;
+	}
+	
+	public final boolean getCdpneighbor()
+	{
+		if (cdpneighbor != null)
+		{
+			return cdpneighbor.get();
+		}
+
+		return false;
+	}
+
+	public final void setCdpneighbor(boolean cdpneighbor)
+	{
+		this.cdpneighborProperty().set(cdpneighbor);
+	}
+
+	public final BooleanProperty cdpneighborProperty()
+	{
+		if (cdpneighbor == null)
+		{
+			cdpneighbor = new SimpleBooleanProperty();
+		}
+
+		return cdpneighbor;
+	}
+	
+	public final boolean getPort_8021X()
+	{
+		if (port_8021X != null)
+		{
+			return port_8021X.get();
+		}
+
+		return false;
+	}
+
+	public final void setPort_8021Xs(boolean port_8021X)
+	{
+		this.port_8021XProperty().set(port_8021X);
+	}
+
+	public final BooleanProperty port_8021XProperty()
+	{
+		if (port_8021X == null)
+		{
+			port_8021X = new SimpleBooleanProperty();
+		}
+
+		return port_8021X;
 	}
 	
 	public String checkAndSetWhatType()
 	{
 		String type = "Unknown";
 		
-		if(isPort_8021X())
+		if(getPort_8021X())
 		{
 			type = "Client";
 		}
-		else if(isTrunkstatus())
+		else if(getTrunkstatus())
 		{
 			type = "Network";
 		}
