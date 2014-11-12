@@ -2,7 +2,7 @@ package at.bmlvs.NDMS.service;
 
 import at.bmlvs.NDMS.domain.Instances;
 import at.bmlvs.NDMS.domain.templates.Templates;
-import at.bmlvs.NDMS.domain.templates.Snapshots;
+import at.bmlvs.NDMS.domain.snapshots.Snapshots;
 
 public class DomainService
 {

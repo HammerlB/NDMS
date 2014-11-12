@@ -1,5 +1,7 @@
 package at.bmlvs.NDMS.presentation;
 
+import at.bmlvs.NDMS.domain.snapshots.Snapshot;
+import at.bmlvs.NDMS.service.ServiceFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -17,11 +19,25 @@ public class SnapshotController
 	public void initialize()
 	{
 		
-		ObservableList<String> items =FXCollections.observableArrayList (
-			    "Single", "Double", "Suite", "Family App");
+		ObservableList<String> items = FXCollections.observableArrayList ();
+		
+		try
+		{
+			for(Snapshot snapshot: ServiceFactory.getDomainService().getSnapshots().getSnapshots())
+			{
+				items.setAll(snapshot.getName() + " " + snapshot.getDatetime());
+				
+			}
+		}
+		catch (Exception e)
+		{
+			
+		}
+
 		
 		snapshotlist.setItems(items);
-	    
+		
 		descArea.setText("jsdhflkasjcfnlaksjcbfhko\nksdjsdkfh");
+		
 	}
 }
