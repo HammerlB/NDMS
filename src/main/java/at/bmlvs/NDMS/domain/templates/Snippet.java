@@ -9,15 +9,15 @@ public class Snippet implements Serializable
 	private String name;
 	private String prev;
 	private String next;
-	
+
 	private ArrayList<Section> sections;
-	
+
 	public Snippet(String name, String prev, String next)
 	{
 		setName(name);
 		setPrev(prev);
 		setNext(next);
-		
+
 		setSections(new ArrayList<Section>());
 	}
 

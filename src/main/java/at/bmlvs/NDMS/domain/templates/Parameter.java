@@ -9,6 +9,7 @@ public class Parameter implements Serializable
 	private String name;
 	private Datatype type;
 	private String value;
+	private boolean useName;
 	
 	public Parameter(int id, String name, Datatype type, String value)
 	{
@@ -56,5 +57,25 @@ public class Parameter implements Serializable
 	public void setValue(String value)
 	{
 		this.value = value;
+	}
+	
+	public boolean isUseName()
+	{
+		return useName;
+	}
+
+	public void setUseName(boolean useName)
+	{
+		this.useName = useName;
+	}
+
+	public String getParameterOutput()
+	{
+		if(isUseName())
+		{
+			return getName() + " " + getValue();
+		}
+		
+		return getValue();
 	}
 }

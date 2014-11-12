@@ -65,4 +65,29 @@ public class Template implements Serializable
 	{
 		//Needs to be implemented.
 	}
+	
+	public String getTemplateOutput()
+	{
+		String output = "";
+		
+		for(Snippet snippet: getSnippets())
+		{
+			for(Section section: snippet.getSections())
+			{
+				for(Command command: section.getCommands())
+				{
+					output += command.getName();
+					
+					for(Parameter parameter: command.getParameters())
+					{
+						output += " " + parameter.getParameterOutput();
+					}
+					
+					output += "\n";
+				}
+			}
+		}
+		
+		return null;
+	}
 }
