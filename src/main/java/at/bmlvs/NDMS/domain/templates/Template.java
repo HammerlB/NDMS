@@ -3,6 +3,11 @@ package at.bmlvs.NDMS.domain.templates;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 @SuppressWarnings("serial")
 public class Template implements Serializable
 {
@@ -11,6 +16,9 @@ public class Template implements Serializable
 	private String device_type;
 	
 	private ArrayList<Snippet> snippets;
+	
+	@XStreamOmitField
+	private StringProperty output;
 	
 	public Template(String version, String os_version, String device_type)
 	{
@@ -61,8 +69,58 @@ public class Template implements Serializable
 		this.snippets = snippets;
 	}
 	
+	public final String getOutput()
+	{
+		if (output != null)
+		{
+			return output.get();
+		}
+
+		return null;
+	}
+
+	public final void setOutput(String output)
+	{
+		this.outputProperty().set(output);
+	}
+
+	public final StringProperty outputProperty()
+	{
+		if (output == null)
+		{
+			output = new SimpleStringProperty(null);
+		}
+
+		return output;
+	}
+	
 	public void sortSnippets()
 	{
 		//Needs to be implemented.
+	}
+	
+	public String receiveTemplateOutput()
+	{
+		String receivedOutput = "";
+		
+		for(Snippet snippet: getSnippets())
+		{
+			for(Section section: snippet.getSections())
+			{
+				for(Command command: section.getCommands())
+				{
+					receivedOutput += command.getName();
+					
+					for(Parameter parameter: command.getParameters())
+					{
+						receivedOutput += " " + parameter.getParameterOutput();
+					}
+					
+					receivedOutput += "\n";
+				}
+			}
+		}
+		
+		return receivedOutput;
 	}
 }
