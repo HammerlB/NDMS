@@ -37,16 +37,16 @@
             <RowConstraints maxHeight="15.0" minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <RadioButton id="rbaddress" fx:id="rbaddress" focusTraversable="false" mnemonicParsing="false" onAction="#iptoggle" selected="false" text="IP-Addresse" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
+            <RadioButton id="rbaddress" fx:id="rbaddress" focusTraversable="false" mnemonicParsing="false" onAction="#iptoggle" selected="true" text="IP-Addresse" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
                <toggleGroup>
                   <ToggleGroup fx:id="radiotoggle" />
                </toggleGroup></RadioButton>
             <RadioButton id="rbrange" fx:id="rbrange" focusTraversable="false" mnemonicParsing="false" onAction="#rangetoggle" selected="false" text="IP-Range" toggleGroup="$radiotoggle" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" /> 
             <RadioButton id="rboff" fx:id="rboff" focusTraversable="false" mnemonicParsing="false" onAction="#offtoggle" selected="false" text="Offline Session" toggleGroup="$radiotoggle" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6" />
-            <RestrictiveTextField id="ipaddress1" fx:id="ipaddress1" disable="true" maxLength="3" restrict="[0-9]" GridPane.columnIndex="5" GridPane.rowIndex="1" />
-            <RestrictiveTextField id="ipaddress2" fx:id="ipaddress2" disable="true" maxLength="3" restrict="[0-9]" GridPane.columnIndex="7" GridPane.rowIndex="1" />
-            <RestrictiveTextField id="ipaddress3" fx:id="ipaddress3" disable="true" maxLength="3" restrict="[0-9]" GridPane.columnIndex="9" GridPane.rowIndex="1" />
-            <RestrictiveTextField id="ipaddress4" fx:id="ipaddress4" disable="true" maxLength="3" restrict="[0-9]" GridPane.columnIndex="11" GridPane.rowIndex="1" />       
+            <RestrictiveTextField id="ipaddress1" fx:id="ipaddress1" disable="false" maxLength="3" restrict="[0-9]" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+            <RestrictiveTextField id="ipaddress2" fx:id="ipaddress2" disable="false" maxLength="3" restrict="[0-9]" GridPane.columnIndex="7" GridPane.rowIndex="1" />
+            <RestrictiveTextField id="ipaddress3" fx:id="ipaddress3" disable="false" maxLength="3" restrict="[0-9]" GridPane.columnIndex="9" GridPane.rowIndex="1" />
+            <RestrictiveTextField id="ipaddress4" fx:id="ipaddress4" disable="false" maxLength="3" restrict="[0-9]" GridPane.columnIndex="11" GridPane.rowIndex="1" />       
             <RestrictiveTextField id="iprange1" fx:id="iprange1" disable="true" maxLength="3" restrict="[0-9]" GridPane.columnIndex="5" GridPane.rowIndex="3" />
             <RestrictiveTextField id="iprange2" fx:id="iprange2" disable="true" maxLength="3" restrict="[0-9]" GridPane.columnIndex="7" GridPane.rowIndex="3" />
             <RestrictiveTextField id="iprange3" fx:id="iprange3" disable="true" maxLength="3" restrict="[0-9]" GridPane.columnIndex="9" GridPane.rowIndex="3" />

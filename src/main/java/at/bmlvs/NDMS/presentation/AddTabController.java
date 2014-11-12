@@ -15,12 +15,15 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -74,6 +77,35 @@ public class AddTabController
 
 	private GridPane portview1;
 
+
+	@FXML
+	public void initialize()
+	{
+		
+		ActionEvent event = new ActionEvent();
+		
+		dotListener(ipaddress1, ipaddress2);
+		dotListener(ipaddress2, ipaddress3);
+		dotListener(ipaddress3, ipaddress4);
+		
+		ipaddress4.setOnKeyPressed(new EventHandler<KeyEvent>()
+		{
+			public void handle(KeyEvent ke)
+			{
+				if (ke.getCode().equals(KeyCode.ENTER))
+				{
+					try
+					{
+						startconnection(event);
+					}
+					catch (IOException e)
+					{
+					}
+				}
+			}
+		});
+	}
+	
 	@SuppressWarnings("static-access")
 	@FXML
 	private void startconnection(ActionEvent event) throws IOException
@@ -158,6 +190,15 @@ public class AddTabController
 						addTab(inst);
 						portview(ServiceFactory.getDomainService().getInstances()
 								.getInstances().indexOf(inst));
+						
+						inst.setOnClosed(new EventHandler<Event>() {
+				            public void handle(Event t) {
+				                 System.out.println("tab got closed");
+				                 ServiceFactory.getDomainService().getInstances().getInstances().remove(inst);
+				                 sshc.doDisconnect();
+				                 
+				            }
+				        });
 					}
 					else
 					{
@@ -271,9 +312,6 @@ public class AddTabController
 	@FXML
 	private void iptoggle(final ActionEvent event) throws IOException
 	{
-		dotListener(ipaddress1, ipaddress2);
-		dotListener(ipaddress2, ipaddress3);
-		dotListener(ipaddress3, ipaddress4);
 
 		iprange1.setDisable(true);
 		iprange2.setDisable(true);
@@ -300,23 +338,6 @@ public class AddTabController
 		ipaddress2.setDisable(false);
 		ipaddress3.setDisable(false);
 		ipaddress4.setDisable(false);
-
-		ipaddress4.setOnKeyPressed(new EventHandler<KeyEvent>()
-		{
-			public void handle(KeyEvent ke)
-			{
-				if (ke.getCode().equals(KeyCode.ENTER))
-				{
-					try
-					{
-						startconnection(event);
-					}
-					catch (IOException e)
-					{
-					}
-				}
-			}
-		});
 
 	}
 
@@ -379,7 +400,7 @@ public class AddTabController
 	}
 
 	@SuppressWarnings("static-access")
-	private void portview(int id)
+	public void portview(int id)
 	{
 		portview1 = new GridPane();
 
@@ -510,11 +531,6 @@ public class AddTabController
 		
 	}
 
-	
-	private void templateview(int id)
-	{
-		
-	}
 	
 	private void dotListener(TextField tf1, final TextField tf2)
 	{

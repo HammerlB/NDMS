@@ -75,8 +75,9 @@ public class Main extends Application
 		
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             public void handle(WindowEvent we) {
+            	System.out.println("Stage is closing");
             	System.exit(0);
-                System.out.println("Stage is closing");
+                
             }
         });        
         //stage.close();
