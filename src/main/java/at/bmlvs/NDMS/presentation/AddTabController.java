@@ -15,10 +15,10 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tab;
@@ -26,6 +26,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
@@ -493,19 +495,27 @@ public class AddTabController
 			}
 		}
 
-		// id stuff to int: Integer.parseInt(interf.getPortid()),
 
 		// Add something in Tab
-		VBox tabbox = new VBox();
-		tabbox.getChildren().addAll(portview1);
-		PresentationService.getMainWindowController().getTabPane().getTabs()
-				.get(id).setContent(tabbox);
 		
-		//_____________________
-
+		VBox tabbox = new VBox();
+		FlowPane flow = new FlowPane();
+		
+		flow.getChildren().addAll(portview1);
+		flow.setAlignment(Pos.CENTER);
+		
+		tabbox.getChildren().add(flow);
+		
+		PresentationService.getMainWindowController().getTabPane().getTabs().get(id).setContent(tabbox);
 		
 	}
 
+	
+	private void templateview(int id)
+	{
+		
+	}
+	
 	private void dotListener(TextField tf1, final TextField tf2)
 	{
 		tf1.setOnKeyPressed(new EventHandler<KeyEvent>()

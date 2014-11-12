@@ -412,12 +412,15 @@ public class Interface extends Button
 	
 	public void setTextForTooltip()
 	{
+		
+		
 		Platform.runLater(new Runnable()
 		{
 			public void run()
 			{
 				if(getTooltip() != null)
 				{
+					getTooltip().setFont(new Font("Arial", 20));
 					getTooltip().setText("Portname: " + getPortname() + "\nType: " + getType() + "\nStatus: " + getPortstatus() + "\nVlan: " + getVlan());
 				}
 			}
