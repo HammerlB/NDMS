@@ -24,6 +24,9 @@ import java.io.FileOutputStream;
 import org.apache.commons.net.tftp.TFTP;
 import org.apache.commons.net.tftp.TFTPClient;
 
+import at.bmlvs.NDMS.domain.snapshots.Snapshot;
+import at.bmlvs.NDMS.domain.snapshots.Snapshots;
+
 /***
  * This is an example of a simple Java tftp client. Notice how all of the code
  * is really just argument processing and error handling.
@@ -47,6 +50,9 @@ public class TFTPConnector extends FileTransferConnector {
 
 	private boolean ascii_transfermode;
 	private boolean binary_transfermode;
+	
+	private Snapshots snapshots;
+	private Snapshot currentsnapshot;
 
 	/*
 	 * "Usage: tftp [options] hostname localfile remotefile\n\n" +
@@ -123,6 +129,17 @@ public class TFTPConnector extends FileTransferConnector {
 
 		if (output != null) {
 			output.close();
+		}
+	}
+	
+	public void doCreateSnapshot(String name) throws Exception{	
+		snapshots.getSnapshots().add(currentsnapshot);
+	}
+	
+	public void initialSnapshot() throws Exception{
+		File f = new File(currentsnapshot.getRelativePath());
+		if(!f.exists()){
+			snapshots.getSnapshots().add(currentsnapshot);
 		}
 	}
 

@@ -1,5 +1,10 @@
 package at.bmlvs.NDMS.domain.snapshots;
 
+import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -8,11 +13,16 @@ public class Snapshot
 	private StringProperty fingerprint;
 	private StringProperty name;
 	private StringProperty datetime;
+	private StringProperty description;
+	private String relativePath;
 	
-	public Snapshot(String name, String datetime)
+	public Snapshot(String name, String description)
 	{
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date date = new Date();
+		setDatetime(dateFormat.format(date));
 		setName(name);
-		setDatetime(datetime);
+		setRelativePath((fingerprint+"/"+name+"("+datetime+")"));
 	}
 	
 	public final String getName()
@@ -88,5 +98,38 @@ public class Snapshot
 		}
 
 		return fingerprint;
+	}
+	
+	public final String getDescription()
+	{
+		if (description != null)
+		{
+			return description.get();
+		}
+
+		return null;
+	}
+
+	public final void setDescription(String description)
+	{
+		this.descriptionProperty().set(description);
+	}
+
+	public final StringProperty descriptionProperty()
+	{
+		if (description == null)
+		{
+			description = new SimpleStringProperty(null);
+		}
+
+		return description;
+	}
+
+	public String getRelativePath() {
+		return relativePath;
+	}
+
+	public void setRelativePath(String relativePath) {
+		this.relativePath = relativePath;
 	}
 }
