@@ -27,6 +27,7 @@ import org.apache.commons.net.tftp.TFTPClient;
 
 import at.bmlvs.NDMS.domain.snapshots.Snapshot;
 import at.bmlvs.NDMS.domain.snapshots.Snapshots;
+import at.bmlvs.NDMS.service.ServiceFactory;
 
 /***
  * This is an example of a simple Java tftp client. Notice how all of the code
@@ -54,6 +55,7 @@ public class TFTPConnector extends FileTransferConnector {
 	
 	private Snapshots snapshots;
 	private Snapshot currentsnapshot;
+	private String path;
 
 	/*
 	 * "Usage: tftp [options] hostname localfile remotefile\n\n" +
@@ -68,6 +70,9 @@ public class TFTPConnector extends FileTransferConnector {
 	 */
 	public TFTPConnector(String host, String localfile, String remotefile) {
 		super(host);
+		setPath(ServiceFactory.getAppConfig().getNDMS_DEFAULT_PATH_APP()
+				+ "\\"
+				+ ServiceFactory.getAppConfig().getNDMS_DEFAULT_PATH_SNAPSHOT_DIRECTORY());
 		setLocalfile(localfile);
 		setRemotefile(remotefile);
 		setTftpc(new TFTPClient());
@@ -124,6 +129,7 @@ public class TFTPConnector extends FileTransferConnector {
 		try{
 			output = new FileOutputStream(file);
 		}catch(FileNotFoundException e){
+			file.mkdirs();
 			file.createNewFile();
 			output = new FileOutputStream(file);
 		}
@@ -138,29 +144,38 @@ public class TFTPConnector extends FileTransferConnector {
 		}
 	}
 	
-	public void doCreateSnapshot(String name,String description) throws Exception{
-		setCurrentsnapshot(new Snapshot(name,description));
-		snapshots.createSnapshot(currentsnapshot);
-		connect();
-		setRemotefile("snapshot.txt");
-		setLocalfile(currentsnapshot.getRelativePath());
-		receive();
-	}
+//	public void doCreateSnapshot(String name,String description) throws Exception{
+//		setCurrentsnapshot(new Snapshot(name,description));
+//		snapshots.createSnapshot(currentsnapshot);
+//		connect();
+//		setRemotefile("snapshot.txt");
+//		setLocalfile(path+"\\"+localfile);
+//		receive();
+//	}
+//	
+//	public void doCreateSnapshot(Snapshot s) throws Exception{
+//		setCurrentsnapshot(s);
+//		snapshots.createSnapshot(currentsnapshot);
+//		connect();
+//		setRemotefile("snapshot.txt");
+//		setLocalfile(path+"\\"+localfile);
+//		receive();
+//	}
+//	
+//	public void initialSnapshot() throws Exception{
+//		setCurrentsnapshot(new Snapshot("initial","This is the initial Snapshot"));
+//		if(!snapshots.checkSnapshot(currentsnapshot)){
+//			doCreateSnapshot(currentsnapshot);
+//		}
+//	}
 	
-	public void doCreateSnapshot(Snapshot s) throws Exception{
-		setCurrentsnapshot(s);
-		snapshots.createSnapshot(currentsnapshot);
-		connect();
-		setRemotefile("snapshot.txt");
-		setLocalfile(currentsnapshot.getRelativePath());
-		receive();
-	}
-	
-	public void initialSnapshot() throws Exception{
-		setCurrentsnapshot(new Snapshot("initial","This is the initial Snapshot"));
-		if(!snapshots.checkSnapshot(currentsnapshot)){
-			doCreateSnapshot(currentsnapshot);
-		}
+	public String getDefaultPath() {
+		return ServiceFactory
+		.getAppConfig().getNDMS_DEFAULT_PATH_APP()
+		+ "\\"
+		+ ServiceFactory.getAppConfig()
+				.getNDMS_DEFAULT_PATH_SNAPSHOT_DIRECTORY()
+		+ "\\FINGERPRINT";
 	}
 
 	public boolean isAscii_transfermode() {
@@ -233,5 +248,13 @@ public class TFTPConnector extends FileTransferConnector {
 
 	public void setCurrentsnapshot(Snapshot currentsnapshot) {
 		this.currentsnapshot = currentsnapshot;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
 	}
 }
