@@ -170,7 +170,7 @@ public class SSHConnector extends Thread {
 	}
 
 	public String getSSHFingerprint() {
-		return ssh.getSSHFingerprint();
+		return ssh.getSSHFingerprint().split(":")[1];
 	}
 
 	public ConnectionSSH getSSHConnection() {

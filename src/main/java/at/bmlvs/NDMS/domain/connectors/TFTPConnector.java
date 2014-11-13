@@ -27,6 +27,7 @@ import org.apache.commons.net.tftp.TFTPClient;
 
 import at.bmlvs.NDMS.domain.snapshots.Snapshot;
 import at.bmlvs.NDMS.domain.snapshots.Snapshots;
+import at.bmlvs.NDMS.linker.SnapshotToPathLinker;
 import at.bmlvs.NDMS.service.ServiceFactory;
 
 /***
@@ -49,25 +50,36 @@ public class TFTPConnector extends FileTransferConnector {
 
 	private String localfile;
 	private String remotefile;
+	
+//	private File file;
 
 	private boolean ascii_transfermode;
 	private boolean binary_transfermode;
 	
 	private Snapshots snapshots;
-	private Snapshot currentsnapshot;
-	private String path;
-	private String fingerprint;
+	private SnapshotToPathLinker stpl;
 	
-	public TFTPConnector(String host, String localfile, String remotefile) {
+	private String localPath;
+
+	/*
+	 * "Usage: tftp [options] hostname localfile remotefile\n\n" +
+	 * "hostname   - The name of the remote host\n" +
+	 * "localfile  - The name of the local file to send or the name to use for\n"
+	 * + "\tthe received file\n" +
+	 * "remotefile - The name of the remote file to receive or the name for\n" +
+	 * "\tthe remote server to use to name the local file being sent.\n\n" +
+	 * "options: (The default is to assume -r -b)\n" +
+	 * "\t-s Send a local file\n" + "\t-r Receive a remote file\n" +
+	 * "\t-a Use ASCII transfer mode\n" + "\t-b Use binary transfer mode\n";
+	 */
+	public TFTPConnector(String host, String localfile, String remotefil) {
 		super(host);
-				
-		setPath(ServiceFactory.getAppConfig().getNDMS_DEFAULT_PATH_APP()
-				+ "\\"
-				+ ServiceFactory.getAppConfig().getNDMS_DEFAULT_PATH_SNAPSHOT_DIRECTORY());
+		setLocalPath(ServiceFactory.getAppConfig().getNDMS_DEFAULT_PATH_APP()
+				+ServiceFactory.getAppConfig().getNDMS_DEFAULT_PATH_SNAPSHOT_DIRECTORY());
 		setLocalfile(localfile);
 		setRemotefile(remotefile);
 		setTftpc(new TFTPClient());
-		setTransfermode(TFTP.BINARY_MODE);
+		setTransfermode(TFTP.ASCII_MODE);
 		setTimeout(60000);
 	}
 
@@ -108,22 +120,21 @@ public class TFTPConnector extends FileTransferConnector {
 		boolean closed = false;
 
 		FileOutputStream output = null;
-		File file;
-		file = new File(path+"\\"+fingerprint);
+		
+		File file = new File(getLocalfile());
 
-// If file exists, don't overwrite it.
-//		if (file.exists()) {
-//			setLocalfile(getLocalfile() + "(duplicate Name)");
-//		}
+		// If file exists, don't overwrite it.
+		if (file.exists()) {
+			setLocalfile(getLocalfile() + "(duplicate Name)");
+		}
 
 		// Try to open local file for writing
 		try{
 			output = new FileOutputStream(file);
 		}catch(FileNotFoundException e){
-			file.mkdirs();
-			File f = new File(file.getAbsolutePath()+"\\"+localfile);
-			f.createNewFile();
-			output = new FileOutputStream(f);
+			
+			file.createNewFile();
+			output = new FileOutputStream(file);
 		}
 
 		// Try to receive remote file via TFTP
@@ -136,12 +147,17 @@ public class TFTPConnector extends FileTransferConnector {
 		}
 	}
 	
+	public void make(String path){
+		File f = new File(path);
+		f.mkdirs();
+	}
+	
 //	public void doCreateSnapshot(String name,String description) throws Exception{
 //		setCurrentsnapshot(new Snapshot(name,description));
 //		snapshots.createSnapshot(currentsnapshot);
 //		connect();
 //		setRemotefile("snapshot.txt");
-//		setLocalfile(path+"\\"+localfile);
+//		setLocalfile(currentsnapshot.getRelativePath());
 //		receive();
 //	}
 //	
@@ -150,7 +166,7 @@ public class TFTPConnector extends FileTransferConnector {
 //		snapshots.createSnapshot(currentsnapshot);
 //		connect();
 //		setRemotefile("snapshot.txt");
-//		setLocalfile(path+"\\"+localfile);
+//		setLocalfile(currentsnapshot.getRelativePath());
 //		receive();
 //	}
 //	
@@ -160,15 +176,6 @@ public class TFTPConnector extends FileTransferConnector {
 //			doCreateSnapshot(currentsnapshot);
 //		}
 //	}
-	
-	public String getDefaultPath() {
-		return ServiceFactory
-		.getAppConfig().getNDMS_DEFAULT_PATH_APP()
-		+ "\\"
-		+ ServiceFactory.getAppConfig()
-				.getNDMS_DEFAULT_PATH_SNAPSHOT_DIRECTORY()
-		+ "\\FINGERPRINT";
-	}
 
 	public boolean isAscii_transfermode() {
 		return ascii_transfermode;
@@ -233,28 +240,12 @@ public class TFTPConnector extends FileTransferConnector {
 	public void setSnapshots(Snapshots snapshots) {
 		this.snapshots = snapshots;
 	}
-
-	public Snapshot getCurrentsnapshot() {
-		return currentsnapshot;
+	
+	public String getLocalPath() {
+		return localPath;
 	}
 
-	public void setCurrentsnapshot(Snapshot currentsnapshot) {
-		this.currentsnapshot = currentsnapshot;
-	}
-
-	public String getPath() {
-		return path;
-	}
-
-	public void setPath(String path) {
-		this.path = path;
-	}
-
-	public String getFingerprint() {
-		return fingerprint;
-	}
-
-	public void setFingerprint(String fingerprint) {
-		this.fingerprint = fingerprint;
+	public void setLocalPath(String localPath) {
+		this.localPath = localPath;
 	}
 }

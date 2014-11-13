@@ -1,22 +1,29 @@
 package at.bmlvs.NDMS.domain;
 
+import java.io.File;
+import java.io.ObjectInputStream.GetField;
+
+import at.bmlvs.NDMS.domain.connectors.SSHConnector;
 import at.bmlvs.NDMS.domain.connectors.TFTPConnector;
 import at.bmlvs.NDMS.domain.snapshots.Snapshot;
 import at.bmlvs.NDMS.linker.SnapshotToPathLinker;
 import at.bmlvs.NDMS.service.PersistenceService;
 import at.bmlvs.NDMS.service.ServiceFactory;
 
-public class TFTPConnectorTest {
+public class SnapshotTest {
 
 	public static void main(String[] args) {
 		
-//		ServiceFactory.setPersistenceService(new PersistenceService());
-//		ServiceFactory.setAppConfig(ServiceFactory.getPersistenceService()
-//				.getAppconfig().getElement());
+		ServiceFactory.setPersistenceService(new PersistenceService());
+		ServiceFactory.setAppConfig(ServiceFactory.getPersistenceService().getAppconfig().getElement());
+		SSHConnector ssh = new SSHConnector("192.168.1.12", "Herkel", "gwdH_2014", "gwd_2014");
+		
 		Snapshot ss = new Snapshot("name", "desc");
-		TFTPConnector tftp = new TFTPConnector("192.168.1.12", "ramconf.txt",
-				"config.text");
+		TFTPConnector tftp = new TFTPConnector("192.168.1.12","tralal.txt","config.text");
 		try {
+			ssh.connect();
+			tftp.make("snapshots/"+ssh.getSSHFingerprint());
+			tftp.setLocalfile("snapshots/"+ssh.getSSHFingerprint()+"/"+tftp.getLocalfile());
 			tftp.connect();
 			tftp.receive();
 			tftp.disconnect();
@@ -24,6 +31,10 @@ public class TFTPConnectorTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+//		String[] s = ssh.getSSHFingerprint().split(":");
+//		File f = new File("snapshots/"+s[1]);
+//		System.out.println(f.mkdirs());
+//		System.out.println(s[1]);
 
 		
 
