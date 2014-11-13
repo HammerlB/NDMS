@@ -137,7 +137,7 @@ public class TFTPConnector extends FileTransferConnector {
 		snapshots.createSnapshot(currentsnapshot);
 		connect();
 		setRemotefile("snapshot.txt");
-		setLocalfile(currentsnapshot.getRelativePath());
+		setLocalfile();
 		receive();
 	}
 	

@@ -1,5 +1,9 @@
 package at.bmlvs.NDMS.domain.snapshots;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -8,14 +12,15 @@ public class Snapshot
 	private StringProperty fingerprint;
 	private StringProperty name;
 	private StringProperty datetime;
-	private StringProperty content;
+	private StringProperty description;
 	
-	public Snapshot(String fingerprint, String name, String datetime, String content)
+	public Snapshot(String fingerprint, String name)
 	{
 		setFingerprint(fingerprint);
 		setName(name);
-		setDatetime(datetime);
-		setContent(content);
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date date = new Date();
+		setDatetime(dateFormat.format(date));
 	}
 	
 	public final String getName()
@@ -93,28 +98,28 @@ public class Snapshot
 		return fingerprint;
 	}
 	
-	public final String getContent()
+	public final String getDescription()
 	{
-		if (content != null)
+		if (description != null)
 		{
-			return content.get();
+			return description.get();
 		}
 
 		return null;
 	}
 
-	public final void setContent(String content)
+	public final void setDescription(String description)
 	{
-		this.contentProperty().set(content);
+		this.descriptionProperty().set(description);
 	}
 
-	public final StringProperty contentProperty()
+	public final StringProperty descriptionProperty()
 	{
-		if (content == null)
+		if (description == null)
 		{
-			content = new SimpleStringProperty(null);
+			description = new SimpleStringProperty(null);
 		}
 
-		return content;
+		return description;
 	}
 }
