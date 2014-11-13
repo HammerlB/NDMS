@@ -50,8 +50,6 @@ public class TFTPConnector extends FileTransferConnector {
 
 	private String localfile;
 	private String remotefile;
-	
-//	private File file;
 
 	private boolean ascii_transfermode;
 	private boolean binary_transfermode;
@@ -60,6 +58,8 @@ public class TFTPConnector extends FileTransferConnector {
 	private SnapshotToPathLinker stpl;
 	
 	private String localPath;
+	
+	private String sshfingerprint;
 
 	/*
 	 * "Usage: tftp [options] hostname localfile remotefile\n\n" +
@@ -72,10 +72,10 @@ public class TFTPConnector extends FileTransferConnector {
 	 * "\t-s Send a local file\n" + "\t-r Receive a remote file\n" +
 	 * "\t-a Use ASCII transfer mode\n" + "\t-b Use binary transfer mode\n";
 	 */
-	public TFTPConnector(String host, String localfile, String remotefil) {
+	public TFTPConnector(String host, String localfile, String remotefile) {
 		super(host);
-		setLocalPath(ServiceFactory.getAppConfig().getNDMS_DEFAULT_PATH_APP()
-				+ServiceFactory.getAppConfig().getNDMS_DEFAULT_PATH_SNAPSHOT_DIRECTORY());
+		setLocalPath(ServiceFactory.getAppConfig().getNDMS_DEFAULT_PATH_APP()+"\\"
+		+ServiceFactory.getAppConfig().getNDMS_DEFAULT_PATH_SNAPSHOT_DIRECTORY());
 		setLocalfile(localfile);
 		setRemotefile(remotefile);
 		setTftpc(new TFTPClient());
@@ -120,19 +120,20 @@ public class TFTPConnector extends FileTransferConnector {
 		boolean closed = false;
 
 		FileOutputStream output = null;
-		
-		File file = new File(getLocalfile());
-
+	
+		File localPath = new File(this.localPath+"\\"+sshfingerprint);
+		File file = new File(localPath.getAbsolutePath()+"\\"+getLocalfile());
+	
 		// If file exists, don't overwrite it.
 		if (file.exists()) {
-			setLocalfile(getLocalfile() + "(duplicate Name)");
+			System.out.println("This shouldn't have happened!");
 		}
 
 		// Try to open local file for writing
 		try{
 			output = new FileOutputStream(file);
 		}catch(FileNotFoundException e){
-			
+			localPath.mkdirs();
 			file.createNewFile();
 			output = new FileOutputStream(file);
 		}
@@ -145,13 +146,15 @@ public class TFTPConnector extends FileTransferConnector {
 		if (output != null) {
 			output.close();
 		}
+		
+		
 	}
 	
-	public void make(String path){
-		File f = new File(path);
-		f.mkdirs();
+	public void connectReceiveDisconnect() throws Exception{
+		connect();
+		receive();
+		disconnect();
 	}
-	
 //	public void doCreateSnapshot(String name,String description) throws Exception{
 //		setCurrentsnapshot(new Snapshot(name,description));
 //		snapshots.createSnapshot(currentsnapshot);
@@ -240,12 +243,28 @@ public class TFTPConnector extends FileTransferConnector {
 	public void setSnapshots(Snapshots snapshots) {
 		this.snapshots = snapshots;
 	}
-	
+
 	public String getLocalPath() {
 		return localPath;
 	}
 
 	public void setLocalPath(String localPath) {
 		this.localPath = localPath;
+	}
+
+	public SnapshotToPathLinker getStpl() {
+		return stpl;
+	}
+
+	public void setStpl(SnapshotToPathLinker stpl) {
+		this.stpl = stpl;
+	}
+
+	public String getSSHFingerprint() {
+		return sshfingerprint;
+	}
+
+	public void setSSHFingerprint(String sshfingerprint) {
+		this.sshfingerprint = sshfingerprint;
 	}
 }

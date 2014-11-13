@@ -22,11 +22,8 @@ public class SnapshotTest {
 		TFTPConnector tftp = new TFTPConnector("192.168.1.12","tralal.txt","config.text");
 		try {
 			ssh.connect();
-			tftp.make("snapshots/"+ssh.getSSHFingerprint());
-			tftp.setLocalfile("snapshots/"+ssh.getSSHFingerprint()+"/"+tftp.getLocalfile());
-			tftp.connect();
-			tftp.receive();
-			tftp.disconnect();
+			tftp.setSSHFingerprint(ssh.getSSHFingerprint());
+			tftp.connectReceiveDisconnect();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -13,6 +13,7 @@ public class Snapshot
 	private StringProperty name;
 	private StringProperty datetime;
 	private StringProperty description;
+	private StringProperty fullName;
 	
 	public Snapshot(String name, String desc)
 	{
@@ -20,6 +21,8 @@ public class Snapshot
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = new Date();
 		setDatetime(dateFormat.format(date));
+		
+		setFullName(getName()+"("+getDatetime()+")");
 	}
 	
 	public final String getName()
@@ -120,5 +123,30 @@ public class Snapshot
 		}
 
 		return description;
+	}
+	
+	public final String getFullName()
+	{
+		if (fullName != null)
+		{
+			return fullName.get();
+		}
+
+		return null;
+	}
+
+	public final void setFullName(String fullName)
+	{
+		this.nameProperty().set(fullName);
+	}
+
+	public final StringProperty fullNameProperty()
+	{
+		if (fullName == null)
+		{
+			fullName = new SimpleStringProperty(null);
+		}
+
+		return fullName;
 	}
 }
