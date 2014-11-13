@@ -134,8 +134,7 @@ public class MainWindowController extends VBox
 			StackPane viewstack = new StackPane();
 
 			GridPane left = new GridPane();
-			GridPane right = new GridPane();
-
+			
 			SplitPane splitter = new SplitPane();
 			splitter.setOrientation(Orientation.HORIZONTAL);
 			
