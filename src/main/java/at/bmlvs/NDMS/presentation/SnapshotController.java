@@ -90,8 +90,8 @@ public class SnapshotController
 		Label tmp3 = new Label("                         ");
 		Label tmp4 = new Label("  ");
 		
-		Label x = new Label("   Sind Sie sicher, dass Sie diesen Snapshot löschen wollen?");
-		Button yes = new Button("O K");
+		Label x = new Label("   Sind Sie sicher, dass Sie diesen Snapshot entfernen wollen?");
+		Button yes = new Button("OK");
         yes.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -116,13 +116,13 @@ public class SnapshotController
 		removegrid.add(tmp4, 3, 1);
 		removegrid.add(no, 4, 1);
 
-		
+		 
 		boxal.getChildren().add(tmp);
 		boxal.getChildren().add(x);
 		boxal.getChildren().add(tmp2);
 		boxal.getChildren().add(removegrid);
 		
-		Scene scene = new Scene(boxal,300, 70);
+		Scene scene = new Scene(boxal,330, 70);
 		
 		stage.setScene(scene);
 		stage.setResizable(false);
