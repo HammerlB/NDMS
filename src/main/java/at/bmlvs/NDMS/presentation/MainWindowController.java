@@ -1,8 +1,18 @@
 package at.bmlvs.NDMS.presentation;
 
 import java.io.IOException;
+
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+import com.sshtools.j2ssh.transport.Service;
+
+import at.bmlvs.NDMS.domain.templates.Command;
+import at.bmlvs.NDMS.domain.templates.Parameter;
+import at.bmlvs.NDMS.domain.templates.Section;
+import at.bmlvs.NDMS.domain.templates.Snippet;
+import at.bmlvs.NDMS.domain.templates.Template;
+import at.bmlvs.NDMS.linker.TemplateToPathLinker;
 import at.bmlvs.NDMS.service.PresentationService;
 import at.bmlvs.NDMS.service.ServiceFactory;
 import javafx.beans.value.ObservableValue;
@@ -47,7 +57,6 @@ import javafx.stage.WindowEvent;
  * Sample custom control hosting a text field and a button.
  */
 @SuppressWarnings("unused")
-
 public class MainWindowController extends VBox
 {
 	@FXML
@@ -57,7 +66,7 @@ public class MainWindowController extends VBox
 	private Stage stage;
 	@FXML
 	private ComboBox<String> templateBox;
-	
+
 	public MainWindowController()
 	{
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
@@ -65,8 +74,6 @@ public class MainWindowController extends VBox
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);
 
-		
-	          
 		try
 		{
 			fxmlLoader.load();
@@ -77,14 +84,14 @@ public class MainWindowController extends VBox
 		}
 		templatusBox();
 	}
-	
-        
+
 	@FXML
 	private void addnew(ActionEvent event) throws IOException
 	{
 
 		stage = new Stage();
-		Parent root = FXMLLoader.load(getClass().getResource("xml/AddTab.fxml"));
+		Parent root = FXMLLoader
+				.load(getClass().getResource("xml/AddTab.fxml"));
 		Scene scene = new Scene(root);
 		stage.setTitle("Verbinden zu...");
 		stage.getIcons().add(new Image("file:icons/ndms.png"));
@@ -93,14 +100,16 @@ public class MainWindowController extends VBox
 		stage.setScene(scene);
 		stage.setResizable(false);
 		stage.show();
-		
+
 	}
+
 	@FXML
 	private void showsnapshotview(ActionEvent event) throws IOException
 	{
 
 		stage = new Stage();
-		Parent root = FXMLLoader.load(getClass().getResource("xml/SnapshotWindow.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource(
+				"xml/SnapshotWindow.fxml"));
 		Scene scene = new Scene(root);
 		stage.setTitle("Snapshots");
 		stage.getIcons().add(new Image("file:icons/ndms.png"));
@@ -109,24 +118,30 @@ public class MainWindowController extends VBox
 		stage.setScene(scene);
 		stage.setResizable(false);
 		stage.show();
-		
-		
+
 	}
+
 	@FXML
 	private void templatusBox()
 	{
-		ObservableList<String> items =FXCollections.observableArrayList (
-			    "Single", "Double", "Suite", "Family App", "fredlkind","herkelkind");
-		templateBox.setItems(items);
+		ObservableList<String> items = FXCollections.observableArrayList();
 		
+		for(TemplateToPathLinker template: ServiceFactory.getPersistenceService().getTemplates())
+		{
+			items.add(template.getElement().getFullName());
+		}
+		
+		templateBox.setItems(items);
+
 		templateBox.setOnAction((event) -> {
-		    System.out.println(templateBox.getSelectionModel().getSelectedItem());
-		    
-		    templateview(tabPane.getSelectionModel().getSelectedIndex());
-		    
-		});	
+			System.out.println(templateBox.getSelectionModel()
+					.getSelectedItem());
+
+			templateview(tabPane.getSelectionModel().getSelectedIndex());
+
+		});
 	}
-	
+
 	private void templateview(int id)
 	{
 		try
@@ -134,15 +149,15 @@ public class MainWindowController extends VBox
 			StackPane viewstack = new StackPane();
 
 			GridPane left = new GridPane();
-			
+
 			SplitPane splitter = new SplitPane();
 			splitter.setOrientation(Orientation.HORIZONTAL);
-			
+
 			TextArea show = new TextArea();
 			show.disableProperty();
 
 			Button btn1 = new Button("pos11");
-			
+
 			left.add(btn1, 1, 1);
 
 			splitter.getItems().addAll(left, show);
@@ -152,23 +167,76 @@ public class MainWindowController extends VBox
 
 			PresentationService.getMainWindowController().getTabPane()
 					.getTabs().get(id).setContent(viewstack);
+
+			for (TemplateToPathLinker template : ServiceFactory
+					.getPersistenceService().getTemplates())
+			{
+				if (template
+						.getElement()
+						.getFullName()
+						.equals(templateBox.getSelectionModel()
+								.getSelectedItem()))
+				{
+					// UEBERSCHRIFT NAME DES TEMPLATES
+					
+					System.out.println(template.getElement().getFullName());
+
+					for (Snippet snippet : template.getElement().getSnippets())
+					{
+						// UEBERSCHRIFT NAME DES SNIPPETS
+
+						for (Section section : snippet.getSections())
+						{
+							// UEBERSCHRIFT NAME DER SECTION
+
+							for (Command command : section.getCommands())
+							{
+
+								// COMMAND NICHT DARSTELLEN
+
+								for (Parameter parameter : command
+										.getParameters())
+								{
+									if (parameter.getType().equals(
+											"DatatypeString"))
+									{
+										// LABEL --> parameter.getName()
+										// TEXTFIELD --> ID FUER FELD
+										// parameter.getId() | DEFAULT VALUE
+										// FUER FELD -->
+										// parameter.getDefaultValue()
+										// BEI AENDERN VON TEXTFIELD
+										// parameter.getValue() SETZEN
+									}
+
+									// VIELE WEITERE IFS
+									// DatatypeMAC-Address
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 		catch (Exception e)
 		{
 		}
 	}
-	
+
 	@FXML
 	private void showportview()
 	{
 		try
 		{
 			tabcontrol.portview(tabPane.getSelectionModel().getSelectedIndex());
-			
-		} catch(Exception e){}
-		
+
+		}
+		catch (Exception e)
+		{
+		}
+
 	}
-	
+
 	public TabPane getTabPane()
 	{
 		return tabPane;

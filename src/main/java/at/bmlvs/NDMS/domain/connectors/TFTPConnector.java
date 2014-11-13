@@ -132,30 +132,30 @@ public class TFTPConnector extends FileTransferConnector {
 		}
 	}
 	
-	public void doCreateSnapshot(String name,String description) throws Exception{
-		setCurrentsnapshot(new Snapshot(name,description));
-		snapshots.createSnapshot(currentsnapshot);
-		connect();
-		setRemotefile("snapshot.txt");
-		setLocalfile();
-		receive();
-	}
-	
-	public void doCreateSnapshot(Snapshot s) throws Exception{
-		setCurrentsnapshot(s);
-		snapshots.createSnapshot(currentsnapshot);
-		connect();
-		setRemotefile("snapshot.txt");
+//	public void doCreateSnapshot(String name,String description) throws Exception{
+//		setCurrentsnapshot(new Snapshot(name,description));
+//		snapshots.createSnapshot(currentsnapshot);
+//		connect();
+//		setRemotefile("snapshot.txt");
 		setLocalfile(currentsnapshot.getRelativePath());
-		receive();
-	}
-	
-	public void initialSnapshot() throws Exception{
-		setCurrentsnapshot(new Snapshot("initial","This is the initial Snapshot"));
-		if(!snapshots.checkSnapshot(currentsnapshot)){
-			doCreateSnapshot(currentsnapshot);
-		}
-	}
+//		receive();
+//	}
+//	
+//	public void doCreateSnapshot(Snapshot s) throws Exception{
+//		setCurrentsnapshot(s);
+//		snapshots.createSnapshot(currentsnapshot);
+//		connect();
+//		setRemotefile("snapshot.txt");
+//		setLocalfile(currentsnapshot.getRelativePath());
+//		receive();
+//	}
+//	
+//	public void initialSnapshot() throws Exception{
+//		setCurrentsnapshot(new Snapshot("initial","This is the initial Snapshot"));
+//		if(!snapshots.checkSnapshot(currentsnapshot)){
+//			doCreateSnapshot(currentsnapshot);
+//		}
+//	}
 
 	public boolean isAscii_transfermode() {
 		return ascii_transfermode;
