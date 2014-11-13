@@ -132,14 +132,28 @@ public class TFTPConnector extends FileTransferConnector {
 		}
 	}
 	
-	public void doCreateSnapshot(String name) throws Exception{	
-		snapshots.getSnapshots().add(currentsnapshot);
+	public void doCreateSnapshot(String name,String description) throws Exception{
+		setCurrentsnapshot(new Snapshot(name,description));
+		snapshots.createSnapshot(currentsnapshot);
+		connect();
+		setRemotefile("snapshot.txt");
+		setLocalfile(currentsnapshot.getRelativePath());
+		receive();
+	}
+	
+	public void doCreateSnapshot(Snapshot s) throws Exception{
+		setCurrentsnapshot(s);
+		snapshots.createSnapshot(currentsnapshot);
+		connect();
+		setRemotefile("snapshot.txt");
+		setLocalfile(currentsnapshot.getRelativePath());
+		receive();
 	}
 	
 	public void initialSnapshot() throws Exception{
-		File f = new File(currentsnapshot.getRelativePath());
-		if(!f.exists()){
-			snapshots.getSnapshots().add(currentsnapshot);
+		setCurrentsnapshot(new Snapshot("initial","This is the initial Snapshot"));
+		if(!snapshots.checkSnapshot(currentsnapshot)){
+			doCreateSnapshot(currentsnapshot);
 		}
 	}
 
@@ -197,5 +211,21 @@ public class TFTPConnector extends FileTransferConnector {
 
 	public void setRemotefile(String remotefile) {
 		this.remotefile = remotefile;
+	}
+
+	public Snapshots getSnapshots() {
+		return snapshots;
+	}
+
+	public void setSnapshots(Snapshots snapshots) {
+		this.snapshots = snapshots;
+	}
+
+	public Snapshot getCurrentsnapshot() {
+		return currentsnapshot;
+	}
+
+	public void setCurrentsnapshot(Snapshot currentsnapshot) {
+		this.currentsnapshot = currentsnapshot;
 	}
 }
