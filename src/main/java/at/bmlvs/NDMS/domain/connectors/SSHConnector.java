@@ -160,6 +160,10 @@ public class SSHConnector extends Thread {
 		if (isConnected())
 			this.disconnect = true;
 	}
+	
+	public void doPrepareSnapshot(){
+		this.cmd.add("");
+	}
 
 	public void checkProgress(int i) {
 		this.progress = 100 / cmd.size() * i;

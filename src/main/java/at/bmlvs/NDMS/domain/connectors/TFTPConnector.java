@@ -24,6 +24,9 @@ import java.io.FileOutputStream;
 import org.apache.commons.net.tftp.TFTP;
 import org.apache.commons.net.tftp.TFTPClient;
 
+import at.bmlvs.NDMS.domain.snapshots.Snapshot;
+import at.bmlvs.NDMS.domain.snapshots.Snapshots;
+
 /***
  * This is an example of a simple Java tftp client. Notice how all of the code
  * is really just argument processing and error handling.
@@ -47,6 +50,9 @@ public class TFTPConnector extends FileTransferConnector {
 
 	private boolean ascii_transfermode;
 	private boolean binary_transfermode;
+	
+	private Snapshots snapshots;
+	private Snapshot currentsnapshot;
 
 	/*
 	 * "Usage: tftp [options] hostname localfile remotefile\n\n" +
@@ -125,6 +131,31 @@ public class TFTPConnector extends FileTransferConnector {
 			output.close();
 		}
 	}
+	
+	public void doCreateSnapshot(String name,String description) throws Exception{
+		setCurrentsnapshot(new Snapshot(name,description));
+		snapshots.createSnapshot(currentsnapshot);
+		connect();
+		setRemotefile("snapshot.txt");
+		setLocalfile(currentsnapshot.getRelativePath());
+		receive();
+	}
+	
+	public void doCreateSnapshot(Snapshot s) throws Exception{
+		setCurrentsnapshot(s);
+		snapshots.createSnapshot(currentsnapshot);
+		connect();
+		setRemotefile("snapshot.txt");
+		setLocalfile(currentsnapshot.getRelativePath());
+		receive();
+	}
+	
+	public void initialSnapshot() throws Exception{
+		setCurrentsnapshot(new Snapshot("initial","This is the initial Snapshot"));
+		if(!snapshots.checkSnapshot(currentsnapshot)){
+			doCreateSnapshot(currentsnapshot);
+		}
+	}
 
 	public boolean isAscii_transfermode() {
 		return ascii_transfermode;
@@ -180,5 +211,21 @@ public class TFTPConnector extends FileTransferConnector {
 
 	public void setRemotefile(String remotefile) {
 		this.remotefile = remotefile;
+	}
+
+	public Snapshots getSnapshots() {
+		return snapshots;
+	}
+
+	public void setSnapshots(Snapshots snapshots) {
+		this.snapshots = snapshots;
+	}
+
+	public Snapshot getCurrentsnapshot() {
+		return currentsnapshot;
+	}
+
+	public void setCurrentsnapshot(Snapshot currentsnapshot) {
+		this.currentsnapshot = currentsnapshot;
 	}
 }
