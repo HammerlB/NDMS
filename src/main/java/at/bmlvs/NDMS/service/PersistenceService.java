@@ -7,24 +7,22 @@ import at.bmlvs.NDMS.domain.configs.Configuration;
 import at.bmlvs.NDMS.domain.helper.Filewalker;
 import at.bmlvs.NDMS.linker.AppConfigToPathLinker;
 import at.bmlvs.NDMS.linker.ConfigurationToPathLinker;
-import at.bmlvs.NDMS.linker.DatatypesToPathLinker;
+import at.bmlvs.NDMS.linker.SnapshotToPathLinker;
 import at.bmlvs.NDMS.linker.TemplateToPathLinker;
 import at.bmlvs.NDMS.persistence.specific.TXTConfigurationDAO;
+import at.bmlvs.NDMS.persistence.specific.TXTSnapshotDAO;
 import at.bmlvs.NDMS.persistence.specific.XMLAppConfigDAO;
-import at.bmlvs.NDMS.persistence.specific.XMLDatatypesDAO;
 import at.bmlvs.NDMS.persistence.specific.XMLTemplateDAO;
 
 public class PersistenceService
 {
 	private ArrayList<TemplateToPathLinker> templates;
+	private ArrayList<SnapshotToPathLinker> snapshots;
 	private AppConfigToPathLinker appconfig;
-	private ArrayList<ConfigurationToPathLinker> configurations;
-	private DatatypesToPathLinker datatypes;
 
 	private XMLTemplateDAO tdao = new XMLTemplateDAO();
 	private XMLAppConfigDAO cdao = new XMLAppConfigDAO();
-	private TXTConfigurationDAO fdao = new TXTConfigurationDAO();
-	private XMLDatatypesDAO ddao = new XMLDatatypesDAO();
+	private TXTSnapshotDAO sdao = new TXTSnapshotDAO();
 
 	public PersistenceService()
 	{
@@ -36,6 +34,24 @@ public class PersistenceService
 		{
 			setAppconfig(new AppConfigToPathLinker(new AppConfig(), "config.xml"));
 			saveAppConfig();
+		}
+		
+		if ((new File("templates")).exists())
+		{
+			setTemplates(loadAllTemplates(getAppconfig().getElement().getNDMS_DEFAULT_PATH_APP() + "\\" + getAppconfig().getElement().getNDMS_DEFAULT_PATH_TEMPLATE_DIRECTORY()));
+		}
+		else
+		{
+			setTemplates(new ArrayList<TemplateToPathLinker>());
+		}
+		
+		if ((new File("snapshots")).exists())
+		{
+			setSnapshots(loadAllSnapshots(getAppconfig().getElement().getNDMS_DEFAULT_PATH_APP() + "\\" + getAppconfig().getElement().getNDMS_DEFAULT_PATH_SNAPSHOT_DIRECTORY()));
+		}
+		else
+		{
+			setSnapshots(new ArrayList<SnapshotToPathLinker>());
 		}
 	}
 
@@ -59,27 +75,6 @@ public class PersistenceService
 		this.appconfig = appconfig;
 	}
 
-	public ArrayList<ConfigurationToPathLinker> getConfigurations()
-	{
-		return configurations;
-	}
-
-	public void setConfigurations(
-			ArrayList<ConfigurationToPathLinker> configurations)
-	{
-		this.configurations = configurations;
-	}
-
-	public DatatypesToPathLinker getDatatypes()
-	{
-		return datatypes;
-	}
-
-	public void setDatatypes(DatatypesToPathLinker datatypes)
-	{
-		this.datatypes = datatypes;
-	}
-
 	public XMLTemplateDAO getTdao()
 	{
 		return tdao;
@@ -100,26 +95,6 @@ public class PersistenceService
 		this.cdao = cdao;
 	}
 
-	public TXTConfigurationDAO getFdao()
-	{
-		return fdao;
-	}
-
-	public void setFdao(TXTConfigurationDAO fdao)
-	{
-		this.fdao = fdao;
-	}
-
-	public XMLDatatypesDAO getDdao()
-	{
-		return ddao;
-	}
-
-	public void setDdao(XMLDatatypesDAO ddao)
-	{
-		this.ddao = ddao;
-	}
-
 	public void saveTemplate(TemplateToPathLinker template)
 	{
 		tdao.write(template.getElement(), template.getPath());
@@ -137,6 +112,18 @@ public class PersistenceService
 		return templates;
 	}
 	
+	public ArrayList<SnapshotToPathLinker> loadAllSnapshots(String pathToDirectory)
+	{
+		ArrayList<SnapshotToPathLinker> snapshots = new ArrayList<SnapshotToPathLinker>();
+		
+		for(String path : Filewalker.walk(pathToDirectory))
+		{
+			snapshots.add(loadSnapshot(path));
+		}
+		
+		return snapshots;
+	}
+	
 	public void saveAllTemplates()
 	{
 		for(TemplateToPathLinker template : getTemplates())
@@ -152,6 +139,13 @@ public class PersistenceService
 		
 		return template;
 	}
+	
+	public SnapshotToPathLinker loadSnapshot(String path)
+	{
+		SnapshotToPathLinker snapshot = new SnapshotToPathLinker(sdao.read(path), path);
+		
+		return snapshot;
+	}
 
 	public void saveAppConfig()
 	{
@@ -163,29 +157,23 @@ public class PersistenceService
 		return new AppConfigToPathLinker(cdao.read(path), path);
 	}
 	
-	public void saveConfigurations()
+	public ArrayList<SnapshotToPathLinker> getSnapshots()
 	{
-		for (ConfigurationToPathLinker c : getConfigurations())
-		{
-			fdao.write(c.getElement().getData(), c.getPath());
-		}
+		return snapshots;
 	}
 
-	public ConfigurationToPathLinker loadConfigurations(String path)
+	public void setSnapshots(ArrayList<SnapshotToPathLinker> snapshots)
 	{
-		ConfigurationToPathLinker config = new ConfigurationToPathLinker(new Configuration(fdao.read(path)), path);;
-		getConfigurations().add(config);
-		
-		return config;
-	}
-	
-	public void saveDatatypes()
-	{
-		ddao.write(getDatatypes().getElement(), getDatatypes().getPath());
+		this.snapshots = snapshots;
 	}
 
-	public DatatypesToPathLinker loadDatatypes(String path)
+	public TXTSnapshotDAO getSdao()
 	{
-		return new DatatypesToPathLinker(ddao.read(path), path);
+		return sdao;
+	}
+
+	public void setSdao(TXTSnapshotDAO sdao)
+	{
+		this.sdao = sdao;
 	}
 }

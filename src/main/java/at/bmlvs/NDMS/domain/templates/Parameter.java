@@ -7,16 +7,19 @@ public class Parameter implements Serializable
 {
 	private int id;
 	private String name;
-	private Datatype type;
+	private String type;
+	private String defaultValue;
 	private String value;
 	private boolean useName;
 	
-	public Parameter(int id, String name, Datatype type, String value)
+	public Parameter(int id, String name, String type, String defaultValue, String value, boolean useName)
 	{
 		setId(id);
 		setName(name);
 		setType(type);
+		setDefaultValue(defaultValue);
 		setValue(value);
+		setUseName(useName);
 	}
 
 	public int getId()
@@ -39,12 +42,12 @@ public class Parameter implements Serializable
 		this.name = name;
 	}
 
-	public Datatype getType()
+	public String getType()
 	{
 		return type;
 	}
 
-	public void setType(Datatype type)
+	public void setType(String type)
 	{
 		this.type = type;
 	}
@@ -77,5 +80,15 @@ public class Parameter implements Serializable
 		}
 		
 		return getValue();
+	}
+
+	public String getDefaultValue()
+	{
+		return defaultValue;
+	}
+
+	public void setDefaultValue(String defaultValue)
+	{
+		this.defaultValue = defaultValue;
 	}
 }

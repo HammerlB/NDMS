@@ -11,6 +11,7 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
 @SuppressWarnings("serial")
 public class Template implements Serializable
 {
+	private String name;
 	private String version;
 	private String os_version;
 	private String device_type;
@@ -20,13 +21,24 @@ public class Template implements Serializable
 	@XStreamOmitField
 	private StringProperty output;
 	
-	public Template(String version, String os_version, String device_type)
+	public Template(String name, String version, String os_version, String device_type)
 	{
+		setName(name);
 		setVersion(version);
 		setOs_version(os_version);
 		setDevice_type(device_type);
 		
 		setSnippets(new ArrayList<Snippet>());
+	}
+
+	public String getName()
+	{
+		return name;
+	}
+
+	public void setName(String name)
+	{
+		this.name = name;
 	}
 
 	public String getVersion()
@@ -122,5 +134,10 @@ public class Template implements Serializable
 		}
 		
 		return receivedOutput;
+	}
+	
+	public String getFullName()
+	{
+		return getDevice_type() + "-" + getName() + "-" + getVersion() + "-" + getOs_version();
 	}
 }

@@ -1,6 +1,7 @@
 package at.bmlvs.NDMS.presentation;
 
 import at.bmlvs.NDMS.domain.snapshots.Snapshot;
+import at.bmlvs.NDMS.linker.SnapshotToPathLinker;
 import at.bmlvs.NDMS.service.ServiceFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,14 +19,13 @@ public class SnapshotController
 	@FXML
 	public void initialize()
 	{
-		
 		ObservableList<String> items = FXCollections.observableArrayList ();
 		
 		try
 		{
-			for(Snapshot snapshot: ServiceFactory.getDomainService().getSnapshots().getSnapshots())
+			for(SnapshotToPathLinker snapshot: ServiceFactory.getPersistenceService().getSnapshots())
 			{
-				items.setAll(snapshot.getName() + " " + snapshot.getDatetime());
+				items.setAll(snapshot.getElement().getName() + " " + snapshot.getElement().getDatetime());
 				
 			}
 		}
@@ -33,7 +33,6 @@ public class SnapshotController
 		{
 			
 		}
-
 		
 		snapshotlist.setItems(items);
 		

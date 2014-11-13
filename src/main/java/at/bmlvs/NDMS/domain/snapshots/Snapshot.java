@@ -8,11 +8,14 @@ public class Snapshot
 	private StringProperty fingerprint;
 	private StringProperty name;
 	private StringProperty datetime;
+	private StringProperty content;
 	
-	public Snapshot(String name, String datetime)
+	public Snapshot(String fingerprint, String name, String datetime, String content)
 	{
+		setFingerprint(fingerprint);
 		setName(name);
 		setDatetime(datetime);
+		setContent(content);
 	}
 	
 	public final String getName()
@@ -88,5 +91,30 @@ public class Snapshot
 		}
 
 		return fingerprint;
+	}
+	
+	public final String getContent()
+	{
+		if (content != null)
+		{
+			return content.get();
+		}
+
+		return null;
+	}
+
+	public final void setContent(String content)
+	{
+		this.contentProperty().set(content);
+	}
+
+	public final StringProperty contentProperty()
+	{
+		if (content == null)
+		{
+			content = new SimpleStringProperty(null);
+		}
+
+		return content;
 	}
 }

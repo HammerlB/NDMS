@@ -14,12 +14,12 @@ import org.apache.log4j.Logger;
 import at.bmlvs.NDMS.domain.connectors.SNMPConnector;
 import at.bmlvs.NDMS.domain.connectors.SSHConnector;
 import at.bmlvs.NDMS.domain.templates.Command;
-import at.bmlvs.NDMS.domain.templates.Datatype;
 import at.bmlvs.NDMS.domain.templates.Parameter;
 import at.bmlvs.NDMS.domain.templates.Section;
 import at.bmlvs.NDMS.domain.templates.Snippet;
 import at.bmlvs.NDMS.domain.templates.Template;
 import at.bmlvs.NDMS.domain.templates.Templates;
+import at.bmlvs.NDMS.linker.TemplateToPathLinker;
 import at.bmlvs.NDMS.service.PersistenceService;
 import at.bmlvs.NDMS.service.ServiceFactory;
 
@@ -42,9 +42,7 @@ public class TemplateTest
 			ServiceFactory.setAppConfig(ServiceFactory.getPersistenceService()
 					.getAppconfig().getElement());
 			
-			ServiceFactory.getDomainService().setTemplates(new Templates());
-			
-			Template templateBasic = new Template("1.0", "15.0(2)SE6", "C2960-LANBASEK9-M");
+			Template templateBasic = new Template("Basiskonfiguration", "1.0", "15.0(2)SE6", "C2960-LANBASEK9-M");
 
 			Snippet snippetBasic = new Snippet("Basic-Snippet", "None", "Interface-Snippet");
 			Snippet snippetInterfaces = new Snippet("Interface-Snippet", "Basic-Snippet", "None");
@@ -53,17 +51,34 @@ public class TemplateTest
 			
 			Command commandSetHostname = new Command("hostname");
 			
-			Datatype textDatatype = new Datatype();
+			Parameter parameterSetHostname = new Parameter(0, "Hostname", "DatatypeString", "GWDSWITCH", "", true);
 			
-			Parameter parameterSetHostname = new Parameter(0, "Hostname", textDatatype, "GWDSWITCH");
+			commandSetHostname.getParameters().add(parameterSetHostname);
+			
+			sectionBasicDeviceConfigurations.getCommands().add(commandSetHostname);
+			
+			snippetBasic.getSections().add(sectionBasicDeviceConfigurations);
 			
 			Section sectionSNMPConfiguration = new Section("SNMP Configuration");
 			
+			snippetBasic.getSections().add(sectionSNMPConfiguration);
+			
 			Section sectionAllInterfaces = new Section("Interface Configuration");
+			
+			snippetInterfaces.getSections().add(sectionAllInterfaces);
+			
+			templateBasic.getSnippets().add(snippetBasic);
+			templateBasic.getSnippets().add(snippetInterfaces);
+			
+			TemplateToPathLinker templateToPathLinker = new TemplateToPathLinker(templateBasic, ServiceFactory.getAppConfig().getNDMS_DEFAULT_PATH_APP() + "\\" + ServiceFactory.getAppConfig().getNDMS_DEFAULT_PATH_TEMPLATE_DIRECTORY() + "\\" + templateBasic.getFullName());
+			
+			ServiceFactory.getPersistenceService().getTemplates().add(templateToPathLinker);
+			
+			ServiceFactory.getPersistenceService().saveAllTemplates();
 		}
 		catch (Exception e)
 		{
-			
+			e.printStackTrace();
 		}
 	}
 	
