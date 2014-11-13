@@ -14,9 +14,8 @@ public class Snapshot
 	private StringProperty datetime;
 	private StringProperty description;
 	
-	public Snapshot(String fingerprint, String name)
+	public Snapshot(String name, String desc)
 	{
-		setFingerprint(fingerprint);
 		setName(name);
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = new Date();

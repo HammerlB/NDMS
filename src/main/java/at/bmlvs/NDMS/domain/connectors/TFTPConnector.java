@@ -19,6 +19,7 @@ package at.bmlvs.NDMS.domain.connectors;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
 import org.apache.commons.net.tftp.TFTP;
@@ -120,7 +121,12 @@ public class TFTPConnector extends FileTransferConnector {
 		}
 
 		// Try to open local file for writing
-		output = new FileOutputStream(file);
+		try{
+			output = new FileOutputStream(file);
+		}catch(FileNotFoundException e){
+			file.createNewFile();
+			output = new FileOutputStream(file);
+		}
 
 		// Try to receive remote file via TFTP
 		tftpc.receiveFile(getRemotefile(), getTransfermode(), output, getHost());

@@ -28,28 +28,28 @@ public class Snapshots
 		snapshots.add(s);
 	}
 	
-//	public boolean checkSnapshot(int index){
-//		File f = new File(snapshots.get(index).getRelativePath());
-//		if(f.exists()){
-//			return true;
-//		}else{
-//			return false;
-//		}
-//	}
-//	
-//	public boolean checkSnapshot(Snapshot s){
-//		int index = snapshots.indexOf(s);
-//		File f = new File(snapshots.get(index).getRelativePath());
-//		if(f.exists()){
-//			return true;
-//		}else{
-//			return false;
-//		}
-//	}
+	public boolean checkSnapshot(int index){
+		File f = new File(snapshots.get(index).);
+		if(f.exists()){
+			return true;
+		}else{
+			return false;
+		}
+	}
 	
-//	public void createSnapshot(Snapshot s){
-//		if(!checkSnapshot(s)){
-//			add(s);
-//		}
-//	}
+	public boolean checkSnapshot(Snapshot s){
+		int index = snapshots.indexOf(s);
+		File f = new File(snapshots.get(index).getRelativePath());
+		if(f.exists()){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	public void createSnapshot(Snapshot s){
+		if(!checkSnapshot(s)){
+			add(s);
+		}
+	}
 }
