@@ -56,27 +56,18 @@ public class TFTPConnector extends FileTransferConnector {
 	private Snapshots snapshots;
 	private Snapshot currentsnapshot;
 	private String path;
-
-	/*
-	 * "Usage: tftp [options] hostname localfile remotefile\n\n" +
-	 * "hostname   - The name of the remote host\n" +
-	 * "localfile  - The name of the local file to send or the name to use for\n"
-	 * + "\tthe received file\n" +
-	 * "remotefile - The name of the remote file to receive or the name for\n" +
-	 * "\tthe remote server to use to name the local file being sent.\n\n" +
-	 * "options: (The default is to assume -r -b)\n" +
-	 * "\t-s Send a local file\n" + "\t-r Receive a remote file\n" +
-	 * "\t-a Use ASCII transfer mode\n" + "\t-b Use binary transfer mode\n";
-	 */
+	private String fingerprint;
+	
 	public TFTPConnector(String host, String localfile, String remotefile) {
 		super(host);
+				
 		setPath(ServiceFactory.getAppConfig().getNDMS_DEFAULT_PATH_APP()
 				+ "\\"
 				+ ServiceFactory.getAppConfig().getNDMS_DEFAULT_PATH_SNAPSHOT_DIRECTORY());
 		setLocalfile(localfile);
 		setRemotefile(remotefile);
 		setTftpc(new TFTPClient());
-		setTransfermode(TFTP.ASCII_MODE);
+		setTransfermode(TFTP.BINARY_MODE);
 		setTimeout(60000);
 	}
 
@@ -118,20 +109,21 @@ public class TFTPConnector extends FileTransferConnector {
 
 		FileOutputStream output = null;
 		File file;
-		file = new File(getLocalfile());
+		file = new File(path+"\\"+fingerprint);
 
-		// If file exists, don't overwrite it.
-		if (file.exists()) {
-			setLocalfile(getLocalfile() + "(duplicate Name)");
-		}
+// If file exists, don't overwrite it.
+//		if (file.exists()) {
+//			setLocalfile(getLocalfile() + "(duplicate Name)");
+//		}
 
 		// Try to open local file for writing
 		try{
 			output = new FileOutputStream(file);
 		}catch(FileNotFoundException e){
 			file.mkdirs();
-			file.createNewFile();
-			output = new FileOutputStream(file);
+			File f = new File(file.getAbsolutePath()+"\\"+localfile);
+			f.createNewFile();
+			output = new FileOutputStream(f);
 		}
 
 		// Try to receive remote file via TFTP
@@ -256,5 +248,13 @@ public class TFTPConnector extends FileTransferConnector {
 
 	public void setPath(String path) {
 		this.path = path;
+	}
+
+	public String getFingerprint() {
+		return fingerprint;
+	}
+
+	public void setFingerprint(String fingerprint) {
+		this.fingerprint = fingerprint;
 	}
 }

@@ -31,10 +31,10 @@ public class TXTSnapshotDAO
 				}
 
 				// get the content in bytes
-				byte[] contentInBytes = element.getContent().getBytes();
+//				byte[] contentInBytes = element.getContent().getBytes();
 
-				fs.write(contentInBytes);
-				fs.flush();
+//				fs.write(contentInBytes);
+//				fs.flush();
 			}
 			catch (FileNotFoundException e)
 			{
@@ -89,9 +89,9 @@ public class TXTSnapshotDAO
 				
 				SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 				
-				Snapshot snapshot = new Snapshot(file.getParent(), file.getName(), sdf.format(file.lastModified()), inputStringBuilder.toString());
+//				Snapshot snapshot = new Snapshot(file.getParent(), file.getName(), sdf.format(file.lastModified()), inputStringBuilder.toString());
 
-				return snapshot;
+//				return snapshot;
 			}
 			catch (Exception e)
 			{
