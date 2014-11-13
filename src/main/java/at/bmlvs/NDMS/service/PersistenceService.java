@@ -36,22 +36,18 @@ public class PersistenceService
 			saveAppConfig();
 		}
 		
+		setTemplates(new ArrayList<TemplateToPathLinker>());
+		
 		if ((new File("templates")).exists())
 		{
 			setTemplates(loadAllTemplates(getAppconfig().getElement().getNDMS_DEFAULT_PATH_APP() + "\\" + getAppconfig().getElement().getNDMS_DEFAULT_PATH_TEMPLATE_DIRECTORY()));
 		}
-		else
-		{
-			setTemplates(new ArrayList<TemplateToPathLinker>());
-		}
+		
+		setSnapshots(new ArrayList<SnapshotToPathLinker>());
 		
 		if ((new File("snapshots")).exists())
 		{
 			setSnapshots(loadAllSnapshots(getAppconfig().getElement().getNDMS_DEFAULT_PATH_APP() + "\\" + getAppconfig().getElement().getNDMS_DEFAULT_PATH_SNAPSHOT_DIRECTORY()));
-		}
-		else
-		{
-			setSnapshots(new ArrayList<SnapshotToPathLinker>());
 		}
 	}
 
@@ -135,6 +131,7 @@ public class PersistenceService
 	public TemplateToPathLinker loadTemplate(String path)
 	{
 		TemplateToPathLinker template = new TemplateToPathLinker(tdao.read(path), path);;
+		
 		getTemplates().add(template);
 		
 		return template;
