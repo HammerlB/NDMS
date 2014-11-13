@@ -148,7 +148,7 @@ public class MainWindowController extends VBox
 		{
 			StackPane viewstack = new StackPane();
 
-			GridPane left = new GridPane();
+			VBox leftbox = new VBox();
 
 			SplitPane splitter = new SplitPane();
 			splitter.setOrientation(Orientation.HORIZONTAL);
@@ -156,17 +156,6 @@ public class MainWindowController extends VBox
 			TextArea show = new TextArea();
 			show.disableProperty();
 
-			Button btn1 = new Button("pos11");
-
-			left.add(btn1, 1, 1);
-
-			splitter.getItems().addAll(left, show);
-			splitter.setDividerPositions(0.6f, 0.4f);
-
-			viewstack.getChildren().add(splitter);
-
-			PresentationService.getMainWindowController().getTabPane()
-					.getTabs().get(id).setContent(viewstack);
 
 			for (TemplateToPathLinker template : ServiceFactory
 					.getPersistenceService().getTemplates())
@@ -178,6 +167,9 @@ public class MainWindowController extends VBox
 								.getSelectedItem()))
 				{
 					// UEBERSCHRIFT NAME DES TEMPLATES
+					
+					HBox tempname = new HBox();
+					tempname.getChildren().add(new Label(template.getElement().getFullName()));
 					
 					System.out.println(template.getElement().getFullName());
 
@@ -217,6 +209,15 @@ public class MainWindowController extends VBox
 					}
 				}
 			}
+			
+			splitter.getItems().addAll(leftbox, show);
+			splitter.setDividerPositions(0.6f, 0.4f);
+
+			viewstack.getChildren().add(splitter);
+
+			PresentationService.getMainWindowController().getTabPane()
+					.getTabs().get(id).setContent(viewstack);
+			
 		}
 		catch (Exception e)
 		{
