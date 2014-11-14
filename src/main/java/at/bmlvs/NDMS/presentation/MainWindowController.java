@@ -69,7 +69,7 @@ public class MainWindowController extends VBox
 	private SnapshotController snapcontrol = new SnapshotController();
 	private Stage stage;
 	@FXML
-	private ComboBox<String> templateBox;
+	private ComboBox<String> templateBox; 
 
 	public MainWindowController()
 	{
@@ -229,8 +229,7 @@ public class MainWindowController extends VBox
 										dataString.setId("" + parameter.getId());
 										
 										paraPane.add(dataString,1,0);
-										dataString.focusedProperty().addListener(new ChangeListener<Boolean>()
-												{
+										dataString.focusedProperty().addListener(new ChangeListener<Boolean>(){
 										    @Override
 										    public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
 										    {
@@ -240,11 +239,13 @@ public class MainWindowController extends VBox
 										        }
 										        else
 										        {
+										        	//System.out.println("Textfield lost focus");
 										            parameter.setValue(dataString.getText());
 										            show.setText(template.getElement().receiveTemplateOutput());
 										        }
 										    }
 										});
+
 										// LABEL --> parameter.getName()
 										// TEXTFIELD --> ID FUER FELD
 										// parameter.getId() | DEFAULT VALUE
@@ -253,7 +254,7 @@ public class MainWindowController extends VBox
 										// BEI AENDERN VON TEXTFIELD
 										// parameter.getValue() SETZEN
 									}
-									
+	
 									// VIELE WEITERE IFS
 									// DatatypeMAC-Address
 									
