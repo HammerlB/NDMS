@@ -18,12 +18,20 @@ public class SnapshotTest {
 		ServiceFactory.setAppConfig(ServiceFactory.getPersistenceService().getAppconfig().getElement());
 		SSHConnector ssh = new SSHConnector("192.168.1.12", "Herkel", "gwdH_2014", "gwd_2014");
 		
-		Snapshot ss = new Snapshot("name", "desc");
-		TFTPConnector tftp = new TFTPConnector("192.168.1.12","tralal.txt","config.text");
+		
+		TFTPConnector tftp = new TFTPConnector("192.168.1.12","tralal.txt","snapshot.txt");
 		try {
 			ssh.connect();
+			ssh.start();
+			ssh.doPrepareSnapshot();
 			tftp.setSSHFingerprint(ssh.getSSHFingerprint());
-			tftp.connectReceiveDisconnect();
+			tftp.takeSnapshot("name", "desc");
+//			tftp.connectAndReceive();
+//			tftp.scanSnapshots();
+			for(int i = 0;i<tftp.getSnapshotsList().getSnapshots().size();i++){
+				System.out.println(tftp.getSnapshotsList().getSnapshots().get(i).getElement().getFullName());
+			}
+			ssh.doDisconnect();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -22,6 +22,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import org.apache.commons.net.finger.FingerClient;
 import org.apache.commons.net.tftp.TFTP;
 import org.apache.commons.net.tftp.TFTPClient;
 
@@ -53,12 +57,12 @@ public class TFTPConnector extends FileTransferConnector {
 
 	private boolean ascii_transfermode;
 	private boolean binary_transfermode;
-	
+
 	private Snapshots snapshots;
 	private SnapshotToPathLinker stpl;
-	
+
 	private String localPath;
-	
+
 	private String sshfingerprint;
 
 	/*
@@ -74,8 +78,11 @@ public class TFTPConnector extends FileTransferConnector {
 	 */
 	public TFTPConnector(String host, String localfile, String remotefile) {
 		super(host);
-		setLocalPath(ServiceFactory.getAppConfig().getNDMS_DEFAULT_PATH_APP()+"\\"
-		+ServiceFactory.getAppConfig().getNDMS_DEFAULT_PATH_SNAPSHOT_DIRECTORY());
+		setLocalPath(ServiceFactory.getAppConfig().getNDMS_DEFAULT_PATH_APP()
+				+ "\\"
+				+ ServiceFactory.getAppConfig()
+						.getNDMS_DEFAULT_PATH_SNAPSHOT_DIRECTORY());
+		snapshots = new Snapshots();
 		setLocalfile(localfile);
 		setRemotefile(remotefile);
 		setTftpc(new TFTPClient());
@@ -120,20 +127,20 @@ public class TFTPConnector extends FileTransferConnector {
 		boolean closed = false;
 
 		FileOutputStream output = null;
-	
-		File localPath = new File(this.localPath+"\\"+sshfingerprint);
-		File file = new File(localPath.getAbsolutePath()+"\\"+getLocalfile());
-	
+
+		File dir = new File(this.localPath + "\\" + sshfingerprint);
+		File file = new File(this.localPath + "\\" + sshfingerprint + "\\" + stpl.getElement().getFullName());
+
 		// If file exists, don't overwrite it.
 		if (file.exists()) {
-			System.out.println("This shouldn't have happened!");
+			System.out.println("This shouldn't have happened! (file exists)");
 		}
 
 		// Try to open local file for writing
-		try{
+		try {
 			output = new FileOutputStream(file);
-		}catch(FileNotFoundException e){
-			localPath.mkdirs();
+		} catch (FileNotFoundException e) {
+			dir.mkdirs();
 			file.createNewFile();
 			output = new FileOutputStream(file);
 		}
@@ -146,39 +153,82 @@ public class TFTPConnector extends FileTransferConnector {
 		if (output != null) {
 			output.close();
 		}
-		
-		
 	}
-	
-	public void connectReceiveDisconnect() throws Exception{
+
+	public void connectAndReceive() throws Exception {
 		connect();
+		Thread.sleep(4000);
 		receive();
-		disconnect();
 	}
-//	public void doCreateSnapshot(String name,String description) throws Exception{
-//		setCurrentsnapshot(new Snapshot(name,description));
-//		snapshots.createSnapshot(currentsnapshot);
-//		connect();
-//		setRemotefile("snapshot.txt");
-//		setLocalfile(currentsnapshot.getRelativePath());
-//		receive();
-//	}
-//	
-//	public void doCreateSnapshot(Snapshot s) throws Exception{
-//		setCurrentsnapshot(s);
-//		snapshots.createSnapshot(currentsnapshot);
-//		connect();
-//		setRemotefile("snapshot.txt");
-//		setLocalfile(currentsnapshot.getRelativePath());
-//		receive();
-//	}
-//	
-//	public void initialSnapshot() throws Exception{
-//		setCurrentsnapshot(new Snapshot("initial","This is the initial Snapshot"));
-//		if(!snapshots.checkSnapshot(currentsnapshot)){
-//			doCreateSnapshot(currentsnapshot);
-//		}
-//	}
+
+	public void connectAndSend() throws Exception {
+		connect();
+		send();
+	}
+
+	public void takeSnapshot(String name, String desc) throws Exception {
+		Snapshot s = new Snapshot(name, desc);
+		stpl = new SnapshotToPathLinker(s, localPath + "\\" + sshfingerprint
+				+ "\\" + s.getFullName());
+		snapshots.add(stpl);
+//		setLocalfile(s.getFullName()+".txt");
+		connectAndReceive();
+	}
+
+	public void scanSnapshots() {
+		File dir = new File(localPath + "\\" + sshfingerprint);
+		for (File file : dir.listFiles()) {
+			if (file.getName().endsWith(".txt")) {
+				Snapshot s = new Snapshot(file.getName().split("-")[0],"Snapshot from "+ file.getName().split("-")[1]);
+				s.setDatetime(file.getName().split("-")[1]);
+				SnapshotToPathLinker stpl = new SnapshotToPathLinker(s, file.getAbsolutePath());
+				snapshots.add(stpl);
+			}
+		}
+	}
+
+	public ObservableList<SnapshotToPathLinker> getSnapshotsFor(
+			String fingerprint) {
+		File dir = new File(localPath + "\\" + fingerprint);
+		ObservableList<SnapshotToPathLinker> list = FXCollections
+				.observableArrayList();
+		for (File file : dir.listFiles()) {
+			if (file.getName().endsWith(".txt")) {
+				Snapshot s = new Snapshot(file.getName().split("-")[0],"Snapshot from "+ file.getName().split("-")[1]);
+				s.setDatetime(file.getName().split("-")[1]);
+				SnapshotToPathLinker stpl = new SnapshotToPathLinker(s, file.getAbsolutePath());
+				list.add(stpl);
+			}
+		}
+		return list;
+	}
+
+	// public void doCreateSnapshot(String name,String description) throws
+	// Exception{
+	// setCurrentsnapshot(new Snapshot(name,description));
+	// snapshots.createSnapshot(currentsnapshot);
+	// connect();
+	// setRemotefile("snapshot.txt");
+	// setLocalfile(currentsnapshot.getRelativePath());
+	// receive();
+	// }
+	//
+	// public void doCreateSnapshot(Snapshot s) throws Exception{
+	// setCurrentsnapshot(s);
+	// snapshots.createSnapshot(currentsnapshot);
+	// connect();
+	// setRemotefile("snapshot.txt");
+	// setLocalfile(currentsnapshot.getRelativePath());
+	// receive();
+	// }
+	//
+	// public void initialSnapshot() throws Exception{
+	// setCurrentsnapshot(new
+	// Snapshot("initial","This is the initial Snapshot"));
+	// if(!snapshots.checkSnapshot(currentsnapshot)){
+	// doCreateSnapshot(currentsnapshot);
+	// }
+	// }
 
 	public boolean isAscii_transfermode() {
 		return ascii_transfermode;
@@ -236,11 +286,11 @@ public class TFTPConnector extends FileTransferConnector {
 		this.remotefile = remotefile;
 	}
 
-	public Snapshots getSnapshots() {
+	public Snapshots getSnapshotsList() {
 		return snapshots;
 	}
 
-	public void setSnapshots(Snapshots snapshots) {
+	public void setSnapshotsList(Snapshots snapshots) {
 		this.snapshots = snapshots;
 	}
 

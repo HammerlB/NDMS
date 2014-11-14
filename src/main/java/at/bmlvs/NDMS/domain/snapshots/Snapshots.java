@@ -2,29 +2,30 @@ package at.bmlvs.NDMS.domain.snapshots;
 
 import java.io.File;
 
+import at.bmlvs.NDMS.linker.SnapshotToPathLinker;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Snapshots
 {
-	private ObservableList<Snapshot> snapshots;
+	private ObservableList<SnapshotToPathLinker> snapshots;
 	
 	public Snapshots()
 	{
 		setSnapshots(FXCollections.observableArrayList());
 	}
 
-	public ObservableList<Snapshot> getSnapshots()
+	public ObservableList<SnapshotToPathLinker> getSnapshots()
 	{
 		return snapshots;
 	}
 
-	public void setSnapshots(ObservableList<Snapshot> snapshots)
+	public void setSnapshots(ObservableList<SnapshotToPathLinker> snapshots)
 	{
 		this.snapshots = snapshots;
 	}
 	
-	public void add(Snapshot s){
+	public void add(SnapshotToPathLinker s){
 		snapshots.add(s);
 	}
 	

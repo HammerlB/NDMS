@@ -50,7 +50,7 @@ public class SSHConnector extends Thread {
 						if (reload) {
 							System.out.println("Reload Requested!");
 							reload = false;
-							sleep(10000);
+							sleep(20000);
 						} else {
 							sleep(1000);
 						}
@@ -160,9 +160,14 @@ public class SSHConnector extends Thread {
 		if (isConnected())
 			this.disconnect = true;
 	}
-	
-	public void doPrepareSnapshot(){
-		this.cmd.add("");
+
+	public void doPrepareSnapshot() {
+//		this.cmd.add("enable\n" + enablePass + "\n");
+		this.cmd.add("enable\n"
+				+ enablePass
+				+ "\ncopy run flash:snapshot.txt\n\n\nconf t\ntftp flash:snapshot.txt\nend\n");
+//		this.cmd.add("end\n");
+		this.somethingToSend = true;
 	}
 
 	public void checkProgress(int i) {

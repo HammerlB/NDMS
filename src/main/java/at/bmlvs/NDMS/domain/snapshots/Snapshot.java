@@ -18,11 +18,11 @@ public class Snapshot
 	public Snapshot(String name, String desc)
 	{
 		setName(name);
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 		Date date = new Date();
 		setDatetime(dateFormat.format(date));
-		
-		setFullName(getName()+"("+getDatetime()+")");
+		setDescription(desc);
+		setFullName(getName()+"-"+getDatetime());
 	}
 	
 	public final String getName()
