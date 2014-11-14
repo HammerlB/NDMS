@@ -133,6 +133,8 @@ public class Template implements Serializable
 			}
 		}
 		
+		setOutput(receivedOutput);
+		
 		return receivedOutput;
 	}
 	

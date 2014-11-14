@@ -87,7 +87,7 @@ public class SnapshotController
 		
 		Label tmp = new Label("  ");
 		Label tmp2 = new Label("   ");
-		Label tmp3 = new Label("                         ");
+		Label tmp3 = new Label("                               ");
 		Label tmp4 = new Label("  ");
 		
 		Label x = new Label("   Sind Sie sicher, dass Sie diesen Snapshot entfernen wollen?");

@@ -37,6 +37,7 @@ import javafx.scene.layout.VBox;
 public class AddTabController
 {
 	private String tabname = "";
+	private String activetab = "";
 
 	@FXML
 	private ToggleGroup radiotoggle;
@@ -131,6 +132,8 @@ public class AddTabController
 					
 					sshc.connect();
 					
+					
+					
 					boolean alreadyfound = false;
 					
 					for(Instance inst: ServiceFactory.getDomainService().getInstances().getInstances())
@@ -152,7 +155,7 @@ public class AddTabController
 										"gwdSNMP_2014"));
 						
 						inst.populateAll();
-
+						
 						inst.nameProperty().addListener(
 								new ChangeListener<Object>()
 								{
@@ -544,6 +547,16 @@ public class AddTabController
 				}
 			}
 		});
+	}
+	
+	public String getActivetab()
+	{
+		return activetab;
+	}
+
+	public void setActivetab(String activetab)
+	{
+		this.activetab = activetab;
 	}
 
 }
