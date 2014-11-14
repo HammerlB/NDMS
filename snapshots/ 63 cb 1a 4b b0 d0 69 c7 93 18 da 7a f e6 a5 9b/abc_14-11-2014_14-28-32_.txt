@@ -1,0 +1,241 @@
+
+!
+! Last configuration change at 06:27:50 UTC Mon Mar 1 1993 by Herkel
+!
+version 15.0
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+!
+hostname GWD-SW3
+!
+boot-start-marker
+boot-end-marker
+!
+enable secret 5 $1$Q/4D$BmJgXy6QMUNkql0yuStz41
+!
+username Herkel secret 5 $1$qORN$YvmpsPaKtgFJDGqlof58q/
+no aaa new-model
+system mtu routing 1500
+!
+!
+ip domain-name gwdnetwork.lan
+!
+!
+crypto pki trustpoint TP-self-signed-4218400384
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-4218400384
+ revocation-check none
+ rsakeypair TP-self-signed-4218400384
+!
+!
+crypto pki certificate chain TP-self-signed-4218400384
+ certificate self-signed 01
+  3082022B 30820194 A0030201 02020101 300D0609 2A864886 F70D0101 05050030 
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 34323138 34303033 3834301E 170D3933 30333031 30303030 
+  35395A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649 
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D34 32313834 
+  30303338 3430819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281 
+  8100AF2C 722991A0 83EBA7D3 672EB670 E750489F B4618587 198C2CEA D7A2B1CF 
+  93D86986 1844750C 401BD6DC A32EB008 C8B8332B 8ACC4CA0 2EB539EC 16F0B689 
+  47E9B5F2 A7E5E71E D4032EC6 80A98EBE 403F3DF3 AD4319A3 B9316202 3772AF43 
+  E02F48BE 80BEE09C 33F39923 3F6F2251 82385D81 A7163697 C4342213 F6788FB8 
+  09FB0203 010001A3 53305130 0F060355 1D130101 FF040530 030101FF 301F0603 
+  551D2304 18301680 14684121 1A97A8E4 E94E8E82 E49A4F0D 38464AD0 67301D06 
+  03551D0E 04160414 6841211A 97A8E4E9 4E8E82E4 9A4F0D38 464AD067 300D0609 
+  2A864886 F70D0101 05050003 8181004B 22E1240F 58F04A75 A167BC10 06517797 
+  7A03CD9D F3887ED1 78CF1F65 4FDE9008 90023BA6 B400FD1C 9B16212B E3FCF635 
+  6F2A644B 227C6A81 54812CF0 FA7D3C3D E1AB0817 40B13CDF 77255D7C 5FC28DF1 
+  5BBB18F1 BACCD08A FFEB5EA5 83F61F51 EF5E6D28 47C918DF 920E53E1 6D502B21 
+  64735F1B 3F313745 1204D602 E38603
+  	quit
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+ip ssh version 2
+!
+!
+!
+!
+!
+interface FastEthernet0/1
+ description trololol
+!
+interface FastEthernet0/2
+ description trololol
+!
+interface FastEthernet0/3
+ description trololol
+!
+interface FastEthernet0/4
+ description trololol
+!
+interface FastEthernet0/5
+ description trololol
+!
+interface FastEthernet0/6
+ description trololol
+!
+interface FastEthernet0/7
+ description trololol
+!
+interface FastEthernet0/8
+ description trololol
+!
+interface FastEthernet0/9
+ description trololol
+!
+interface FastEthernet0/10
+ description trololol
+!
+interface FastEthernet0/11
+ description trololol
+!
+interface FastEthernet0/12
+ description trololol
+!
+interface FastEthernet0/13
+ description trololol
+!
+interface FastEthernet0/14
+ description trololol
+!
+interface FastEthernet0/15
+ description trololol
+!
+interface FastEthernet0/16
+ description trololol
+!
+interface FastEthernet0/17
+ description trololol
+!
+interface FastEthernet0/18
+ description trololol
+!
+interface FastEthernet0/19
+ description trololol
+!
+interface FastEthernet0/20
+ description trololol
+!
+interface FastEthernet0/21
+ description trololol
+!
+interface FastEthernet0/22
+ description trololol
+!
+interface FastEthernet0/23
+ description trololol
+!
+interface FastEthernet0/24
+ description trololol
+!
+interface FastEthernet0/25
+ description trololol
+!
+interface FastEthernet0/26
+ description trololol
+!
+interface FastEthernet0/27
+ description trololol
+!
+interface FastEthernet0/28
+ description trololol
+!
+interface FastEthernet0/29
+ description trololol
+!
+interface FastEthernet0/30
+ description trololol
+!
+interface FastEthernet0/31
+ description trololol
+!
+interface FastEthernet0/32
+ description trololol
+!
+interface FastEthernet0/33
+ description trololol
+!
+interface FastEthernet0/34
+ description trololol
+!
+interface FastEthernet0/35
+ description trololol
+!
+interface FastEthernet0/36
+ description trololol
+!
+interface FastEthernet0/37
+ description trololol
+!
+interface FastEthernet0/38
+ description trololol
+!
+interface FastEthernet0/39
+ description trololol
+!
+interface FastEthernet0/40
+ description trololol
+!
+interface FastEthernet0/41
+ description trololol
+!
+interface FastEthernet0/42
+ description trololol
+!
+interface FastEthernet0/43
+ description trololol
+!
+interface FastEthernet0/44
+ description trololol
+!
+interface FastEthernet0/45
+ description trololol
+!
+interface FastEthernet0/46
+ description trololol
+!
+interface FastEthernet0/47
+ description trololol
+!
+interface FastEthernet0/48
+ description trololol
+!
+interface GigabitEthernet0/1
+ switchport mode trunk
+!
+interface GigabitEthernet0/2
+!
+interface Vlan1
+ ip address 192.168.1.12 255.255.255.0
+!
+ip default-gateway 192.168.1.1
+ip http server
+ip http secure-server
+tftp-server flash:snapshot.txt
+snmp-server community gwdSNMP_2014 RW
+!
+!
+line con 0
+ password 7 08265B4A364B554646
+ logging synchronous
+line vty 0 4
+ login local
+ transport input ssh
+ transport output ssh
+line vty 5 15
+ login local
+ transport input ssh
+ transport output ssh
+!
+end

@@ -169,6 +169,13 @@ public class SSHConnector extends Thread {
 //		this.cmd.add("end\n");
 		this.somethingToSend = true;
 	}
+	
+	public void doPlaySnapshot(){
+		this.cmd.add("enable\n"
+				+ enablePass
+				+ "\ncopy flash:snapshotToPlay.txt start\n\n\nconf t\ntftp flash:snapshot.txt\nend\n");
+		this.somethingToSend = true;
+	}
 
 	public void checkProgress(int i) {
 		this.progress = 100 / cmd.size() * i;

@@ -14,8 +14,7 @@ public class TFTPConnectorTest {
 //		ServiceFactory.setAppConfig(ServiceFactory.getPersistenceService()
 //				.getAppconfig().getElement());
 		Snapshot ss = new Snapshot("name", "desc");
-		TFTPConnector tftp = new TFTPConnector("192.168.1.12", "ramconf.txt",
-				"config.text");
+		TFTPConnector tftp = new TFTPConnector("192.168.1.12");
 		try {
 			tftp.connect();
 			tftp.receive();

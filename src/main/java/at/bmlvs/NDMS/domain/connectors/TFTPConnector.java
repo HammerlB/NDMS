@@ -76,13 +76,14 @@ public class TFTPConnector extends FileTransferConnector {
 	 * "\t-s Send a local file\n" + "\t-r Receive a remote file\n" +
 	 * "\t-a Use ASCII transfer mode\n" + "\t-b Use binary transfer mode\n";
 	 */
-	public TFTPConnector(String host, String localfile, String remotefile) {
+	public TFTPConnector(String host) {
 		super(host);
 		setLocalPath(ServiceFactory.getAppConfig().getNDMS_DEFAULT_PATH_APP()
 				+ "\\"
 				+ ServiceFactory.getAppConfig()
 						.getNDMS_DEFAULT_PATH_SNAPSHOT_DIRECTORY());
 		snapshots = new Snapshots();
+		stpl = new SnapshotToPathLinker(null,null);
 		setLocalfile(localfile);
 		setRemotefile(remotefile);
 		setTftpc(new TFTPClient());
@@ -109,8 +110,17 @@ public class TFTPConnector extends FileTransferConnector {
 		FileInputStream input = null;
 
 		// Try to open local file for reading
-		input = new FileInputStream(getLocalfile());
-
+		input = null;
+		File file = new File(this.localPath + "\\" + sshfingerprint + "\\" + stpl.getElement().getFullName());
+		
+		setRemotefile("snapshotToPlay.txt");
+		
+		try {
+			input = new FileInputStream(file);
+		} catch (FileNotFoundException e) {
+			System.err.println("This Snapshot don't exists!");
+		}
+		
 		// Try to send local file via TFTP
 		tftpc.sendFile(getRemotefile(), getTransfermode(), input, getHost());
 
@@ -130,7 +140,7 @@ public class TFTPConnector extends FileTransferConnector {
 
 		File dir = new File(this.localPath + "\\" + sshfingerprint);
 		File file = new File(this.localPath + "\\" + sshfingerprint + "\\" + stpl.getElement().getFullName());
-
+		setRemotefile("snapshot.txt");
 		// If file exists, don't overwrite it.
 		if (file.exists()) {
 			System.out.println("This shouldn't have happened! (file exists)");
@@ -174,28 +184,39 @@ public class TFTPConnector extends FileTransferConnector {
 //		setLocalfile(s.getFullName()+".txt");
 		connectAndReceive();
 	}
+	
+	public void sendSnapshot(String fullName) throws Exception{
+ 		String s = snapshots.getSnapshots().get(0).getElement().getFullName();
+		for(int i = 0; i<snapshots.getSnapshots().size();i++){
+			if(snapshots.getSnapshots().get(i).getElement().getFullName().equals(fullName)){
+				this.stpl = snapshots.getSnapshots().get(i);
+				System.out.println(this.stpl.getElement().getFullName());
+				break;
+			}
+		}
+		connectAndSend();
+	}
 
 	public void scanSnapshots() {
 		File dir = new File(localPath + "\\" + sshfingerprint);
+		snapshots.getSnapshots().clear();
 		for (File file : dir.listFiles()) {
 			if (file.getName().endsWith(".txt")) {
-				Snapshot s = new Snapshot(file.getName().split("-")[0],"Snapshot from "+ file.getName().split("-")[1]);
-				s.setDatetime(file.getName().split("-")[1]);
+				Snapshot s = new Snapshot(file.getName().split("_")[0],"Snapshot from "+ file.getName().split("_")[1]+"_"+file.getName().split("_")[2], "_"+file.getName().split("_")[1]+"_"+file.getName().split("_")[2]+"_");
 				SnapshotToPathLinker stpl = new SnapshotToPathLinker(s, file.getAbsolutePath());
 				snapshots.add(stpl);
 			}
 		}
 	}
 
-	public ObservableList<SnapshotToPathLinker> getSnapshotsFor(
+	public ObservableList<SnapshotToPathLinker> scanSnapshotsFrom(
 			String fingerprint) {
 		File dir = new File(localPath + "\\" + fingerprint);
 		ObservableList<SnapshotToPathLinker> list = FXCollections
 				.observableArrayList();
 		for (File file : dir.listFiles()) {
 			if (file.getName().endsWith(".txt")) {
-				Snapshot s = new Snapshot(file.getName().split("-")[0],"Snapshot from "+ file.getName().split("-")[1]);
-				s.setDatetime(file.getName().split("-")[1]);
+				Snapshot s = new Snapshot(file.getName().split("_")[0],"Snapshot from "+ file.getName().split("_")[1]+"_"+file.getName().split("_")[2], "_"+file.getName().split("_")[1]+"_"+file.getName().split("_")[2]+"_");
 				SnapshotToPathLinker stpl = new SnapshotToPathLinker(s, file.getAbsolutePath());
 				list.add(stpl);
 			}

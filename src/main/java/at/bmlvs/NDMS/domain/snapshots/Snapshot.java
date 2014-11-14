@@ -18,11 +18,19 @@ public class Snapshot
 	public Snapshot(String name, String desc)
 	{
 		setName(name);
-		DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+		DateFormat dateFormat = new SimpleDateFormat("_dd-MM-yyyy_HH-mm-ss_");
 		Date date = new Date();
 		setDatetime(dateFormat.format(date));
 		setDescription(desc);
-		setFullName(getName()+"-"+getDatetime());
+		setFullName(getName()+getDatetime()+".txt");
+	}
+	
+	public Snapshot(String name, String desc, String datetime)
+	{
+		setName(name);
+		setDatetime(datetime);
+		setDescription(desc);
+		setFullName(getName()+getDatetime()+".txt");
 	}
 	
 	public final String getName()
@@ -137,7 +145,7 @@ public class Snapshot
 
 	public final void setFullName(String fullName)
 	{
-		this.nameProperty().set(fullName);
+		this.fullNameProperty().set(fullName);
 	}
 
 	public final StringProperty fullNameProperty()
@@ -149,4 +157,13 @@ public class Snapshot
 
 		return fullName;
 	}
+	
+//	public static void main(String[] args){
+//		Snapshot s = new Snapshot("test","desc");
+//		System.out.println(s.getFullName().split("_")[0]);
+//		System.out.println(s.getFullName().split("_")[1]);
+//		System.out.println(s.getFullName().split("_")[2]);
+//		System.out.println(s.getFullName().split("_")[3]);
+//		System.out.println(s.getFullName());
+//	}
 }
