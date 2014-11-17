@@ -1,7 +1,13 @@
 package at.bmlvs.NDMS.presentation;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+import at.bmlvs.NDMS.domain.Instance;
+import at.bmlvs.NDMS.domain.connectors.SSHConnector;
+import at.bmlvs.NDMS.domain.connectors.TFTPConnector;
 import at.bmlvs.NDMS.domain.snapshots.Snapshot;
 import at.bmlvs.NDMS.linker.SnapshotToPathLinker;
 import at.bmlvs.NDMS.service.PresentationService;
@@ -24,8 +30,11 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+
 public class SnapshotController
 {
+	private MainWindowController mainWindow;
+	
 	@FXML
 	private TextArea descArea;
 	@FXML
@@ -34,8 +43,10 @@ public class SnapshotController
 	private Stage stage;
 	
 	@FXML
-	public void initialize()
+	public void initialize(MainWindowController mainWindow)
 	{
+		this.mainWindow = mainWindow;
+		
 		ObservableList<String> items = FXCollections.observableArrayList ();
 		
 		try
@@ -56,9 +67,7 @@ public class SnapshotController
 		snapshotlist.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 		    @Override
 		    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-		        
-		    	
-		    	
+		     
 		        System.out.println("Selected item: " + newValue);
 		    }
 		});
@@ -70,7 +79,9 @@ public class SnapshotController
 	@FXML
 	private void addsnapshot(ActionEvent event) throws IOException
 	{
-		
+			Instance inst = ServiceFactory.getDomainService().getInstances().getInstances().get(ServiceFactory.getPresentationService().getMainWindowController().getTabPane().getSelectionModel().getSelectedIndex());
+	
+			System.out.println(inst.getManagement_IP());
 	}
 	@FXML
 	private void removesnapshot(ActionEvent event) throws IOException
@@ -95,8 +106,7 @@ public class SnapshotController
         yes.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                
-            	
+
             	stage.close();
             }
         });

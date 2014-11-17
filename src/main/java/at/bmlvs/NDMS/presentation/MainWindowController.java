@@ -69,7 +69,7 @@ public class MainWindowController extends VBox
 	private SnapshotController snapcontrol = new SnapshotController();
 	private Stage stage;
 	@FXML
-	private ComboBox<String> templateBox;
+	private ComboBox<String> templateBox; 
 
 	public MainWindowController()
 	{
@@ -77,7 +77,7 @@ public class MainWindowController extends VBox
 				"xml/MainWindow.fxml"));
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);
-
+		
 		try
 		{
 			fxmlLoader.load();
@@ -137,34 +137,33 @@ public class MainWindowController extends VBox
 		
 		
 		templateBox.setOnAction((event) -> {
-			System.out.println(templateBox.getSelectionModel()
-					.getSelectedItem());
+			//System.out.println(templateBox.getSelectionModel().getSelectedItem());
 			
-			if(!templateBox.getSelectionModel()
-					.getSelectedItem().equals("Templates"))
+			if(!templateBox.getSelectionModel().getSelectedItem().equals("Templates"))
 			{
 				templateview(tabPane.getSelectionModel().getSelectedIndex());
 			}
-				
-
 		});
 	}
 
 	private void templateview(int id)
 	{
+		
+		
+		
 		try
 		{
 			StackPane viewstack = new StackPane();
 
 			VBox leftbox = new VBox();
-
+			
 			SplitPane splitter = new SplitPane();
 			splitter.setOrientation(Orientation.HORIZONTAL);
-
+			
 			TextArea show = new TextArea();
 			show.disableProperty();
-
-
+			show.setEditable(false);
+			
 			for (TemplateToPathLinker template : ServiceFactory
 					.getPersistenceService().getTemplates())
 			{
@@ -229,8 +228,7 @@ public class MainWindowController extends VBox
 										dataString.setId("" + parameter.getId());
 										
 										paraPane.add(dataString,1,0);
-										dataString.focusedProperty().addListener(new ChangeListener<Boolean>()
-												{
+										dataString.focusedProperty().addListener(new ChangeListener<Boolean>(){
 										    @Override
 										    public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
 										    {
@@ -240,11 +238,13 @@ public class MainWindowController extends VBox
 										        }
 										        else
 										        {
+										        	//System.out.println("Textfield lost focus");
 										            parameter.setValue(dataString.getText());
 										            show.setText(template.getElement().receiveTemplateOutput());
 										        }
 										    }
 										});
+
 										// LABEL --> parameter.getName()
 										// TEXTFIELD --> ID FUER FELD
 										// parameter.getId() | DEFAULT VALUE
@@ -253,7 +253,7 @@ public class MainWindowController extends VBox
 										// BEI AENDERN VON TEXTFIELD
 										// parameter.getValue() SETZEN
 									}
-									
+	
 									// VIELE WEITERE IFS
 									// DatatypeMAC-Address
 									
@@ -295,7 +295,7 @@ public class MainWindowController extends VBox
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 
@@ -304,6 +304,7 @@ public class MainWindowController extends VBox
 	{
 		try
 		{
+			templateBox.getSelectionModel().select("Templates");
 			tabcontrol.portview(tabPane.getSelectionModel().getSelectedIndex());
 
 		}
@@ -321,6 +322,16 @@ public class MainWindowController extends VBox
 	public void setTabPane(TabPane tabPane)
 	{
 		this.tabPane = tabPane;
+	}
+
+	public AddTabController getTabcontrol()
+	{
+		return tabcontrol;
+	}
+
+	public void setTabcontrol(AddTabController tabcontrol)
+	{
+		this.tabcontrol = tabcontrol;
 	}
 
 	public Stage getStage()
