@@ -12,6 +12,8 @@ import at.bmlvs.NDMS.domain.Interface;
 import at.bmlvs.NDMS.domain.connectors.SNMPConnector;
 import at.bmlvs.NDMS.domain.connectors.SSHConnector;
 import at.bmlvs.NDMS.domain.connectors.TFTPConnector;
+import at.bmlvs.NDMS.domain.helper.IPv4Address;
+import at.bmlvs.NDMS.domain.helper.IPv4Range;
 import at.bmlvs.NDMS.presentation.elements.RestrictiveTextField;
 import at.bmlvs.NDMS.service.PresentationService;
 import at.bmlvs.NDMS.service.ServiceFactory;
@@ -24,16 +26,13 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.SplitPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -83,17 +82,16 @@ public class AddTabController
 	private SSHConnector sshc;
 	private GridPane portview1;
 
-
 	@FXML
 	public void initialize()
 	{
-		
+
 		ActionEvent event = new ActionEvent();
-		
+
 		dotListener(ipaddress1, ipaddress2);
 		dotListener(ipaddress2, ipaddress3);
 		dotListener(ipaddress3, ipaddress4);
-		
+
 		ipaddress4.setOnKeyPressed(new EventHandler<KeyEvent>()
 		{
 			public void handle(KeyEvent ke)
@@ -111,13 +109,12 @@ public class AddTabController
 			}
 		});
 	}
-	
+
 	@SuppressWarnings("static-access")
 	@FXML
 	private void startconnection(ActionEvent event) throws IOException
 	{
-		
-		
+
 		if (rbaddress.isSelected())
 		{
 			if ((!ipaddress1.getText().equals(""))
@@ -125,114 +122,126 @@ public class AddTabController
 					&& (!ipaddress3.getText().equals(""))
 					&& (!ipaddress4.getText().equals("")))
 			{
-				tabname = ipaddress1.getText() + "." + ipaddress2.getText()
-						+ "." + ipaddress3.getText() + "."
-						+ ipaddress4.getText();
+				IPv4Address address = new IPv4Address(ipaddress1.getText()
+						+ "." + ipaddress2.getText() + "."
+						+ ipaddress3.getText() + "." + ipaddress4.getText());
 
-				try
+				if (address.isAlive(address.getIPv4Address()))
 				{
-					
-					sshc = new SSHConnector(tabname, "Herkel",
-							"gwdH_2014", "gwd_2014");
-					
-					sshc.connect();
-					
-					boolean alreadyfound = false;
-					
-					for(Instance inst: ServiceFactory.getDomainService().getInstances().getInstances())
+					try
 					{
-						if(sshc.getSSHFingerprint().equals(inst.getFingerprint()))
+
+						sshc = new SSHConnector(address.getIPv4Address(), "Herkel", "gwdH_2014",
+								"gwd_2014");
+
+						sshc.connect();
+
+						boolean alreadyfound = false;
+
+						for (Instance inst : ServiceFactory.getDomainService()
+								.getInstances().getInstances())
 						{
-							alreadyfound = true;
-							break;
+							if (sshc.getSSHFingerprint().equals(
+									inst.getFingerprint()))
+							{
+								alreadyfound = true;
+								break;
+							}
+						}
+
+						if (alreadyfound == false)
+						{
+							sshc.start();
+
+							// TFTP Initial Snapshot
+							tftpc = new TFTPConnector(address.getIPv4Address());
+
+							tftpc.setSSHFingerprint(sshc.getSSHFingerprint());
+							sshc.doPrepareSnapshot();
+
+							tftpc.scanSnapshots();
+
+							DateFormat dateformat = new SimpleDateFormat(
+									"_dd-MM-yyyy_HH-mm-ss_");
+							Date date = new Date();
+							tftpc.takeSnapshot("Initial",
+									"Initial Snapshot from " + address.getIPv4Address() + " "
+											+ dateformat.format(date));
+
+							Instance inst = new Instance(address.getIPv4Address(),
+									sshc.getSSHFingerprint(), address.getIPv4Address(), sshc,
+									tftpc, new SNMPConnector("udp:" + address.getIPv4Address()
+											+ "/161", "gwdSNMP_2014"));
+
+							inst.populateAll();
+
+							inst.nameProperty().addListener(
+									new ChangeListener<Object>()
+									{
+										@Override
+										public void changed(
+												ObservableValue<? extends Object> arg0,
+												Object arg1, Object arg2)
+										{
+											Platform.runLater(new Runnable()
+											{
+												public void run()
+												{
+													inst.setText(inst.getName());
+												}
+											});
+										}
+									});
+
+							Timer timer = new Timer();
+
+							timer.scheduleAtFixedRate(new TimerTask()
+							{
+								public void run()
+								{
+									inst.checkInstance();
+									inst.checkInterfaces();
+								}
+							}, 1000, 5000);
+
+							// Platform.runLater(inst);
+
+							// inst.checkInterfaces();
+							ServiceFactory.getDomainService().getInstances()
+									.addSingleOnlineInstance(inst);
+							addTab(inst);
+							portview(ServiceFactory.getDomainService()
+									.getInstances().getInstances()
+									.indexOf(inst));
+
+							inst.setOnClosed(new EventHandler<Event>()
+							{
+								public void handle(Event t)
+								{
+									System.out.println("tab got closed");
+									ServiceFactory.getDomainService()
+											.getInstances().getInstances()
+											.remove(inst);
+									sshc.doDisconnect();
+
+								}
+							});
+						}
+						else
+						{
+							sshc.getSSHConnection().disconnect();
+							errorlabel
+									.setText("Es besteht bereits eine Verbindung\nzu dieser Netzwerkkomponente!");
 						}
 					}
-					
-					if(alreadyfound == false)
+					catch (Exception e)
 					{
-						sshc.start();
-						
-						//TFTP Initial Snapshot
-						tftpc = new TFTPConnector(tabname);
-						
-						
-						tftpc.setSSHFingerprint(sshc.getSSHFingerprint());
-						sshc.doPrepareSnapshot();
-						
-						tftpc.scanSnapshots();
-						
-						DateFormat dateformat = new SimpleDateFormat("_dd-MM-yyyy_HH-mm-ss_");
-						Date date = new Date();
-						tftpc.takeSnapshot("Initial", "Initial Snapshot from " + tabname + " " + dateformat.format(date));
-						
-						
-						Instance inst = new Instance(tabname,
-								sshc.getSSHFingerprint(), tabname, sshc, tftpc,
-								new SNMPConnector("udp:" + tabname + "/161",
-										"gwdSNMP_2014"));
-						
-						inst.populateAll();
-						
-						inst.nameProperty().addListener(
-								new ChangeListener<Object>()
-								{
-									@Override
-									public void changed(
-											ObservableValue<? extends Object> arg0,
-											Object arg1, Object arg2)
-									{
-										Platform.runLater(new Runnable()
-										{
-											public void run()
-											{
-												inst.setText(inst.getName());
-											}
-										});
-									}
-								});
-						
-						Timer timer = new Timer();
-
-						timer.scheduleAtFixedRate(new TimerTask()
-						{
-							public void run()
-							{
-								inst.checkInstance();
-								inst.checkInterfaces();
-							}
-						}, 1000, 5000);
-
-						// Platform.runLater(inst);
-
-						// inst.checkInterfaces();
-						ServiceFactory.getDomainService().getInstances()
-								.addSingleOnlineInstance(inst);
-						addTab(inst);
-						portview(ServiceFactory.getDomainService().getInstances()
-								.getInstances().indexOf(inst));
-						
-						inst.setOnClosed(new EventHandler<Event>() {
-				            public void handle(Event t) {
-				                 System.out.println("tab got closed");
-				                 ServiceFactory.getDomainService().getInstances().getInstances().remove(inst);
-				                 sshc.doDisconnect();
-				                 
-				            }
-				        });
-					}
-					else
-					{
-						sshc.getSSHConnection().disconnect();
-						errorlabel.setText("Es besteht bereits eine Verbindung\nzu dieser Netzwerkkomponente!");
+						errorlabel
+								.setText("Verbindung war nicht erfolgreich! \n("
+										+ e.getMessage() + ")");
+						// e.printStackTrace();
 					}
 				}
-				catch (Exception e)
-				{
-					errorlabel.setText("Verbindung war nicht erfolgreich! \n("
-							+ e.getMessage() + ")");
-					//e.printStackTrace();
-				}
-
 			}
 			else
 			{
@@ -251,10 +260,129 @@ public class AddTabController
 					&& (!iprange7.getText().equals(""))
 					&& (!iprange8.getText().equals("")))
 			{
-				tabname = iprange1.getText() + "." + iprange2.getText() + "."
-						+ iprange3.getText() + "." + iprange4.getText() + " - "
-						+ iprange5.getText() + "." + iprange6.getText() + "."
-						+ iprange7.getText() + "." + iprange8.getText();
+				IPv4Range range = new IPv4Range(
+						new IPv4Address(iprange1.getText() + "."
+								+ iprange2.getText() + "." + iprange3.getText()
+								+ "." + iprange4.getText()), new IPv4Address(
+								iprange5.getText() + "." + iprange6.getText()
+										+ "." + iprange7.getText() + "."
+										+ iprange8.getText()));
+
+				for (String tabname : range.getAllAddressesAsStringArray(true))
+				{
+					try
+					{
+						sshc = new SSHConnector(tabname, "Herkel", "gwdH_2014",
+								"gwd_2014");
+
+						sshc.connect();
+
+						boolean alreadyfound = false;
+
+						for (Instance inst : ServiceFactory.getDomainService()
+								.getInstances().getInstances())
+						{
+							if (sshc.getSSHFingerprint().equals(
+									inst.getFingerprint()))
+							{
+								alreadyfound = true;
+								break;
+							}
+						}
+
+						if (alreadyfound == false)
+						{
+							sshc.start();
+
+							// TFTP Initial Snapshot
+							tftpc = new TFTPConnector(tabname);
+
+							tftpc.setSSHFingerprint(sshc.getSSHFingerprint());
+							sshc.doPrepareSnapshot();
+
+							tftpc.scanSnapshots();
+
+							DateFormat dateformat = new SimpleDateFormat(
+									"_dd-MM-yyyy_HH-mm-ss_");
+							Date date = new Date();
+							tftpc.takeSnapshot("Initial",
+									"Initial Snapshot from " + tabname + " "
+											+ dateformat.format(date));
+
+							Instance inst = new Instance(tabname,
+									sshc.getSSHFingerprint(), tabname, sshc,
+									tftpc, new SNMPConnector("udp:" + tabname
+											+ "/161", "gwdSNMP_2014"));
+
+							inst.populateAll();
+
+							inst.nameProperty().addListener(
+									new ChangeListener<Object>()
+									{
+										@Override
+										public void changed(
+												ObservableValue<? extends Object> arg0,
+												Object arg1, Object arg2)
+										{
+											Platform.runLater(new Runnable()
+											{
+												public void run()
+												{
+													inst.setText(inst.getName());
+												}
+											});
+										}
+									});
+
+							Timer timer = new Timer();
+
+							timer.scheduleAtFixedRate(new TimerTask()
+							{
+								public void run()
+								{
+									inst.checkInstance();
+									inst.checkInterfaces();
+								}
+							}, 1000, 5000);
+
+							// Platform.runLater(inst);
+
+							// inst.checkInterfaces();
+							ServiceFactory.getDomainService().getInstances()
+									.addSingleOnlineInstance(inst);
+							addTab(inst);
+							portview(ServiceFactory.getDomainService()
+									.getInstances().getInstances()
+									.indexOf(inst));
+
+							inst.setOnClosed(new EventHandler<Event>()
+							{
+								public void handle(Event t)
+								{
+									System.out.println("tab got closed");
+									ServiceFactory.getDomainService()
+											.getInstances().getInstances()
+											.remove(inst);
+									sshc.doDisconnect();
+
+								}
+							});
+						}
+						else
+						{
+							sshc.getSSHConnection().disconnect();
+							errorlabel
+									.setText("Es besteht bereits eine Verbindung\nzu dieser Netzwerkkomponente!");
+						}
+					}
+					catch (Exception e)
+					{
+						errorlabel
+								.setText("Verbindung war nicht erfolgreich! \n("
+										+ e.getMessage() + ")");
+						// e.printStackTrace();
+					}
+				}
 			}
 			else
 			{
@@ -426,49 +554,44 @@ public class AddTabController
 
 		int counterrow = 1;
 		int countercolumn = 1;
-		
-		portview1.setPadding(new Insets(5, 0, 5, 0));
 
+		portview1.setPadding(new Insets(5, 0, 5, 0));
 
 		for (Interface interf : ServiceFactory.getDomainService()
 				.getInstances().getInstances().get(id).getInterfaces())
 		{
-			interf.typeProperty().addListener(
-					new ChangeListener<Object>()
+			interf.typeProperty().addListener(new ChangeListener<Object>()
+			{
+				@Override
+				public void changed(ObservableValue<? extends Object> arg0,
+						Object arg1, Object arg2)
+				{
+					Platform.runLater(new Runnable()
 					{
-						@Override
-						public void changed(
-								ObservableValue<? extends Object> arg0,
-								Object arg1, Object arg2)
+						public void run()
 						{
-							Platform.runLater(new Runnable()
-							{
-								public void run()
-								{
-									interf.setTextForTooltip();
-								}
-							});
+							interf.setTextForTooltip();
 						}
 					});
+				}
+			});
 
-			interf.vlanProperty().addListener(
-					new ChangeListener<Object>()
+			interf.vlanProperty().addListener(new ChangeListener<Object>()
+			{
+				@Override
+				public void changed(ObservableValue<? extends Object> arg0,
+						Object arg1, Object arg2)
+				{
+					Platform.runLater(new Runnable()
 					{
-						@Override
-						public void changed(
-								ObservableValue<? extends Object> arg0,
-								Object arg1, Object arg2)
+						public void run()
 						{
-							Platform.runLater(new Runnable()
-							{
-								public void run()
-								{
-									interf.setTextForTooltip();
-								}
-							});
+							interf.setTextForTooltip();
 						}
 					});
-			
+				}
+			});
+
 			interf.portstatusProperty().addListener(
 					new ChangeListener<Object>()
 					{
@@ -482,17 +605,17 @@ public class AddTabController
 								public void run()
 								{
 									interf.setTextForTooltip();
-									
+
 								}
 							});
 						}
 					});
-			
+
 			if (interf.getPortstatus() == "1")
 			{
 				interf.setStyle("-fx-base: #b6e7c9;");
 			}
-			
+
 			if ((countercolumn == 7))
 			{
 				portview1.add(new Label("    "), countercolumn, counterrow);
@@ -536,22 +659,21 @@ public class AddTabController
 			}
 		}
 
-
 		// Add something in Tab
-		
+
 		VBox tabbox = new VBox();
 		FlowPane flow = new FlowPane();
-		
+
 		flow.getChildren().addAll(portview1);
 		flow.setAlignment(Pos.CENTER);
-		
+
 		tabbox.getChildren().add(flow);
-		
-		PresentationService.getMainWindowController().getTabPane().getTabs().get(id).setContent(tabbox);
-		
+
+		PresentationService.getMainWindowController().getTabPane().getTabs()
+				.get(id).setContent(tabbox);
+
 	}
 
-	
 	private void dotListener(TextField tf1, final TextField tf2)
 	{
 		tf1.setOnKeyPressed(new EventHandler<KeyEvent>()
@@ -565,7 +687,7 @@ public class AddTabController
 			}
 		});
 	}
-	
+
 	public String getActivetab()
 	{
 		return activetab;
