@@ -159,7 +159,7 @@ public class AddTabController
 							tftpc.setSSHFingerprint(sshc.getSSHFingerprint());
 							sshc.doPrepareSnapshot();
 
-							tftpc.scanSnapshots();
+							//tftpc.scanSnapshots();
 
 							DateFormat dateformat = new SimpleDateFormat(
 									"_dd-MM-yyyy_HH-mm-ss_");
@@ -239,7 +239,7 @@ public class AddTabController
 						errorlabel
 								.setText("Verbindung war nicht erfolgreich! \n("
 										+ e.getMessage() + ")");
-						// e.printStackTrace();
+						 e.printStackTrace();
 					}
 				}
 			}
