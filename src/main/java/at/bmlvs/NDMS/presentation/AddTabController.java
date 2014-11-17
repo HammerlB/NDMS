@@ -1,6 +1,9 @@
 package at.bmlvs.NDMS.presentation;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -8,6 +11,7 @@ import at.bmlvs.NDMS.domain.Instance;
 import at.bmlvs.NDMS.domain.Interface;
 import at.bmlvs.NDMS.domain.connectors.SNMPConnector;
 import at.bmlvs.NDMS.domain.connectors.SSHConnector;
+import at.bmlvs.NDMS.domain.connectors.TFTPConnector;
 import at.bmlvs.NDMS.presentation.elements.RestrictiveTextField;
 import at.bmlvs.NDMS.service.PresentationService;
 import at.bmlvs.NDMS.service.ServiceFactory;
@@ -75,7 +79,8 @@ public class AddTabController
 	private TextField offline1;
 	@FXML
 	private Label errorlabel;
-
+	private TFTPConnector tftpc;
+	private SSHConnector sshc;
 	private GridPane portview1;
 
 
@@ -127,13 +132,21 @@ public class AddTabController
 				try
 				{
 					
-					SSHConnector sshc = new SSHConnector(tabname, "Herkel",
+					sshc = new SSHConnector(tabname, "Herkel",
 							"gwdH_2014", "gwd_2014");
 					
 					sshc.connect();
 					
 					
+					/*TFTP Initial Snapshot
+					tftpc = new TFTPConnector(tabname);
+					tftpc.setSSHFingerprint(sshc.getSSHFingerprint());
+					sshc.doPrepareSnapshot();
 					
+					DateFormat dateformat = new SimpleDateFormat("_dd-MM-yyyy_HH-mm-ss_");
+					Date date = new Date();
+					tftpc.takeSnapshot("Initial", "Initial Snapshot from " + tabname + " " + dateformat.format(date));
+					*/
 					boolean alreadyfound = false;
 					
 					for(Instance inst: ServiceFactory.getDomainService().getInstances().getInstances())
@@ -148,7 +161,8 @@ public class AddTabController
 					if(alreadyfound == false)
 					{
 						sshc.start();
-
+						
+						
 						Instance inst = new Instance(tabname,
 								sshc.getSSHFingerprint(), tabname, sshc,
 								new SNMPConnector("udp:" + tabname + "/161",
@@ -557,6 +571,26 @@ public class AddTabController
 	public void setActivetab(String activetab)
 	{
 		this.activetab = activetab;
+	}
+
+	public TFTPConnector getTftpc()
+	{
+		return tftpc;
+	}
+
+	public void setTftpc(TFTPConnector tftpc)
+	{
+		this.tftpc = tftpc;
+	}
+
+	public SSHConnector getSshc()
+	{
+		return sshc;
+	}
+
+	public void setSshc(SSHConnector sshc)
+	{
+		this.sshc = sshc;
 	}
 
 }

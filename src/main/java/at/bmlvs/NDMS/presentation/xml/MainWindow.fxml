@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
@@ -175,6 +178,14 @@
                   </ImageView>
                </graphic>
             </Button>
+            <Label alignment="TOP_LEFT" text="Early Alpha Version" textFill="#aeaeae">
+               <padding>
+                  <Insets left="200.0" />
+               </padding>
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
         </items>
       </ToolBar>
       <TabPane id="tabPane" fx:id="tabPane" focusTraversable="false" prefHeight="1080.0" prefWidth="1920.0" tabClosingPolicy="ALL_TABS">
