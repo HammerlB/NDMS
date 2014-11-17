@@ -137,16 +137,6 @@ public class AddTabController
 					
 					sshc.connect();
 					
-					
-					/*TFTP Initial Snapshot
-					tftpc = new TFTPConnector(tabname);
-					tftpc.setSSHFingerprint(sshc.getSSHFingerprint());
-					sshc.doPrepareSnapshot();
-					
-					DateFormat dateformat = new SimpleDateFormat("_dd-MM-yyyy_HH-mm-ss_");
-					Date date = new Date();
-					tftpc.takeSnapshot("Initial", "Initial Snapshot from " + tabname + " " + dateformat.format(date));
-					*/
 					boolean alreadyfound = false;
 					
 					for(Instance inst: ServiceFactory.getDomainService().getInstances().getInstances())
@@ -162,9 +152,22 @@ public class AddTabController
 					{
 						sshc.start();
 						
+						//TFTP Initial Snapshot
+						tftpc = new TFTPConnector(tabname);
+						
+						
+						tftpc.setSSHFingerprint(sshc.getSSHFingerprint());
+						sshc.doPrepareSnapshot();
+						
+						tftpc.scanSnapshots();
+						
+						DateFormat dateformat = new SimpleDateFormat("_dd-MM-yyyy_HH-mm-ss_");
+						Date date = new Date();
+						tftpc.takeSnapshot("Initial", "Initial Snapshot from " + tabname + " " + dateformat.format(date));
+						
 						
 						Instance inst = new Instance(tabname,
-								sshc.getSSHFingerprint(), tabname, sshc,
+								sshc.getSSHFingerprint(), tabname, sshc, tftpc,
 								new SNMPConnector("udp:" + tabname + "/161",
 										"gwdSNMP_2014"));
 						
