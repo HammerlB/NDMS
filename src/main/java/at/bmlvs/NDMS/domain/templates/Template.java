@@ -111,7 +111,7 @@ public class Template implements Serializable
 		//Needs to be implemented.
 	}
 	
-	public String receiveTemplateOutput()
+	public String receiveTemplateOutputAsString()
 	{
 		String receivedOutput = "";
 		
@@ -134,6 +134,32 @@ public class Template implements Serializable
 		}
 		
 		setOutput(receivedOutput);
+		
+		return receivedOutput;
+	}
+	
+	public ArrayList<String> receiveTemplateOutputAsArrayList()
+	{
+		ArrayList<String> receivedOutput = new ArrayList<String>();
+		
+		for(Snippet snippet: getSnippets())
+		{
+			for(Section section: snippet.getSections())
+			{
+				for(Command command: section.getCommands())
+				{
+					String cmd = "";
+					cmd += command.getName();
+					
+					for(Parameter parameter: command.getParameters())
+					{
+						cmd += " " + parameter.getParameterOutput();
+					}
+					
+					receivedOutput.add(cmd);
+				}
+			}
+		}
 		
 		return receivedOutput;
 	}

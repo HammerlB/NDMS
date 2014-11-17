@@ -7,13 +7,13 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import at.bmlvs.NDMS.domain.Instance;
-import at.bmlvs.NDMS.domain.Interface;
 import at.bmlvs.NDMS.domain.connectors.SNMPConnector;
 import at.bmlvs.NDMS.domain.connectors.SSHConnector;
 import at.bmlvs.NDMS.domain.connectors.TFTPConnector;
 import at.bmlvs.NDMS.domain.helper.IPv4Address;
 import at.bmlvs.NDMS.domain.helper.IPv4Range;
+import at.bmlvs.NDMS.domain.instances.InstanceOnline;
+import at.bmlvs.NDMS.domain.instances.Interface;
 import at.bmlvs.NDMS.presentation.elements.RestrictiveTextField;
 import at.bmlvs.NDMS.service.PresentationService;
 import at.bmlvs.NDMS.service.ServiceFactory;
@@ -138,8 +138,8 @@ public class AddTabController
 
 						boolean alreadyfound = false;
 
-						for (Instance inst : ServiceFactory.getDomainService()
-								.getInstances().getInstances())
+						for (InstanceOnline inst : ServiceFactory.getDomainService()
+								.getInstances().getInstancesOnline())
 						{
 							if (sshc.getSSHFingerprint().equals(
 									inst.getFingerprint()))
@@ -168,7 +168,7 @@ public class AddTabController
 									"Initial Snapshot from " + address.getIPv4Address() + " "
 											+ dateformat.format(date));
 
-							Instance inst = new Instance(address.getIPv4Address(),
+							InstanceOnline inst = new InstanceOnline(address.getIPv4Address(),
 									sshc.getSSHFingerprint(), address.getIPv4Address(), sshc,
 									tftpc, new SNMPConnector("udp:" + address.getIPv4Address()
 											+ "/161", "gwdSNMP_2014"));
@@ -211,7 +211,7 @@ public class AddTabController
 									.addSingleOnlineInstance(inst);
 							addTab(inst);
 							portview(ServiceFactory.getDomainService()
-									.getInstances().getInstances()
+									.getInstances().getInstancesOnline()
 									.indexOf(inst));
 
 							inst.setOnClosed(new EventHandler<Event>()
@@ -220,7 +220,7 @@ public class AddTabController
 								{
 									System.out.println("tab got closed");
 									ServiceFactory.getDomainService()
-											.getInstances().getInstances()
+											.getInstances().getInstancesOnline()
 											.remove(inst);
 									sshc.doDisconnect();
 
@@ -279,8 +279,8 @@ public class AddTabController
 
 						boolean alreadyfound = false;
 
-						for (Instance inst : ServiceFactory.getDomainService()
-								.getInstances().getInstances())
+						for (InstanceOnline inst : ServiceFactory.getDomainService()
+								.getInstances().getInstancesOnline())
 						{
 							if (sshc.getSSHFingerprint().equals(
 									inst.getFingerprint()))
@@ -300,7 +300,7 @@ public class AddTabController
 							tftpc.setSSHFingerprint(sshc.getSSHFingerprint());
 							sshc.doPrepareSnapshot();
 
-							tftpc.scanSnapshots();
+//							tftpc.scanSnapshots();
 
 							DateFormat dateformat = new SimpleDateFormat(
 									"_dd-MM-yyyy_HH-mm-ss_");
@@ -309,7 +309,7 @@ public class AddTabController
 									"Initial Snapshot from " + tabname + " "
 											+ dateformat.format(date));
 
-							Instance inst = new Instance(tabname,
+							InstanceOnline inst = new InstanceOnline(tabname,
 									sshc.getSSHFingerprint(), tabname, sshc,
 									tftpc, new SNMPConnector("udp:" + tabname
 											+ "/161", "gwdSNMP_2014"));
@@ -352,7 +352,7 @@ public class AddTabController
 									.addSingleOnlineInstance(inst);
 							addTab(inst);
 							portview(ServiceFactory.getDomainService()
-									.getInstances().getInstances()
+									.getInstances().getInstancesOnline()
 									.indexOf(inst));
 
 							inst.setOnClosed(new EventHandler<Event>()
@@ -361,7 +361,7 @@ public class AddTabController
 								{
 									System.out.println("tab got closed");
 									ServiceFactory.getDomainService()
-											.getInstances().getInstances()
+											.getInstances().getInstancesOnline()
 											.remove(inst);
 									sshc.doDisconnect();
 
@@ -395,6 +395,17 @@ public class AddTabController
 			{
 				tabname = offline1.getText();
 				addTab(new Tab(tabname));
+				
+//				InstanceOnline inst = new InstanceOnline(tabname,
+//						sshc.getSSHFingerprint(), tabname, sshc, tftpc,
+//						new SNMPConnector("udp:" + tabname + "/161",
+//								"gwdSNMP_2014"));
+//
+//				inst.populateAll();
+//
+//				ServiceFactory.getDomainService().getInstances()
+//						.addSingleOnlineInstance(inst);
+//				addTab(inst);
 
 			}
 			else
@@ -558,7 +569,7 @@ public class AddTabController
 		portview1.setPadding(new Insets(5, 0, 5, 0));
 
 		for (Interface interf : ServiceFactory.getDomainService()
-				.getInstances().getInstances().get(id).getInterfaces())
+				.getInstances().getInstancesOnline().get(id).getInterfaces())
 		{
 			interf.typeProperty().addListener(new ChangeListener<Object>()
 			{

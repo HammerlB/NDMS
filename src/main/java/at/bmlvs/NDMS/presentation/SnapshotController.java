@@ -5,9 +5,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import at.bmlvs.NDMS.domain.Instance;
 import at.bmlvs.NDMS.domain.connectors.SSHConnector;
 import at.bmlvs.NDMS.domain.connectors.TFTPConnector;
+import at.bmlvs.NDMS.domain.instances.InstanceOnline;
 import at.bmlvs.NDMS.domain.snapshots.Snapshot;
 import at.bmlvs.NDMS.linker.SnapshotToPathLinker;
 import at.bmlvs.NDMS.service.PresentationService;
@@ -77,7 +77,7 @@ public class SnapshotController
 	@FXML
 	private void addsnapshot(ActionEvent event) throws IOException
 	{
-			Instance inst = ServiceFactory.getDomainService().getInstances().getInstances().get(ServiceFactory.getPresentationService().getMainWindowController().getTabPane().getSelectionModel().getSelectedIndex());
+			InstanceOnline inst = ServiceFactory.getDomainService().getInstances().getInstancesOnline().get(ServiceFactory.getPresentationService().getMainWindowController().getTabPane().getSelectionModel().getSelectedIndex());
 	
 			System.out.println(inst.getManagement_IP());
 	}

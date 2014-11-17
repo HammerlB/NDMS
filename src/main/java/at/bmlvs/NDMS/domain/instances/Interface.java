@@ -1,4 +1,4 @@
-package at.bmlvs.NDMS.domain;
+package at.bmlvs.NDMS.domain.instances;
 
 import at.bmlvs.NDMS.domain.helper.UUIDGenerator;
 import javafx.application.Platform;
@@ -18,6 +18,7 @@ public class Interface extends Button
 	private StringProperty portname;
 	private StringProperty portnameshort;
 	private StringProperty portnameshortDisplay;
+	private StringProperty portdescription;
 	private StringProperty type;
 	private StringProperty portstatus;
 	private StringProperty vlan;
@@ -33,6 +34,7 @@ public class Interface extends Button
 		setType("Unknown");
 		setId(getUUID());
 		setText(getPortnameshort());
+		setPortdescription("None");
 		
 		setTooltip(new Tooltip());
 		setTextForTooltip();
@@ -86,6 +88,31 @@ public class Interface extends Button
 		}
 
 		return portid;
+	}
+	
+	public final String getPortdescription()
+	{
+		if (portdescription != null)
+		{
+			return portdescription.get();
+		}
+
+		return null;
+	}
+
+	public final void setPortdescription(String portdescription)
+	{
+		this.portdescriptionProperty().set(portdescription);
+	}
+
+	public final StringProperty portdescriptionProperty()
+	{
+		if (portdescription == null)
+		{
+			portdescription = new SimpleStringProperty(null);
+		}
+
+		return portdescription;
 	}
 	
 	public final String getPortidshort()
@@ -421,7 +448,7 @@ public class Interface extends Button
 				if(getTooltip() != null)
 				{
 					getTooltip().setFont(new Font("Arial", 20));
-					getTooltip().setText("Portname: " + getPortname() + "\nType: " + getType() + "\nStatus: " + getPortstatus() + "\nVlan: " + getVlan());
+					getTooltip().setText("Portname: " + getPortname() + "\nType: " + getType() + "\nStatus: " + getPortstatus() + "\nVlan: " + getVlan() + "\nDescription:\n" + getPortdescription());
 				}
 			}
 		});

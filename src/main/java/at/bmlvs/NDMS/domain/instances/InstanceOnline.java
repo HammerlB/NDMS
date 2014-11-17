@@ -1,25 +1,17 @@
-package at.bmlvs.NDMS.domain;
+package at.bmlvs.NDMS.domain.instances;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 import javafx.application.Platform;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
-import javafx.scene.control.Tab;
 import at.bmlvs.NDMS.domain.connectors.SNMPConnector;
 import at.bmlvs.NDMS.domain.connectors.SSHConnector;
 import at.bmlvs.NDMS.domain.connectors.TFTPConnector;
-import at.bmlvs.NDMS.domain.helper.SNMPParser;
-import at.bmlvs.NDMS.domain.helper.UUIDGenerator;
 import at.bmlvs.NDMS.service.ServiceFactory;
 
-public class Instance extends Tab
+public class InstanceOnline extends Instance
 {
 	private StringProperty uuid;
 	private StringProperty name;
@@ -30,70 +22,16 @@ public class Instance extends Tab
 	private SNMPConnector snmpConnector;
 	private TFTPConnector tftpConnector;
 
-	private ObservableList<Interface> interfaces;
-
-	public Instance(String name, String fingerprint, String management_ip,
+	public InstanceOnline(String name, String fingerprint, String management_ip,
 			SSHConnector sshConnector,TFTPConnector tftpConnector ,SNMPConnector snmpConnector)
 	{
-		setUUID(UUIDGenerator.generateUUID());
-		setName(name);
+		super(name);
 		setFingerprint(fingerprint);
 		setManagement_IP(management_ip);
 		setSshConnector(sshConnector);
 		setTftpConnector(tftpConnector);
 		setSnmpConnector(snmpConnector);
 		setText(getName());
-		setInterfaces(FXCollections.observableArrayList());
-	}
-
-	public final String getUUID()
-	{
-		if (uuid != null)
-		{
-			return uuid.get();
-		}
-
-		return null;
-	}
-
-	public final void setUUID(String uuid)
-	{
-		this.uuidProperty().set(uuid);
-	}
-
-	public final StringProperty uuidProperty()
-	{
-		if (uuid == null)
-		{
-			uuid = new SimpleStringProperty(null);
-		}
-
-		return uuid;
-	}
-
-	public final String getName()
-	{
-		if (name != null)
-		{
-			return name.get();
-		}
-
-		return null;
-	}
-
-	public final void setName(String name)
-	{
-		this.nameProperty().set(name);
-	}
-
-	public final StringProperty nameProperty()
-	{
-		if (name == null)
-		{
-			name = new SimpleStringProperty(null);
-		}
-
-		return name;
 	}
 
 	public final String getFingerprint()
@@ -146,16 +84,6 @@ public class Instance extends Tab
 		return management_ip;
 	}
 
-	public ObservableList<Interface> getInterfaces()
-	{
-		return interfaces;
-	}
-
-	public void setInterfaces(ObservableList<Interface> interfaces)
-	{
-		this.interfaces = interfaces;
-	}
-
 	public SNMPConnector getSnmpConnector()
 	{
 		return snmpConnector;
@@ -184,6 +112,7 @@ public class Instance extends Tab
 		this.tftpConnector = tftpConnector;
 	}
 
+	@Override
 	public void populateInstance()
 	{
 		try
@@ -213,7 +142,8 @@ public class Instance extends Tab
 			e.printStackTrace();
 		}
 	}
-
+	
+	@Override
 	public void populateInterfaces()
 	{
 		ArrayList<String> vlans = new ArrayList<String>();
@@ -255,9 +185,60 @@ public class Instance extends Tab
 						{
 							Interface interf = new Interface(parts[0]);
 							interf.setPortname(parts[1]);
-							interf.setPortnameshort(SNMPParser
-									.convertPortnameToPortshortname(parts[1]));
 							getInterfaces().add(interf);
+						}
+					}
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace();
+				}
+			}
+			
+			for (String output : getSnmpConnector()
+					.walk(ServiceFactory.getPersistenceService().getAppconfig()
+							.getElement().getSNMP_BRIDGESHORTNAME(), true, false))
+			{
+				try
+				{
+					String[] parts = output.split("\\:");
+
+					for (Interface interf : getInterfaces())
+					{
+						if (parts.length > 1)
+						{
+							if (interf.getPortid().equals(parts[0]))
+							{
+								interf.setPortnameshort(parts[1]);
+							}
+						}
+					}
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace();
+				}
+			}
+			
+			for (String output : getSnmpConnector()
+					.walk(ServiceFactory.getPersistenceService().getAppconfig()
+							.getElement().getSNMP_BRIDGEALIAS(), true, false))
+			{
+				try
+				{
+					String[] parts = output.split("\\:");
+
+					for (Interface interf : getInterfaces())
+					{
+						if (parts.length > 1)
+						{
+							if (interf.getPortid().equals(parts[0]))
+							{
+								if(parts[1] != null)
+								{
+									interf.setPortdescription(parts[1]);
+								}
+							}
 						}
 					}
 				}
@@ -416,12 +397,6 @@ public class Instance extends Tab
 		}
 	}
 
-	public void populateAll()
-	{
-		populateInstance();
-		populateInterfaces();
-	}
-
 	public void checkInterfaces()
 	{
 		ArrayList<String> vlans = new ArrayList<String>();
@@ -440,6 +415,59 @@ public class Instance extends Tab
 					if (parts.length > 1)
 					{
 						vlans.add(parts[0]);
+					}
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace();
+				}
+			}
+			
+			for (String output : getSnmpConnector()
+					.walk(ServiceFactory.getPersistenceService().getAppconfig()
+							.getElement().getSNMP_BRIDGESHORTNAME(), true, false))
+			{
+				try
+				{
+					String[] parts = output.split("\\:");
+
+					for (Interface interf : getInterfaces())
+					{
+						if (parts.length > 1)
+						{
+							if (interf.getPortid().equals(parts[0]))
+							{
+								interf.setPortnameshort(parts[1]);
+							}
+						}
+					}
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace();
+				}
+			}
+			
+			for (String output : getSnmpConnector()
+					.walk(ServiceFactory.getPersistenceService().getAppconfig()
+							.getElement().getSNMP_BRIDGEALIAS(), true, false))
+			{
+				try
+				{
+					String[] parts = output.split("\\:");
+
+					for (Interface interf : getInterfaces())
+					{
+						if (parts.length > 1)
+						{
+							if (interf.getPortid().equals(parts[0]))
+							{
+								if(parts[1] != null)
+								{
+									interf.setPortdescription(parts[1]);
+								}
+							}
+						}
 					}
 				}
 				catch (Exception e)
