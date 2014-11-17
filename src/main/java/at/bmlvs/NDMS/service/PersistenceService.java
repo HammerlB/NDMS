@@ -3,15 +3,12 @@ package at.bmlvs.NDMS.service;
 import java.io.File;
 import java.util.ArrayList;
 
-import at.bmlvs.NDMS.domain.configs.Configuration;
 import at.bmlvs.NDMS.domain.helper.Filewalker;
 import at.bmlvs.NDMS.linker.AppConfigToPathLinker;
-import at.bmlvs.NDMS.linker.ConfigurationToPathLinker;
 import at.bmlvs.NDMS.linker.SnapshotToPathLinker;
 import at.bmlvs.NDMS.linker.TemplateToPathLinker;
-import at.bmlvs.NDMS.persistence.specific.TXTConfigurationDAO;
-import at.bmlvs.NDMS.persistence.specific.TXTSnapshotDAO;
 import at.bmlvs.NDMS.persistence.specific.XMLAppConfigDAO;
+import at.bmlvs.NDMS.persistence.specific.XMLSnapshotDAO;
 import at.bmlvs.NDMS.persistence.specific.XMLTemplateDAO;
 
 public class PersistenceService
@@ -22,7 +19,7 @@ public class PersistenceService
 
 	private XMLTemplateDAO tdao = new XMLTemplateDAO();
 	private XMLAppConfigDAO cdao = new XMLAppConfigDAO();
-	private TXTSnapshotDAO sdao = new TXTSnapshotDAO();
+	private XMLSnapshotDAO sdao = new XMLSnapshotDAO();
 
 	public PersistenceService()
 	{
@@ -141,6 +138,8 @@ public class PersistenceService
 	{
 		SnapshotToPathLinker snapshot = new SnapshotToPathLinker(sdao.read(path), path);
 		
+		getSnapshots().add(snapshot);
+		
 		return snapshot;
 	}
 
@@ -164,13 +163,26 @@ public class PersistenceService
 		this.snapshots = snapshots;
 	}
 
-	public TXTSnapshotDAO getSdao()
+	public XMLSnapshotDAO getSdao()
 	{
 		return sdao;
 	}
 
-	public void setSdao(TXTSnapshotDAO sdao)
+	public void setSdao(XMLSnapshotDAO sdao)
 	{
 		this.sdao = sdao;
+	}
+	
+	public void saveSnapshot(SnapshotToPathLinker snapshot)
+	{
+		sdao.write(snapshot.getElement(), snapshot.getPath());
+	}
+	
+	public void saveAllSnapshots()
+	{
+		for(SnapshotToPathLinker snapshot : getSnapshots())
+		{
+			saveSnapshot(snapshot);
+		}
 	}
 }

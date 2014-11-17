@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.HBox?>
 
-<HBox prefHeight="439.0" prefWidth="478.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.bmlvs.NDMS.presentation.SnapshotController">
+<HBox prefHeight="439.0" prefWidth="656.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.bmlvs.NDMS.presentation.SnapshotController">
    <children>
       <VBox prefHeight="439.0" prefWidth="239.0">
          <children>
@@ -42,14 +42,14 @@
                </children>
             </VBox>
             <ListView id="snapshotlist" fx:id="snapshotlist" focusTraversable="false" prefHeight="415.0" prefWidth="237.0" />
-            <Button contentDisplay="RIGHT" focusTraversable="false" mnemonicParsing="false" prefHeight="23.0" prefWidth="97.0" text="Einspielen" onAction="#einspielen">
+            <Button contentDisplay="RIGHT" focusTraversable="false" mnemonicParsing="false" onAction="#einspielen" prefHeight="23.0" prefWidth="97.0" text="Einspielen">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </Button>
          </children>
       </VBox>
-      <TextArea id="descArea" fx:id="descArea" editable="false" focusTraversable="false" prefHeight="439.0" prefWidth="243.0">
+      <TextArea id="descArea" fx:id="descArea" editable="false" focusTraversable="false" minHeight="439.0" minWidth="422.0" prefHeight="439.0" prefWidth="422.0">
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>

@@ -3,7 +3,6 @@ package at.bmlvs.NDMS.linker;
 import java.io.Serializable;
 
 import at.bmlvs.NDMS.service.AppConfig;
-import at.bmlvs.NDMS.service.ServiceFactory;
 
 @SuppressWarnings("serial")
 public class AppConfigToPathLinker extends Linker<AppConfig, String> implements

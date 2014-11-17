@@ -43,9 +43,8 @@ public class SnapshotController
 	private Stage stage;
 	
 	@FXML
-	public void initialize(MainWindowController mainWindow)
+	public void initialize()
 	{
-		this.mainWindow = mainWindow;
 		
 		ObservableList<String> items = FXCollections.observableArrayList ();
 		
@@ -53,8 +52,7 @@ public class SnapshotController
 		{
 			for(SnapshotToPathLinker snapshot: ServiceFactory.getPersistenceService().getSnapshots())
 			{
-				items.setAll(snapshot.getElement().getName() + " " + snapshot.getElement().getDatetime());
-				
+				items.setAll(snapshot.getElement().getFullName());
 			}
 		}
 		catch (Exception e)
@@ -67,12 +65,12 @@ public class SnapshotController
 		snapshotlist.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 		    @Override
 		    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-		     
+		    	
+		    	descArea.setText(ServiceFactory.getPersistenceService().getSnapshots().get(snapshotlist.getSelectionModel().getSelectedIndex()).getElement().getDescription());
+		    	
 		        System.out.println("Selected item: " + newValue);
 		    }
 		});
-		
-		descArea.setText("jsdhflkasjcfnlaksjcbfhko\nksdjsdkfh");
 		
 	}
 	
