@@ -180,31 +180,31 @@ public class TFTPConnector extends FileTransferConnector {
 		Snapshot s = new Snapshot(name, desc);
 		stpl = new SnapshotToPathLinker(s, localPath + "\\" + sshfingerprint
 				+ "\\" + s.getFullName());
-		snapshots.add(stpl);
+		ServiceFactory.getPersistenceService().getSnapshots().add(stpl);
 //		setLocalfile(s.getFullName()+".txt");
 		connectAndReceive();
 	}
 	
-	public void sendSnapshot(String fullName) throws Exception{
- 		String s = snapshots.getSnapshots().get(0).getElement().getFullName();
-		for(int i = 0; i<snapshots.getSnapshots().size();i++){
-			if(snapshots.getSnapshots().get(i).getElement().getFullName().equals(fullName)){
-				this.stpl = snapshots.getSnapshots().get(i);
-				System.out.println(this.stpl.getElement().getFullName());
-				break;
-			}
-		}
-		connectAndSend();
-	}
+//	public void sendSnapshot(String fullName) throws Exception{
+// 		String s = snapshots.getSnapshots().get(0).getElement().getFullName();
+//		for(int i = 0; i<snapshots.getSnapshots().size();i++){
+//			if(snapshots.getSnapshots().get(i).getElement().getFullName().equals(fullName)){
+//				this.stpl = snapshots.getSnapshots().get(i);
+//				System.out.println(this.stpl.getElement().getFullName());
+//				break;
+//			}
+//		}
+//		connectAndSend();
+//	}
 
 	public void scanSnapshots() {
 		File dir = new File(localPath + "\\" + sshfingerprint);
-		snapshots.getSnapshots().clear();
+		ServiceFactory.getPersistenceService().getSnapshots().clear();
 		for (File file : dir.listFiles()) {
 			if (file.getName().endsWith(".txt")) {
 				Snapshot s = new Snapshot(file.getName().split("_")[0],"Snapshot from "+ file.getName().split("_")[1]+"_"+file.getName().split("_")[2], "_"+file.getName().split("_")[1]+"_"+file.getName().split("_")[2]+"_");
 				SnapshotToPathLinker stpl = new SnapshotToPathLinker(s, file.getAbsolutePath());
-				snapshots.add(stpl);
+				ServiceFactory.getPersistenceService().getSnapshots().add(stpl);
 			}
 		}
 	}

@@ -14,6 +14,7 @@ import javafx.concurrent.Task;
 import javafx.scene.control.Tab;
 import at.bmlvs.NDMS.domain.connectors.SNMPConnector;
 import at.bmlvs.NDMS.domain.connectors.SSHConnector;
+import at.bmlvs.NDMS.domain.connectors.TFTPConnector;
 import at.bmlvs.NDMS.domain.helper.SNMPParser;
 import at.bmlvs.NDMS.domain.helper.UUIDGenerator;
 import at.bmlvs.NDMS.service.ServiceFactory;
@@ -27,17 +28,19 @@ public class Instance extends Tab
 
 	private SSHConnector sshConnector;
 	private SNMPConnector snmpConnector;
+	private TFTPConnector tftpConnector;
 
 	private ObservableList<Interface> interfaces;
 
 	public Instance(String name, String fingerprint, String management_ip,
-			SSHConnector sshConnector, SNMPConnector snmpConnector)
+			SSHConnector sshConnector,TFTPConnector tftpConnector ,SNMPConnector snmpConnector)
 	{
 		setUUID(UUIDGenerator.generateUUID());
 		setName(name);
 		setFingerprint(fingerprint);
 		setManagement_IP(management_ip);
 		setSshConnector(sshConnector);
+		setTftpConnector(tftpConnector);
 		setSnmpConnector(snmpConnector);
 		setText(getName());
 		setInterfaces(FXCollections.observableArrayList());
@@ -171,6 +174,14 @@ public class Instance extends Tab
 	public void setSshConnector(SSHConnector sshConnector)
 	{
 		this.sshConnector = sshConnector;
+	}
+
+	public TFTPConnector getTftpConnector() {
+		return tftpConnector;
+	}
+
+	public void setTftpConnector(TFTPConnector tftpConnector) {
+		this.tftpConnector = tftpConnector;
 	}
 
 	public void populateInstance()

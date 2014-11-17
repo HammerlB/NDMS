@@ -26,9 +26,9 @@ public class SnapshotTest {
 		try {
 			ssh.connect();
 			ssh.start();
-//			ssh.doPrepareSnapshot();
+			ssh.doPrepareSnapshot();
 			tftp.setSSHFingerprint(ssh.getSSHFingerprint());
-//			tftp.takeSnapshot("abc", "desc");
+			tftp.takeSnapshot("abc", "desc");
 //			tftp.takeSnapshot("def", "desc");
 //			tftp.takeSnapshot("ghi", "desc");
 //			tftp.takeSnapshot("jkl", "desc");
@@ -51,7 +51,7 @@ public class SnapshotTest {
 //				System.out.println(s.getElement().getDescription());
 //			}
 //			JOptionPane.showInputDialog("Trolololol");
-			tftp.sendSnapshot("abc_14-11-2014_14-28-32_.txt");
+//			tftp.sendSnapshot("abc_14-11-2014_14-28-32_.txt");
 //			ssh.doPlaySnapshot();
 //			ssh.doReloadWithoutWrite();
 			
