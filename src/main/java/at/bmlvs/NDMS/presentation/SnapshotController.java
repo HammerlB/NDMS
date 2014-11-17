@@ -5,7 +5,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import at.bmlvs.NDMS.domain.Instance;
 import at.bmlvs.NDMS.domain.connectors.SSHConnector;
 import at.bmlvs.NDMS.domain.connectors.TFTPConnector;
 import at.bmlvs.NDMS.domain.snapshots.Snapshot;
@@ -94,7 +93,7 @@ public class SnapshotController
 		Parent root = FXMLLoader.load(getClass().getResource(
 				"xml/AddSnapshotWindow.fxml"));
 		Scene scene = new Scene(root);
-		stage.setTitle("Snapshot hinzufügen");
+		stage.setTitle("Snapshot hinzufï¿½gen");
 		stage.getIcons().add(new Image("file:icons/ndms.png"));
 		stage.initModality(Modality.WINDOW_MODAL);
 		stage.setScene(scene);
