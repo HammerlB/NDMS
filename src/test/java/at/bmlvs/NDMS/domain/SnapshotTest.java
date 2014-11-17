@@ -19,10 +19,10 @@ public class SnapshotTest {
 		ServiceFactory.setPersistenceService(new PersistenceService());
 		ServiceFactory.setAppConfig(ServiceFactory.getPersistenceService()
 				.getAppconfig().getElement());
-		SSHConnector ssh = new SSHConnector("192.168.1.12", "Herkel",
+		SSHConnector ssh = new SSHConnector("192.168.1.11", "Herkel",
 				"gwdH_2014", "gwd_2014");
 
-		TFTPConnector tftp = new TFTPConnector("192.168.1.12");
+		TFTPConnector tftp = new TFTPConnector("192.168.1.11");
 		try {
 			ssh.connect();
 			ssh.start();
@@ -34,23 +34,17 @@ public class SnapshotTest {
 //			tftp.takeSnapshot("jkl", "desc");
 //			tftp.takeSnapshot("mno", "desc");
 //			tftp.takeSnapshot("pqr", "desc");
-//			tftp.scanSnapshots();
-//			System.out.println("Scan1:");
-//			for (SnapshotToPathLinker s : tftp.getSnapshotsList().getSnapshots()) {
-//				System.out.println(s.getElement().getFullName());
-//				System.out.println(s.getElement().getDescription());
-//			}
-//			System.out.println("Scan2:");
-//			for(SnapshotToPathLinker s : tftp.scanSnapshotsFrom(ssh.getSSHFingerprint())){
-//				System.out.println(s.getElement().getFullName());
-//				System.out.println(s.getElement().getDescription());
-//			}
 			tftp.scanSnapshots();
-//			for (SnapshotToPathLinker s : tftp.getSnapshotsList().getSnapshots()) {
-//				System.out.println(s.getElement().getFullName());
-//				System.out.println(s.getElement().getDescription());
-//			}
-//			JOptionPane.showInputDialog("Trolololol");
+			System.out.println("Scan1:");
+			for (SnapshotToPathLinker s : ServiceFactory.getPersistenceService().getSnapshots()) {
+				System.out.println(s.getElement().getFullName());
+				System.out.println(s.getElement().getDescription());
+			}
+			System.out.println("Scan2:");
+			for(SnapshotToPathLinker s : tftp.scanSnapshotsFrom(ssh.getSSHFingerprint())){
+				System.out.println(s.getElement().getFullName());
+				System.out.println(s.getElement().getDescription());
+			}
 //			tftp.sendSnapshot("abc_14-11-2014_14-28-32_.txt");
 //			ssh.doPlaySnapshot();
 //			ssh.doReloadWithoutWrite();
