@@ -33,12 +33,4 @@ public class Instances extends TabPane
 		getInstances().add(instance);
 		getTabs().add(getInstances().indexOf(instance), getInstances().get(getInstances().indexOf(instance)));
 	}
-	
-	public void addMultipleOnlineInstances(Instance[] instances)
-	{
-		for(Instance inst: instances)
-		{
-			addSingleOnlineInstance(inst);
-		}
-	}
 }
