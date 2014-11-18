@@ -263,17 +263,42 @@ public class MainWindowController extends VBox
 															}
 														});
 
-										// LABEL --> parameter.getName()
-										// TEXTFIELD --> ID FUER FELD
-										// parameter.getId() | DEFAULT VALUE
-										// FUER FELD -->
-										// parameter.getDefaultValue()
-										// BEI AENDERN VON TEXTFIELD
-										// parameter.getValue() SETZEN
 									}
+									if (parameter.getType().equals("DatatypeVlan"))
+									{
+										//WICHTIG Restriced Textfield!!!!
+										TextField dataString = new TextField(
+												parameter.getDefaultValue());
 
-									// VIELE WEITERE IFS
-									// DatatypeMAC-Address
+										dataString.setId("" + parameter.getId());
+
+										paraPane.add(dataString, 1, 0);
+										dataString.focusedProperty().addListener(
+														new ChangeListener<Boolean>()
+														{
+															@Override
+															public void changed(
+																	ObservableValue<? extends Boolean> arg0,
+																	Boolean oldPropertyValue,
+																	Boolean newPropertyValue)
+															{
+																if (newPropertyValue)
+																{
+																	// System.out.println("Textfield on focus");
+																}
+																else
+																{
+																	// System.out.println("Textfield lost focus");
+																	parameter
+																			.setValue(dataString
+																					.getText());
+																	show.setText(template
+																			.getElement()
+																			.receiveTemplateOutputAsString());
+																}
+															}
+														});
+									}
 
 									leftbox.getChildren().add(paraPane);
 								}
@@ -328,16 +353,6 @@ public class MainWindowController extends VBox
 			PresentationService.getMainWindowController().getTabPane()
 					.getTabs().get(id).setContent(viewstack);
 
-			/*
-			 * for (TemplateToPathLinker template : ServiceFactory
-			 * .getPersistenceService().getTemplates()) { if (template
-			 * .getElement() .getFullName()
-			 * .equals(templateBox.getSelectionModel() .getSelectedItem())) {
-			 * //INSTANCES FOREACH DURCHSUCHEN NACH FINGERPRINT WENN MATCH DANN
-			 * AUF SSH CON ZUGREIFEN //tabcontrol.getActive() FINGERPRINT
-			 * //template.getElement().receiveTemplateOutput(); --> SSH
-			 * CONNECTOR SENDEN } }
-			 */
 
 		}
 		catch (Exception e)
