@@ -135,7 +135,9 @@ public class MainWindowController extends VBox
 		for (TemplateToPathLinker template : ServiceFactory
 				.getPersistenceService().getTemplates())
 		{
+			
 			templateBox.getItems().add((template.getElement().getFullName()));
+		
 		}
 
 		templateBox.setOnAction((event) -> {
