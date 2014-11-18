@@ -1,0 +1,55 @@
+<template>
+  <name>Basiskonfiguration</name>
+  <version>1.0</version>
+  <os__version>15.0(2)SE6</os__version>
+  <device__type>C2960-LANBASEK9-M</device__type>
+  <snippets>
+    <at.bmlvs.NDMS.domain.templates.Snippet>
+      <name>Basic-Snippet</name>
+      <prev>None</prev>
+      <next>Interface-Snippet</next>
+      <sections>
+        <at.bmlvs.NDMS.domain.templates.Section>
+          <name>Basic Device Configurations</name>
+          <commands>
+            <at.bmlvs.NDMS.domain.templates.Command>
+              <id>0</id>
+              <name>hostname</name>
+              <parameters>
+                <at.bmlvs.NDMS.domain.templates.Parameter>
+                  <id>0</id>
+                  <name>Hostname</name>
+                  <type>DatatypeString</type>
+                  <defaultValue>GOGOGOGO</defaultValue>
+                  <value>GOGOGOGO</value>
+                  <useName>false</useName>
+                </at.bmlvs.NDMS.domain.templates.Parameter>
+              </parameters>
+            </at.bmlvs.NDMS.domain.templates.Command>
+          </commands>
+        </at.bmlvs.NDMS.domain.templates.Section>
+        <at.bmlvs.NDMS.domain.templates.Section>
+          <name>SNMP Configuration</name>
+          <commands/>
+        </at.bmlvs.NDMS.domain.templates.Section>
+      </sections>
+    </at.bmlvs.NDMS.domain.templates.Snippet>
+    <at.bmlvs.NDMS.domain.templates.Snippet>
+      <name>Interface-Snippet</name>
+      <prev>Basic-Snippet</prev>
+      <next>None</next>
+      <sections>
+        <at.bmlvs.NDMS.domain.templates.Section>
+          <name>Interface Configuration</name>
+          <commands/>
+        </at.bmlvs.NDMS.domain.templates.Section>
+      </sections>
+    </at.bmlvs.NDMS.domain.templates.Snippet>
+  </snippets>
+  <output class="javafx.beans.property.SimpleStringProperty">
+    <name></name>
+    <value>hostname GOGOGOGO
+</value>
+    <valid>false</valid>
+  </output>
+</template>

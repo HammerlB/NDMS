@@ -91,7 +91,7 @@ public class SnapshotController
 						}
 						catch (Exception e)
 						{
-							e.printStackTrace();
+							//e.printStackTrace();
 						}
 
 						

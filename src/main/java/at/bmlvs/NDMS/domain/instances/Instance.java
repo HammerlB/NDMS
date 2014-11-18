@@ -11,6 +11,8 @@ public abstract class Instance extends Tab
 {
 	private StringProperty uuid;
 	private StringProperty name;
+	private StringProperty device_type;
+	private StringProperty os_version;
 	
 	private ObservableList<Interface> interfaces;
 	
@@ -70,6 +72,56 @@ public abstract class Instance extends Tab
 		}
 
 		return name;
+	}
+	
+	public final String getDevice_Type()
+	{
+		if (device_type != null)
+		{
+			return device_type.get();
+		}
+
+		return null;
+	}
+
+	public final void setDevice_Type(String device_type)
+	{
+		this.device_typeProperty().set(device_type);
+	}
+
+	public final StringProperty device_typeProperty()
+	{
+		if (device_type == null)
+		{
+			device_type = new SimpleStringProperty(null);
+		}
+
+		return device_type;
+	}
+	
+	public final String getOs_Version()
+	{
+		if (os_version != null)
+		{
+			return os_version.get();
+		}
+
+		return null;
+	}
+
+	public final void setOs_Version(String os_version)
+	{
+		this.os_versionProperty().set(os_version);
+	}
+
+	public final StringProperty os_versionProperty()
+	{
+		if (os_version == null)
+		{
+			os_version = new SimpleStringProperty(null);
+		}
+
+		return os_version;
 	}
 	
 	public ObservableList<Interface> getInterfaces()
