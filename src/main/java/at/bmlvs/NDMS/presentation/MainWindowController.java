@@ -287,6 +287,7 @@ public class MainWindowController extends VBox
 
 			einspielen.setOnAction(new EventHandler<ActionEvent>()
 			{
+				@SuppressWarnings("static-access")
 				@Override
 				public void handle(ActionEvent e)
 				{
@@ -299,10 +300,10 @@ public class MainWindowController extends VBox
 								.equals(templateBox.getSelectionModel()
 										.getSelectedItem()))
 						{
-							InstanceOnline inst = ServiceFactory
+							InstanceOnline inst = (InstanceOnline) ServiceFactory
 									.getDomainService()
 									.getInstances()
-									.getInstancesOnline()
+									.getInstances()
 									.get(ServiceFactory
 											.getPresentationService()
 											.getMainWindowController()

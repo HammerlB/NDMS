@@ -6,32 +6,40 @@ import javafx.scene.control.TabPane;
 
 public class Instances extends TabPane
 {
-	private ArrayList<InstanceOnline> instancesOnline;
-	private ArrayList<InstanceOffline> instancesOffline;
+	private ArrayList<Instance> instances;
 
 	public Instances()
 	{
-		setInstancesOnline(new ArrayList<InstanceOnline>());
+		setInstances(new ArrayList<Instance>());
 	}
 
-	public ArrayList<InstanceOnline> getInstancesOnline()
+	public ArrayList<Instance> getInstances()
 	{
-		return instancesOnline;
+		return instances;
 	}
 
-	public void setInstancesOnline(ArrayList<InstanceOnline> instancesOnline)
+	public void setInstances(ArrayList<Instance> instances)
 	{
-		this.instancesOnline = instancesOnline;
+		this.instances = instances;
 	}
 	
-	public void addSingleOfflineInstance(String name)
+	public void addSingleInstance(InstanceOnline instance)
 	{
-		
+		getInstances().add(instance);
+		getTabs().add(getInstances().indexOf(instance), getInstances().get(getInstances().indexOf(instance)));
 	}
 	
-	public void addSingleOnlineInstance(InstanceOnline instance)
+	public void convertSingleOfflineInstanceToOnlineInstance(InstanceOffline instanceOffline, String ipv4address)
 	{
-		getInstancesOnline().add(instance);
-		getTabs().add(getInstancesOnline().indexOf(instance), getInstancesOnline().get(getInstancesOnline().indexOf(instance)));
+		for(Instance inst: getInstances())
+		{
+			if(inst.equals(instanceOffline))
+			{
+				InstanceOnline instanceOnline = new InstanceOnline(name, fingerprint, management_ip, sshConnector, tftpConnector, snmpConnector)
+				String id = inst.getId();
+				
+				break;
+			}
+		}
 	}
 }

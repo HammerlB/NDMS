@@ -12,6 +12,8 @@ import at.bmlvs.NDMS.domain.connectors.SSHConnector;
 import at.bmlvs.NDMS.domain.connectors.TFTPConnector;
 import at.bmlvs.NDMS.domain.helper.IPv4Address;
 import at.bmlvs.NDMS.domain.helper.IPv4Range;
+import at.bmlvs.NDMS.domain.instances.Instance;
+import at.bmlvs.NDMS.domain.instances.InstanceOffline;
 import at.bmlvs.NDMS.domain.instances.InstanceOnline;
 import at.bmlvs.NDMS.domain.instances.Interface;
 import at.bmlvs.NDMS.presentation.elements.RestrictiveTextField;
@@ -138,14 +140,17 @@ public class AddTabController
 
 						boolean alreadyfound = false;
 
-						for (InstanceOnline inst : ServiceFactory.getDomainService()
-								.getInstances().getInstancesOnline())
+						for (Instance inst : ServiceFactory.getDomainService()
+								.getInstances().getInstances())
 						{
-							if (sshc.getSSHFingerprint().equals(
-									inst.getFingerprint()))
+							if (inst.getClass() == InstanceOnline.class)
 							{
-								alreadyfound = true;
-								break;
+								if (sshc.getSSHFingerprint().equals(
+										((InstanceOnline) inst).getFingerprint()))
+								{
+									alreadyfound = true;
+									break;
+								}
 							}
 						}
 
@@ -208,10 +213,10 @@ public class AddTabController
 
 							// inst.checkInterfaces();
 							ServiceFactory.getDomainService().getInstances()
-									.addSingleOnlineInstance(inst);
+									.addSingleInstance(inst);
 							addTab(inst);
 							portview(ServiceFactory.getDomainService()
-									.getInstances().getInstancesOnline()
+									.getInstances().getInstances()
 									.indexOf(inst));
 
 							inst.setOnClosed(new EventHandler<Event>()
@@ -220,7 +225,7 @@ public class AddTabController
 								{
 									System.out.println("tab got closed");
 									ServiceFactory.getDomainService()
-											.getInstances().getInstancesOnline()
+											.getInstances().getInstances()
 											.remove(inst);
 									sshc.doDisconnect();
 
@@ -279,14 +284,17 @@ public class AddTabController
 
 						boolean alreadyfound = false;
 
-						for (InstanceOnline inst : ServiceFactory.getDomainService()
-								.getInstances().getInstancesOnline())
+						for (Instance inst : ServiceFactory.getDomainService()
+								.getInstances().getInstances())
 						{
-							if (sshc.getSSHFingerprint().equals(
-									inst.getFingerprint()))
+							if (inst.getClass() == InstanceOnline.class)
 							{
-								alreadyfound = true;
-								break;
+								if (sshc.getSSHFingerprint().equals(
+										((InstanceOnline) inst).getFingerprint()))
+								{
+									alreadyfound = true;
+									break;
+								}
 							}
 						}
 
@@ -349,10 +357,10 @@ public class AddTabController
 
 							// inst.checkInterfaces();
 							ServiceFactory.getDomainService().getInstances()
-									.addSingleOnlineInstance(inst);
+									.addSingleInstance(inst);
 							addTab(inst);
 							portview(ServiceFactory.getDomainService()
-									.getInstances().getInstancesOnline()
+									.getInstances().getInstances()
 									.indexOf(inst));
 
 							inst.setOnClosed(new EventHandler<Event>()
@@ -361,7 +369,7 @@ public class AddTabController
 								{
 									System.out.println("tab got closed");
 									ServiceFactory.getDomainService()
-											.getInstances().getInstancesOnline()
+											.getInstances().getInstances()
 											.remove(inst);
 									sshc.doDisconnect();
 
@@ -394,6 +402,11 @@ public class AddTabController
 			if (!offline1.getText().equals(""))
 			{
 				tabname = offline1.getText();
+				
+				int portcount = 0;
+				
+				InstanceOffline inst = new InstanceOffline(tabname, portcount);
+				
 				addTab(new Tab(tabname));
 				
 //				InstanceOnline inst = new InstanceOnline(tabname,
@@ -569,7 +582,7 @@ public class AddTabController
 		portview1.setPadding(new Insets(5, 0, 5, 0));
 
 		for (Interface interf : ServiceFactory.getDomainService()
-				.getInstances().getInstancesOnline().get(id).getInterfaces())
+				.getInstances().getInstances().get(id).getInterfaces())
 		{
 			interf.typeProperty().addListener(new ChangeListener<Object>()
 			{
