@@ -211,7 +211,7 @@ public class SnapshotController
 							.getMainWindowController().getTabPane()
 							.getSelectionModel().getSelectedIndex()));
 					
-					inst.getTftpConnector().deleteSnapshot(snapshotlist.selectionModelProperty().getName());
+					inst.getTftpConnector().deleteSnapshot(snapshotlist.selectionModelProperty().getName(),inst.getSshConnector());
 					
 					items.clear();
 					for (SnapshotToPathLinker snapshot : ServiceFactory
