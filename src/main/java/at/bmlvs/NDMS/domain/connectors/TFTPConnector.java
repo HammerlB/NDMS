@@ -165,13 +165,13 @@ public class TFTPConnector extends FileTransferConnector {
 		}
 	}
 
-	public void connectAndReceive() throws Exception {
+	private void connectAndReceive() throws Exception {
 		connect();
 		Thread.sleep(4000);
 		receive();
 	}
 
-	public void connectAndSend() throws Exception {
+	private void connectAndSend() throws Exception {
 		connect();
 		send();
 	}
@@ -185,6 +185,20 @@ public class TFTPConnector extends FileTransferConnector {
 		ServiceFactory.getPersistenceService().getSnapshots().add(stpl);
 //		setLocalfile(s.getFullName()+".txt");
 		connectAndReceive();
+	}
+	
+	private void deleteSnapshot(Snapshot s){
+		ServiceFactory.getPersistenceService().getSnapshots().remove(s);
+	}
+	
+	public void deleteSnapshot(String fullName){
+		Snapshot snapshotToDelete = new Snapshot(null,null);
+		for(SnapshotToPathLinker s : ServiceFactory.getPersistenceService().getSnapshots()){
+			if(s.getElement().getFullName().equals(fullName)){
+				snapshotToDelete=s.getElement();
+			}
+		}
+		deleteSnapshot(snapshotToDelete);
 	}
 	
 //	public void sendSnapshot(String fullName) throws Exception{
