@@ -113,11 +113,8 @@ public class SnapshotController
 		Label namelabel = new Label("Name: ");
 		Label desclabel = new Label("Beschreibung: ");
 		TextField name = new TextField();
-		name.setFocusTraversable(false);
 		TextArea desc = new TextArea();
-		desc.setFocusTraversable(false);
 		Button save = new Button("Speichern");
-		save.setFocusTraversable(false);
 		
 		hbox.getChildren().add(namelabel);
 		hbox.getChildren().add(name);

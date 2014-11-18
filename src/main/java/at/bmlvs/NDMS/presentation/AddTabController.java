@@ -99,28 +99,29 @@ public class AddTabController
 	public void initialize()
 	{
 
-		ActionEvent event = new ActionEvent();
+		
 
 		dotListener(ipaddress1, ipaddress2);
 		dotListener(ipaddress2, ipaddress3);
 		dotListener(ipaddress3, ipaddress4);
 
-		ipaddress4.setOnKeyPressed(new EventHandler<KeyEvent>()
-		{
-			public void handle(KeyEvent ke)
-			{
-				if (ke.getCode().equals(KeyCode.ENTER))
-				{
-					try
-					{
-						startconnection(event);
-					}
-					catch (IOException e)
-					{
-					}
-				}
-			}
-		});
+		enterListener(ipaddress1);
+		enterListener(ipaddress2);
+		enterListener(ipaddress3);
+		enterListener(ipaddress4);
+		
+		enterListener(iprange1);
+		enterListener(iprange2);
+		enterListener(iprange3);
+		enterListener(iprange4);
+		enterListener(iprange5);
+		enterListener(iprange6);
+		enterListener(iprange7);
+		enterListener(iprange8);
+		
+		enterListener(offline1);
+		enterListener(portanz);
+		
 	}
 
 	@SuppressWarnings("static-access")
@@ -766,7 +767,28 @@ public class AddTabController
 			}
 		});
 	}
-
+	private void enterListener(TextField tf1)
+	{
+		ActionEvent event = new ActionEvent();
+		
+		tf1.setOnKeyPressed(new EventHandler<KeyEvent>()
+				{
+					public void handle(KeyEvent ke)
+					{
+						if (ke.getCode().equals(KeyCode.ENTER))
+						{
+							try
+							{
+								startconnection(event);
+							}
+							catch (IOException e)
+							{
+							}
+						}
+					}
+				});
+	}
+	
 	public String getActivetab()
 	{
 		return activetab;
