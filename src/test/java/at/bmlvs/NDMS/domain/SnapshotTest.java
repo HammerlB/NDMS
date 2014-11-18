@@ -26,9 +26,7 @@ public class SnapshotTest {
 		try {
 			ssh.connect();
 			ssh.start();
-			ssh.doPrepareSnapshot();
-			tftp.setSSHFingerprint(ssh.getSSHFingerprint());
-			tftp.takeSnapshot("abc", "desc");
+			tftp.takeSnapshot("abc", "desc", ssh);
 //			tftp.takeSnapshot("def", "desc");
 //			tftp.takeSnapshot("ghi", "desc");
 //			tftp.takeSnapshot("jkl", "desc");

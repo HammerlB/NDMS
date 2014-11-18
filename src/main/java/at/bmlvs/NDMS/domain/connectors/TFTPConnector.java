@@ -176,7 +176,9 @@ public class TFTPConnector extends FileTransferConnector {
 		send();
 	}
 
-	public void takeSnapshot(String name, String desc) throws Exception {
+	public void takeSnapshot(String name, String desc, SSHConnector ssh) throws Exception {
+		setSSHFingerprint(ssh.getSSHFingerprint());
+		ssh.doPrepareSnapshot();
 		Snapshot s = new Snapshot(name, desc);
 		stpl = new SnapshotToPathLinker(s, localPath + "\\" + sshfingerprint
 				+ "\\" + s.getFullName());
