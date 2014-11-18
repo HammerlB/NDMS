@@ -414,11 +414,32 @@ public class AddTabController
 			{
 				tabname = offline1.getText();
 				
-				int portcount = 0;
+				int portcount = Integer.parseInt(portanz.getText());
 				
 				InstanceOffline inst = new InstanceOffline(tabname, portcount);
 				
+				inst.populateAll();
+				
+				ServiceFactory.getDomainService().getInstances().addSingleInstance(inst);
+				
 				addTab(new Tab(tabname));
+				
+				portview(ServiceFactory.getDomainService()
+						.getInstances().getInstances()
+						.indexOf(inst));
+
+				inst.setOnClosed(new EventHandler<Event>()
+				{
+					public void handle(Event t)
+					{
+						System.out.println("tab got closed");
+						ServiceFactory.getDomainService()
+								.getInstances().getInstances()
+								.remove(inst);
+						sshc.doDisconnect();
+
+					}
+				});
 				
 //				InstanceOnline inst = new InstanceOnline(tabname,
 //						sshc.getSSHFingerprint(), tabname, sshc, tftpc,

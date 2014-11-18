@@ -13,8 +13,6 @@ import at.bmlvs.NDMS.service.ServiceFactory;
 
 public class InstanceOnline extends Instance
 {
-	private StringProperty uuid;
-	private StringProperty name;
 	private StringProperty fingerprint;
 	private StringProperty management_ip;
 
@@ -643,7 +641,7 @@ public class InstanceOnline extends Instance
 	@Override
 	public String toString()
 	{
-		return "Instance [UUID=" + uuid + ", name=" + name + ", fingerprint="
+		return "Instance [UUID=" + getUUID() + ", name=" + getName() + ", fingerprint="
 				+ fingerprint + ", management_ip=" + management_ip + "]";
 	}
 }

@@ -7,6 +7,8 @@ public class InstanceOffline extends Instance
 	public InstanceOffline(String name, int portcount)
 	{
 		super(name);
+		
+		setPortcount(portcount);
 	}
 	
 	public int getPortcount()
@@ -22,7 +24,7 @@ public class InstanceOffline extends Instance
 	@Override
 	public void populateInstance()
 	{
-		
+		setText(getName());
 	}
 
 	@Override
@@ -30,8 +32,10 @@ public class InstanceOffline extends Instance
 	{
 		for(int i = 0; i < getPortcount(); i++)
 		{
-			getInterfaces().add(new Interface("" + i));
+			Interface interf = new Interface("" + i);
+			interf.setText("Fa0" + "/" + interf.getPortid());
+			
+			getInterfaces().add(interf);
 		}
-		
 	}
 }
