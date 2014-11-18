@@ -146,6 +146,19 @@ public class SnapshotController
 					public void handle(ActionEvent e)
 					{
 						
+						try
+						{
+							InstanceOnline inst = ((InstanceOnline)ServiceFactory.getDomainService().getInstances().getInstances().get(ServiceFactory.getPresentationService()
+									.getMainWindowController().getTabPane()
+									.getSelectionModel().getSelectedIndex()));
+							
+							inst.getTftpConnector().takeSnapshot(name.getText(), desc.getText(), inst.getSshConnector());
+						}
+						catch (Exception e1)
+						{
+							e1.printStackTrace();
+						}
+						
 						stage.close();
 					}
 				});
