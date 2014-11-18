@@ -419,6 +419,8 @@ public class AddTabController
 				int portcount = Integer.parseInt(portanz.getText());
 				
 				InstanceOffline inst = new InstanceOffline(tabname, portcount);
+				inst.setDevice_Type(type.getText());
+				inst.setOs_Version(version.getText());
 				
 				inst.populateAll();
 				

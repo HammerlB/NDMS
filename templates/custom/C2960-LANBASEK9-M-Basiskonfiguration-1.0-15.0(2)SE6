@@ -20,8 +20,8 @@
                   <id>0</id>
                   <name>Hostname</name>
                   <type>DatatypeString</type>
-                  <defaultValue>GOGOGOGO</defaultValue>
-                  <value>GOGOGOGO</value>
+                  <defaultValue>TTTT</defaultValue>
+                  <value>TTTT</value>
                   <useName>false</useName>
                 </at.bmlvs.NDMS.domain.templates.Parameter>
               </parameters>
@@ -48,7 +48,7 @@
   </snippets>
   <output class="javafx.beans.property.SimpleStringProperty">
     <name></name>
-    <value>hostname GOGOGOGO
+    <value>hostname TTTT
 </value>
     <valid>false</valid>
   </output>
