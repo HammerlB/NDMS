@@ -78,15 +78,22 @@ public class SnapshotController
 							ObservableValue<? extends String> observable,
 							String oldValue, String newValue)
 					{
+						try
+						{
+							descArea.setText(ServiceFactory
+									.getPersistenceService()
+									.getSnapshots()
+									.get(snapshotlist.getSelectionModel()
+											.getSelectedIndex()).getElement()
+									.getDescription());
+							
+							removebtn.setDisable(false);
+						}
+						catch (Exception e)
+						{
+							e.printStackTrace();
+						}
 
-						descArea.setText(ServiceFactory
-								.getPersistenceService()
-								.getSnapshots()
-								.get(snapshotlist.getSelectionModel()
-										.getSelectedIndex()).getElement()
-								.getDescription());
-						
-						removebtn.setDisable(false);
 						
 					}
 				});
@@ -113,11 +120,8 @@ public class SnapshotController
 		Label namelabel = new Label("Name: ");
 		Label desclabel = new Label("Beschreibung: ");
 		TextField name = new TextField();
-		name.setFocusTraversable(false);
 		TextArea desc = new TextArea();
-		desc.setFocusTraversable(false);
 		Button save = new Button("Speichern");
-		save.setFocusTraversable(false);
 		
 		hbox.getChildren().add(namelabel);
 		hbox.getChildren().add(name);
@@ -200,6 +204,26 @@ public class SnapshotController
 			@Override
 			public void handle(ActionEvent event)
 			{
+				
+				try
+				{
+					InstanceOnline inst = ((InstanceOnline)ServiceFactory.getDomainService().getInstances().getInstances().get(ServiceFactory.getPresentationService()
+							.getMainWindowController().getTabPane()
+							.getSelectionModel().getSelectedIndex()));
+					
+					inst.getTftpConnector().deleteSnapshot(snapshotlist.selectionModelProperty().getName());
+					
+					items.clear();
+					for (SnapshotToPathLinker snapshot : ServiceFactory
+							.getPersistenceService().getSnapshots())
+					{
+						items.add(snapshot.getElement().getFullName());
+					}
+				}
+				catch (Exception e1)
+				{
+					e1.printStackTrace();
+				}
 				
 				stage.close();
 			}
