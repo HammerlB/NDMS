@@ -80,6 +80,17 @@ public class AddTabController
 	private TextField offline1;
 	@FXML
 	private Label errorlabel;
+	@FXML
+	private Label vonlabel;
+	@FXML
+	private Label bislabel;
+	@FXML
+	private Label namelabel;
+	@FXML
+	private Label portanzlabel;
+	@FXML
+	private TextField portanz;
+	
 	private TFTPConnector tftpc;
 	private SSHConnector sshc;
 	private GridPane portview1;
@@ -459,9 +470,16 @@ public class AddTabController
 		ipaddress2.setText("");
 		ipaddress3.setText("");
 		ipaddress4.setText("");
+		
+		vonlabel.setDisable(true);
+		bislabel.setDisable(true);
+		
+		namelabel.setDisable(false);
+		portanzlabel.setDisable(false);
 
 		offline1.setDisable(false);
-
+		portanz.setDisable(false);
+		
 		offline1.setOnKeyPressed(new EventHandler<KeyEvent>()
 		{
 			public void handle(KeyEvent ke)
@@ -505,7 +523,15 @@ public class AddTabController
 
 		offline1.setDisable(true);
 		offline1.setText("");
-
+		portanz.setDisable(true);
+		portanz.setText("");
+		
+		vonlabel.setDisable(true);
+		bislabel.setDisable(true);
+		
+		namelabel.setDisable(true);
+		portanzlabel.setDisable(true);
+		
 		ipaddress1.setDisable(false);
 		ipaddress2.setDisable(false);
 		ipaddress3.setDisable(false);
@@ -535,6 +561,8 @@ public class AddTabController
 
 		offline1.setDisable(true);
 		offline1.setText("");
+		portanz.setDisable(true);
+		portanz.setText("");
 
 		ipaddress1.setDisable(true);
 		ipaddress2.setDisable(true);
@@ -545,6 +573,12 @@ public class AddTabController
 		ipaddress2.setText("");
 		ipaddress3.setText("");
 		ipaddress4.setText("");
+		
+		vonlabel.setDisable(false);
+		bislabel.setDisable(false);
+		
+		namelabel.setDisable(true);
+		portanzlabel.setDisable(true);
 
 		iprange8.setOnKeyPressed(new EventHandler<KeyEvent>()
 		{
