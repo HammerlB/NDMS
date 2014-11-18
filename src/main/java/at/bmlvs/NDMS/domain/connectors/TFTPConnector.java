@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -29,6 +30,7 @@ import org.apache.commons.net.finger.FingerClient;
 import org.apache.commons.net.tftp.TFTP;
 import org.apache.commons.net.tftp.TFTPClient;
 
+import at.bmlvs.NDMS.domain.connectors.TFTPServer.ServerMode;
 import at.bmlvs.NDMS.domain.snapshots.Snapshot;
 import at.bmlvs.NDMS.domain.snapshots.Snapshots;
 import at.bmlvs.NDMS.linker.SnapshotToPathLinker;
@@ -64,6 +66,7 @@ public class TFTPConnector extends FileTransferConnector {
 	private String localPath;
 
 	private String sshfingerprint;
+	private TFTPServer tftps;
 
 	/*
 	 * "Usage: tftp [options] hostname localfile remotefile\n\n" +
@@ -76,7 +79,7 @@ public class TFTPConnector extends FileTransferConnector {
 	 * "\t-s Send a local file\n" + "\t-r Receive a remote file\n" +
 	 * "\t-a Use ASCII transfer mode\n" + "\t-b Use binary transfer mode\n";
 	 */
-	public TFTPConnector(String host) {
+	public TFTPConnector(String host) throws Exception {
 		super(host);
 		setLocalPath(ServiceFactory.getAppConfig().getNDMS_DEFAULT_PATH_APP()
 				+ "\\"
@@ -84,6 +87,13 @@ public class TFTPConnector extends FileTransferConnector {
 						.getNDMS_DEFAULT_PATH_SNAPSHOT_DIRECTORY());
 		snapshots = new Snapshots();
 		stpl = new SnapshotToPathLinker(null,null);
+		tftps = new TFTPServer(new File(ServiceFactory.getAppConfig().getNDMS_DEFAULT_PATH_APP()
+				+ "\\"
+				+ ServiceFactory.getAppConfig()
+						.getNDMS_DEFAULT_PATH_SNAPSHOT_DIRECTORY()),new File(ServiceFactory.getAppConfig().getNDMS_DEFAULT_PATH_APP()
+						+ "\\"
+						+ ServiceFactory.getAppConfig()
+								.getNDMS_DEFAULT_PATH_SNAPSHOT_DIRECTORY()), ServerMode.GET_ONLY);
 		setLocalfile(localfile);
 		setRemotefile(remotefile);
 		setTftpc(new TFTPClient());
@@ -106,6 +116,8 @@ public class TFTPConnector extends FileTransferConnector {
 
 	@Override
 	public void send() throws Exception {
+		tftps.run();
+		
 		// We're sending a file
 		FileInputStream input = null;
 
@@ -184,6 +196,7 @@ public class TFTPConnector extends FileTransferConnector {
 
 	private void connectAndSend() throws Exception {
 		connect();
+		
 		send();
 	}
 
