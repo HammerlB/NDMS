@@ -794,27 +794,27 @@ public class AddTabController
 	{
 		return activetab;
 	}
-
+	
 	public void setActivetab(String activetab)
 	{
 		this.activetab = activetab;
 	}
-
+	
 	public TFTPConnector getTftpc()
 	{
 		return tftpc;
 	}
-
+	
 	public void setTftpc(TFTPConnector tftpc)
 	{
 		this.tftpc = tftpc;
 	}
-
+	
 	public SSHConnector getSshc()
 	{
 		return sshc;
 	}
-
+	
 	public void setSshc(SSHConnector sshc)
 	{
 		this.sshc = sshc;
