@@ -135,8 +135,24 @@ public class MainWindowController extends VBox
 		for (TemplateToPathLinker template : ServiceFactory
 				.getPersistenceService().getTemplates())
 		{
+			try
+			{
+				if ((template.getElement().getOs_version().equals(ServiceFactory.getDomainService().getInstances().getInstances().get(ServiceFactory.getPresentationService()
+						.getMainWindowController().getTabPane().getSelectionModel().getSelectedIndex()).getOs_Version()))
+						&&
+						(template.getElement().getDevice_type().equals(ServiceFactory.getDomainService().getInstances().getInstances().get(ServiceFactory.getPresentationService()
+								.getMainWindowController().getTabPane().getSelectionModel().getSelectedIndex()).getDevice_Type()))
+						)
+				{
+					templateBox.getItems().add((template.getElement().getFullName()));
+				}
+			}
+			catch (Exception e)
+			{
+				// TODO: handle exception
+			}
+
 			
-			templateBox.getItems().add((template.getElement().getFullName()));
 		
 		}
 
