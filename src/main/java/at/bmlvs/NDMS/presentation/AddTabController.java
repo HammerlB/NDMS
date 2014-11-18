@@ -182,7 +182,7 @@ public class AddTabController
 							Date date = new Date();
 							tftpc.takeSnapshot("Initial",
 									"Initial Snapshot from " + address.getIPv4Address() + " "
-											+ dateformat.format(date));
+											+ dateformat.format(date), sshc);
 
 							InstanceOnline inst = new InstanceOnline(address.getIPv4Address(),
 									sshc.getSSHFingerprint(), address.getIPv4Address(), sshc,
@@ -326,7 +326,7 @@ public class AddTabController
 							Date date = new Date();
 							tftpc.takeSnapshot("Initial",
 									"Initial Snapshot from " + tabname + " "
-											+ dateformat.format(date));
+											+ dateformat.format(date), sshc);
 
 							InstanceOnline inst = new InstanceOnline(tabname,
 									sshc.getSSHFingerprint(), tabname, sshc,

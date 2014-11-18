@@ -47,20 +47,20 @@ public class SnapshotController
 	private ListView<String> snapshotlist;
 	@FXML
 	private Button removebtn;
-	
+	private ObservableList<String> items;
 	private Stage stage;
 	@FXML
 	public void initialize()
 	{
 		removebtn.setDisable(true);
-		ObservableList<String> items = FXCollections.observableArrayList();
+		items = FXCollections.observableArrayList();
 
 		try
 		{
 			for (SnapshotToPathLinker snapshot : ServiceFactory
 					.getPersistenceService().getSnapshots())
 			{
-				items.setAll(snapshot.getElement().getFullName());
+				items.add(snapshot.getElement().getFullName());
 			}
 		}
 		catch (Exception e)
@@ -88,7 +88,6 @@ public class SnapshotController
 						
 						removebtn.setDisable(false);
 						
-						System.out.println("Selected item: " + newValue);
 					}
 				});
 
@@ -146,26 +145,32 @@ public class SnapshotController
 					public void handle(ActionEvent e)
 					{
 						
+						try
+						{
+							InstanceOnline inst = ((InstanceOnline)ServiceFactory.getDomainService().getInstances().getInstances().get(ServiceFactory.getPresentationService()
+									.getMainWindowController().getTabPane()
+									.getSelectionModel().getSelectedIndex()));
+							
+							inst.getTftpConnector().takeSnapshot(name.getText(), desc.getText(), inst.getSshConnector());
+							
+							items.clear();
+							for (SnapshotToPathLinker snapshot : ServiceFactory
+									.getPersistenceService().getSnapshots())
+							{
+								items.add(snapshot.getElement().getFullName());
+							}
+						}
+						catch (Exception e1)
+						{
+							//e1.printStackTrace();
+						}
+						
 						stage.close();
 					}
 				});
 		
 		stage.show();
 		
-		
-		
-		
-		/*
-		Instance inst = ServiceFactory
-				.getDomainService()
-				.getInstances()
-				.getInstances()
-				.get(ServiceFactory.getPresentationService()
-						.getMainWindowController().getTabPane()
-						.getSelectionModel().getSelectedIndex());
-
-		System.out.println(inst.getManagement_IP());
-		*/
 	}
 
 	@FXML
@@ -195,7 +200,7 @@ public class SnapshotController
 			@Override
 			public void handle(ActionEvent event)
 			{
-
+				
 				stage.close();
 			}
 		});
@@ -206,7 +211,6 @@ public class SnapshotController
 			@Override
 			public void handle(ActionEvent event)
 			{
-
 				stage.close();
 			}
 		});
