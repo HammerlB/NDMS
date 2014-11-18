@@ -198,7 +198,7 @@ public class TFTPConnector extends FileTransferConnector {
 		connectAndReceive();
 	}
 	
-	public void deleteSnapshot(String fullName, SSHConnector ssh){
+	public void deleteSnapshot(String fullName, SSHConnector ssh) throws Exception{
 		Snapshot s = new Snapshot(null,null);
 		for(int i = 0;i<ServiceFactory.getPersistenceService().getSnapshots().size();i++){
 			if(ServiceFactory.getPersistenceService().getSnapshots().get(i).getElement().getFullName().equals(fullName)){
