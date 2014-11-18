@@ -2,7 +2,7 @@
   <name>Basiskonfiguration</name>
   <version>1.0</version>
   <os__version>15.0(2)SE6</os__version>
-  <device__type>C2960-LANBASEK9-M</device__type>
+  <device__type>C2980-LANBASEK9-M</device__type>
   <snippets>
     <at.bmlvs.NDMS.domain.templates.Snippet>
       <name>Basic-Snippet</name>
@@ -20,8 +20,8 @@
                   <id>0</id>
                   <name>Hostname</name>
                   <type>DatatypeString</type>
-                  <defaultValue>TTTT</defaultValue>
-                  <value>TTTT</value>
+                  <defaultValue>GWDSWITCH</defaultValue>
+                  <value></value>
                   <useName>false</useName>
                 </at.bmlvs.NDMS.domain.templates.Parameter>
               </parameters>
@@ -46,10 +46,4 @@
       </sections>
     </at.bmlvs.NDMS.domain.templates.Snippet>
   </snippets>
-  <output class="javafx.beans.property.SimpleStringProperty">
-    <name></name>
-    <value>hostname TTTT
-</value>
-    <valid>false</valid>
-  </output>
 </template>

@@ -119,6 +119,14 @@ public class InstanceOnline extends Instance
 					ServiceFactory.getPersistenceService().getAppconfig()
 							.getElement().getSNMP_SWNAME(), false, true).get(0));
 			setText(getName());
+			
+			setDevice_Type(getSnmpConnector().walk(
+					ServiceFactory.getPersistenceService().getAppconfig()
+					.getElement().getSNMP_DEVICETYPE(), false, true).get(0));
+			
+			setOs_Version(getSnmpConnector().walk(
+					ServiceFactory.getPersistenceService().getAppconfig()
+					.getElement().getSNMP_OSVERSION(), false, true).get(0));
 		}
 		catch (Exception e)
 		{

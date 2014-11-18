@@ -210,8 +210,8 @@ public class SnapshotController
 					InstanceOnline inst = ((InstanceOnline)ServiceFactory.getDomainService().getInstances().getInstances().get(ServiceFactory.getPresentationService()
 							.getMainWindowController().getTabPane()
 							.getSelectionModel().getSelectedIndex()));
-					
-					inst.getTftpConnector().deleteSnapshot(snapshotlist.selectionModelProperty().getName(),inst.getSshConnector());
+
+					inst.getTftpConnector().deleteSnapshot(snapshotlist.getSelectionModel().getSelectedItem(),inst.getSshConnector());
 					
 					items.clear();
 					for (SnapshotToPathLinker snapshot : ServiceFactory
@@ -260,7 +260,8 @@ public class SnapshotController
 	@FXML
 	private void einspielen(ActionEvent event) throws IOException
 	{
-
+		
+		
 		PresentationService.getMainWindowController().getStage().close();
 	}
 }
