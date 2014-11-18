@@ -70,7 +70,7 @@ public class TemplateTest
 			templateBasic.getSnippets().add(snippetBasic);
 			templateBasic.getSnippets().add(snippetInterfaces);
 			
-			TemplateToPathLinker templateToPathLinker = new TemplateToPathLinker(templateBasic, ServiceFactory.getAppConfig().getNDMS_DEFAULT_PATH_APP() + "\\" + ServiceFactory.getAppConfig().getNDMS_DEFAULT_PATH_TEMPLATE_DIRECTORY() + "\\" + templateBasic.getFullName());
+			TemplateToPathLinker templateToPathLinker = new TemplateToPathLinker(templateBasic, ServiceFactory.getAppConfig().getNDMS_DEFAULT_PATH_APP() + "\\" + ServiceFactory.getAppConfig().getNDMS_DEFAULT_PATH_TEMPLATE_SOURCE_DIRECTORY() + "\\" + templateBasic.getFullName());
 			
 			ServiceFactory.getPersistenceService().getTemplates().add(templateToPathLinker);
 			
