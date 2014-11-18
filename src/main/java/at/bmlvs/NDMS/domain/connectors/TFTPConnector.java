@@ -206,6 +206,7 @@ public class TFTPConnector extends FileTransferConnector {
 		for(SnapshotToPathLinker s : ServiceFactory.getPersistenceService().getSnapshots()){
 			if(s.getElement().getFullName().equals(fullName)){
 				snapshotToDelete=s.getElement();
+				break;
 			}
 		}
 		deleteSnapshot(snapshotToDelete);
