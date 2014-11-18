@@ -21,6 +21,8 @@ public class AppConfig implements Serializable
 	private ArrayList<String> NDMS_DEFAULT_PATH_SNAPSHOTS;
 	
 	private String SNMP_SWNAME;
+	private String SNMP_DEVICETYPE;
+	private String SNMP_OSVERSION;
 	private String SNMP_BRIDGEIFDESCR;
 	private String SNMP_BRIDGEIFSTATUS;
 	private String SNMP_BRIDGEALIAS;
@@ -275,6 +277,26 @@ public class AppConfig implements Serializable
 		NDMS_DEFAULT_PATH_TEMPLATE_USER_DIRECTORY = nDMS_DEFAULT_PATH_TEMPLATE_USER_DIRECTORY;
 	}
 
+	public String getSNMP_DEVICETYPE()
+	{
+		return SNMP_DEVICETYPE;
+	}
+
+	public void setSNMP_DEVICETYPE(String sNMP_DEVICETYPE)
+	{
+		SNMP_DEVICETYPE = sNMP_DEVICETYPE;
+	}
+
+	public String getSNMP_OSVERSION()
+	{
+		return SNMP_OSVERSION;
+	}
+
+	public void setSNMP_OSVERSION(String sNMP_OSVERSION)
+	{
+		SNMP_OSVERSION = sNMP_OSVERSION;
+	}
+
 	/**
 	 * Serialization default-configuration
 	 */
@@ -292,6 +314,8 @@ public class AppConfig implements Serializable
 		setNDMS_DEFAULT_PATH_SNAPSHOTS(new ArrayList<String>());
 		
 		setSNMP_SWNAME(".1.3.6.1.2.1.1.5");
+		setSNMP_DEVICETYPE("1.3.6.1.2.1.47.1.1.1.1.13");
+		setSNMP_OSVERSION("1.3.6.1.2.1.47.1.1.1.1.10");
 		setSNMP_BRIDGEIFDESCR(".1.3.6.1.2.1.2.2.1.2");
 		setSNMP_BRIDGEALIAS(".1.3.6.1.2.1.31.1.1.1.18");
 		setSNMP_BRIDGESHORTNAME("1.3.6.1.2.1.31.1.1.1.1");

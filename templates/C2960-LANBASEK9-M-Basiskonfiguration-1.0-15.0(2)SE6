@@ -2,7 +2,7 @@
   <name>Basiskonfiguration</name>
   <version>1.0</version>
   <os__version>15.0(2)SE6</os__version>
-  <device__type>C2960-LANBASEK9-M</device__type>
+  <device__type>WS-C2960-48TC-L</device__type>
   <snippets>
     <at.bmlvs.NDMS.domain.templates.Snippet>
       <name>Basic-Snippet</name>
