@@ -1,13 +1,7 @@
 package at.bmlvs.NDMS.domain;
 
-import java.io.File;
-import java.io.ObjectInputStream.GetField;
-
-import javax.swing.JOptionPane;
-
 import at.bmlvs.NDMS.domain.connectors.SSHConnector;
 import at.bmlvs.NDMS.domain.connectors.TFTPConnector;
-import at.bmlvs.NDMS.domain.snapshots.Snapshot;
 import at.bmlvs.NDMS.linker.SnapshotToPathLinker;
 import at.bmlvs.NDMS.service.PersistenceService;
 import at.bmlvs.NDMS.service.ServiceFactory;
@@ -26,23 +20,39 @@ public class SnapshotTest {
 		try {
 			ssh.connect();
 			ssh.start();
+//			tftp.takeInitialSnapshot();
 			tftp.takeSnapshot("abc", "desc", ssh);
+			tftp.takeSnapshot("abc", "desc", ssh);
+			
+			tftp.deleteSnapshot(ServiceFactory.getPersistenceService().getSnapshots().get(1).getElement().getFullName(), ssh);
+			
+			for (SnapshotToPathLinker s : ServiceFactory.getPersistenceService().getSnapshots()) {
+				System.out.println(s.getElement().getFullName());
+				System.out.println(s.getElement().getDescription());
+			}
+			
+//			ServiceFactory.getPersistenceService().getSnapshots().remove(1);
+//			
+//			for (SnapshotToPathLinker s : ServiceFactory.getPersistenceService().getSnapshots()) {
+//				System.out.println(s.getElement().getFullName());
+//				System.out.println(s.getElement().getDescription());
+//			}
 //			tftp.takeSnapshot("def", "desc");
 //			tftp.takeSnapshot("ghi", "desc");
 //			tftp.takeSnapshot("jkl", "desc");
 //			tftp.takeSnapshot("mno", "desc");
 //			tftp.takeSnapshot("pqr", "desc");
-			tftp.scanSnapshots();
-			System.out.println("Scan1:");
-			for (SnapshotToPathLinker s : ServiceFactory.getPersistenceService().getSnapshots()) {
-				System.out.println(s.getElement().getFullName());
-				System.out.println(s.getElement().getDescription());
-			}
-			System.out.println("Scan2:");
-			for(SnapshotToPathLinker s : tftp.scanSnapshotsFrom(ssh.getSSHFingerprint())){
-				System.out.println(s.getElement().getFullName());
-				System.out.println(s.getElement().getDescription());
-			}
+//			tftp.scanSnapshots();
+//			System.out.println("Scan1:");
+//			for (SnapshotToPathLinker s : ServiceFactory.getPersistenceService().getSnapshots()) {
+//				System.out.println(s.getElement().getFullName());
+//				System.out.println(s.getElement().getDescription());
+//			}
+//			System.out.println("Scan2:");
+//			for(SnapshotToPathLinker s : tftp.scanSnapshotsFrom(ssh.getSSHFingerprint())){
+//				System.out.println(s.getElement().getFullName());
+//				System.out.println(s.getElement().getDescription());
+//			}
 //			tftp.sendSnapshot("abc_14-11-2014_14-28-32_.txt");
 //			ssh.doPlaySnapshot();
 //			ssh.doReloadWithoutWrite();

@@ -165,13 +165,14 @@ public class TFTPConnector extends FileTransferConnector {
 		}
 	}
 	
-	private void deleteSnapshotInFileSystem(Snapshot s){
+	private void deleteSnapshotInFileSystem(Snapshot s, SSHConnector ssh){
+		setSSHFingerprint(ssh.getSSHFingerprint());
 		File file = new File(this.localPath + "\\" + sshfingerprint + "\\" + s.getFullName());
-		if (file.exists()) {
+		if (!s.getName().equals(null)) {
 			file.delete();
 			System.out.println("Sucessfully deleted!");
 		} else {
-			System.err.println("Snapshot don't exists!");
+			System.err.println("Snapshot doesn't exist!");
 		}
 	}
 
@@ -197,20 +198,17 @@ public class TFTPConnector extends FileTransferConnector {
 		connectAndReceive();
 	}
 	
-	private void deleteSnapshot(Snapshot s){
-		ServiceFactory.getPersistenceService().getSnapshots().remove(s);
-	}
-	
-	public void deleteSnapshot(String fullName){
-		Snapshot snapshotToDelete = new Snapshot(null,null);
-		for(SnapshotToPathLinker s : ServiceFactory.getPersistenceService().getSnapshots()){
-			if(s.getElement().getFullName().equals(fullName)){
-				snapshotToDelete=s.getElement();
+	public void deleteSnapshot(String fullName, SSHConnector ssh){
+		Snapshot s = new Snapshot(null,null);
+		for(int i = 0;i<ServiceFactory.getPersistenceService().getSnapshots().size();i++){
+			if(ServiceFactory.getPersistenceService().getSnapshots().get(i).getElement().getFullName().equals(fullName)){
+				s = ServiceFactory.getPersistenceService().getSnapshots().get(i).getElement();
+				ServiceFactory.getPersistenceService().getSnapshots().remove(i);
+				System.out.println("HAHAHAHAHAH");
 				break;
 			}
 		}
-		deleteSnapshot(snapshotToDelete);
-		deleteSnapshotInFileSystem(snapshotToDelete);
+		deleteSnapshotInFileSystem(s, ssh);
 	}
 	
 //	public void sendSnapshot(String fullName) throws Exception{
@@ -251,33 +249,12 @@ public class TFTPConnector extends FileTransferConnector {
 		}
 		return list;
 	}
-
-	// public void doCreateSnapshot(String name,String description) throws
-	// Exception{
-	// setCurrentsnapshot(new Snapshot(name,description));
-	// snapshots.createSnapshot(currentsnapshot);
-	// connect();
-	// setRemotefile("snapshot.txt");
-	// setLocalfile(currentsnapshot.getRelativePath());
-	// receive();
-	// }
-	//
-	// public void doCreateSnapshot(Snapshot s) throws Exception{
-	// setCurrentsnapshot(s);
-	// snapshots.createSnapshot(currentsnapshot);
-	// connect();
-	// setRemotefile("snapshot.txt");
-	// setLocalfile(currentsnapshot.getRelativePath());
-	// receive();
-	// }
-	//
-	// public void initialSnapshot() throws Exception{
-	// setCurrentsnapshot(new
-	// Snapshot("initial","This is the initial Snapshot"));
-	// if(!snapshots.checkSnapshot(currentsnapshot)){
-	// doCreateSnapshot(currentsnapshot);
-	// }
-	// }
+	
+	private void takeInitialSnapshot(SSHConnector ssh) throws Exception{
+		ssh.doPrepareSnapshot();
+		Snapshot s = new Snapshot(null,null);
+		takeSnapshot("Initial","Initial Snapshot from "+s.getDatetime(),ssh);
+	}
 
 	public boolean isAscii_transfermode() {
 		return ascii_transfermode;
