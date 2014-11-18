@@ -37,7 +37,7 @@ public class PersistenceService
 		
 		if ((new File("templates")).exists())
 		{
-			setTemplates(loadAllTemplates(getAppconfig().getElement().getNDMS_DEFAULT_PATH_APP() + "\\" + getAppconfig().getElement().getNDMS_DEFAULT_PATH_TEMPLATE_DIRECTORY()));
+			setTemplates(loadAllTemplates(getAppconfig().getElement().getNDMS_DEFAULT_PATH_APP() + "\\" + getAppconfig().getElement().getNDMS_DEFAULT_PATH_TEMPLATE_SOURCE_DIRECTORY()));
 		}
 		
 		setSnapshots(new ArrayList<SnapshotToPathLinker>());
@@ -122,6 +122,19 @@ public class PersistenceService
 		for(TemplateToPathLinker template : getTemplates())
 		{
 			saveTemplate(template);
+		}
+	}
+	
+	public void saveAllChangedTemplates()
+	{
+		for(TemplateToPathLinker template : getTemplates())
+		{
+			if(template.isChanged())
+			{
+				File file = new File(template.getPath());
+				template.setPath(getAppconfig().getElement().getNDMS_DEFAULT_PATH_APP() + "\\" + getAppconfig().getElement().getNDMS_DEFAULT_PATH_TEMPLATE_SOURCE_DIRECTORY() +  "\\" + getAppconfig().getElement().getNDMS_DEFAULT_PATH_TEMPLATE_USER_DIRECTORY() + "\\" + file.getName());
+				saveTemplate(template);
+			}
 		}
 	}
 

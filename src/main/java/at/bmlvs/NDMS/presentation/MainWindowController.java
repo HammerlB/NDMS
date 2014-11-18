@@ -256,6 +256,13 @@ public class MainWindowController extends VBox
 																	parameter
 																			.setValue(dataString
 																					.getText());
+																	parameter
+																			.setDefaultValue(dataString
+																					.getText());
+																	template.setChanged(true);
+																	System.out
+																			.println(template
+																					.getPath());
 																	show.setText(template
 																			.getElement()
 																			.receiveTemplateOutputAsString());
@@ -264,16 +271,20 @@ public class MainWindowController extends VBox
 														});
 
 									}
-									if (parameter.getType().equals("DatatypeVlan"))
+									if (parameter.getType().equals(
+											"DatatypeVlan"))
 									{
-										//WICHTIG Restriced Textfield!!!!
+										// WICHTIG Restriced Textfield!!!!
 										TextField dataString = new TextField(
 												parameter.getDefaultValue());
 
-										dataString.setId("" + parameter.getId());
+										dataString
+												.setId("" + parameter.getId());
 
 										paraPane.add(dataString, 1, 0);
-										dataString.focusedProperty().addListener(
+										dataString
+												.focusedProperty()
+												.addListener(
 														new ChangeListener<Boolean>()
 														{
 															@Override
@@ -292,6 +303,13 @@ public class MainWindowController extends VBox
 																	parameter
 																			.setValue(dataString
 																					.getText());
+																	parameter
+																			.setDefaultValue(dataString
+																					.getText());
+																	System.out
+																			.println(template
+																					.getPath());
+																	template.setChanged(true);
 																	show.setText(template
 																			.getElement()
 																			.receiveTemplateOutputAsString());
@@ -325,22 +343,45 @@ public class MainWindowController extends VBox
 								.equals(templateBox.getSelectionModel()
 										.getSelectedItem()))
 						{
-							InstanceOnline inst = (InstanceOnline) ServiceFactory
-									.getDomainService()
-									.getInstances()
-									.getInstances()
-									.get(ServiceFactory
-											.getPresentationService()
-											.getMainWindowController()
-											.getTabPane().getSelectionModel()
-											.getSelectedIndex());
+							try
+							{
+								if (ServiceFactory
+										.getDomainService()
+										.getInstances()
+										.getInstances()
+										.get(ServiceFactory
+												.getPresentationService()
+												.getMainWindowController()
+												.getTabPane()
+												.getSelectionModel()
+												.getSelectedIndex()).getClass() == InstanceOnline.class)
+								{
+									InstanceOnline inst = (InstanceOnline) ServiceFactory
+											.getDomainService()
+											.getInstances()
+											.getInstances()
+											.get(ServiceFactory
+													.getPresentationService()
+													.getMainWindowController()
+													.getTabPane()
+													.getSelectionModel()
+													.getSelectedIndex());
 
-							inst.getSshConnector()
-									.doSendMultipleCMD(
-											template.getElement()
-													.receiveTemplateOutputAsArrayList());
+									inst.getSshConnector()
+											.doSendMultipleCMD(
+													template.getElement()
+															.receiveTemplateOutputAsArrayList());
+								}
+							}
+							catch (Exception exc)
+							{
+
+							}
 						}
 					}
+
+					ServiceFactory.getPersistenceService()
+							.saveAllChangedTemplates();
 				}
 			});
 
@@ -353,7 +394,6 @@ public class MainWindowController extends VBox
 
 			PresentationService.getMainWindowController().getTabPane()
 					.getTabs().get(id).setContent(viewstack);
-
 
 		}
 		catch (Exception e)
