@@ -11,8 +11,8 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.snmp4j.smi.OID;
 
-import at.bmlvs.NDMS.domain.Instances;
 import at.bmlvs.NDMS.domain.connectors.SNMPConnector;
+import at.bmlvs.NDMS.domain.instances.Instances;
 import at.bmlvs.NDMS.presentation.MainWindowController;
 import at.bmlvs.NDMS.service.DomainService;
 import at.bmlvs.NDMS.service.PersistenceService;

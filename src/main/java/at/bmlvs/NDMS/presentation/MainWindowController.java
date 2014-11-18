@@ -3,10 +3,12 @@ package at.bmlvs.NDMS.presentation;
 import java.io.IOException;
 
 import javax.swing.event.ChangeEvent;
+
 import javafx.beans.value.ChangeListener;
 
 import com.sshtools.j2ssh.transport.Service;
 
+import at.bmlvs.NDMS.domain.instances.InstanceOnline;
 import at.bmlvs.NDMS.domain.templates.Command;
 import at.bmlvs.NDMS.domain.templates.Parameter;
 import at.bmlvs.NDMS.domain.templates.Section;
@@ -69,7 +71,7 @@ public class MainWindowController extends VBox
 	private SnapshotController snapcontrol = new SnapshotController();
 	private Stage stage;
 	@FXML
-	private ComboBox<String> templateBox; 
+	private ComboBox<String> templateBox;
 
 	public MainWindowController()
 	{
@@ -77,7 +79,7 @@ public class MainWindowController extends VBox
 				"xml/MainWindow.fxml"));
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);
-		
+
 		try
 		{
 			fxmlLoader.load();
@@ -129,41 +131,40 @@ public class MainWindowController extends VBox
 	private void templatusBox()
 	{
 		templateBox.getItems().add("Templates");
-		
-		for(TemplateToPathLinker template: ServiceFactory.getPersistenceService().getTemplates())
+
+		for (TemplateToPathLinker template : ServiceFactory
+				.getPersistenceService().getTemplates())
 		{
 			templateBox.getItems().add((template.getElement().getFullName()));
 		}
-		
-		
+
 		templateBox.setOnAction((event) -> {
-			//System.out.println(templateBox.getSelectionModel().getSelectedItem());
-			
-			if(!templateBox.getSelectionModel().getSelectedItem().equals("Templates"))
-			{
-				templateview(tabPane.getSelectionModel().getSelectedIndex());
-			}
-		});
+			// System.out.println(templateBox.getSelectionModel().getSelectedItem());
+
+				if (!templateBox.getSelectionModel().getSelectedItem()
+						.equals("Templates"))
+				{
+					templateview(tabPane.getSelectionModel().getSelectedIndex());
+				}
+			});
 	}
 
 	private void templateview(int id)
 	{
-		
-		
-		
+
 		try
 		{
 			StackPane viewstack = new StackPane();
 
 			VBox leftbox = new VBox();
-			
+
 			SplitPane splitter = new SplitPane();
 			splitter.setOrientation(Orientation.HORIZONTAL);
-			
+
 			TextArea show = new TextArea();
 			show.disableProperty();
 			show.setEditable(false);
-			
+
 			for (TemplateToPathLinker template : ServiceFactory
 					.getPersistenceService().getTemplates())
 			{
@@ -175,88 +176,130 @@ public class MainWindowController extends VBox
 				{
 					// UEBERSCHRIFT NAME DES TEMPLATES
 
-					Label tempnamelabel = new Label(template.getElement().getFullName());
-					
-					tempnamelabel.setStyle("-fx-font-weight: bold;-fx-font-size: 15;");
-					tempnamelabel.setPadding(new Insets(10,10,10,10));
-					
+					Label tempnamelabel = new Label(template.getElement()
+							.getFullName());
+
+					tempnamelabel
+							.setStyle("-fx-font-weight: bold;-fx-font-size: 15;");
+					tempnamelabel.setPadding(new Insets(10, 10, 10, 10));
+
 					leftbox.getChildren().add(tempnamelabel);
-					
 
 					for (Snippet snippet : template.getElement().getSnippets())
 					{
 						// UEBERSCHRIFT NAME DES SNIPPETS
 						Label snipnamelabel = new Label(snippet.getName());
-						
-						snipnamelabel.setStyle("-fx-font-weight: bold;-fx-font-size: 14;");
-						snipnamelabel.setPadding(new Insets(10,10,10,10));
-						
+
+						snipnamelabel
+								.setStyle("-fx-font-weight: bold;-fx-font-size: 14;");
+						snipnamelabel.setPadding(new Insets(10, 10, 10, 10));
+
 						leftbox.getChildren().add(snipnamelabel);
-						
+
 						for (Section section : snippet.getSections())
 						{
 							// UEBERSCHRIFT NAME DER SECTION
 							Label secnamelabel = new Label(section.getName());
-							
-							secnamelabel.setStyle("-fx-font-weight: bold;-fx-font-size: 11;");
-							secnamelabel.setPadding(new Insets(10,10,10,10));
-							
+
+							secnamelabel
+									.setStyle("-fx-font-weight: bold;-fx-font-size: 11;");
+							secnamelabel.setPadding(new Insets(10, 10, 10, 10));
+
 							leftbox.getChildren().add(secnamelabel);
-							
+
 							for (Command command : section.getCommands())
 							{
-
 
 								for (Parameter parameter : command
 										.getParameters())
 								{
-									
+
 									GridPane paraPane = new GridPane();
-									
-									Label paranamelabel = new Label(parameter.getName());
-									
-									//paranamelabel.setStyle("-fx-font-size: 11;");
-									paranamelabel.setPadding(new Insets(10,10,10,10));
-									
-									paraPane.add(paranamelabel,0,0);
-									
+
+									Label paranamelabel = new Label(
+											parameter.getName());
+
+									// paranamelabel.setStyle("-fx-font-size: 11;");
+									paranamelabel.setPadding(new Insets(10, 10,
+											10, 10));
+
+									paraPane.add(paranamelabel, 0, 0);
+
 									if (parameter.getType().equals(
 											"DatatypeString"))
 									{
-										TextField dataString = new TextField(parameter.getDefaultValue());
-										
-										dataString.setId("" + parameter.getId());
-										
-										paraPane.add(dataString,1,0);
-										dataString.focusedProperty().addListener(new ChangeListener<Boolean>(){
-										    @Override
-										    public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
-										    {
-										        if (newPropertyValue)
-										        {
-										           //System.out.println("Textfield on focus");
-										        }
-										        else
-										        {
-										        	//System.out.println("Textfield lost focus");
-										            parameter.setValue(dataString.getText());
-										            show.setText(template.getElement().receiveTemplateOutput());
-										        }
-										    }
-										});
+										TextField dataString = new TextField(
+												parameter.getDefaultValue());
 
-										// LABEL --> parameter.getName()
-										// TEXTFIELD --> ID FUER FELD
-										// parameter.getId() | DEFAULT VALUE
-										// FUER FELD -->
-										// parameter.getDefaultValue()
-										// BEI AENDERN VON TEXTFIELD
-										// parameter.getValue() SETZEN
+										dataString
+												.setId("" + parameter.getId());
+
+										paraPane.add(dataString, 1, 0);
+										dataString
+												.focusedProperty()
+												.addListener(
+														new ChangeListener<Boolean>()
+														{
+															@Override
+															public void changed(
+																	ObservableValue<? extends Boolean> arg0,
+																	Boolean oldPropertyValue,
+																	Boolean newPropertyValue)
+															{
+																if (newPropertyValue)
+																{
+																	// System.out.println("Textfield on focus");
+																}
+																else
+																{
+																	// System.out.println("Textfield lost focus");
+																	parameter
+																			.setValue(dataString
+																					.getText());
+																	show.setText(template
+																			.getElement()
+																			.receiveTemplateOutputAsString());
+																}
+															}
+														});
+
 									}
-	
-									// VIELE WEITERE IFS
-									// DatatypeMAC-Address
-									
+									if (parameter.getType().equals("DatatypeVlan"))
+									{
+										//WICHTIG Restriced Textfield!!!!
+										TextField dataString = new TextField(
+												parameter.getDefaultValue());
+
+										dataString.setId("" + parameter.getId());
+
+										paraPane.add(dataString, 1, 0);
+										dataString.focusedProperty().addListener(
+														new ChangeListener<Boolean>()
+														{
+															@Override
+															public void changed(
+																	ObservableValue<? extends Boolean> arg0,
+																	Boolean oldPropertyValue,
+																	Boolean newPropertyValue)
+															{
+																if (newPropertyValue)
+																{
+																	// System.out.println("Textfield on focus");
+																}
+																else
+																{
+																	// System.out.println("Textfield lost focus");
+																	parameter
+																			.setValue(dataString
+																					.getText());
+																	show.setText(template
+																			.getElement()
+																			.receiveTemplateOutputAsString());
+																}
+															}
+														});
+									}
+
 									leftbox.getChildren().add(paraPane);
 								}
 							}
@@ -264,10 +307,45 @@ public class MainWindowController extends VBox
 					}
 				}
 			}
-			
-			Button go = new Button("GOOOOO!");
-			leftbox.getChildren().add(go);
-			
+
+			Button einspielen = new Button("Einspielen");
+
+			einspielen.setOnAction(new EventHandler<ActionEvent>()
+			{
+				@SuppressWarnings("static-access")
+				@Override
+				public void handle(ActionEvent e)
+				{
+					for (TemplateToPathLinker template : ServiceFactory
+							.getPersistenceService().getTemplates())
+					{
+						if (template
+								.getElement()
+								.getFullName()
+								.equals(templateBox.getSelectionModel()
+										.getSelectedItem()))
+						{
+							InstanceOnline inst = (InstanceOnline) ServiceFactory
+									.getDomainService()
+									.getInstances()
+									.getInstances()
+									.get(ServiceFactory
+											.getPresentationService()
+											.getMainWindowController()
+											.getTabPane().getSelectionModel()
+											.getSelectedIndex());
+
+							inst.getSshConnector()
+									.doSendMultipleCMD(
+											template.getElement()
+													.receiveTemplateOutputAsArrayList());
+						}
+					}
+				}
+			});
+
+			leftbox.getChildren().add(einspielen);
+
 			splitter.getItems().addAll(leftbox, show);
 			splitter.setDividerPositions(0.6f, 0.4f);
 
@@ -275,27 +353,12 @@ public class MainWindowController extends VBox
 
 			PresentationService.getMainWindowController().getTabPane()
 					.getTabs().get(id).setContent(viewstack);
-			
-			/*
-			for (TemplateToPathLinker template : ServiceFactory
-					.getPersistenceService().getTemplates())
-			{
-				if (template
-						.getElement()
-						.getFullName()
-						.equals(templateBox.getSelectionModel()
-								.getSelectedItem()))
-				{
-					//INSTANCES FOREACH DURCHSUCHEN NACH FINGERPRINT WENN MATCH DANN AUF SSH CON ZUGREIFEN
-					//tabcontrol.getActive() FINGERPRINT
-					//template.getElement().receiveTemplateOutput(); --> SSH CONNECTOR SENDEN
-				}
-			}*/
-			
+
+
 		}
 		catch (Exception e)
 		{
-			//e.printStackTrace();
+			// e.printStackTrace();
 		}
 	}
 

@@ -22,6 +22,8 @@ public class AppConfig implements Serializable
 	private String SNMP_SWNAME;
 	private String SNMP_BRIDGEIFDESCR;
 	private String SNMP_BRIDGEIFSTATUS;
+	private String SNMP_BRIDGEALIAS;
+	private String SNMP_BRIDGESHORTNAME;
 	private String SNMP_DOT1DTPFDBADDRESS;
 	private String SNMP_DOT1DTPFDBPORT;
 	private String SNMP_VLANTRUNKPORTDYNAMICSTATUS;
@@ -159,6 +161,26 @@ public class AppConfig implements Serializable
 		SNMP_BRIDGEIFSTATUS = sNMP_BRIDGEIFSTATUS;
 	}
 
+	public String getSNMP_BRIDGEALIAS()
+	{
+		return SNMP_BRIDGEALIAS;
+	}
+
+	public void setSNMP_BRIDGEALIAS(String sNMP_BRIDGEALIAS)
+	{
+		SNMP_BRIDGEALIAS = sNMP_BRIDGEALIAS;
+	}
+
+	public String getSNMP_BRIDGESHORTNAME()
+	{
+		return SNMP_BRIDGESHORTNAME;
+	}
+
+	public void setSNMP_BRIDGESHORTNAME(String sNMP_BRIDGESHORTNAME)
+	{
+		SNMP_BRIDGESHORTNAME = sNMP_BRIDGESHORTNAME;
+	}
+
 	public String getSNMP_DOT1DTPFDBADDRESS()
 	{
 		return SNMP_DOT1DTPFDBADDRESS;
@@ -258,6 +280,8 @@ public class AppConfig implements Serializable
 		
 		setSNMP_SWNAME(".1.3.6.1.2.1.1.5");
 		setSNMP_BRIDGEIFDESCR(".1.3.6.1.2.1.2.2.1.2");
+		setSNMP_BRIDGEALIAS(".1.3.6.1.2.1.31.1.1.1.18");
+		setSNMP_BRIDGESHORTNAME("1.3.6.1.2.1.31.1.1.1.1");
 		setSNMP_BRIDGEIFSTATUS(".1.3.6.1.2.1.2.2.1.8");
 		setSNMP_DOT1DTPFDBADDRESS(".1.3.6.1.2.1.17.4.3.1.1");
 		setSNMP_DOT1DTPFDBPORT(".1.3.6.1.2.1.17.4.3.1.2");

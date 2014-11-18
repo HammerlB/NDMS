@@ -5,11 +5,12 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import at.bmlvs.NDMS.domain.Instance;
 import at.bmlvs.NDMS.domain.connectors.SSHConnector;
 import at.bmlvs.NDMS.domain.connectors.TFTPConnector;
+import at.bmlvs.NDMS.domain.instances.InstanceOnline;
 import at.bmlvs.NDMS.domain.snapshots.Snapshot;
 import at.bmlvs.NDMS.linker.SnapshotToPathLinker;
+import at.bmlvs.NDMS.linker.TemplateToPathLinker;
 import at.bmlvs.NDMS.service.PresentationService;
 import at.bmlvs.NDMS.service.ServiceFactory;
 import javafx.beans.value.ChangeListener;
@@ -20,6 +21,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -28,7 +30,9 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -41,12 +45,14 @@ public class SnapshotController
 	private TextArea descArea;
 	@FXML
 	private ListView<String> snapshotlist;
-
+	@FXML
+	private Button removebtn;
+	
 	private Stage stage;
 	@FXML
 	public void initialize()
 	{
-
+		removebtn.setDisable(true);
 		ObservableList<String> items = FXCollections.observableArrayList();
 
 		try
@@ -79,7 +85,9 @@ public class SnapshotController
 								.get(snapshotlist.getSelectionModel()
 										.getSelectedIndex()).getElement()
 								.getDescription());
-
+						
+						removebtn.setDisable(false);
+						
 						System.out.println("Selected item: " + newValue);
 					}
 				});
@@ -91,15 +99,61 @@ public class SnapshotController
 	{
 
 		stage = new Stage();
-		Parent root = FXMLLoader.load(getClass().getResource(
-				"xml/AddSnapshotWindow.fxml"));
-		Scene scene = new Scene(root);
-		stage.setTitle("Snapshot hinzufügen");
+
+		stage.setTitle("Neuer Snapshot");
 		stage.getIcons().add(new Image("file:icons/ndms.png"));
 		stage.initModality(Modality.WINDOW_MODAL);
-		stage.setScene(scene);
 		stage.setResizable(false);
+		
+		
+		BorderPane bpane = new BorderPane();
+		HBox hbox = new HBox();
+		VBox vbox = new VBox();
+		
+		
+		Label namelabel = new Label("Name: ");
+		Label desclabel = new Label("Beschreibung: ");
+		TextField name = new TextField();
+		name.setFocusTraversable(false);
+		TextArea desc = new TextArea();
+		desc.setFocusTraversable(false);
+		Button save = new Button("Speichern");
+		save.setFocusTraversable(false);
+		
+		hbox.getChildren().add(namelabel);
+		hbox.getChildren().add(name);
+		hbox.setAlignment(Pos.CENTER_LEFT);
+		
+		vbox.getChildren().add(hbox);
+		vbox.getChildren().add(new Label("    "));
+		vbox.getChildren().add(desclabel);
+		vbox.getChildren().add(desc);
+		vbox.getChildren().add(save);
+		
+		
+		bpane.setCenter(vbox);
+		bpane.setTop(new Label("    "));
+		bpane.setLeft(new Label("    "));
+		bpane.setRight(new Label("    "));
+		
+		Scene scene = new Scene(bpane, 400, 270);
+
+		stage.setScene(scene);
+		
+		save.setOnAction(new EventHandler<ActionEvent>()
+				{
+					@Override
+					public void handle(ActionEvent e)
+					{
+						
+						stage.close();
+					}
+				});
+		
 		stage.show();
+		
+		
+		
 		
 		/*
 		Instance inst = ServiceFactory

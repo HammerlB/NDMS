@@ -22,7 +22,7 @@
                   <type>DatatypeString</type>
                   <defaultValue>GWDSWITCH</defaultValue>
                   <value></value>
-                  <useName>true</useName>
+                  <useName>false</useName>
                 </at.bmlvs.NDMS.domain.templates.Parameter>
               </parameters>
             </at.bmlvs.NDMS.domain.templates.Command>

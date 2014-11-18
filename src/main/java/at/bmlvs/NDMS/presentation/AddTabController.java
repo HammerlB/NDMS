@@ -7,13 +7,15 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import at.bmlvs.NDMS.domain.Instance;
-import at.bmlvs.NDMS.domain.Interface;
 import at.bmlvs.NDMS.domain.connectors.SNMPConnector;
 import at.bmlvs.NDMS.domain.connectors.SSHConnector;
 import at.bmlvs.NDMS.domain.connectors.TFTPConnector;
 import at.bmlvs.NDMS.domain.helper.IPv4Address;
 import at.bmlvs.NDMS.domain.helper.IPv4Range;
+import at.bmlvs.NDMS.domain.instances.Instance;
+import at.bmlvs.NDMS.domain.instances.InstanceOffline;
+import at.bmlvs.NDMS.domain.instances.InstanceOnline;
+import at.bmlvs.NDMS.domain.instances.Interface;
 import at.bmlvs.NDMS.presentation.elements.RestrictiveTextField;
 import at.bmlvs.NDMS.service.PresentationService;
 import at.bmlvs.NDMS.service.ServiceFactory;
@@ -78,6 +80,17 @@ public class AddTabController
 	private TextField offline1;
 	@FXML
 	private Label errorlabel;
+	@FXML
+	private Label vonlabel;
+	@FXML
+	private Label bislabel;
+	@FXML
+	private Label namelabel;
+	@FXML
+	private Label portanzlabel;
+	@FXML
+	private TextField portanz;
+	
 	private TFTPConnector tftpc;
 	private SSHConnector sshc;
 	private GridPane portview1;
@@ -141,11 +154,14 @@ public class AddTabController
 						for (Instance inst : ServiceFactory.getDomainService()
 								.getInstances().getInstances())
 						{
-							if (sshc.getSSHFingerprint().equals(
-									inst.getFingerprint()))
+							if (inst.getClass() == InstanceOnline.class)
 							{
-								alreadyfound = true;
-								break;
+								if (sshc.getSSHFingerprint().equals(
+										((InstanceOnline) inst).getFingerprint()))
+								{
+									alreadyfound = true;
+									break;
+								}
 							}
 						}
 
@@ -168,7 +184,7 @@ public class AddTabController
 									"Initial Snapshot from " + address.getIPv4Address() + " "
 											+ dateformat.format(date));
 
-							Instance inst = new Instance(address.getIPv4Address(),
+							InstanceOnline inst = new InstanceOnline(address.getIPv4Address(),
 									sshc.getSSHFingerprint(), address.getIPv4Address(), sshc,
 									tftpc, new SNMPConnector("udp:" + address.getIPv4Address()
 											+ "/161", "gwdSNMP_2014"));
@@ -208,7 +224,7 @@ public class AddTabController
 
 							// inst.checkInterfaces();
 							ServiceFactory.getDomainService().getInstances()
-									.addSingleOnlineInstance(inst);
+									.addSingleInstance(inst);
 							addTab(inst);
 							portview(ServiceFactory.getDomainService()
 									.getInstances().getInstances()
@@ -282,11 +298,14 @@ public class AddTabController
 						for (Instance inst : ServiceFactory.getDomainService()
 								.getInstances().getInstances())
 						{
-							if (sshc.getSSHFingerprint().equals(
-									inst.getFingerprint()))
+							if (inst.getClass() == InstanceOnline.class)
 							{
-								alreadyfound = true;
-								break;
+								if (sshc.getSSHFingerprint().equals(
+										((InstanceOnline) inst).getFingerprint()))
+								{
+									alreadyfound = true;
+									break;
+								}
 							}
 						}
 
@@ -300,7 +319,7 @@ public class AddTabController
 							tftpc.setSSHFingerprint(sshc.getSSHFingerprint());
 							sshc.doPrepareSnapshot();
 
-							tftpc.scanSnapshots();
+//							tftpc.scanSnapshots();
 
 							DateFormat dateformat = new SimpleDateFormat(
 									"_dd-MM-yyyy_HH-mm-ss_");
@@ -309,7 +328,7 @@ public class AddTabController
 									"Initial Snapshot from " + tabname + " "
 											+ dateformat.format(date));
 
-							Instance inst = new Instance(tabname,
+							InstanceOnline inst = new InstanceOnline(tabname,
 									sshc.getSSHFingerprint(), tabname, sshc,
 									tftpc, new SNMPConnector("udp:" + tabname
 											+ "/161", "gwdSNMP_2014"));
@@ -349,7 +368,7 @@ public class AddTabController
 
 							// inst.checkInterfaces();
 							ServiceFactory.getDomainService().getInstances()
-									.addSingleOnlineInstance(inst);
+									.addSingleInstance(inst);
 							addTab(inst);
 							portview(ServiceFactory.getDomainService()
 									.getInstances().getInstances()
@@ -394,7 +413,23 @@ public class AddTabController
 			if (!offline1.getText().equals(""))
 			{
 				tabname = offline1.getText();
+				
+				int portcount = 0;
+				
+				InstanceOffline inst = new InstanceOffline(tabname, portcount);
+				
 				addTab(new Tab(tabname));
+				
+//				InstanceOnline inst = new InstanceOnline(tabname,
+//						sshc.getSSHFingerprint(), tabname, sshc, tftpc,
+//						new SNMPConnector("udp:" + tabname + "/161",
+//								"gwdSNMP_2014"));
+//
+//				inst.populateAll();
+//
+//				ServiceFactory.getDomainService().getInstances()
+//						.addSingleOnlineInstance(inst);
+//				addTab(inst);
 
 			}
 			else
@@ -435,9 +470,16 @@ public class AddTabController
 		ipaddress2.setText("");
 		ipaddress3.setText("");
 		ipaddress4.setText("");
+		
+		vonlabel.setDisable(true);
+		bislabel.setDisable(true);
+		
+		namelabel.setDisable(false);
+		portanzlabel.setDisable(false);
 
 		offline1.setDisable(false);
-
+		portanz.setDisable(false);
+		
 		offline1.setOnKeyPressed(new EventHandler<KeyEvent>()
 		{
 			public void handle(KeyEvent ke)
@@ -481,7 +523,15 @@ public class AddTabController
 
 		offline1.setDisable(true);
 		offline1.setText("");
-
+		portanz.setDisable(true);
+		portanz.setText("");
+		
+		vonlabel.setDisable(true);
+		bislabel.setDisable(true);
+		
+		namelabel.setDisable(true);
+		portanzlabel.setDisable(true);
+		
 		ipaddress1.setDisable(false);
 		ipaddress2.setDisable(false);
 		ipaddress3.setDisable(false);
@@ -511,6 +561,8 @@ public class AddTabController
 
 		offline1.setDisable(true);
 		offline1.setText("");
+		portanz.setDisable(true);
+		portanz.setText("");
 
 		ipaddress1.setDisable(true);
 		ipaddress2.setDisable(true);
@@ -521,6 +573,12 @@ public class AddTabController
 		ipaddress2.setText("");
 		ipaddress3.setText("");
 		ipaddress4.setText("");
+		
+		vonlabel.setDisable(false);
+		bislabel.setDisable(false);
+		
+		namelabel.setDisable(true);
+		portanzlabel.setDisable(true);
 
 		iprange8.setOnKeyPressed(new EventHandler<KeyEvent>()
 		{
