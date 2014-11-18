@@ -89,7 +89,15 @@ public class AddTabController
 	@FXML
 	private Label portanzlabel;
 	@FXML
+	private Label versionlabel;
+	@FXML
+	private Label typelabel;
+	@FXML
 	private TextField portanz;
+	@FXML
+	private TextField version;
+	@FXML
+	private TextField type;
 	
 	private TFTPConnector tftpc;
 	private SSHConnector sshc;
@@ -110,7 +118,9 @@ public class AddTabController
 		
 
 		enterListener(iprange8);
-		
+		enterListener(offline1);
+		enterListener(version);
+		enterListener(type);
 		enterListener(portanz);
 		
 	}
@@ -489,9 +499,16 @@ public class AddTabController
 		
 		namelabel.setDisable(false);
 		portanzlabel.setDisable(false);
-
+		
 		offline1.setDisable(false);
 		portanz.setDisable(false);
+		
+		typelabel.setDisable(false);
+		versionlabel.setDisable(false);
+		type.setDisable(false);
+		version.setDisable(false);
+
+		
 		
 		offline1.setOnKeyPressed(new EventHandler<KeyEvent>()
 		{
@@ -545,6 +562,11 @@ public class AddTabController
 		namelabel.setDisable(true);
 		portanzlabel.setDisable(true);
 		
+		typelabel.setDisable(true);
+		versionlabel.setDisable(true);
+		type.setDisable(true);
+		version.setDisable(true);
+		
 		ipaddress1.setDisable(false);
 		ipaddress2.setDisable(false);
 		ipaddress3.setDisable(false);
@@ -592,23 +614,11 @@ public class AddTabController
 		
 		namelabel.setDisable(true);
 		portanzlabel.setDisable(true);
-
-		iprange8.setOnKeyPressed(new EventHandler<KeyEvent>()
-		{
-			public void handle(KeyEvent ke)
-			{
-				if (ke.getCode().equals(KeyCode.ENTER))
-				{
-					try
-					{
-						startconnection(event);
-					}
-					catch (IOException e)
-					{
-					}
-				}
-			}
-		});
+		
+		typelabel.setDisable(true);
+		versionlabel.setDisable(true);
+		type.setDisable(true);
+		version.setDisable(true);
 	}
 
 	private void addTab(Tab tab)
