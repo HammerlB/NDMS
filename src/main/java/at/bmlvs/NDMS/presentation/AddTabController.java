@@ -105,21 +105,12 @@ public class AddTabController
 		dotListener(ipaddress2, ipaddress3);
 		dotListener(ipaddress3, ipaddress4);
 
-		enterListener(ipaddress1);
-		enterListener(ipaddress2);
-		enterListener(ipaddress3);
+
 		enterListener(ipaddress4);
 		
-		enterListener(iprange1);
-		enterListener(iprange2);
-		enterListener(iprange3);
-		enterListener(iprange4);
-		enterListener(iprange5);
-		enterListener(iprange6);
-		enterListener(iprange7);
+
 		enterListener(iprange8);
 		
-		enterListener(offline1);
 		enterListener(portanz);
 		
 	}
