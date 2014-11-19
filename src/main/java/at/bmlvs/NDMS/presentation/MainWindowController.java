@@ -88,7 +88,6 @@ public class MainWindowController extends VBox
 		{
 			throw new RuntimeException(exception);
 		}
-		templatusBox();
 	}
 
 	@FXML
@@ -128,7 +127,7 @@ public class MainWindowController extends VBox
 	}
 
 	@FXML
-	private void templatusBox()
+	public void templatusBox()
 	{
 		templateBox.getItems().add("Templates");
 
@@ -137,6 +136,7 @@ public class MainWindowController extends VBox
 		{
 			try
 			{
+				
 				if ((template.getElement().getOs_version().equals(ServiceFactory.getDomainService().getInstances().getInstances().get(ServiceFactory.getPresentationService()
 						.getMainWindowController().getTabPane().getSelectionModel().getSelectedIndex()).getOs_Version()))
 						&&
@@ -144,12 +144,13 @@ public class MainWindowController extends VBox
 								.getMainWindowController().getTabPane().getSelectionModel().getSelectedIndex()).getDevice_Type()))
 						)
 				{
+					
 					templateBox.getItems().add((template.getElement().getFullName()));
 				}
 			}
 			catch (Exception e)
 			{
-				// TODO: handle exception
+				//e.printStackTrace();
 			}
 
 			
