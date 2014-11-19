@@ -635,10 +635,11 @@ public class AddTabController
 	public void portview(int id)
 	{
 		portview1 = new GridPane();
-
+		
 		int counterrow = 1;
 		int countercolumn = 1;
-
+		
+		
 		portview1.setPadding(new Insets(5, 0, 5, 0));
 
 		for (Interface interf : ServiceFactory.getDomainService()
@@ -655,6 +656,7 @@ public class AddTabController
 						public void run()
 						{
 							interf.setTextForTooltip();
+							
 						}
 					});
 				}
@@ -671,6 +673,8 @@ public class AddTabController
 						public void run()
 						{
 							interf.setTextForTooltip();
+							
+							
 						}
 					});
 				}
@@ -689,17 +693,13 @@ public class AddTabController
 								public void run()
 								{
 									interf.setTextForTooltip();
-
+									
 								}
 							});
 						}
 					});
 
-			if (interf.getPortstatus() == "1")
-			{
-				interf.setStyle("-fx-base: #b6e7c9;");
-			}
-
+			
 			if ((countercolumn == 7))
 			{
 				portview1.add(new Label("    "), countercolumn, counterrow);
@@ -730,11 +730,11 @@ public class AddTabController
 
 				portview1.add(interf, countercolumn, counterrow);
 
-				if ((counterrow == 2) || (counterrow == 5))
+				if ((counterrow == 2) || (counterrow == 5) || (counterrow == 8) || (counterrow == 11) || (counterrow == 14) || (counterrow == 17) || 
+						(counterrow == 20) || (counterrow == 23) || (counterrow == 26) || (counterrow == 29))
 				{
 					counterrow--;
 					countercolumn++;
-
 				}
 				else
 				{

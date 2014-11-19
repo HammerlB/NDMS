@@ -430,6 +430,10 @@ public class Interface extends Button
 				type = "Network";
 				setStyle("-fx-base: #CCFF99;");
 			}
+			else
+			{
+				setStyle("-fx-base: #CDCDC1;");
+			}
 		}
 		
 		setType(type);
