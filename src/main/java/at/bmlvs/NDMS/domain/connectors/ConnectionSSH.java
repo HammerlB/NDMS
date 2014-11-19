@@ -26,7 +26,7 @@ public class ConnectionSSH extends TerminalConnector implements Runnable {
 	private String fingerprint;
 	private InputStream in;
 	private OutputStream out;
-	private boolean connected;
+	private boolean connected, noOutput;
 	private byte buffer[] = new byte[1024];
 	private int read = 0;
 
@@ -52,6 +52,7 @@ public class ConnectionSSH extends TerminalConnector implements Runnable {
 		this.user = user;
 		this.pass = pass;
 		connected = false;
+		noOutput=true;
 	}
 
 	public String getSSHFingerprint() {
@@ -120,8 +121,12 @@ public class ConnectionSSH extends TerminalConnector implements Runnable {
 	public void run() {
 		try {
 			while (true) {
-				if(!connected){
+				if(connected&&noOutput){
 					this.read = in.read(buffer);
+					
+				}else if(connected&&!noOutput){
+					this.read = in.read(buffer);
+					System.out.println(new String(buffer, 0, read));
 				}else{
 					Thread.sleep(5000);
 					break;
@@ -131,6 +136,14 @@ public class ConnectionSSH extends TerminalConnector implements Runnable {
 		} catch (IOException | InterruptedException e) {
 			System.out.println("Reader was interrupted!");
 		}
+	}
+	
+	public void wantOutput(){
+		noOutput = false;
+	}
+	
+	public void shutup(){
+		noOutput = true;
 	}
 	
 	public void disconnectReader(){
