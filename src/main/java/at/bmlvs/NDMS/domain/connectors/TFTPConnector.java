@@ -99,6 +99,7 @@ public class TFTPConnector extends FileTransferConnector {
 		setTftpc(new TFTPClient());
 		setTransfermode(TFTP.ASCII_MODE);
 		setTimeout(60000);
+		tftps.shutdown();
 	}
 
 	@Override
