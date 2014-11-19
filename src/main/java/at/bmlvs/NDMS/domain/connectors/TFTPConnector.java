@@ -66,7 +66,6 @@ public class TFTPConnector extends FileTransferConnector {
 	private String localPath;
 
 	private String sshfingerprint;
-	private TFTPServer tftps;
 
 	/*
 	 * "Usage: tftp [options] hostname localfile remotefile\n\n" +
@@ -87,19 +86,11 @@ public class TFTPConnector extends FileTransferConnector {
 						.getNDMS_DEFAULT_PATH_SNAPSHOT_DIRECTORY());
 		snapshots = new Snapshots();
 		stpl = new SnapshotToPathLinker(null,null);
-//		tftps = new TFTPServer(new File(ServiceFactory.getAppConfig().getNDMS_DEFAULT_PATH_APP()
-//				+ "\\"
-//				+ ServiceFactory.getAppConfig()
-//						.getNDMS_DEFAULT_PATH_SNAPSHOT_DIRECTORY()),new File(ServiceFactory.getAppConfig().getNDMS_DEFAULT_PATH_APP()
-//						+ "\\"
-//						+ ServiceFactory.getAppConfig()
-//								.getNDMS_DEFAULT_PATH_SNAPSHOT_DIRECTORY()), ServerMode.GET_ONLY);
 		setLocalfile(localfile);
 		setRemotefile(remotefile);
 		setTftpc(new TFTPClient());
 		setTransfermode(TFTP.ASCII_MODE);
 		setTimeout(60000);
-//		tftps.shutdown();
 	}
 
 	@Override
@@ -113,35 +104,6 @@ public class TFTPConnector extends FileTransferConnector {
 	@Override
 	public void disconnect() throws Exception {
 		tftpc.close();
-	}
-
-	@Override
-	public void send() throws Exception {
-//		tftps.run();
-		
-		// We're sending a file
-		FileInputStream input = null;
-
-		// Try to open local file for reading
-		input = null;
-		File file = new File(this.localPath + "\\" + sshfingerprint + "\\" + stpl.getElement().getFullName());
-		
-		setRemotefile("snapshotToPlay.txt");
-		
-		try {
-			input = new FileInputStream(file);
-		} catch (FileNotFoundException e) {
-			System.err.println("This Snapshot don't exists!");
-		}
-		
-		// Try to send local file via TFTP
-		tftpc.sendFile(getRemotefile(), getTransfermode(), input, getHost());
-
-		// Close local socket and input file
-		disconnect();
-		if (input != null) {
-			input.close();
-		}
 	}
 
 	@Override
@@ -195,12 +157,6 @@ public class TFTPConnector extends FileTransferConnector {
 		receive();
 	}
 
-	private void connectAndSend() throws Exception {
-		connect();
-		
-		send();
-	}
-
 	public void takeSnapshot(String name, String desc, SSHConnector ssh) throws Exception {
 		setSSHFingerprint(ssh.getSSHFingerprint());
 		ssh.doPrepareSnapshot();
@@ -218,24 +174,11 @@ public class TFTPConnector extends FileTransferConnector {
 			if(ServiceFactory.getPersistenceService().getSnapshots().get(i).getElement().getFullName().equals(fullName)){
 				s = ServiceFactory.getPersistenceService().getSnapshots().get(i).getElement();
 				ServiceFactory.getPersistenceService().getSnapshots().remove(i);
-				System.out.println("HAHAHAHAHAH");
 				break;
 			}
 		}
 		deleteSnapshotInFileSystem(s, ssh);
 	}
-	
-//	public void sendSnapshot(String fullName) throws Exception{
-// 		String s = snapshots.getSnapshots().get(0).getElement().getFullName();
-//		for(int i = 0; i<snapshots.getSnapshots().size();i++){
-//			if(snapshots.getSnapshots().get(i).getElement().getFullName().equals(fullName)){
-//				this.stpl = snapshots.getSnapshots().get(i);
-//				System.out.println(this.stpl.getElement().getFullName());
-//				break;
-//			}
-//		}
-//		connectAndSend();
-//	}
 
 	public void scanSnapshots() {
 		File dir = new File(localPath + "\\" + sshfingerprint);

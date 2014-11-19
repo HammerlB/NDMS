@@ -170,10 +170,10 @@ public class SSHConnector extends Thread {
 		this.somethingToSend = true;
 	}
 	
-	public void doPlaySnapshot(){
+	public void doPlaySnapshot(String fullName){
 		this.cmd.add("enable\n"
 				+ enablePass
-				+ "\ncopy flash:snapshotToPlay.txt start\n\n\nconf t\ntftp flash:snapshot.txt\nend\n");
+				+ "\ncopy tftp:snapshotToPlay.txt start\n\n\nconf t\ntftp flash:snapshot.txt\nend\n");
 		this.somethingToSend = true;
 	}
 

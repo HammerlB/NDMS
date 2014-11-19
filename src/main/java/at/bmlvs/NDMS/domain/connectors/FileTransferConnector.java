@@ -23,7 +23,5 @@ public abstract class FileTransferConnector
 	
 	abstract void disconnect() throws Exception;
 	
-	abstract void send() throws Exception;
-	
 	abstract void receive() throws Exception;
 }

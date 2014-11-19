@@ -8,7 +8,7 @@ import at.bmlvs.NDMS.service.ServiceFactory;
 
 public class SnapshotTest {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 
 		ServiceFactory.setPersistenceService(new PersistenceService());
 		ServiceFactory.setAppConfig(ServiceFactory.getPersistenceService()
