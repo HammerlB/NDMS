@@ -1,5 +1,6 @@
 package at.bmlvs.NDMS.service;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -309,6 +310,27 @@ public class AppConfig implements Serializable
 		setNDMS_DEFAULT_PATH_SNAPSHOT_DIRECTORY("snapshots");
 		setNDMS_DEFAULT_XML_FILE_EXTENSION(".xml");
 		setNDMS_DEFAULT_TXT_FILE_EXTENSION(".txt");
+		
+		File file = new File(getNDMS_DEFAULT_PATH_APP() + "\\" + getNDMS_DEFAULT_PATH_TEMPLATE_SOURCE_DIRECTORY());
+		
+		if(!file.exists())
+		{
+			file.mkdir();
+		}
+		
+		file = new File(getNDMS_DEFAULT_PATH_APP() + "\\" + getNDMS_DEFAULT_PATH_TEMPLATE_SOURCE_DIRECTORY() + "\\" + getNDMS_DEFAULT_PATH_TEMPLATE_USER_DIRECTORY());
+		
+		if(!file.exists())
+		{
+			file.mkdir();
+		}
+		
+		file = new File(getNDMS_DEFAULT_PATH_APP() + "\\" + getNDMS_DEFAULT_PATH_SNAPSHOT_DIRECTORY());
+
+		if(!file.exists())
+		{
+			file.mkdir();
+		}
 
 		setNDMS_DEFAULT_PATH_TEMPLATES(new ArrayList<String>());
 		setNDMS_DEFAULT_PATH_SNAPSHOTS(new ArrayList<String>());
