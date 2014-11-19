@@ -117,7 +117,7 @@ public class TFTPConnector extends FileTransferConnector {
 
 	@Override
 	public void send() throws Exception {
-		tftps.run();
+//		tftps.run();
 		
 		// We're sending a file
 		FileInputStream input = null;
