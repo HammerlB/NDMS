@@ -37,6 +37,7 @@ public class TFTPSender {
 
 	private void send() throws TFTPException {
 		if (snapshotToSend != "UNDEFINED" && fingerprint != "UNDEFINED") {
+			System.out.println("Hurray");
 		} else if (snapshotToSend == "UNDEFINED") {
 			throw new TFTPException("The snapshot to send is undefined");
 		} else if (fingerprint == "UNDEFINED") {

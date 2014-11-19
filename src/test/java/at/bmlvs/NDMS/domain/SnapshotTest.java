@@ -17,6 +17,7 @@ public class SnapshotTest {
 				"gwdH_2014", "gwd_2014");
 
 		TFTPConnector tftp = new TFTPConnector("192.168.1.11");
+		
 		try {
 			ssh.connect();
 			ssh.start();

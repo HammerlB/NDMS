@@ -20,7 +20,7 @@ public class TFTPServerTest {
 		TFTPSender tftps = new TFTPSender();
 		tftpc.takeSnapshot("asd", "hello", ssh);
 		tftps.playSnapshot("asd", ssh);
-
+		ssh.doDisconnect();
 	}
 
 }
