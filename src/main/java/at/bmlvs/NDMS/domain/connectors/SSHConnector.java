@@ -1,5 +1,6 @@
 package at.bmlvs.NDMS.domain.connectors;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -102,7 +103,11 @@ public class SSHConnector extends Thread {
 	}
 
 	private void sendCMD(String cmd) {
-		ssh.sendCmd(cmd);
+		try {
+			ssh.sendCmd(cmd);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void doSendCMD(String cmd) {

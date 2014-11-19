@@ -20,7 +20,6 @@ public class ConnectionSSH extends TerminalConnector implements Runnable {
 	private String version;
 	private int port;
 	private SshClient ssh;
-	private SessionChannelClient session;
 	private String host;
 	private String user;
 	private String pass;
@@ -63,22 +62,8 @@ public class ConnectionSSH extends TerminalConnector implements Runnable {
 		this.fingerprint = fingerprint;
 	}
 
-	public void sendCmd(String cmd) {
-		try {
-			out.write(cmd.getBytes());
-		} catch (IOException e) {
-			System.out.println("SendCMD: " + e.getMessage());
-		}
-
-		// byte buffer[] = new byte[cmd.getBytes().length];
-		// int read = 0;
-		// for (int i = 0; i < 100; i++) {
-		// try {
-		// read = in.read(buffer);
-		// } catch (IOException e) {
-		// System.out.println("ReadCMD: " + e.getMessage());
-		// }
-		// }
+	public void sendCmd(String cmd) throws IOException {
+		out.write(cmd.getBytes());
 	}
 
 	@Override
@@ -107,13 +92,12 @@ public class ConnectionSSH extends TerminalConnector implements Runnable {
 		// COMMANDS
 		out = session.getOutputStream();
 		in = session.getInputStream();
+		this.connected=true;
 	}
 
 	@Override
 	public void disconnect() throws Exception {
-		// session.close();
 		ssh.disconnect();
-		System.out.println("Disconnected!");
 	}
 
 	public InputStream getIn() {
@@ -132,14 +116,105 @@ public class ConnectionSSH extends TerminalConnector implements Runnable {
 		this.out = out;
 	}
 
+	@Override
 	public void run() {
 		try {
 			while (true) {
-				read = in.read(buffer);
+				if(!connected){
+					this.read = in.read(buffer);
+				}else{
+					Thread.sleep(5000);
+					break;
+				}
 			}
-		} catch (IOException e) {
 			System.out.println("Reader has stopped!");
+		} catch (IOException | InterruptedException e) {
+			System.out.println("Reader was interrupted!");
 		}
+	}
+	
+	public void disconnectReader(){
+		this.setConnected(false);
+	}
+
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
+	}
+
+	public int getPort() {
+		return port;
+	}
+
+	public void setPort(int port) {
+		this.port = port;
+	}
+
+	public SshClient getSsh() {
+		return ssh;
+	}
+
+	public void setSsh(SshClient ssh) {
+		this.ssh = ssh;
+	}
+
+	public String getHost() {
+		return host;
+	}
+
+	public void setHost(String host) {
+		this.host = host;
+	}
+
+	public String getUser() {
+		return user;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
+	}
+
+	public String getPass() {
+		return pass;
+	}
+
+	public void setPass(String pass) {
+		this.pass = pass;
+	}
+
+	public String getFingerprint() {
+		return fingerprint;
+	}
+
+	public void setFingerprint(String fingerprint) {
+		this.fingerprint = fingerprint;
+	}
+
+	public boolean isConnected() {
+		return connected;
+	}
+
+	public void setConnected(boolean connected) {
+		this.connected = connected;
+	}
+
+	public byte[] getBuffer() {
+		return buffer;
+	}
+
+	public void setBuffer(byte[] buffer) {
+		this.buffer = buffer;
+	}
+
+	public int getRead() {
+		return read;
+	}
+
+	public void setRead(int read) {
+		this.read = read;
 	}
 
 	// @Override
