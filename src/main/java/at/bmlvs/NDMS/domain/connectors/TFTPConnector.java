@@ -87,19 +87,19 @@ public class TFTPConnector extends FileTransferConnector {
 						.getNDMS_DEFAULT_PATH_SNAPSHOT_DIRECTORY());
 		snapshots = new Snapshots();
 		stpl = new SnapshotToPathLinker(null,null);
-		tftps = new TFTPServer(new File(ServiceFactory.getAppConfig().getNDMS_DEFAULT_PATH_APP()
-				+ "\\"
-				+ ServiceFactory.getAppConfig()
-						.getNDMS_DEFAULT_PATH_SNAPSHOT_DIRECTORY()),new File(ServiceFactory.getAppConfig().getNDMS_DEFAULT_PATH_APP()
-						+ "\\"
-						+ ServiceFactory.getAppConfig()
-								.getNDMS_DEFAULT_PATH_SNAPSHOT_DIRECTORY()), ServerMode.GET_ONLY);
+//		tftps = new TFTPServer(new File(ServiceFactory.getAppConfig().getNDMS_DEFAULT_PATH_APP()
+//				+ "\\"
+//				+ ServiceFactory.getAppConfig()
+//						.getNDMS_DEFAULT_PATH_SNAPSHOT_DIRECTORY()),new File(ServiceFactory.getAppConfig().getNDMS_DEFAULT_PATH_APP()
+//						+ "\\"
+//						+ ServiceFactory.getAppConfig()
+//								.getNDMS_DEFAULT_PATH_SNAPSHOT_DIRECTORY()), ServerMode.GET_ONLY);
 		setLocalfile(localfile);
 		setRemotefile(remotefile);
 		setTftpc(new TFTPClient());
 		setTransfermode(TFTP.ASCII_MODE);
 		setTimeout(60000);
-		tftps.shutdown();
+//		tftps.shutdown();
 	}
 
 	@Override
