@@ -460,9 +460,10 @@ public class AddTabController
 			else
 			{
 				errorlabel.setText("Geben Sie einen Namen an!");
-			}
-
+			}	
 		}
+		
+		ServiceFactory.getPresentationService().getMainWindowController().templatusBox();
 	}
 
 	@FXML
