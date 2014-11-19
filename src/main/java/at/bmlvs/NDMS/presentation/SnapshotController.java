@@ -214,6 +214,7 @@ public class SnapshotController
 					inst.getTftpConnector().deleteSnapshot(snapshotlist.getSelectionModel().getSelectedItem(),inst.getSshConnector());
 					
 					items.clear();
+					descArea.setText("");
 					for (SnapshotToPathLinker snapshot : ServiceFactory
 							.getPersistenceService().getSnapshots())
 					{
