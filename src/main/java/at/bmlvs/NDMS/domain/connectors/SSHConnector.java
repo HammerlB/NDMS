@@ -39,10 +39,10 @@ public class SSHConnector {
 				ssh.connect();
 			}catch(ConnectException e){
 				try{
-					System.out.println("Retry connecting... (timed out)");
+					System.out.println("Retry connecting... ("+e.getMessage()+")(1)");
 					ssh.connect();
 				}catch(ConnectException e1){
-					System.out.println("Retry connecting... (timed out)");
+					System.out.println("Retry connecting... ("+e1.getMessage()+")(2)");
 					ssh.connect();
 				}
 			}
@@ -152,8 +152,10 @@ public class SSHConnector {
 	public void playSnapshot(String fullName) {
 		sendCMD("enable\n"
 				+ enablePass
-				+ "\ncopy tftp:snapshotToPlay.txt start\n\n\nconf t\ntftp flash:snapshot.txt\nend\n");
+				+ "\ncopy tftp:snapshotToPlay.txt start\n\n\n");
 	}
+	
+	
 
 	public String getSSHFingerprint() {
 		return ssh.getSSHFingerprint().split(":")[1];

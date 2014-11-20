@@ -1,6 +1,8 @@
 package at.bmlvs.NDMS.domain.connectors;
 
 import java.io.File;
+import java.net.Inet4Address;
+import java.net.InetAddress;
 
 import at.bmlvs.NDMS.domain.connectors.TFTPServer.ServerMode;
 import at.bmlvs.NDMS.domain.connectors.CustomExceptions.TFTPException;
@@ -14,6 +16,7 @@ public class TFTPSender {
 	private SnapshotToPathLinker stpl;
 	private TFTPServer tftps;
 	private SSHConnector ssh;
+	private InetAddress localIP;
 
 	public TFTPSender() throws Exception {
 		this.readDir = ServiceFactory.getAppConfig().getNDMS_DEFAULT_PATH_APP()
@@ -27,17 +30,14 @@ public class TFTPSender {
 		this.mode = ServerMode.GET_ONLY;
 		this.stpl = new SnapshotToPathLinker(null, null);
 		this.tftps = new TFTPServer(new File(readDir), new File(writeDir), mode);
+		this.tftps.setSocketTimeout(5000);
 		this.fingerprint = "UNDEFINED";
 		this.snapshotToSend = "UNDEFINED";
 	}
 
-	private void connect() {
-		tftps.run();
-	}
-
 	private void send() throws TFTPException {
 		if (snapshotToSend != "UNDEFINED" && fingerprint != "UNDEFINED") {
-			System.out.println("Hurray");
+			
 		} else if (snapshotToSend == "UNDEFINED") {
 			throw new TFTPException("The snapshot to send is undefined");
 		} else if (fingerprint == "UNDEFINED") {
@@ -50,9 +50,8 @@ public class TFTPSender {
 
 	public void playSnapshot(String fullName, SSHConnector ssh) throws TFTPException {
 		this.snapshotToSend = fullName;
-		this.ssh=ssh;
+		this.ssh = ssh;
 		setActiveConnection(ssh);
-		connect();
 		send();
 		disconnect();
 	}
@@ -107,5 +106,10 @@ public class TFTPSender {
 
 	public void setTftps(TFTPServer tftps) {
 		this.tftps = tftps;
+	}
+	
+	public InetAddress getLocalAddress(){
+		return tftps.getLocalAddress();
+		
 	}
 }

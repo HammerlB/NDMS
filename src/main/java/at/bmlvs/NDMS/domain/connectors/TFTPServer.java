@@ -27,6 +27,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.net.SocketTimeoutException;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -866,5 +868,9 @@ public class TFTPServer implements Runnable
     public void setLogError(PrintStream logError)
     {
         this.logError_ = logError;
+    }
+    
+    public InetAddress getLocalAddress(){
+    	return serverTftp_.getLocalAddress();
     }
 }

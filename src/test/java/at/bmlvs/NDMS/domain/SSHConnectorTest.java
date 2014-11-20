@@ -10,7 +10,7 @@ public class SSHConnectorTest {
 		SSHConnector ssh = new SSHConnector("192.168.1.12", "Herkel",
 				"gwdH_2014", "gwd_2014");
 		try {
-			ssh.connect();
+			ssh.connect(true);
 			ArrayList<String> a = new ArrayList<String>();
 			for (int i = 1; i <= 48; i++) {
 				a.add("int f0/" + i + "\nno desc trololol1");

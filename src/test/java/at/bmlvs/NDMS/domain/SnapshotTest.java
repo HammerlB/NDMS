@@ -1,7 +1,12 @@
 package at.bmlvs.NDMS.domain;
 
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.util.Enumeration;
+
 import at.bmlvs.NDMS.domain.connectors.SSHConnector;
 import at.bmlvs.NDMS.domain.connectors.TFTPConnector;
+import at.bmlvs.NDMS.domain.connectors.TFTPSender;
 import at.bmlvs.NDMS.linker.SnapshotToPathLinker;
 import at.bmlvs.NDMS.service.PersistenceService;
 import at.bmlvs.NDMS.service.ServiceFactory;
@@ -17,16 +22,31 @@ public class SnapshotTest {
 				"gwdH_2014", "gwd_2014");
 
 		TFTPConnector tftp = new TFTPConnector("192.168.1.11");
+		TFTPSender tftps = new TFTPSender();
 		
 		try {
 			ssh.connect(true);
 //			tftp.takeInitialSnapshot();
 			tftp.takeSnapshot("abc", "desc", ssh);
-			tftp.takeSnapshot("abc", "desc", ssh);
+//			tftp.takeSnapshot("abc", "desc", ssh);
 			
-			tftp.deleteSnapshot(ServiceFactory.getPersistenceService().getSnapshots().get(1).getElement().getFullName(), ssh);
+//			tftp.deleteSnapshot(ServiceFactory.getPersistenceService().getSnapshots().get(1).getElement().getFullName(), ssh);
+			tftps.playSnapshot("asd", ssh);
+
+			Enumeration e = NetworkInterface.getNetworkInterfaces();
+			while(e.hasMoreElements())
+			{
+			    NetworkInterface n = (NetworkInterface) e.nextElement();
+			    Enumeration ee = n.getInetAddresses();
+			    while (ee.hasMoreElements())
+			    {
+			        InetAddress i = (InetAddress) ee.nextElement();
+			        System.out.println(i.getHostAddress());
+			    }
+			}
 			
-			ssh.disconnect();
+			
+//			ssh.disconnect();
 			for (SnapshotToPathLinker s : ServiceFactory.getPersistenceService().getSnapshots()) {
 				System.out.println(s.getElement().getFullName());
 				System.out.println(s.getElement().getDescription());
@@ -58,8 +78,6 @@ public class SnapshotTest {
 //			tftp.sendSnapshot("abc_14-11-2014_14-28-32_.txt");
 //			ssh.doPlaySnapshot();
 //			ssh.doReloadWithoutWrite();
-			
-			ssh.disconnect();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
