@@ -380,7 +380,7 @@ public class AddTabController
 							{
 								public void handle(Event t)
 								{
-									System.out.println("tab got closed");
+									System.out.println("rangetab got closed");
 									ServiceFactory.getDomainService()
 											.getInstances().getInstances()
 											.remove(inst);
@@ -436,11 +436,12 @@ public class AddTabController
 				{
 					public void handle(Event t)
 					{
-						System.out.println("tab got closed");
+						System.out.println("offline tab got closed");
 						ServiceFactory.getDomainService()
 								.getInstances().getInstances()
 								.remove(inst);
 						sshc.doDisconnect();
+						
 
 					}
 				});
