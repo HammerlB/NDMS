@@ -42,7 +42,6 @@ import at.bmlvs.NDMS.service.ServiceFactory;
 public class AddTabController
 {
 	private String tabname = "";
-	private String activetab = "";
 
 	@FXML
 	private ToggleGroup radiotoggle;
@@ -106,17 +105,11 @@ public class AddTabController
 	@FXML
 	public void initialize()
 	{
-
-		
-
 		dotListener(ipaddress1, ipaddress2);
 		dotListener(ipaddress2, ipaddress3);
 		dotListener(ipaddress3, ipaddress4);
 
-
 		enterListener(ipaddress4);
-		
-
 		enterListener(iprange8);
 		enterListener(offline1);
 		enterListener(version);
@@ -429,12 +422,13 @@ public class AddTabController
 				InstanceOffline inst = new InstanceOffline(tabname, portcount);
 				inst.setDevice_Type(type.getText());
 				inst.setOs_Version(version.getText());
+
 				
 				inst.populateAll();
 				
 				ServiceFactory.getDomainService().getInstances().addSingleInstance(inst);
 				
-				addTab(new Tab(tabname));
+				addTab(inst);
 				
 				portview(ServiceFactory.getDomainService()
 						.getInstances().getInstances()
@@ -448,26 +442,8 @@ public class AddTabController
 						ServiceFactory.getDomainService()
 								.getInstances().getInstances()
 								.remove(inst);
-						try {
-							sshc.disconnect();
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-
 					}
 				});
-				
-//				InstanceOnline inst = new InstanceOnline(tabname,
-//						sshc.getSSHFingerprint(), tabname, sshc, tftpc,
-//						new SNMPConnector("udp:" + tabname + "/161",
-//								"gwdSNMP_2014"));
-//
-//				inst.populateAll();
-//
-//				ServiceFactory.getDomainService().getInstances()
-//						.addSingleOnlineInstance(inst);
-//				addTab(inst);
 
 			}
 			else
@@ -805,17 +781,6 @@ public class AddTabController
 					}
 				});
 	}
-	
-	public String getActivetab()
-	{
-		return activetab;
-	}
-	
-	public void setActivetab(String activetab)
-	{
-		this.activetab = activetab;
-	}
-	
 	public TFTPConnector getTftpc()
 	{
 		return tftpc;
