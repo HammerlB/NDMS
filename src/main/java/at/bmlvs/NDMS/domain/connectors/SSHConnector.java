@@ -33,8 +33,8 @@ public class SSHConnector {
 		counter = 0;
 	}
 
-	public void connect() throws Exception {
-		if (!connected) {
+	public void connect(boolean withRetry) throws Exception {
+		if (!connected&&withRetry) {
 			try{
 				ssh.connect();
 			}catch(ConnectException e){
@@ -48,6 +48,9 @@ public class SSHConnector {
 			}
 			this.connected = true;
 			System.out.println("Connected!");
+			
+		}else if(!connected&&!withRetry){
+			ssh.connect();
 		} else {
 			System.out.println("Already connected!");
 		}

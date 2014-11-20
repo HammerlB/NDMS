@@ -149,7 +149,7 @@ public class AddTabController
 						sshc = new SSHConnector(address.getIPv4Address(), "Herkel", "gwdH_2014",
 								"gwd_2014");
 
-						sshc.connect();
+						sshc.connect(false);
 
 						boolean alreadyfound = false;
 
@@ -297,7 +297,7 @@ public class AddTabController
 						sshc = new SSHConnector(tabname, "Herkel", "gwdH_2014",
 								"gwd_2014");
 
-						sshc.connect();
+						sshc.connect(false);
 
 						boolean alreadyfound = false;
 

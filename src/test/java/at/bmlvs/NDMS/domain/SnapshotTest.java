@@ -19,7 +19,7 @@ public class SnapshotTest {
 		TFTPConnector tftp = new TFTPConnector("192.168.1.11");
 		
 		try {
-			ssh.connect();
+			ssh.connect(true);
 //			tftp.takeInitialSnapshot();
 			tftp.takeSnapshot("abc", "desc", ssh);
 			tftp.takeSnapshot("abc", "desc", ssh);
