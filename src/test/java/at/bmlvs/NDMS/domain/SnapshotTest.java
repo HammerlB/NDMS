@@ -20,7 +20,6 @@ public class SnapshotTest {
 		
 		try {
 			ssh.connect();
-			ssh.start();
 //			tftp.takeInitialSnapshot();
 			tftp.takeSnapshot("abc", "desc", ssh);
 			tftp.takeSnapshot("abc", "desc", ssh);
@@ -58,7 +57,7 @@ public class SnapshotTest {
 //			ssh.doPlaySnapshot();
 //			ssh.doReloadWithoutWrite();
 			
-			ssh.doDisconnect();
+			ssh.disconnect();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

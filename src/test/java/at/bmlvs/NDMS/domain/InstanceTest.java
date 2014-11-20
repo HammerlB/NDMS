@@ -3,14 +3,15 @@ package at.bmlvs.NDMS.domain;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
-
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import at.bmlvs.NDMS.domain.connectors.SNMPConnector;
 import at.bmlvs.NDMS.domain.connectors.SSHConnector;
 import at.bmlvs.NDMS.domain.instances.InstanceOnline;
@@ -38,7 +39,6 @@ public class InstanceTest extends Application
 					.getAppconfig().getElement());
 			
 			SSHConnector sshc = new SSHConnector(tabname, "Herkel", "gwdH_2014","gwd_2014");
-			sshc.start();
 			
 			InstanceOnline inst = new InstanceOnline(tabname, sshc.getSSHFingerprint(), tabname, sshc, null, new SNMPConnector("udp:" + tabname + "/161", "gwdSNMP_2014"));
 			inst.populateAll();

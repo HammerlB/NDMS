@@ -159,7 +159,7 @@ public class TFTPConnector extends FileTransferConnector {
 
 	public void takeSnapshot(String name, String desc, SSHConnector ssh) throws Exception {
 		setSSHFingerprint(ssh.getSSHFingerprint());
-		ssh.doPrepareSnapshot();
+		ssh.prepareSnapshot();
 		System.out.println("Waiting for Snapshot to take!");
 		Thread.sleep(5000);
 		Snapshot s = new Snapshot(name, desc);
@@ -210,7 +210,7 @@ public class TFTPConnector extends FileTransferConnector {
 	}
 	
 	private void takeInitialSnapshot(SSHConnector ssh) throws Exception{
-		ssh.doPrepareSnapshot();
+		ssh.prepareSnapshot();
 		Snapshot s = new Snapshot(null,null);
 		takeSnapshot("Initial","Initial Snapshot from "+s.getDatetime(),ssh);
 	}

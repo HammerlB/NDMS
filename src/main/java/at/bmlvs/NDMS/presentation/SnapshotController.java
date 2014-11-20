@@ -1,18 +1,7 @@
 package at.bmlvs.NDMS.presentation;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
-import at.bmlvs.NDMS.domain.connectors.SSHConnector;
-import at.bmlvs.NDMS.domain.connectors.TFTPConnector;
-import at.bmlvs.NDMS.domain.instances.InstanceOnline;
-import at.bmlvs.NDMS.domain.snapshots.Snapshot;
-import at.bmlvs.NDMS.linker.SnapshotToPathLinker;
-import at.bmlvs.NDMS.linker.TemplateToPathLinker;
-import at.bmlvs.NDMS.service.PresentationService;
-import at.bmlvs.NDMS.service.ServiceFactory;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -20,9 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -36,6 +23,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import at.bmlvs.NDMS.domain.instances.InstanceOnline;
+import at.bmlvs.NDMS.linker.SnapshotToPathLinker;
+import at.bmlvs.NDMS.service.PresentationService;
+import at.bmlvs.NDMS.service.ServiceFactory;
 
 public class SnapshotController
 {

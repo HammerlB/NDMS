@@ -15,12 +15,11 @@ public class TFTPServerTest {
 		
 		SSHConnector ssh = new SSHConnector("192.168.1.11", "Herkel", "gwdH_2014", "gwd_2014");
 		ssh.connect();
-		ssh.start();
 		TFTPConnector tftpc = new TFTPConnector("192.168.1.11");
 		TFTPSender tftps = new TFTPSender();
 		tftpc.takeSnapshot("asd", "hello", ssh);
 		tftps.playSnapshot("asd", ssh);
-		ssh.doDisconnect();
+		ssh.disconnect();
 	}
 
 }

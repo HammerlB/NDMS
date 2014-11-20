@@ -7,18 +7,6 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import at.bmlvs.NDMS.domain.connectors.SNMPConnector;
-import at.bmlvs.NDMS.domain.connectors.SSHConnector;
-import at.bmlvs.NDMS.domain.connectors.TFTPConnector;
-import at.bmlvs.NDMS.domain.helper.IPv4Address;
-import at.bmlvs.NDMS.domain.helper.IPv4Range;
-import at.bmlvs.NDMS.domain.instances.Instance;
-import at.bmlvs.NDMS.domain.instances.InstanceOffline;
-import at.bmlvs.NDMS.domain.instances.InstanceOnline;
-import at.bmlvs.NDMS.domain.instances.Interface;
-import at.bmlvs.NDMS.presentation.elements.RestrictiveTextField;
-import at.bmlvs.NDMS.service.PresentationService;
-import at.bmlvs.NDMS.service.ServiceFactory;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -38,6 +26,18 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import at.bmlvs.NDMS.domain.connectors.SNMPConnector;
+import at.bmlvs.NDMS.domain.connectors.SSHConnector;
+import at.bmlvs.NDMS.domain.connectors.TFTPConnector;
+import at.bmlvs.NDMS.domain.helper.IPv4Address;
+import at.bmlvs.NDMS.domain.helper.IPv4Range;
+import at.bmlvs.NDMS.domain.instances.Instance;
+import at.bmlvs.NDMS.domain.instances.InstanceOffline;
+import at.bmlvs.NDMS.domain.instances.InstanceOnline;
+import at.bmlvs.NDMS.domain.instances.Interface;
+import at.bmlvs.NDMS.presentation.elements.RestrictiveTextField;
+import at.bmlvs.NDMS.service.PresentationService;
+import at.bmlvs.NDMS.service.ServiceFactory;
 
 public class AddTabController
 {
@@ -169,13 +169,12 @@ public class AddTabController
 
 						if (alreadyfound == false)
 						{
-							sshc.start();
 
 							// TFTP Initial Snapshot
 							tftpc = new TFTPConnector(address.getIPv4Address());
 
 							tftpc.setSSHFingerprint(sshc.getSSHFingerprint());
-							sshc.doPrepareSnapshot();
+							sshc.prepareSnapshot();
 
 							//tftpc.scanSnapshots();
 
@@ -240,7 +239,12 @@ public class AddTabController
 									ServiceFactory.getDomainService()
 											.getInstances().getInstances()
 											.remove(inst);
-									sshc.doDisconnect();
+									try {
+										sshc.disconnect();
+									} catch (Exception e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
 
 								}
 							});
@@ -313,13 +317,12 @@ public class AddTabController
 
 						if (alreadyfound == false)
 						{
-							sshc.start();
 
 							// TFTP Initial Snapshot
 							tftpc = new TFTPConnector(tabname);
 
 							tftpc.setSSHFingerprint(sshc.getSSHFingerprint());
-							sshc.doPrepareSnapshot();
+							sshc.prepareSnapshot();
 
 //							tftpc.scanSnapshots();
 
@@ -384,7 +387,12 @@ public class AddTabController
 									ServiceFactory.getDomainService()
 											.getInstances().getInstances()
 											.remove(inst);
-									sshc.doDisconnect();
+									try {
+										sshc.disconnect();
+									} catch (Exception e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
 
 								}
 							});
@@ -440,7 +448,12 @@ public class AddTabController
 						ServiceFactory.getDomainService()
 								.getInstances().getInstances()
 								.remove(inst);
-						sshc.doDisconnect();
+						try {
+							sshc.disconnect();
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 
 					}
 				});

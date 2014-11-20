@@ -387,7 +387,7 @@ public class MainWindowController extends VBox
 													.getSelectedIndex());
 
 									inst.getSshConnector()
-											.doSendMultipleCMD(
+											.sendMultipleCMD(
 													template.getElement()
 															.receiveTemplateOutputAsArrayList());
 								}

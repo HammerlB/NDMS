@@ -2,12 +2,12 @@ package at.bmlvs.NDMS.domain;
 
 import java.util.ArrayList;
 
-import at.bmlvs.NDMS.domain.connectors.SSHConnectorLight;
+import at.bmlvs.NDMS.domain.connectors.SSHConnector;
 
 public class SSHConnectorTest {
 
 	public static void main(String[] args) {
-		SSHConnectorLight ssh = new SSHConnectorLight("192.168.1.12", "Herkel",
+		SSHConnector ssh = new SSHConnector("192.168.1.12", "Herkel",
 				"gwdH_2014", "gwd_2014");
 		try {
 			ssh.connect();
@@ -20,7 +20,7 @@ public class SSHConnectorTest {
 //			ssh.sendSingleCMD("hostname GWD-SW3");
 //			ssh.sendEnd();
 //			ssh.saveRunningConfig();
-			ssh.reloadWithWrite();
+//			ssh.reloadWithWrite();
 //			ssh.reloadWithoutWrite();
 			ssh.disconnect();
 			// try {
