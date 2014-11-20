@@ -139,8 +139,8 @@ public class SSHConnector {
 				+ "\ncopy tftp:snapshotToPlay.txt start\n\n\nconf t\ntftp flash:snapshot.txt\nend\n");
 	}
 
-	public String getSSHFingerprint(){
-		return ssh.getSSHFingerprint();
+	public String getSSHFingerprint() {
+		return ssh.getSSHFingerprint().split(":")[1];
 	}
 	
 	public ConnectionSSH getSSHConnection(){
