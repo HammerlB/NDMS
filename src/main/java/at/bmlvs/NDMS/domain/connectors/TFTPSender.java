@@ -30,7 +30,7 @@ public class TFTPSender {
 		this.mode = ServerMode.GET_ONLY;
 		this.stpl = new SnapshotToPathLinker(null, null);
 		this.tftps = new TFTPServer(new File(readDir), new File(writeDir), mode);
-		this.tftps.setSocketTimeout(5000);
+		this.tftps.setSocketTimeout(0);
 		this.fingerprint = "UNDEFINED";
 		this.snapshotToSend = "UNDEFINED";
 	}
