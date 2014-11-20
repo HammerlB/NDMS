@@ -448,12 +448,17 @@ public class AddTabController
 						ServiceFactory.getDomainService()
 								.getInstances().getInstances()
 								.remove(inst);
+<<<<<<< HEAD
 						try {
 							sshc.disconnect();
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
+=======
+						sshc.doDisconnect();
+						
+>>>>>>> d8ff5f239d9f202494f7aef7c36234ba351c4312
 
 					}
 				});
