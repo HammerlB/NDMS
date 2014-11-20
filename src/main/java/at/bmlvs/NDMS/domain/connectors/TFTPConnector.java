@@ -145,7 +145,7 @@ public class TFTPConnector extends FileTransferConnector {
 		File file = new File(this.localPath + "\\" + sshfingerprint + "\\" + s.getFullName());
 		if (!s.getName().equals(null)) {
 			file.delete();
-			System.out.println("Sucessfully deleted!");
+			System.out.println("Snapshot sucessfully deleted!");
 		} else {
 			System.err.println("Snapshot doesn't exist!");
 		}
@@ -153,7 +153,6 @@ public class TFTPConnector extends FileTransferConnector {
 
 	private void connectAndReceive() throws Exception {
 		connect();
-		Thread.sleep(4000);
 		receive();
 	}
 
@@ -161,7 +160,7 @@ public class TFTPConnector extends FileTransferConnector {
 		setSSHFingerprint(ssh.getSSHFingerprint());
 		ssh.prepareSnapshot();
 		System.out.println("Waiting for Snapshot to take!");
-		Thread.sleep(5000);
+		Thread.sleep(3000);
 		Snapshot s = new Snapshot(name, desc);
 		stpl = new SnapshotToPathLinker(s, localPath + "\\" + sshfingerprint
 				+ "\\" + s.getFullName());

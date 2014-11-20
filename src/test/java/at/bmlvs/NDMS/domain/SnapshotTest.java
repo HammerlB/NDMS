@@ -26,10 +26,12 @@ public class SnapshotTest {
 			
 			tftp.deleteSnapshot(ServiceFactory.getPersistenceService().getSnapshots().get(1).getElement().getFullName(), ssh);
 			
+			ssh.disconnect();
 			for (SnapshotToPathLinker s : ServiceFactory.getPersistenceService().getSnapshots()) {
 				System.out.println(s.getElement().getFullName());
 				System.out.println(s.getElement().getDescription());
 			}
+			
 			
 //			ServiceFactory.getPersistenceService().getSnapshots().remove(1);
 //			

@@ -72,6 +72,7 @@ public class ConnectionSSH extends TerminalConnector implements Runnable {
 		SshClient ssh = new SshClient();
 
 		ssh.connect(host, new IgnoreHostKeyVerification());
+		
 		PasswordAuthenticationClient pwd = new PasswordAuthenticationClient();
 
 		pwd.setUsername(user);

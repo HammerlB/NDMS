@@ -1,8 +1,11 @@
 package at.bmlvs.NDMS.domain.connectors;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import com.sshtools.j2ssh.transport.IgnoreHostKeyVerification;
 
 import at.bmlvs.NDMS.domain.connectors.CustomExceptions.SSHException;
 
@@ -32,7 +35,17 @@ public class SSHConnector {
 
 	public void connect() throws Exception {
 		if (!connected) {
-			ssh.connect();
+			try{
+				ssh.connect();
+			}catch(ConnectException e){
+				try{
+					System.out.println("Retry connecting... (timed out)");
+					ssh.connect();
+				}catch(ConnectException e1){
+					System.out.println("Retry connecting... (timed out)");
+					ssh.connect();
+				}
+			}
 			this.connected = true;
 			System.out.println("Connected!");
 		} else {
