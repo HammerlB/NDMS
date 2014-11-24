@@ -10,6 +10,7 @@ public class AppConfig implements Serializable
 	// Serialization
 	private String NDMS_DEFAULT_PATH_APP;
 	private String NDMS_DEFAULT_PATH_APPCONFIG;
+	private String NDMS_DEFAULT_PATH_ICONS_DIRECTORY;
 	private String NDMS_DEFAULT_PATH_TEMPLATE_SOURCE_DIRECTORY;
 	private String NDMS_DEFAULT_PATH_TEMPLATE_USER_DIRECTORY;
 	private String NDMS_DEFAULT_PATH_SNAPSHOT_DIRECTORY;
@@ -288,6 +289,17 @@ public class AppConfig implements Serializable
 		SNMP_DEVICETYPE = sNMP_DEVICETYPE;
 	}
 
+	public String getNDMS_DEFAULT_PATH_ICONS_DIRECTORY()
+	{
+		return NDMS_DEFAULT_PATH_ICONS_DIRECTORY;
+	}
+
+	public void setNDMS_DEFAULT_PATH_ICONS_DIRECTORY(
+			String nDMS_DEFAULT_PATH_ICONS_DIRECTORY)
+	{
+		NDMS_DEFAULT_PATH_ICONS_DIRECTORY = nDMS_DEFAULT_PATH_ICONS_DIRECTORY;
+	}
+
 	public String getSNMP_OSVERSION()
 	{
 		return SNMP_OSVERSION;
@@ -305,6 +317,7 @@ public class AppConfig implements Serializable
 	{
 		setNDMS_DEFAULT_PATH_APP(System.getProperty("user.dir"));
 		setNDMS_DEFAULT_PATH_APPCONFIG("appconfig.xml");
+		setNDMS_DEFAULT_PATH_ICONS_DIRECTORY("icons");
 		setNDMS_DEFAULT_PATH_TEMPLATE_SOURCE_DIRECTORY("templates");
 		setNDMS_DEFAULT_PATH_TEMPLATE_USER_DIRECTORY("custom");
 		setNDMS_DEFAULT_PATH_SNAPSHOT_DIRECTORY("snapshots");

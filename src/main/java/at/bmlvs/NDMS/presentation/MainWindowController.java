@@ -136,25 +136,39 @@ public class MainWindowController extends VBox
 		{
 			try
 			{
-				
-				if ((template.getElement().getOs_version().equals(ServiceFactory.getDomainService().getInstances().getInstances().get(ServiceFactory.getPresentationService()
-						.getMainWindowController().getTabPane().getSelectionModel().getSelectedIndex()).getOs_Version()))
-						&&
-						(template.getElement().getDevice_type().equals(ServiceFactory.getDomainService().getInstances().getInstances().get(ServiceFactory.getPresentationService()
-								.getMainWindowController().getTabPane().getSelectionModel().getSelectedIndex()).getDevice_Type()))
-						)
+
+				if ((template.getElement().getOs_version()
+						.equals(ServiceFactory
+								.getDomainService()
+								.getInstances()
+								.getInstances()
+								.get(ServiceFactory.getPresentationService()
+										.getMainWindowController().getTabPane()
+										.getSelectionModel().getSelectedIndex())
+								.getOs_Version()))
+						&& (template.getElement().getDevice_type()
+								.equals(ServiceFactory
+										.getDomainService()
+										.getInstances()
+										.getInstances()
+										.get(ServiceFactory
+												.getPresentationService()
+												.getMainWindowController()
+												.getTabPane()
+												.getSelectionModel()
+												.getSelectedIndex())
+										.getDevice_Type())))
 				{
-					
-					templateBox.getItems().add((template.getElement().getFullName()));
+
+					templateBox.getItems().add(
+							(template.getElement().getFullName()));
 				}
 			}
 			catch (Exception e)
 			{
-				//e.printStackTrace();
+				// e.printStackTrace();
 			}
 
-			
-		
 		}
 
 		templateBox.setOnAction((event) -> {
@@ -228,6 +242,20 @@ public class MainWindowController extends VBox
 
 							for (Command command : section.getCommands())
 							{
+								if (command.isHidden() == false)
+								{
+									GridPane commandPane = new GridPane();
+									
+									Label commandlabel = new Label(
+											command.getAlias());
+									
+									commandlabel.setPadding(new Insets(10, 10,
+											10, 10));
+
+									commandPane.add(commandlabel, 0, 0);
+									
+									leftbox.getChildren().add(commandPane);
+								}
 
 								for (Parameter parameter : command
 										.getParameters())
@@ -236,7 +264,7 @@ public class MainWindowController extends VBox
 									GridPane paraPane = new GridPane();
 
 									Label paranamelabel = new Label(
-											parameter.getName());
+											parameter.getAlias());
 
 									// paranamelabel.setStyle("-fx-font-size: 11;");
 									paranamelabel.setPadding(new Insets(10, 10,

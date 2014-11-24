@@ -2,11 +2,15 @@ package at.bmlvs.NDMS.linker;
 
 import java.io.Serializable;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+
 @SuppressWarnings("serial")
 public abstract class Linker<T, P> implements Serializable
 {
 	private T element;
 	private P path;
+	private BooleanProperty changed;
 
 	public Linker(T element, P path)
 	{
@@ -32,5 +36,30 @@ public abstract class Linker<T, P> implements Serializable
 	public void setPath(P path)
 	{
 		this.path = path;
+	}
+	
+	public final boolean wasChanged()
+	{
+		if (changed != null)
+		{
+			return changed.get();
+		}
+
+		return false;
+	}
+
+	public final void setChanged(boolean changed)
+	{
+		this.changedProperty().set(changed);
+	}
+
+	public final BooleanProperty changedProperty()
+	{
+		if (changed == null)
+		{
+			changed = new SimpleBooleanProperty();
+		}
+
+		return changed;
 	}
 }

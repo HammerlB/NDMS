@@ -15,6 +15,8 @@
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>hostname</name>
+              <hidden>false</hidden>
+              <appendParameters>false</appendParameters>
               <parameters>
                 <at.bmlvs.NDMS.domain.templates.Parameter>
                   <id>0</id>
@@ -22,6 +24,7 @@
                   <type>DatatypeString</type>
                   <defaultValue>GWDSWITCH</defaultValue>
                   <value></value>
+                  <used>false</used>
                   <useName>false</useName>
                 </at.bmlvs.NDMS.domain.templates.Parameter>
               </parameters>

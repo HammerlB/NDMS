@@ -7,18 +7,22 @@ public class Parameter implements Serializable
 {
 	private int id;
 	private String name;
+	private String alias;
 	private String type;
 	private String defaultValue;
 	private String value;
+	private boolean used;
 	private boolean useName;
 	
-	public Parameter(int id, String name, String type, String defaultValue, String value, boolean useName)
+	public Parameter(int id, String name, String alias, String type, String defaultValue, String value, boolean used, boolean useName)
 	{
 		setId(id);
 		setName(name);
+		setAlias(alias);
 		setType(type);
 		setDefaultValue(defaultValue);
 		setValue(value);
+		setUsed(used);
 		setUseName(useName);
 	}
 
@@ -42,6 +46,16 @@ public class Parameter implements Serializable
 		this.name = name;
 	}
 
+	public String getAlias()
+	{
+		return alias;
+	}
+
+	public void setAlias(String alias)
+	{
+		this.alias = alias;
+	}
+
 	public String getType()
 	{
 		return type;
@@ -62,6 +76,22 @@ public class Parameter implements Serializable
 		this.value = value;
 	}
 	
+	/**
+	 * @return the used
+	 */
+	public boolean isUsed()
+	{
+		return used;
+	}
+
+	/**
+	 * @param used the used to set
+	 */
+	public void setUsed(boolean used)
+	{
+		this.used = used;
+	}
+
 	public boolean isUseName()
 	{
 		return useName;

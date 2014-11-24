@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.ArrayList;
 
 import at.bmlvs.NDMS.domain.helper.Filewalker;
+import at.bmlvs.NDMS.domain.snapshots.Snapshot;
+import at.bmlvs.NDMS.domain.templates.Template;
 import at.bmlvs.NDMS.linker.AppConfigToPathLinker;
 import at.bmlvs.NDMS.linker.SnapshotToPathLinker;
 import at.bmlvs.NDMS.linker.TemplateToPathLinker;
@@ -129,7 +131,7 @@ public class PersistenceService
 	{
 		for(TemplateToPathLinker template : getTemplates())
 		{
-			if(template.isChanged())
+			if(template.wasChanged())
 			{
 				File file = new File(template.getPath());
 				template.setPath(getAppconfig().getElement().getNDMS_DEFAULT_PATH_APP() + "\\" + getAppconfig().getElement().getNDMS_DEFAULT_PATH_TEMPLATE_SOURCE_DIRECTORY() +  "\\" + getAppconfig().getElement().getNDMS_DEFAULT_PATH_TEMPLATE_USER_DIRECTORY() + "\\" + file.getName());
@@ -140,7 +142,7 @@ public class PersistenceService
 
 	public TemplateToPathLinker loadTemplate(String path)
 	{
-		TemplateToPathLinker template = new TemplateToPathLinker(tdao.read(path), path);;
+		TemplateToPathLinker template = new TemplateToPathLinker(tdao.read(path), path);
 		
 		getTemplates().add(template);
 		
@@ -197,5 +199,42 @@ public class PersistenceService
 		{
 			saveSnapshot(snapshot);
 		}
+	}
+	
+	public void saveAllChangedSnapshots()
+	{
+		for(SnapshotToPathLinker snapshot : getSnapshots())
+		{
+			if(snapshot.wasChanged())
+			{
+				saveSnapshot(snapshot);
+			}
+		}
+	}
+	
+	public SnapshotToPathLinker getCorrespondentLinkerToSnapshot(Snapshot snapshot)
+	{
+		for(SnapshotToPathLinker linker: getSnapshots())
+		{
+			if(snapshot.equals(linker.getElement()))
+			{
+				return linker;
+			}
+		}
+		
+		return null;
+	}
+	
+	public TemplateToPathLinker getCorrespondentLinkerToTemplate(Template template)
+	{
+		for(TemplateToPathLinker linker: getTemplates())
+		{
+			if(template.equals(linker.getElement()))
+			{
+				return linker;
+			}
+		}
+		
+		return null;
 	}
 }
