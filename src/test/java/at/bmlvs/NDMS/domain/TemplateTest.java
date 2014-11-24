@@ -40,7 +40,7 @@ public class TemplateTest
 			ServiceFactory.setAppConfig(ServiceFactory.getPersistenceService()
 					.getAppconfig().getElement());
 			
-			Template templateBasic = new Template("TEST", "1.0", "15.0(2)SE6", "C2960-LANBASEK9-M");
+			Template templateBasic = new Template("TEST", "1.0", "15.0(2)SE6", "WS-C2960-48TC-L");
 
 			Snippet snippetBasic = new Snippet("Basic-Snippet", "None", "Interface-Snippet");
 			Snippet snippetInterfaces = new Snippet("Interface-Snippet", "Basic-Snippet", "None");
@@ -72,19 +72,16 @@ public class TemplateTest
 			
 			for(Section sectionInterface: sectionsInterfaces)
 			{
-				int id = sectionsInterfaces.indexOf(sectionInterface);
-				
-				Command commandSetInterface = new Command("interface", "", true);
-				
-				Parameter parameterSetInterface = new Parameter(id, "fa0/" + id, "", "DatatypeString", "GWDSWITCH", "", false, false);
-				
-				commandSetInterface.getParameters().add(parameterSetInterface);
+				Command commandSetInterface = new Command("interface fa0/" + sectionsInterfaces.indexOf(sectionInterface), "", true);
 				
 				Command commandInterfaceSetVlan = new Command("vlan", "", true);
 				
-				Parameter parameterInterfaceSetVlan = new Parameter(0, "", "", "DatatypeString", "1", "", true, false);
+				Parameter parameterInterfaceSetVlan = new Parameter(0, "Vlan", "Vlan", "DatatypeVlan", "1", "", true, false);
 				
 				commandInterfaceSetVlan.getParameters().add(parameterInterfaceSetVlan);
+				
+				sectionInterface.getCommands().add(commandSetInterface);
+				sectionInterface.getCommands().add(commandInterfaceSetVlan);
 				
 				snippetInterfaces.getSections().add(sectionInterface);
 			}
@@ -98,7 +95,7 @@ public class TemplateTest
 			
 			templateToPathLinker.setChanged(true);
 			
-			ServiceFactory.getPersistenceService().saveAllChangedTemplates();
+			ServiceFactory.getPersistenceService().saveAllTemplates();;
 		}
 		catch (Exception e)
 		{
