@@ -40,7 +40,7 @@ public class TemplateTest
 			ServiceFactory.setAppConfig(ServiceFactory.getPersistenceService()
 					.getAppconfig().getElement());
 			
-			Template templateBasic = new Template("Basiskonfiguration", "1.0", "15.0(2)SE6", "C2960-LANBASEK9-M");
+			Template templateBasic = new Template("TEST", "1.0", "15.0(2)SE6", "C2960-LANBASEK9-M");
 
 			Snippet snippetBasic = new Snippet("Basic-Snippet", "None", "Interface-Snippet");
 			Snippet snippetInterfaces = new Snippet("Interface-Snippet", "Basic-Snippet", "None");
