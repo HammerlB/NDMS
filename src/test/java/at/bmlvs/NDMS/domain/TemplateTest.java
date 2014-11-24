@@ -46,9 +46,11 @@ public class TemplateTest
 			
 			Section sectionBasicDeviceConfigurations = new Section("Basic Device Configurations");
 			
-			Command commandSetHostname = new Command("hostname");
+			//String name, String alias, boolean appendParameters
+			Command commandSetHostname = new Command("hostname", "", true);
 			
-			Parameter parameterSetHostname = new Parameter(0, "Hostname", "DatatypeString", "GWDSWITCH", "", true);
+			//int id, String name, String alias, String type, String defaultValue, String value, boolean used, boolean useName
+			Parameter parameterSetHostname = new Parameter(0, "Hostname", "Hostname", "DatatypeString", "GWDSWITCH", "", true, false);
 			
 			commandSetHostname.getParameters().add(parameterSetHostname);
 			
