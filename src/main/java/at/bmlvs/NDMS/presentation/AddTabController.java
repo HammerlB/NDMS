@@ -737,11 +737,18 @@ public class AddTabController
 
 		VBox tabbox = new VBox();
 		FlowPane flow = new FlowPane();
-		
+		FlowPane flow2 = new FlowPane();
 		
 		flow.getChildren().addAll(portview1);
 		flow.setAlignment(Pos.CENTER);
 		
+		
+		Label title = new Label("\n" + ServiceFactory.getDomainService().getInstances().getInstances().get(id).getDevice_Type() + " " + ServiceFactory.getDomainService().getInstances().getInstances().get(id).getOs_Version() + "\n");
+		title.setStyle("-fx-font-weight: bold;-fx-font-size: 16;");
+		flow2.getChildren().addAll(title);
+		flow2.setAlignment(Pos.CENTER);
+		
+		tabbox.getChildren().add(flow2);
 		tabbox.getChildren().add(flow);
 		PresentationService.getMainWindowController().getTabBorderPane().setTop(tabbox);
 		PresentationService.getMainWindowController().getTabPane().getTabs().get(id).setContent(PresentationService.getMainWindowController().getTabBorderPane());

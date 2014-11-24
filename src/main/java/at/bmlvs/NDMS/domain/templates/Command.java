@@ -3,22 +3,34 @@ package at.bmlvs.NDMS.domain.templates;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 @SuppressWarnings("serial")
 public class Command implements Serializable
 {
 	private int id;
 	private String name;
 	private String alias;
+	private String type;
 	private boolean hidden;
 	private boolean appendParameters;
 	
+	@XStreamOmitField
+	private BooleanProperty activated;
+	
 	private ArrayList<Parameter> parameters;
 	
-	public Command(String name, String alias, boolean appendParameters)
+	public Command(String name, String alias, String type, boolean appendParameters)
 	{
+		setActivated(true);
+		
 		setId(id);
 		setName(name);
 		setAlias(alias);
+		setType(type);
 		
 		if(alias.equals(""))
 		{
@@ -82,6 +94,47 @@ public class Command implements Serializable
 	public void setAppendParameters(boolean appendParameters)
 	{
 		this.appendParameters = appendParameters;
+	}
+	
+	/**
+	 * @return the type
+	 */
+	public String getType()
+	{
+		return type;
+	}
+
+	/**
+	 * @param type the type to set
+	 */
+	public void setType(String type)
+	{
+		this.type = type;
+	}
+
+	public final boolean isActivated()
+	{
+		if (activated != null)
+		{
+			return activated.get();
+		}
+
+		return false;
+	}
+
+	public final void setActivated(boolean activated)
+	{
+		this.activatedProperty().set(activated);
+	}
+
+	public final BooleanProperty activatedProperty()
+	{
+		if (activated == null)
+		{
+			activated = new SimpleBooleanProperty();
+		}
+
+		return activated;
 	}
 
 	public ArrayList<Parameter> getParameters()

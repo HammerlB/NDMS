@@ -31,6 +31,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
@@ -39,6 +40,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -191,16 +193,16 @@ public class MainWindowController extends VBox
 		try
 		{
 			StackPane viewstack = new StackPane();
-
+			ScrollPane sp = new ScrollPane();
 			VBox leftbox = new VBox();
-
+			
 			SplitPane splitter = new SplitPane();
 			splitter.setOrientation(Orientation.HORIZONTAL);
 
 			TextArea show = new TextArea();
 			show.disableProperty();
 			show.setEditable(false);
-
+			
 			for (TemplateToPathLinker template : ServiceFactory
 					.getPersistenceService().getTemplates())
 			{
@@ -212,11 +214,9 @@ public class MainWindowController extends VBox
 				{
 					// UEBERSCHRIFT NAME DES TEMPLATES
 
-					Label tempnamelabel = new Label(template.getElement()
-							.getFullName());
+					Label tempnamelabel = new Label(template.getElement().getFullName());
 
-					tempnamelabel
-							.setStyle("-fx-font-weight: bold;-fx-font-size: 15;");
+					tempnamelabel.setStyle("-fx-font-weight: bold;-fx-font-size: 15;");
 					tempnamelabel.setPadding(new Insets(10, 10, 10, 10));
 
 					leftbox.getChildren().add(tempnamelabel);
@@ -225,24 +225,46 @@ public class MainWindowController extends VBox
 					{
 						// UEBERSCHRIFT NAME DES SNIPPETS
 						Label snipnamelabel = new Label(snippet.getName());
-
-						snipnamelabel
-								.setStyle("-fx-font-weight: bold;-fx-font-size: 14;");
+						GridPane snippetGrid = new GridPane();
+						
+						snipnamelabel.setStyle("-fx-font-weight: bold;-fx-font-size: 14;");
 						snipnamelabel.setPadding(new Insets(10, 10, 10, 10));
+						
+						CheckBox checksnippet = new CheckBox();
 
-						leftbox.getChildren().add(snipnamelabel);
+						snippetGrid.add(checksnippet, 0, 0);
+						snippetGrid.add(snipnamelabel, 1, 0);
+						leftbox.getChildren().add(snippetGrid);
+						
+						checksnippet.selectedProperty().addListener(new ChangeListener<Boolean>() {
+						    @Override
+						    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 
+						    	if (checksnippet.isSelected() == true)
+								{
+						    		snipnamelabel.setDisable(false);
+								} else {
+									snipnamelabel.setDisable(true);
+								}
+						    }
+						});
+						
 						for (Section section : snippet.getSections())
 						{
 							// UEBERSCHRIFT NAME DER SECTION
 							Label secnamelabel = new Label(section.getName());
-
-							secnamelabel
-									.setStyle("-fx-font-weight: bold;-fx-font-size: 11;");
+							
+							GridPane sectionGrid = new GridPane();
+							
+							secnamelabel.setStyle("-fx-font-weight: bold;-fx-font-size: 11;");
 							secnamelabel.setPadding(new Insets(10, 10, 10, 10));
+							
+							CheckBox checksection = new CheckBox();
 
-							leftbox.getChildren().add(secnamelabel);
-
+							sectionGrid.add(checksection, 0, 0);
+							sectionGrid.add(secnamelabel, 1, 0);
+							leftbox.getChildren().add(sectionGrid);
+							
 							for (Command command : section.getCommands())
 							{
 								if (command.isHidden() == false)
@@ -257,6 +279,7 @@ public class MainWindowController extends VBox
 
 									commandPane.add(commandlabel, 0, 0);
 									
+									leftbox.getChildren().add(new CheckBox());
 									leftbox.getChildren().add(commandPane);
 								}
 
@@ -266,17 +289,16 @@ public class MainWindowController extends VBox
 
 									GridPane paraPane = new GridPane();
 
-									Label paranamelabel = new Label(
-											parameter.getAlias());
+									Label paranamelabel = new Label(parameter.getAlias());
 
 									// paranamelabel.setStyle("-fx-font-size: 11;");
-									paranamelabel.setPadding(new Insets(10, 10,
-											10, 10));
+									paranamelabel.setPadding(new Insets(10, 10, 10, 10));
+									
+									CheckBox checkcommand = new CheckBox();
+									paraPane.add(checkcommand, 0, 0);
+									paraPane.add(paranamelabel, 1, 0);
 
-									paraPane.add(paranamelabel, 0, 0);
-
-									if (parameter.getType().equals(
-											"DatatypeString"))
+									if (parameter.getType().equals("DatatypeString"))
 									{
 										TextField dataString = new TextField(
 												parameter.getDefaultValue());
@@ -284,7 +306,7 @@ public class MainWindowController extends VBox
 										dataString
 												.setId("" + parameter.getId());
 
-										paraPane.add(dataString, 1, 0);
+										paraPane.add(dataString, 2, 0);
 										dataString
 												.focusedProperty()
 												.addListener(
@@ -310,9 +332,7 @@ public class MainWindowController extends VBox
 																			.setDefaultValue(dataString
 																					.getText());
 																	template.setChanged(true);
-																	System.out
-																			.println(template
-																					.getPath());
+																	//System.out.println(template.getPath());
 																	show.setText(template
 																			.getElement()
 																			.receiveTemplateOutputAsString());
@@ -321,8 +341,7 @@ public class MainWindowController extends VBox
 														});
 
 									}
-									if (parameter.getType().equals(
-											"DatatypeVlan"))
+									if (parameter.getType().equals("DatatypeVlan"))
 									{
 										// WICHTIG Restriced Textfield!!!!
 										TextField dataString = new TextField(
@@ -331,6 +350,7 @@ public class MainWindowController extends VBox
 										dataString
 												.setId("" + parameter.getId());
 
+										
 										paraPane.add(dataString, 1, 0);
 										dataString
 												.focusedProperty()
@@ -356,9 +376,7 @@ public class MainWindowController extends VBox
 																	parameter
 																			.setDefaultValue(dataString
 																					.getText());
-																	System.out
-																			.println(template
-																					.getPath());
+																	//System.out.println(template.getPath());
 																	template.setChanged(true);
 																	show.setText(template
 																			.getElement()
@@ -367,7 +385,11 @@ public class MainWindowController extends VBox
 															}
 														});
 									}
-
+									
+									show.setText(template
+											.getElement()
+											.receiveTemplateOutputAsString());
+									
 									leftbox.getChildren().add(paraPane);
 								}
 							}
@@ -434,10 +456,11 @@ public class MainWindowController extends VBox
 							.saveAllChangedTemplates();
 				}
 			});
-
+			
+			
 			leftbox.getChildren().add(einspielen);
-
-			splitter.getItems().addAll(leftbox, show);
+			sp.setContent(leftbox);
+			splitter.getItems().addAll(sp, show);
 			splitter.setDividerPositions(0.6f, 0.4f);
 
 			viewstack.getChildren().add(splitter);
