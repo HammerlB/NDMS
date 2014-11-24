@@ -23,6 +23,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -102,13 +103,13 @@ public class AddTabController
 	private SSHConnector sshc;
 	private GridPane portview1;
 
+
 	@FXML
 	public void initialize()
 	{
 		dotListener(ipaddress1, ipaddress2);
 		dotListener(ipaddress2, ipaddress3);
 		dotListener(ipaddress3, ipaddress4);
-
 		enterListener(ipaddress4);
 		enterListener(iprange8);
 		enterListener(offline1);
@@ -736,15 +737,15 @@ public class AddTabController
 
 		VBox tabbox = new VBox();
 		FlowPane flow = new FlowPane();
-
+		
+		
 		flow.getChildren().addAll(portview1);
 		flow.setAlignment(Pos.CENTER);
-
+		
 		tabbox.getChildren().add(flow);
-
-		PresentationService.getMainWindowController().getTabPane().getTabs()
-				.get(id).setContent(tabbox);
-
+		PresentationService.getMainWindowController().getTabBorderPane().setTop(tabbox);
+		PresentationService.getMainWindowController().getTabPane().getTabs().get(id).setContent(PresentationService.getMainWindowController().getTabBorderPane());
+		
 	}
 
 	private void dotListener(TextField tf1, final TextField tf2)

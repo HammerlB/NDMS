@@ -72,6 +72,7 @@ public class MainWindowController extends VBox
 	private Stage stage;
 	@FXML
 	private ComboBox<String> templateBox;
+	private BorderPane tabBorderPane;
 
 	public MainWindowController()
 	{
@@ -79,7 +80,9 @@ public class MainWindowController extends VBox
 				"xml/MainWindow.fxml"));
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);
-
+		
+		tabBorderPane = new BorderPane();
+		
 		try
 		{
 			fxmlLoader.load();
@@ -166,7 +169,7 @@ public class MainWindowController extends VBox
 			}
 			catch (Exception e)
 			{
-				// e.printStackTrace();
+				e.printStackTrace();
 			}
 
 		}
@@ -438,14 +441,15 @@ public class MainWindowController extends VBox
 			splitter.setDividerPositions(0.6f, 0.4f);
 
 			viewstack.getChildren().add(splitter);
-
-			PresentationService.getMainWindowController().getTabPane()
-					.getTabs().get(id).setContent(viewstack);
+			
+			//PresentationService.getMainWindowController().getTabPane().getTabs().get(id).getContent();
+			
+			PresentationService.getMainWindowController().getTabBorderPane().setCenter(viewstack);
 
 		}
 		catch (Exception e)
 		{
-			// e.printStackTrace();
+			e.printStackTrace();
 		}
 	}
 
@@ -492,5 +496,15 @@ public class MainWindowController extends VBox
 	public void setStage(Stage stage)
 	{
 		this.stage = stage;
+	}
+
+	public BorderPane getTabBorderPane()
+	{
+		return tabBorderPane;
+	}
+
+	public void setTabBorderPane(BorderPane tabBorderPane)
+	{
+		this.tabBorderPane = tabBorderPane;
 	}
 }
