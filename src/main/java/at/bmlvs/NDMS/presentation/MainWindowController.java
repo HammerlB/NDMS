@@ -31,6 +31,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
@@ -194,7 +195,7 @@ public class MainWindowController extends VBox
 			StackPane viewstack = new StackPane();
 			ScrollPane sp = new ScrollPane();
 			VBox leftbox = new VBox();
-
+			
 			SplitPane splitter = new SplitPane();
 			splitter.setOrientation(Orientation.HORIZONTAL);
 
@@ -224,22 +225,46 @@ public class MainWindowController extends VBox
 					{
 						// UEBERSCHRIFT NAME DES SNIPPETS
 						Label snipnamelabel = new Label(snippet.getName());
-
+						GridPane snippetGrid = new GridPane();
+						
 						snipnamelabel.setStyle("-fx-font-weight: bold;-fx-font-size: 14;");
 						snipnamelabel.setPadding(new Insets(10, 10, 10, 10));
+						
+						CheckBox checksnippet = new CheckBox();
 
-						leftbox.getChildren().add(snipnamelabel);
+						snippetGrid.add(checksnippet, 0, 0);
+						snippetGrid.add(snipnamelabel, 1, 0);
+						leftbox.getChildren().add(snippetGrid);
+						
+						checksnippet.selectedProperty().addListener(new ChangeListener<Boolean>() {
+						    @Override
+						    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 
+						    	if (checksnippet.isSelected() == true)
+								{
+						    		snipnamelabel.setDisable(false);
+								} else {
+									snipnamelabel.setDisable(true);
+								}
+						    }
+						});
+						
 						for (Section section : snippet.getSections())
 						{
 							// UEBERSCHRIFT NAME DER SECTION
 							Label secnamelabel = new Label(section.getName());
-
+							
+							GridPane sectionGrid = new GridPane();
+							
 							secnamelabel.setStyle("-fx-font-weight: bold;-fx-font-size: 11;");
 							secnamelabel.setPadding(new Insets(10, 10, 10, 10));
+							
+							CheckBox checksection = new CheckBox();
 
-							leftbox.getChildren().add(secnamelabel);
-
+							sectionGrid.add(checksection, 0, 0);
+							sectionGrid.add(secnamelabel, 1, 0);
+							leftbox.getChildren().add(sectionGrid);
+							
 							for (Command command : section.getCommands())
 							{
 								if (command.isHidden() == false)
@@ -254,6 +279,7 @@ public class MainWindowController extends VBox
 
 									commandPane.add(commandlabel, 0, 0);
 									
+									leftbox.getChildren().add(new CheckBox());
 									leftbox.getChildren().add(commandPane);
 								}
 
@@ -267,8 +293,10 @@ public class MainWindowController extends VBox
 
 									// paranamelabel.setStyle("-fx-font-size: 11;");
 									paranamelabel.setPadding(new Insets(10, 10, 10, 10));
-
-									paraPane.add(paranamelabel, 0, 0);
+									
+									CheckBox checkcommand = new CheckBox();
+									paraPane.add(checkcommand, 0, 0);
+									paraPane.add(paranamelabel, 1, 0);
 
 									if (parameter.getType().equals("DatatypeString"))
 									{
@@ -278,7 +306,7 @@ public class MainWindowController extends VBox
 										dataString
 												.setId("" + parameter.getId());
 
-										paraPane.add(dataString, 1, 0);
+										paraPane.add(dataString, 2, 0);
 										dataString
 												.focusedProperty()
 												.addListener(
@@ -322,6 +350,7 @@ public class MainWindowController extends VBox
 										dataString
 												.setId("" + parameter.getId());
 
+										
 										paraPane.add(dataString, 1, 0);
 										dataString
 												.focusedProperty()
