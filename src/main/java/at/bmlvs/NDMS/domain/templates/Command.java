@@ -14,6 +14,7 @@ public class Command implements Serializable
 	private int id;
 	private String name;
 	private String alias;
+	private String type;
 	private boolean hidden;
 	private boolean appendParameters;
 	
@@ -22,13 +23,14 @@ public class Command implements Serializable
 	
 	private ArrayList<Parameter> parameters;
 	
-	public Command(String name, String alias, boolean appendParameters)
+	public Command(String name, String alias, String type, boolean appendParameters)
 	{
 		setActivated(true);
 		
 		setId(id);
 		setName(name);
 		setAlias(alias);
+		setType(type);
 		
 		if(alias.equals(""))
 		{
@@ -94,6 +96,22 @@ public class Command implements Serializable
 		this.appendParameters = appendParameters;
 	}
 	
+	/**
+	 * @return the type
+	 */
+	public String getType()
+	{
+		return type;
+	}
+
+	/**
+	 * @param type the type to set
+	 */
+	public void setType(String type)
+	{
+		this.type = type;
+	}
+
 	public final boolean isActivated()
 	{
 		if (activated != null)
