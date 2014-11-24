@@ -1,5 +1,6 @@
 package at.bmlvs.NDMS.domain;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -62,9 +63,31 @@ public class TemplateTest
 			
 			snippetBasic.getSections().add(sectionSNMPConfiguration);
 			
-			Section sectionAllInterfaces = new Section("Interface Configuration");
+			ArrayList<Section> sectionsInterfaces = new ArrayList<Section>();
 			
-			snippetInterfaces.getSections().add(sectionAllInterfaces);
+			for(int i = 0; i < 24; i++)
+			{
+				sectionsInterfaces.add(new Section("Interface fa0/" + i + " Configuration:"));
+			}
+			
+			for(Section sectionInterface: sectionsInterfaces)
+			{
+				int id = sectionsInterfaces.indexOf(sectionInterface);
+				
+				Command commandSetInterface = new Command("interface", "", true);
+				
+				Parameter parameterSetInterface = new Parameter(id, "fa0/" + id, "", "DatatypeString", "GWDSWITCH", "", false, false);
+				
+				commandSetInterface.getParameters().add(parameterSetInterface);
+				
+				Command commandInterfaceSetVlan = new Command("vlan", "", true);
+				
+				Parameter parameterInterfaceSetVlan = new Parameter(0, "", "", "DatatypeString", "1", "", true, false);
+				
+				commandInterfaceSetVlan.getParameters().add(parameterInterfaceSetVlan);
+				
+				snippetInterfaces.getSections().add(sectionInterface);
+			}
 			
 			templateBasic.getSnippets().add(snippetBasic);
 			templateBasic.getSnippets().add(snippetInterfaces);
@@ -73,7 +96,9 @@ public class TemplateTest
 			
 			ServiceFactory.getPersistenceService().getTemplates().add(templateToPathLinker);
 			
-			ServiceFactory.getPersistenceService().saveAllTemplates();
+			templateToPathLinker.setChanged(true);
+			
+			ServiceFactory.getPersistenceService().saveAllChangedTemplates();
 		}
 		catch (Exception e)
 		{
