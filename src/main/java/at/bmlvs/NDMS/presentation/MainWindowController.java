@@ -39,6 +39,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -191,7 +192,7 @@ public class MainWindowController extends VBox
 		try
 		{
 			StackPane viewstack = new StackPane();
-
+			ScrollPane sp = new ScrollPane();
 			VBox leftbox = new VBox();
 
 			SplitPane splitter = new SplitPane();
@@ -212,11 +213,9 @@ public class MainWindowController extends VBox
 				{
 					// UEBERSCHRIFT NAME DES TEMPLATES
 
-					Label tempnamelabel = new Label(template.getElement()
-							.getFullName());
+					Label tempnamelabel = new Label(template.getElement().getFullName());
 
-					tempnamelabel
-							.setStyle("-fx-font-weight: bold;-fx-font-size: 15;");
+					tempnamelabel.setStyle("-fx-font-weight: bold;-fx-font-size: 15;");
 					tempnamelabel.setPadding(new Insets(10, 10, 10, 10));
 
 					leftbox.getChildren().add(tempnamelabel);
@@ -226,8 +225,7 @@ public class MainWindowController extends VBox
 						// UEBERSCHRIFT NAME DES SNIPPETS
 						Label snipnamelabel = new Label(snippet.getName());
 
-						snipnamelabel
-								.setStyle("-fx-font-weight: bold;-fx-font-size: 14;");
+						snipnamelabel.setStyle("-fx-font-weight: bold;-fx-font-size: 14;");
 						snipnamelabel.setPadding(new Insets(10, 10, 10, 10));
 
 						leftbox.getChildren().add(snipnamelabel);
@@ -237,8 +235,7 @@ public class MainWindowController extends VBox
 							// UEBERSCHRIFT NAME DER SECTION
 							Label secnamelabel = new Label(section.getName());
 
-							secnamelabel
-									.setStyle("-fx-font-weight: bold;-fx-font-size: 11;");
+							secnamelabel.setStyle("-fx-font-weight: bold;-fx-font-size: 11;");
 							secnamelabel.setPadding(new Insets(10, 10, 10, 10));
 
 							leftbox.getChildren().add(secnamelabel);
@@ -266,17 +263,14 @@ public class MainWindowController extends VBox
 
 									GridPane paraPane = new GridPane();
 
-									Label paranamelabel = new Label(
-											parameter.getAlias());
+									Label paranamelabel = new Label(parameter.getAlias());
 
 									// paranamelabel.setStyle("-fx-font-size: 11;");
-									paranamelabel.setPadding(new Insets(10, 10,
-											10, 10));
+									paranamelabel.setPadding(new Insets(10, 10, 10, 10));
 
 									paraPane.add(paranamelabel, 0, 0);
 
-									if (parameter.getType().equals(
-											"DatatypeString"))
+									if (parameter.getType().equals("DatatypeString"))
 									{
 										TextField dataString = new TextField(
 												parameter.getDefaultValue());
@@ -310,9 +304,7 @@ public class MainWindowController extends VBox
 																			.setDefaultValue(dataString
 																					.getText());
 																	template.setChanged(true);
-																	System.out
-																			.println(template
-																					.getPath());
+																	//System.out.println(template.getPath());
 																	show.setText(template
 																			.getElement()
 																			.receiveTemplateOutputAsString());
@@ -321,8 +313,7 @@ public class MainWindowController extends VBox
 														});
 
 									}
-									if (parameter.getType().equals(
-											"DatatypeVlan"))
+									if (parameter.getType().equals("DatatypeVlan"))
 									{
 										// WICHTIG Restriced Textfield!!!!
 										TextField dataString = new TextField(
@@ -356,9 +347,7 @@ public class MainWindowController extends VBox
 																	parameter
 																			.setDefaultValue(dataString
 																					.getText());
-																	System.out
-																			.println(template
-																					.getPath());
+																	//System.out.println(template.getPath());
 																	template.setChanged(true);
 																	show.setText(template
 																			.getElement()
@@ -367,7 +356,7 @@ public class MainWindowController extends VBox
 															}
 														});
 									}
-
+									
 									leftbox.getChildren().add(paraPane);
 								}
 							}
@@ -434,10 +423,11 @@ public class MainWindowController extends VBox
 							.saveAllChangedTemplates();
 				}
 			});
-
+			
+			
 			leftbox.getChildren().add(einspielen);
-
-			splitter.getItems().addAll(leftbox, show);
+			sp.setContent(leftbox);
+			splitter.getItems().addAll(sp, show);
 			splitter.setDividerPositions(0.6f, 0.4f);
 
 			viewstack.getChildren().add(splitter);
