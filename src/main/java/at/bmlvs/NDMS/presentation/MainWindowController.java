@@ -201,7 +201,7 @@ public class MainWindowController extends VBox
 			TextArea show = new TextArea();
 			show.disableProperty();
 			show.setEditable(false);
-
+			
 			for (TemplateToPathLinker template : ServiceFactory
 					.getPersistenceService().getTemplates())
 			{
@@ -356,6 +356,10 @@ public class MainWindowController extends VBox
 															}
 														});
 									}
+									
+									show.setText(template
+											.getElement()
+											.receiveTemplateOutputAsString());
 									
 									leftbox.getChildren().add(paraPane);
 								}

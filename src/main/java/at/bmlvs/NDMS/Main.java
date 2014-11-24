@@ -71,7 +71,7 @@ public class Main extends Application
 		stage.getIcons().add(new Image("file:icons/ndms.png"));
 		stage.setWidth(800);
 		stage.setHeight(700);
-		stage.setFullScreen(true);
+	//	stage.setFullScreen(true);
 		stage.show();
 		
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
