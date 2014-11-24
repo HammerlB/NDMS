@@ -4,6 +4,8 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Enumeration;
 
+import javax.swing.JOptionPane;
+
 import at.bmlvs.NDMS.domain.connectors.SSHConnector;
 import at.bmlvs.NDMS.domain.connectors.TFTPConnector;
 import at.bmlvs.NDMS.domain.connectors.TFTPSender;
@@ -21,38 +23,29 @@ public class SnapshotTest {
 		SSHConnector ssh = new SSHConnector("192.168.1.11", "Herkel",
 				"gwdH_2014", "gwd_2014");
 
-		TFTPConnector tftp = new TFTPConnector("192.168.1.11");
+		TFTPConnector tftpc = new TFTPConnector("192.168.1.11");
 		TFTPSender tftps = new TFTPSender();
 		
 		try {
 			ssh.connect(true);
+			tftps.setActiveConnection(ssh);
+			tftpc.takeSnapshot("Hallo", "trallalla", ssh);
+			tftps.playSnapshot(ServiceFactory.getPersistenceService().getSnapshots().get(0).getElement().getFullName(), ssh);
 //			tftp.takeInitialSnapshot();
-			tftp.takeSnapshot("abc", "desc", ssh);
 //			tftp.takeSnapshot("abc", "desc", ssh);
-			
+//			tftp.takeSnapshot("abc", "desc", ssh);
+			JOptionPane.showMessageDialog(null, "Disconnect?");
 //			tftp.deleteSnapshot(ServiceFactory.getPersistenceService().getSnapshots().get(1).getElement().getFullName(), ssh);
-			tftps.playSnapshot("asd", ssh);
-
-			Enumeration e = NetworkInterface.getNetworkInterfaces();
-			while(e.hasMoreElements())
-			{
-			    NetworkInterface n = (NetworkInterface) e.nextElement();
-			    Enumeration ee = n.getInetAddresses();
-			    while (ee.hasMoreElements())
-			    {
-			        InetAddress i = (InetAddress) ee.nextElement();
-			        System.out.println(i.getHostAddress());
-			    }
-			}
+//			tftps.playSnapshot("asd", ssh);
 			
+			
+			ssh.disconnect();
+//			for (SnapshotToPathLinker s : ServiceFactory.getPersistenceService().getSnapshots()) {
+//				System.out.println(s.getElement().getFullName());
+//				System.out.println(s.getElement().getDescription());
+//			}
 			
 //			ssh.disconnect();
-			for (SnapshotToPathLinker s : ServiceFactory.getPersistenceService().getSnapshots()) {
-				System.out.println(s.getElement().getFullName());
-				System.out.println(s.getElement().getDescription());
-			}
-			
-			
 //			ServiceFactory.getPersistenceService().getSnapshots().remove(1);
 //			
 //			for (SnapshotToPathLinker s : ServiceFactory.getPersistenceService().getSnapshots()) {

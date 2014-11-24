@@ -18,7 +18,7 @@ public class Snapshot
 	public Snapshot(String name, String desc)
 	{
 		setName(name);
-		DateFormat dateFormat = new SimpleDateFormat("_dd-MM-yyyy_HH-mm-ss_");
+		DateFormat dateFormat = new SimpleDateFormat("_ddMMyyHHmmss");
 		Date date = new Date();
 		setDatetime(dateFormat.format(date));
 		setDescription(desc);

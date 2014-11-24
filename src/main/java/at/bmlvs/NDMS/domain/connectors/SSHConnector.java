@@ -152,7 +152,8 @@ public class SSHConnector {
 	public void playSnapshot(String fullName) {
 		sendCMD("enable\n"
 				+ enablePass
-				+ "\ncopy tftp:snapshotToPlay.txt start\n\n\n");
+				+ "\ncopy tftp: flash:"
+				+ "\n");
 	}
 	
 	

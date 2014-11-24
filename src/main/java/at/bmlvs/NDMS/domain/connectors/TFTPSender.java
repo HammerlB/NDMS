@@ -1,6 +1,7 @@
 package at.bmlvs.NDMS.domain.connectors;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 
@@ -29,8 +30,8 @@ public class TFTPSender {
 						.getNDMS_DEFAULT_PATH_SNAPSHOT_DIRECTORY();
 		this.mode = ServerMode.GET_ONLY;
 		this.stpl = new SnapshotToPathLinker(null, null);
-		this.tftps = new TFTPServer(new File(readDir), new File(writeDir), mode);
-		this.tftps.setSocketTimeout(0);
+//		this.tftps = new TFTPServer(new File(readDir), new File(writeDir), mode);
+		this.tftps.setSocketTimeout(6000);
 		this.fingerprint = "UNDEFINED";
 		this.snapshotToSend = "UNDEFINED";
 	}
@@ -48,7 +49,7 @@ public class TFTPSender {
 		}
 	}
 
-	public void playSnapshot(String fullName, SSHConnector ssh) throws TFTPException {
+	public void playSnapshot(String fullName, SSHConnector ssh) throws TFTPException, IOException {
 		this.snapshotToSend = fullName;
 		this.ssh = ssh;
 		setActiveConnection(ssh);
@@ -56,8 +57,9 @@ public class TFTPSender {
 		disconnect();
 	}
 
-	public void setActiveConnection(SSHConnector ssh) {
+	public void setActiveConnection(SSHConnector ssh) throws IOException {
 		this.fingerprint = ssh.getSSHFingerprint();
+		this.tftps = new TFTPServer(new File(readDir+"\\"+fingerprint), new File(writeDir+"\\"+fingerprint), mode);
 	}
 
 	public void setActiveConnection(String sshFingerprint) {
