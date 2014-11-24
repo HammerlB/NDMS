@@ -3,6 +3,11 @@ package at.bmlvs.NDMS.domain.templates;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 @SuppressWarnings("serial")
 public class Command implements Serializable
 {
@@ -12,10 +17,15 @@ public class Command implements Serializable
 	private boolean hidden;
 	private boolean appendParameters;
 	
+	@XStreamOmitField
+	private BooleanProperty activated;
+	
 	private ArrayList<Parameter> parameters;
 	
 	public Command(String name, String alias, boolean appendParameters)
 	{
+		setActivated(true);
+		
 		setId(id);
 		setName(name);
 		setAlias(alias);
@@ -82,6 +92,31 @@ public class Command implements Serializable
 	public void setAppendParameters(boolean appendParameters)
 	{
 		this.appendParameters = appendParameters;
+	}
+	
+	public final boolean isActivated()
+	{
+		if (activated != null)
+		{
+			return activated.get();
+		}
+
+		return false;
+	}
+
+	public final void setActivated(boolean activated)
+	{
+		this.activatedProperty().set(activated);
+	}
+
+	public final BooleanProperty activatedProperty()
+	{
+		if (activated == null)
+		{
+			activated = new SimpleBooleanProperty();
+		}
+
+		return activated;
 	}
 
 	public ArrayList<Parameter> getParameters()
