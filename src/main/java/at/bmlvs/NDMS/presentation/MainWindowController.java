@@ -371,12 +371,14 @@ public class MainWindowController extends VBox
 								if (command.isHidden() == false)
 								{
 									GridPane commandPane = new GridPane();
+									
 									CheckBox checkcommand = new CheckBox();
 									Label commandlabel = new Label(
 											command.getAlias());
 									commandlabel.setPadding(new Insets(10, 10,
 											10, 10));
-									commandPane.add(checkcommand, 0, 0);
+									
+									commandPane.add(checkcommand,0,0);
 									commandPane.add(commandlabel, 1, 0);
 
 									command.activatedProperty().addListener(
@@ -435,7 +437,6 @@ public class MainWindowController extends VBox
 
 									// command.activatedProperty().bind(checkcommand.selectedProperty());
 
-									leftbox.getChildren().add(new CheckBox());
 									leftbox.getChildren().add(commandPane);
 								}
 
