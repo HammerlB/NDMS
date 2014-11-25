@@ -65,7 +65,7 @@ public class TemplateTest
 			
 			ArrayList<Section> sectionsInterfaces = new ArrayList<Section>();
 			
-			for(int i = 0; i < 24; i++)
+			for(int i = 1; i < 24; i++)
 			{
 				sectionsInterfaces.add(new Section("Interface fa0/" + i + " Configuration:"));
 			}
@@ -84,7 +84,23 @@ public class TemplateTest
 				
 				commandInterfaceSetShutdownOption.getParameters().add(parameterInterfaceSetShutdownOptionFalse);
 				
-				Command commandInterfaceSetVlan = new Command("vlan", "", "None", true);
+				Command commandInterfaceSetMode = new Command("switchport mode", "ObjecttypeSelectOne", "None", true);
+				
+				Parameter parameterInterfaceSetModeOptionAccess = new Parameter(0, "access", "Access", "None", "", "", true, false);
+				
+				Parameter parameterInterfaceSetModeOptionTrunk = new Parameter(0, "trunk", "Trunk", "None", "", "", true, false);
+				
+				Parameter parameterInterfaceSetModeOptionDynamic = new Parameter(0, "dynamic", "Dynamic", "None", "", "", true, false);
+				
+				//TEST123
+				
+				commandInterfaceSetMode.getParameters().add(parameterInterfaceSetModeOptionAccess);
+				
+				commandInterfaceSetMode.getParameters().add(parameterInterfaceSetModeOptionTrunk);
+						
+				commandInterfaceSetMode.getParameters().add(parameterInterfaceSetModeOptionDynamic);
+				
+				Command commandInterfaceSetVlan = new Command("switchport access vlan", "", "None", true);
 				
 				Parameter parameterInterfaceSetVlan = new Parameter(0, "Vlan", "Vlan", "DatatypeVlan", "1", "", true, false);
 				
