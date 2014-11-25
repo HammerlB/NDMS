@@ -5,9 +5,12 @@ import java.util.ArrayList;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.scene.control.CheckBox;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
+@XStreamAlias("Command")
 @SuppressWarnings("serial")
 public class Command implements Serializable
 {
@@ -21,7 +24,11 @@ public class Command implements Serializable
 	@XStreamOmitField
 	private BooleanProperty activated;
 	
+	@XStreamAlias("Parameters")
 	private ArrayList<Parameter> parameters;
+	
+	@XStreamOmitField
+	private CheckBox checkbox;
 	
 	public Command(String name, String alias, String type, boolean appendParameters)
 	{
@@ -147,6 +154,16 @@ public class Command implements Serializable
 		this.parameters = parameters;
 	}
 	
+	public CheckBox getCheckbox()
+	{
+		return checkbox;
+	}
+
+	public void setCheckbox(CheckBox checkbox)
+	{
+		this.checkbox = checkbox;
+	}
+
 	public void deactivateChildren()
 	{
 		for(Parameter parameter: getParameters())

@@ -3,11 +3,16 @@ package at.bmlvs.NDMS.domain.templates;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.control.CheckBox;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
+@XStreamAlias("Template")
 @SuppressWarnings("serial")
 public class Template implements Serializable
 {
@@ -15,19 +20,26 @@ public class Template implements Serializable
 	private String version;
 	private String os_version;
 	private String device_type;
-	
+
+	@XStreamOmitField
+	private BooleanProperty activated;
+
+	@XStreamAlias("Snippets")
 	private ArrayList<Snippet> snippets;
-	
+
 	@XStreamOmitField
 	private StringProperty output;
-	
+
+	@XStreamOmitField
+	private CheckBox checkbox;
+
 	public Template(String name, String version, String os_version, String device_type)
 	{
 		setName(name);
 		setVersion(version);
 		setOs_version(os_version);
 		setDevice_type(device_type);
-		
+
 		setSnippets(new ArrayList<Snippet>());
 	}
 
@@ -80,7 +92,7 @@ public class Template implements Serializable
 	{
 		this.snippets = snippets;
 	}
-	
+
 	public final String getOutput()
 	{
 		if (output != null)
@@ -105,83 +117,195 @@ public class Template implements Serializable
 
 		return output;
 	}
-	
+
+	public final boolean isActivated()
+	{
+		if (activated != null)
+		{
+			return activated.get();
+		}
+
+		return false;
+	}
+
+	public final void setActivated(boolean activated)
+	{
+		this.activatedProperty().set(activated);
+	}
+
+	public final BooleanProperty activatedProperty()
+	{
+		if (activated == null)
+		{
+			activated = new SimpleBooleanProperty();
+		}
+
+		return activated;
+	}
+
+	public CheckBox getCheckbox()
+	{
+		return checkbox;
+	}
+
+	public void setCheckbox(CheckBox checkbox)
+	{
+		this.checkbox = checkbox;
+	}
+
 	public void sortSnippets()
 	{
-		//Needs to be implemented.
+		// Needs to be implemented.
 	}
-	
+
+	// public String receiveTemplateOutputAsString()
+	// {
+	// String receivedOutput = "";
+	//
+	// for(Snippet snippet: getSnippets())
+	// {
+	// if(snippet.isActivated() == true)
+	// {
+	// for(Section section: snippet.getSections())
+	// {
+	// if(section.isActivated() == true)
+	// {
+	// for(Command command: section.getCommands())
+	// {
+	// if(command.isActivated() == true)
+	// {
+	// receivedOutput += command.getName();
+	//
+	// for(Parameter parameter: command.getParameters())
+	// {
+	// receivedOutput += " " + parameter.getParameterOutput();
+	// }
+	//
+	// receivedOutput += "\n";
+	// }
+	// }
+	// }
+	// }
+	// }
+	// }
+	//
+	// setOutput(receivedOutput);
+	//
+	// return receivedOutput;
+	// }
+
 	public String receiveTemplateOutputAsString()
 	{
 		String receivedOutput = "";
-		
-		for(Snippet snippet: getSnippets())
+
+		for (Snippet snippet : getSnippets())
 		{
-			if(snippet.isActivated() == true)
+			for (Section section : snippet.getSections())
 			{
-				for(Section section: snippet.getSections())
+				for (Command command : section.getCommands())
 				{
-					if(section.isActivated() == true)
+					if (command.isActivated() == true)
 					{
-						for(Command command: section.getCommands())
+						receivedOutput += command.getName();
+
+						for (Parameter parameter : command.getParameters())
 						{
-							if(command.isActivated() == true)
-							{
-								receivedOutput += command.getName();
-								
-								for(Parameter parameter: command.getParameters())
-								{
-									receivedOutput += " " + parameter.getParameterOutput();
-								}
-								
-								receivedOutput += "\n";
-							}
+							receivedOutput += " " + parameter.getParameterOutput();
 						}
+
+						receivedOutput += "\n";
 					}
 				}
 			}
 		}
-		
+
 		setOutput(receivedOutput);
-		
+
 		return receivedOutput;
 	}
-	
+
+	// public ArrayList<String> receiveTemplateOutputAsArrayList()
+	// {
+	// ArrayList<String> receivedOutput = new ArrayList<String>();
+	//
+	// for (Snippet snippet : getSnippets())
+	// {
+	// if (snippet.isActivated() == true)
+	// {
+	// for (Section section : snippet.getSections())
+	// {
+	// if (section.isActivated() == true)
+	// {
+	// for (Command command : section.getCommands())
+	// {
+	// if (command.isActivated() == true)
+	// {
+	// String cmd = "";
+	// cmd += command.getName();
+	//
+	// for (Parameter parameter : command.getParameters())
+	// {
+	// cmd += " " + parameter.getParameterOutput();
+	// }
+	//
+	// receivedOutput.add(cmd);
+	// }
+	// }
+	// }
+	// }
+	// }
+	// }
+	//
+	// return receivedOutput;
+	// }
+
 	public ArrayList<String> receiveTemplateOutputAsArrayList()
 	{
 		ArrayList<String> receivedOutput = new ArrayList<String>();
-		
-		for(Snippet snippet: getSnippets())
+
+		for (Snippet snippet : getSnippets())
 		{
-			if(snippet.isActivated() == true)
+			for (Section section : snippet.getSections())
 			{
-				for(Section section: snippet.getSections())
+				for (Command command : section.getCommands())
 				{
-					if(section.isActivated() == true)
+					if (command.isActivated() == true)
 					{
-						for(Command command: section.getCommands())
+						String cmd = "";
+						cmd += command.getName();
+
+						for (Parameter parameter : command.getParameters())
 						{
-							if(command.isActivated() == true)
-							{
-								String cmd = "";
-								cmd += command.getName();
-								
-								for(Parameter parameter: command.getParameters())
-								{
-									cmd += " " + parameter.getParameterOutput();
-								}
-								
-								receivedOutput.add(cmd);
-							}
+							cmd += " " + parameter.getParameterOutput();
 						}
+
+						receivedOutput.add(cmd);
 					}
 				}
 			}
 		}
-		
+
 		return receivedOutput;
 	}
-	
+
+	public void deactivateChildren()
+	{
+		for (Snippet snippet : getSnippets())
+		{
+			snippet.getCheckbox().setSelected(false);
+			snippet.deactivateChildren();
+		}
+	}
+
+	public void activateChildren()
+	{
+		for (Snippet snippet : getSnippets())
+		{
+			snippet.getCheckbox().setSelected(true);
+			snippet.activateChildren();
+		}
+	}
+
 	public String getFullName()
 	{
 		return getDevice_type() + "-" + getName() + "-" + getVersion() + "-" + getOs_version();
