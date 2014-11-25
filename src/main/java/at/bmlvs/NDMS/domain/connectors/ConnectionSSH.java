@@ -24,6 +24,7 @@ public class ConnectionSSH extends TerminalConnector implements Runnable {
 	private String user;
 	private String pass;
 	private String fingerprint;
+	private String output;
 	private InputStream in;
 	private OutputStream out;
 	private boolean connected, noOutput;
@@ -51,6 +52,7 @@ public class ConnectionSSH extends TerminalConnector implements Runnable {
 		this.host = host;
 		this.user = user;
 		this.pass = pass;
+		this.output = "";
 		connected = false;
 		noOutput=true;
 	}
@@ -124,9 +126,10 @@ public class ConnectionSSH extends TerminalConnector implements Runnable {
 			while (true) {
 				if(connected&&noOutput){
 					this.read = in.read(buffer);
-//					System.out.print(new String(buffer, 0, read));
+					output+= new String(buffer, 0, read);
 				}else if(connected&&!noOutput){
 					this.read = in.read(buffer);
+					output+= new String(buffer, 0, read);
 					System.out.print(new String(buffer, 0, read));
 				}else{
 					Thread.sleep(5000);
@@ -230,6 +233,24 @@ public class ConnectionSSH extends TerminalConnector implements Runnable {
 	public void setRead(int read) {
 		this.read = read;
 	}
+	
+	public void begin(){
+		output="";
+	}
+	
+	public void end(){
+		System.out.println(output);
+	}
+
+	public String getOutput() {
+		return output;
+	}
+
+	public void setOutput(String output) {
+		this.output = output;
+	}
+	
+	
 
 	// @Override
 	// public void run() {

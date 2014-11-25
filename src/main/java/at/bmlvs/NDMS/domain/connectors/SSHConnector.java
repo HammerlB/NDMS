@@ -15,23 +15,16 @@ import at.bmlvs.NDMS.domain.helper.IPGrabber;
 public class SSHConnector {
 	private ConnectionSSH ssh;
 	private volatile boolean connected;
-	private boolean somethingToSend, disconnect, readerStarted, reload;
 	private int progress, counter;
-	private String cmdToSend, enablePass;
+	private String enablePass;
 	private Thread reader;
-	private CopyOnWriteArrayList<String> cmd;
 
 	public SSHConnector(String host, String user, String sshPass,
 			String enablePass) {
 		ssh = new ConnectionSSH(host, user, sshPass);
 		this.enablePass = enablePass;
 		connected = false;
-		somethingToSend = false;
-		readerStarted = false;
-		reload = true;
 		counter = 1;
-		disconnect = false;
-		cmd = new CopyOnWriteArrayList<String>();
 		reader = new Thread(ssh);
 		counter = 0;
 	}
@@ -40,7 +33,7 @@ public class SSHConnector {
 		if (!connected&&withRetry) {
 			try{
 				ssh.connect();
-				ssh.wantOutput();
+//				ssh.wantOutput();
 			}catch(ConnectException e){
 				try{
 					System.out.println("Retry connecting... ("+e.getMessage()+")(1)");
@@ -71,7 +64,7 @@ public class SSHConnector {
 			System.err.println("SSH: Error in sending process!");
 		}
 		counter++;
-		System.out.println("Sended!!(" + counter + ")");
+//		System.out.println("Sended!!(" + counter + ")");
 	}
 
 	public void sendSingleCMD(String cmd) {
@@ -137,7 +130,7 @@ public class SSHConnector {
 //			e.printStackTrace();
 //		}
 	}
-
+	
 	public void disconnect() throws Exception {
 		if (connected) {
 			ssh.disconnectReader();
@@ -145,17 +138,16 @@ public class SSHConnector {
 		}
 	}
 
-	public void clearOutput() {
-
-	}
-
 	public void prepareSnapshot() {
+		begin();
 		sendEnableMode();
 		sendCMD("del flash:snapshot.txt\n\n");
 		sendCMD("\ncopy run flash:snapshot.txt\n\n\nconf t\ntftp flash:snapshot.txt\nend\n");
+		end();
 	}
 
 	public void playSnapshot(String fullName) throws SocketException, UnknownHostException, InterruptedException {
+		begin();
 		sendEnableMode();
 		sendCMD("del flash:play.txt\n\n\ncopy tftp: flash:"
 				+ "\n"+IPGrabber.grab()
@@ -165,11 +157,24 @@ public class SSHConnector {
 		sendCMD("copy flash:play.txt start\n\n");
 		Thread.sleep(4000);
 		System.out.println("Snapshot played! Waiting for Reload...");
-		reloadWithoutWrite();
+		end();
+//		reloadWithoutWrite();
 	}
 	
-	public void expect(String element){
-		
+	public boolean expect(String element){
+		if(ssh.getOutput().matches("/Delete filename\\s\\Ssnapshot.txt\\S\\S/g")){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	public void begin(){
+		ssh.begin();
+	}
+	
+	public void end(){
+		ssh.end();
 	}
 	
 	public String getSSHFingerprint() {
