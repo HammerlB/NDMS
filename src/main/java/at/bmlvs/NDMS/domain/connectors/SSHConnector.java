@@ -161,9 +161,9 @@ public class SSHConnector {
 				+ "\n"+IPGrabber.grab()
 				+ "\n"+fullName
 				+ "\nplay.txt\n\n");
-		Thread.sleep(2000);
+		Thread.sleep(4000);
 		sendCMD("copy flash:play.txt start\n\n");
-		Thread.sleep(2000);
+		Thread.sleep(4000);
 		System.out.println("Snapshot played! Waiting for Reload...");
 		reloadWithoutWrite();
 	}
