@@ -290,7 +290,7 @@ public class MainWindowController extends VBox
 									GridPane paraPane = new GridPane();
 
 									Label paranamelabel = new Label(parameter.getAlias());
-
+									
 									// paranamelabel.setStyle("-fx-font-size: 11;");
 									paranamelabel.setPadding(new Insets(10, 10, 10, 10));
 									
