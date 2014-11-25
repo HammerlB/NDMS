@@ -198,6 +198,7 @@ public class MainWindowController extends VBox
 		{
 			StackPane viewstack = new StackPane();
 			ScrollPane sp = new ScrollPane();
+			VBox overtheleftbox = new VBox();
 			VBox leftbox = new VBox();
 
 			SplitPane splitter = new SplitPane();
@@ -639,7 +640,8 @@ public class MainWindowController extends VBox
 			}
 
 			Button einspielen = new Button("Einspielen");
-
+			einspielen.setPadding(new Insets(10, 10, 10, 10));
+			
 			einspielen.setOnAction(new EventHandler<ActionEvent>()
 			{
 				@SuppressWarnings("static-access")
@@ -697,11 +699,15 @@ public class MainWindowController extends VBox
 				}
 			});
 
-			leftbox.getChildren().add(einspielen);
 			sp.setContent(leftbox);
-			splitter.getItems().addAll(sp, show);
+			
+			
+			overtheleftbox.getChildren().add(sp);
+			overtheleftbox.getChildren().add(einspielen);
+			
+			splitter.getItems().addAll(overtheleftbox, show);
 			splitter.setDividerPositions(0.6f, 0.4f);
-
+			
 			viewstack.getChildren().add(splitter);
 
 			// PresentationService.getMainWindowController().getTabPane().getTabs().get(id).getContent();
