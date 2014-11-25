@@ -535,7 +535,7 @@ public class MainWindowController extends VBox
 										dataString
 												.setId("" + parameter.getId());
 
-										paraPane.add(dataString, 1, 0);
+										paraPane.add(dataString, 2, 0);
 										dataString
 												.focusedProperty()
 												.addListener(
