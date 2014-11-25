@@ -2,11 +2,15 @@ package at.bmlvs.NDMS.presentation;
 
 import java.io.IOException;
 
+import javax.naming.Binding;
 import javax.swing.event.ChangeEvent;
 
+import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 
 import com.sshtools.j2ssh.transport.Service;
+import com.sun.javafx.binding.BidirectionalBinding;
 
 import at.bmlvs.NDMS.domain.instances.InstanceOnline;
 import at.bmlvs.NDMS.domain.templates.Command;
@@ -225,15 +229,47 @@ public class MainWindowController extends VBox
 
 					for (Snippet snippet : template.getElement().getSnippets())
 					{
-						snippet.setActivated(true);
-						
-						// UEBERSCHRIFT NAME DES SNIPPETS
 						Label snipnamelabel = new Label(snippet.getName());
-						GridPane snippetGrid = new GridPane();
-
 						snipnamelabel
 								.setStyle("-fx-font-weight: bold;-fx-font-size: 14;");
 						snipnamelabel.setPadding(new Insets(10, 10, 10, 10));
+
+						snippet.setActivated(true);
+
+						snippet.activatedProperty().addListener(
+								new ChangeListener<Object>()
+								{
+									@Override
+									public void changed(
+											ObservableValue<? extends Object> arg0,
+											Object old_val, Object new_val)
+									{
+										boolean oldValue = (Boolean) old_val;
+										boolean newValue = (Boolean) new_val;
+										
+										System.out.println("FIRED SNIPPETPROPERTY: " + newValue);
+
+//										snippet.setActivated(!newValue);
+
+										if (newValue == true)
+										{
+											snippet.activateChildren();
+										}
+										else
+										{
+											snippet.deactivateChildren();
+										}
+
+										show.setText(template
+												.getElement()
+												.receiveTemplateOutputAsString());
+
+										snipnamelabel.setDisable(!newValue);
+									}
+								});
+
+						// UEBERSCHRIFT NAME DES SNIPPETS
+						GridPane snippetGrid = new GridPane();
 
 						CheckBox checksnippet = new CheckBox();
 
@@ -249,45 +285,60 @@ public class MainWindowController extends VBox
 											ObservableValue<? extends Boolean> observable,
 											Boolean old_val, Boolean new_val)
 									{
-										old_val = !old_val;
-										new_val = !new_val;
+										System.out.println("FIRED SNIPPETCHECKBOX: " + !new_val);
 										
-										snippet.setActivated(new_val);
-										
-										System.out
-										.println("CHANGED SNIPPET: " + new_val);
-										
-										snipnamelabel.setDisable(!new_val);
-										
-										if (new_val == true)
-										{
-											snippet.activateChildren();
-										}
-										else
-										{
-											snippet.deactivateChildren();
-										}
-										
-										show.setText(template
-												.getElement()
-												.receiveTemplateOutputAsString());
+										snippet.setActivated(!new_val);
 									}
 								});
-						
-//						snippet.activatedProperty().bind(checksnippet.selectedProperty());
+
+						// snippet.activatedProperty().bind(checksnippet.selectedProperty());
+
+						// Bindings.bindBidirectional(snippet.activatedProperty(),
+						// checksnippet.selectedProperty());
 
 						for (Section section : snippet.getSections())
 						{
 							section.setActivated(true);
-							
+
 							// UEBERSCHRIFT NAME DER SECTION
 							Label secnamelabel = new Label(section.getName());
-
-							GridPane sectionGrid = new GridPane();
-
 							secnamelabel
 									.setStyle("-fx-font-weight: bold;-fx-font-size: 11;");
 							secnamelabel.setPadding(new Insets(10, 10, 10, 10));
+
+							section.activatedProperty().addListener(
+									new ChangeListener<Object>()
+									{
+										@Override
+										public void changed(
+												ObservableValue<? extends Object> arg0,
+												Object old_val, Object new_val)
+										{
+											boolean oldValue = (Boolean) old_val;
+											boolean newValue = (Boolean) new_val;
+											
+											System.out.println("FIRED SECTIONPROPERTY: " + newValue);
+
+//											section.setActivated(newValue);
+
+											if (newValue == true)
+											{
+												section.activateChildren();
+											}
+											else
+											{
+												section.deactivateChildren();
+											}
+
+											show.setText(template
+													.getElement()
+													.receiveTemplateOutputAsString());
+
+											secnamelabel.setDisable(!newValue);
+										}
+									});
+
+							GridPane sectionGrid = new GridPane();
 
 							CheckBox checksection = new CheckBox();
 							checksection.selectedProperty().addListener(
@@ -297,32 +348,16 @@ public class MainWindowController extends VBox
 												ObservableValue<? extends Boolean> ov,
 												Boolean old_val, Boolean new_val)
 										{
-											old_val = !old_val;
-											new_val = !new_val;
+											System.out.println("FIRED SECTIONCHECKBOX: " + !new_val);
 											
-											section.setActivated(new_val);
-											
-											System.out
-											.println("CHANGED SECTION: " + new_val);
-											
-											secnamelabel.setDisable(!new_val);
-											
-											if(new_val == true)
-											{
-												section.activateChildren();
-											}
-											else
-											{
-												section.deactivateChildren();
-											}
-											
-											show.setText(template
-													.getElement()
-													.receiveTemplateOutputAsString());
+											section.setActivated(!new_val);
 										}
 									});
-							
-//							section.activatedProperty().bind(checksection.selectedProperty());
+
+							// section.activatedProperty().bind(checksection.selectedProperty());
+
+							// Bindings.bindBidirectional(section.activatedProperty(),
+							// checksection.selectedProperty());
 
 							sectionGrid.add(checksection, 0, 0);
 							sectionGrid.add(secnamelabel, 1, 0);
@@ -331,45 +366,73 @@ public class MainWindowController extends VBox
 							for (Command command : section.getCommands())
 							{
 								command.setActivated(true);
-								
+
 								if (command.isHidden() == false)
 								{
 									GridPane commandPane = new GridPane();
 
 									Label commandlabel = new Label(
 											command.getAlias());
-									
-									CheckBox checkcommand = new CheckBox();
-									checkcommand.selectedProperty().addListener(
-											new ChangeListener<Boolean>()
-											{
-												public void changed(
-														ObservableValue<? extends Boolean> ov,
-														Boolean old_val, Boolean new_val)
-												{
-										
-													old_val = !old_val;
-													new_val = !new_val;
-													
-													command.setActivated(new_val);
-													
-													System.out
-															.println("CHANGED COMMAND: " + new_val);
-													
-													commandlabel.setDisable(!new_val);
-													
-													show.setText(template
-															.getElement()
-															.receiveTemplateOutputAsString());
-												}
-											});
-									
-//									command.activatedProperty().bind(checkcommand.selectedProperty());
-
 									commandlabel.setPadding(new Insets(10, 10,
 											10, 10));
 
 									commandPane.add(commandlabel, 0, 0);
+
+									command.activatedProperty().addListener(
+											new ChangeListener<Object>()
+											{
+												@Override
+												public void changed(
+														ObservableValue<? extends Object> arg0,
+														Object old_val,
+														Object new_val)
+												{
+													boolean oldValue = (Boolean) old_val;
+													boolean newValue = (Boolean) new_val;
+													
+													System.out.println("FIRED COMMANDPROPERTY: " + newValue);
+
+//													command.setActivated(newValue);
+													
+													if (newValue == true)
+													{
+														command.activateChildren();
+													}
+													else
+													{
+														command.deactivateChildren();
+													}
+
+													show.setText(template
+															.getElement()
+															.receiveTemplateOutputAsString());
+
+													commandlabel
+															.setDisable(!newValue);
+												}
+											});
+
+									CheckBox checkcommand = new CheckBox();
+									checkcommand
+											.selectedProperty()
+											.addListener(
+													new ChangeListener<Boolean>()
+													{
+														public void changed(
+																ObservableValue<? extends Boolean> ov,
+																Boolean old_val,
+																Boolean new_val)
+														{
+															System.out.println("FIRED COMMANDCHECKBOX: " + !new_val);
+															
+															command.setActivated(!new_val);
+														}
+													});
+
+									// Bindings.bindBidirectional(command.activatedProperty(),
+									// checkcommand.selectedProperty());
+
+									// command.activatedProperty().bind(checkcommand.selectedProperty());
 
 									leftbox.getChildren().add(new CheckBox());
 									leftbox.getChildren().add(commandPane);
@@ -389,6 +452,32 @@ public class MainWindowController extends VBox
 											10, 10));
 
 									paraPane.add(paranamelabel, 1, 0);
+									
+									parameter.activatedProperty().addListener(
+											new ChangeListener<Object>()
+											{
+												@Override
+												public void changed(
+														ObservableValue<? extends Object> arg0,
+														Object old_val,
+														Object new_val)
+												{
+													boolean oldValue = (Boolean) old_val;
+													boolean newValue = (Boolean) new_val;
+													
+													System.out.println("FIRED PARAMETERPROPERTY: " + newValue);
+
+//													parameter.setActivated(newValue);
+
+													show.setText(template
+															.getElement()
+															.receiveTemplateOutputAsString());
+
+													paranamelabel.setDisable(!newValue);
+													paraPane.setDisable(!newValue);
+												}
+											});
+
 
 									if (parameter.getType().equals(
 											"DatatypeString"))

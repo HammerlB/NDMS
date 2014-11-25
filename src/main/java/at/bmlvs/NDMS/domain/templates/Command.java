@@ -146,4 +146,20 @@ public class Command implements Serializable
 	{
 		this.parameters = parameters;
 	}
+	
+	public void deactivateChildren()
+	{
+		for(Parameter parameter: getParameters())
+		{
+			parameter.setActivated(false);
+		}
+	}
+	
+	public void activateChildren()
+	{
+		for(Parameter parameter: getParameters())
+		{
+			parameter.setActivated(true);
+		}
+	}
 }
