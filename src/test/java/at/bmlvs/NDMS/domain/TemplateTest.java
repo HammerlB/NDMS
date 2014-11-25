@@ -76,9 +76,9 @@ public class TemplateTest
 				
 				Command commandInterfaceSetShutdownOption = new Command("shutdown", "Configure Shutdown", "ObjecttypeSelectOne", false);
 				
-				Parameter parameterInterfaceSetShutdownOptionTrue = new Parameter(0, "Shutdown", "", "None", "", "", true, false);
+				Parameter parameterInterfaceSetShutdownOptionTrue = new Parameter(0, "", "Shutdown", "None", "", "", true, false);
 				
-				Parameter parameterInterfaceSetShutdownOptionFalse = new Parameter(1, "No Shutdown", "no", "None", "", "", true, false);
+				Parameter parameterInterfaceSetShutdownOptionFalse = new Parameter(1, "no", "No Shutdown", "None", "", "", true, false);
 				
 				commandInterfaceSetShutdownOption.getParameters().add(parameterInterfaceSetShutdownOptionTrue);
 				

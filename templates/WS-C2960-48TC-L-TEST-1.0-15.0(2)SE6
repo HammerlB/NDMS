@@ -8,16 +8,32 @@
       <name>Basic-Snippet</name>
       <prev>None</prev>
       <next>Interface-Snippet</next>
+      <activated class="javafx.beans.property.SimpleBooleanProperty">
+        <name></name>
+        <value>true</value>
+        <valid>false</valid>
+      </activated>
       <sections>
         <at.bmlvs.NDMS.domain.templates.Section>
           <name>Basic Device Configurations</name>
+          <activated class="javafx.beans.property.SimpleBooleanProperty">
+            <name></name>
+            <value>true</value>
+            <valid>false</valid>
+          </activated>
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>hostname</name>
-              <alias></alias>
-              <hidden>true</hidden>
+              <alias>Configure Hostname</alias>
+              <type>None</type>
+              <hidden>false</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters>
                 <at.bmlvs.NDMS.domain.templates.Parameter>
                   <id>0</id>
@@ -35,6 +51,11 @@
         </at.bmlvs.NDMS.domain.templates.Section>
         <at.bmlvs.NDMS.domain.templates.Section>
           <name>SNMP Configuration</name>
+          <activated class="javafx.beans.property.SimpleBooleanProperty">
+            <name></name>
+            <value>true</value>
+            <valid>false</valid>
+          </activated>
           <commands/>
         </at.bmlvs.NDMS.domain.templates.Section>
       </sections>
@@ -43,24 +64,46 @@
       <name>Interface-Snippet</name>
       <prev>Basic-Snippet</prev>
       <next>None</next>
+      <activated class="javafx.beans.property.SimpleBooleanProperty">
+        <name></name>
+        <value>true</value>
+        <valid>false</valid>
+      </activated>
       <sections>
         <at.bmlvs.NDMS.domain.templates.Section>
           <name>Interface fa0/0 Configuration:</name>
+          <activated class="javafx.beans.property.SimpleBooleanProperty">
+            <name></name>
+            <value>true</value>
+            <valid>false</valid>
+          </activated>
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>interface fa0/0</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters/>
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>vlan</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters>
                 <at.bmlvs.NDMS.domain.templates.Parameter>
                   <id>0</id>
@@ -78,21 +121,38 @@
         </at.bmlvs.NDMS.domain.templates.Section>
         <at.bmlvs.NDMS.domain.templates.Section>
           <name>Interface fa0/1 Configuration:</name>
+          <activated class="javafx.beans.property.SimpleBooleanProperty">
+            <name></name>
+            <value>true</value>
+            <valid>false</valid>
+          </activated>
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>interface fa0/1</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters/>
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>vlan</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters>
                 <at.bmlvs.NDMS.domain.templates.Parameter>
                   <id>0</id>
@@ -110,21 +170,38 @@
         </at.bmlvs.NDMS.domain.templates.Section>
         <at.bmlvs.NDMS.domain.templates.Section>
           <name>Interface fa0/2 Configuration:</name>
+          <activated class="javafx.beans.property.SimpleBooleanProperty">
+            <name></name>
+            <value>true</value>
+            <valid>false</valid>
+          </activated>
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>interface fa0/2</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters/>
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>vlan</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters>
                 <at.bmlvs.NDMS.domain.templates.Parameter>
                   <id>0</id>
@@ -142,21 +219,38 @@
         </at.bmlvs.NDMS.domain.templates.Section>
         <at.bmlvs.NDMS.domain.templates.Section>
           <name>Interface fa0/3 Configuration:</name>
+          <activated class="javafx.beans.property.SimpleBooleanProperty">
+            <name></name>
+            <value>true</value>
+            <valid>false</valid>
+          </activated>
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>interface fa0/3</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters/>
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>vlan</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters>
                 <at.bmlvs.NDMS.domain.templates.Parameter>
                   <id>0</id>
@@ -174,21 +268,38 @@
         </at.bmlvs.NDMS.domain.templates.Section>
         <at.bmlvs.NDMS.domain.templates.Section>
           <name>Interface fa0/4 Configuration:</name>
+          <activated class="javafx.beans.property.SimpleBooleanProperty">
+            <name></name>
+            <value>true</value>
+            <valid>false</valid>
+          </activated>
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>interface fa0/4</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters/>
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>vlan</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters>
                 <at.bmlvs.NDMS.domain.templates.Parameter>
                   <id>0</id>
@@ -206,21 +317,38 @@
         </at.bmlvs.NDMS.domain.templates.Section>
         <at.bmlvs.NDMS.domain.templates.Section>
           <name>Interface fa0/5 Configuration:</name>
+          <activated class="javafx.beans.property.SimpleBooleanProperty">
+            <name></name>
+            <value>true</value>
+            <valid>false</valid>
+          </activated>
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>interface fa0/5</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters/>
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>vlan</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters>
                 <at.bmlvs.NDMS.domain.templates.Parameter>
                   <id>0</id>
@@ -238,21 +366,38 @@
         </at.bmlvs.NDMS.domain.templates.Section>
         <at.bmlvs.NDMS.domain.templates.Section>
           <name>Interface fa0/6 Configuration:</name>
+          <activated class="javafx.beans.property.SimpleBooleanProperty">
+            <name></name>
+            <value>true</value>
+            <valid>false</valid>
+          </activated>
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>interface fa0/6</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters/>
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>vlan</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters>
                 <at.bmlvs.NDMS.domain.templates.Parameter>
                   <id>0</id>
@@ -270,21 +415,38 @@
         </at.bmlvs.NDMS.domain.templates.Section>
         <at.bmlvs.NDMS.domain.templates.Section>
           <name>Interface fa0/7 Configuration:</name>
+          <activated class="javafx.beans.property.SimpleBooleanProperty">
+            <name></name>
+            <value>true</value>
+            <valid>false</valid>
+          </activated>
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>interface fa0/7</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters/>
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>vlan</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters>
                 <at.bmlvs.NDMS.domain.templates.Parameter>
                   <id>0</id>
@@ -302,21 +464,38 @@
         </at.bmlvs.NDMS.domain.templates.Section>
         <at.bmlvs.NDMS.domain.templates.Section>
           <name>Interface fa0/8 Configuration:</name>
+          <activated class="javafx.beans.property.SimpleBooleanProperty">
+            <name></name>
+            <value>true</value>
+            <valid>false</valid>
+          </activated>
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>interface fa0/8</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters/>
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>vlan</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters>
                 <at.bmlvs.NDMS.domain.templates.Parameter>
                   <id>0</id>
@@ -334,21 +513,38 @@
         </at.bmlvs.NDMS.domain.templates.Section>
         <at.bmlvs.NDMS.domain.templates.Section>
           <name>Interface fa0/9 Configuration:</name>
+          <activated class="javafx.beans.property.SimpleBooleanProperty">
+            <name></name>
+            <value>true</value>
+            <valid>false</valid>
+          </activated>
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>interface fa0/9</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters/>
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>vlan</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters>
                 <at.bmlvs.NDMS.domain.templates.Parameter>
                   <id>0</id>
@@ -366,21 +562,38 @@
         </at.bmlvs.NDMS.domain.templates.Section>
         <at.bmlvs.NDMS.domain.templates.Section>
           <name>Interface fa0/10 Configuration:</name>
+          <activated class="javafx.beans.property.SimpleBooleanProperty">
+            <name></name>
+            <value>true</value>
+            <valid>false</valid>
+          </activated>
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>interface fa0/10</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters/>
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>vlan</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters>
                 <at.bmlvs.NDMS.domain.templates.Parameter>
                   <id>0</id>
@@ -398,21 +611,38 @@
         </at.bmlvs.NDMS.domain.templates.Section>
         <at.bmlvs.NDMS.domain.templates.Section>
           <name>Interface fa0/11 Configuration:</name>
+          <activated class="javafx.beans.property.SimpleBooleanProperty">
+            <name></name>
+            <value>true</value>
+            <valid>false</valid>
+          </activated>
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>interface fa0/11</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters/>
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>vlan</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters>
                 <at.bmlvs.NDMS.domain.templates.Parameter>
                   <id>0</id>
@@ -430,21 +660,38 @@
         </at.bmlvs.NDMS.domain.templates.Section>
         <at.bmlvs.NDMS.domain.templates.Section>
           <name>Interface fa0/12 Configuration:</name>
+          <activated class="javafx.beans.property.SimpleBooleanProperty">
+            <name></name>
+            <value>true</value>
+            <valid>false</valid>
+          </activated>
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>interface fa0/12</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters/>
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>vlan</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters>
                 <at.bmlvs.NDMS.domain.templates.Parameter>
                   <id>0</id>
@@ -462,21 +709,38 @@
         </at.bmlvs.NDMS.domain.templates.Section>
         <at.bmlvs.NDMS.domain.templates.Section>
           <name>Interface fa0/13 Configuration:</name>
+          <activated class="javafx.beans.property.SimpleBooleanProperty">
+            <name></name>
+            <value>true</value>
+            <valid>false</valid>
+          </activated>
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>interface fa0/13</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters/>
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>vlan</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters>
                 <at.bmlvs.NDMS.domain.templates.Parameter>
                   <id>0</id>
@@ -494,21 +758,38 @@
         </at.bmlvs.NDMS.domain.templates.Section>
         <at.bmlvs.NDMS.domain.templates.Section>
           <name>Interface fa0/14 Configuration:</name>
+          <activated class="javafx.beans.property.SimpleBooleanProperty">
+            <name></name>
+            <value>true</value>
+            <valid>false</valid>
+          </activated>
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>interface fa0/14</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters/>
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>vlan</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters>
                 <at.bmlvs.NDMS.domain.templates.Parameter>
                   <id>0</id>
@@ -526,21 +807,38 @@
         </at.bmlvs.NDMS.domain.templates.Section>
         <at.bmlvs.NDMS.domain.templates.Section>
           <name>Interface fa0/15 Configuration:</name>
+          <activated class="javafx.beans.property.SimpleBooleanProperty">
+            <name></name>
+            <value>true</value>
+            <valid>false</valid>
+          </activated>
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>interface fa0/15</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters/>
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>vlan</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters>
                 <at.bmlvs.NDMS.domain.templates.Parameter>
                   <id>0</id>
@@ -558,21 +856,38 @@
         </at.bmlvs.NDMS.domain.templates.Section>
         <at.bmlvs.NDMS.domain.templates.Section>
           <name>Interface fa0/16 Configuration:</name>
+          <activated class="javafx.beans.property.SimpleBooleanProperty">
+            <name></name>
+            <value>true</value>
+            <valid>false</valid>
+          </activated>
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>interface fa0/16</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters/>
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>vlan</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters>
                 <at.bmlvs.NDMS.domain.templates.Parameter>
                   <id>0</id>
@@ -590,21 +905,38 @@
         </at.bmlvs.NDMS.domain.templates.Section>
         <at.bmlvs.NDMS.domain.templates.Section>
           <name>Interface fa0/17 Configuration:</name>
+          <activated class="javafx.beans.property.SimpleBooleanProperty">
+            <name></name>
+            <value>true</value>
+            <valid>false</valid>
+          </activated>
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>interface fa0/17</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters/>
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>vlan</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters>
                 <at.bmlvs.NDMS.domain.templates.Parameter>
                   <id>0</id>
@@ -622,21 +954,38 @@
         </at.bmlvs.NDMS.domain.templates.Section>
         <at.bmlvs.NDMS.domain.templates.Section>
           <name>Interface fa0/18 Configuration:</name>
+          <activated class="javafx.beans.property.SimpleBooleanProperty">
+            <name></name>
+            <value>true</value>
+            <valid>false</valid>
+          </activated>
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>interface fa0/18</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters/>
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>vlan</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters>
                 <at.bmlvs.NDMS.domain.templates.Parameter>
                   <id>0</id>
@@ -654,21 +1003,38 @@
         </at.bmlvs.NDMS.domain.templates.Section>
         <at.bmlvs.NDMS.domain.templates.Section>
           <name>Interface fa0/19 Configuration:</name>
+          <activated class="javafx.beans.property.SimpleBooleanProperty">
+            <name></name>
+            <value>true</value>
+            <valid>false</valid>
+          </activated>
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>interface fa0/19</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters/>
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>vlan</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters>
                 <at.bmlvs.NDMS.domain.templates.Parameter>
                   <id>0</id>
@@ -686,21 +1052,38 @@
         </at.bmlvs.NDMS.domain.templates.Section>
         <at.bmlvs.NDMS.domain.templates.Section>
           <name>Interface fa0/20 Configuration:</name>
+          <activated class="javafx.beans.property.SimpleBooleanProperty">
+            <name></name>
+            <value>true</value>
+            <valid>false</valid>
+          </activated>
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>interface fa0/20</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters/>
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>vlan</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters>
                 <at.bmlvs.NDMS.domain.templates.Parameter>
                   <id>0</id>
@@ -718,21 +1101,38 @@
         </at.bmlvs.NDMS.domain.templates.Section>
         <at.bmlvs.NDMS.domain.templates.Section>
           <name>Interface fa0/21 Configuration:</name>
+          <activated class="javafx.beans.property.SimpleBooleanProperty">
+            <name></name>
+            <value>true</value>
+            <valid>false</valid>
+          </activated>
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>interface fa0/21</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters/>
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>vlan</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters>
                 <at.bmlvs.NDMS.domain.templates.Parameter>
                   <id>0</id>
@@ -750,21 +1150,38 @@
         </at.bmlvs.NDMS.domain.templates.Section>
         <at.bmlvs.NDMS.domain.templates.Section>
           <name>Interface fa0/22 Configuration:</name>
+          <activated class="javafx.beans.property.SimpleBooleanProperty">
+            <name></name>
+            <value>true</value>
+            <valid>false</valid>
+          </activated>
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>interface fa0/22</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters/>
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>vlan</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters>
                 <at.bmlvs.NDMS.domain.templates.Parameter>
                   <id>0</id>
@@ -782,21 +1199,38 @@
         </at.bmlvs.NDMS.domain.templates.Section>
         <at.bmlvs.NDMS.domain.templates.Section>
           <name>Interface fa0/23 Configuration:</name>
+          <activated class="javafx.beans.property.SimpleBooleanProperty">
+            <name></name>
+            <value>true</value>
+            <valid>false</valid>
+          </activated>
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>interface fa0/23</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters/>
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
               <name>vlan</name>
               <alias></alias>
+              <type>None</type>
               <hidden>true</hidden>
               <appendParameters>true</appendParameters>
+              <activated class="javafx.beans.property.SimpleBooleanProperty">
+                <name></name>
+                <value>true</value>
+                <valid>false</valid>
+              </activated>
               <parameters>
                 <at.bmlvs.NDMS.domain.templates.Parameter>
                   <id>0</id>
