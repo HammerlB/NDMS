@@ -38,7 +38,9 @@ public class TFTPSender {
 
 	private void send() throws TFTPException, SocketException, UnknownHostException, InterruptedException {
 		if (snapshotToSend != "UNDEFINED" && fingerprint != "UNDEFINED") {
+			ssh.begin();
 			ssh.playSnapshot(snapshotToSend);
+			ssh.end();
 		} else if (snapshotToSend == "UNDEFINED") {
 			throw new TFTPException("The snapshot to send is undefined");
 		} else if (fingerprint == "UNDEFINED") {

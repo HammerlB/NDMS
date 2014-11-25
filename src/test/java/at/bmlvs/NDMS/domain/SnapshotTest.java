@@ -32,7 +32,7 @@ public class SnapshotTest {
 //			tftp.takeInitialSnapshot();
 //			tftp.takeSnapshot("abc", "desc", ssh);
 //			tftp.takeSnapshot("abc", "desc", ssh);
-			tftps.playSnapshot("ddd.txt", ssh);
+//			tftps.playSnapshot("ddd.txt", ssh);
 //			tftp.deleteSnapshot(ServiceFactory.getPersistenceService().getSnapshots().get(1).getElement().getFullName(), ssh);
 //			tftps.playSnapshot("asd", ssh);
 			
