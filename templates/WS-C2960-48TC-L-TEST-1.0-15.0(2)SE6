@@ -71,7 +71,7 @@
       </activated>
       <sections>
         <at.bmlvs.NDMS.domain.templates.Section>
-          <name>Interface fa0/0 Configuration:</name>
+          <name>Interface fa0/1 Configuration:</name>
           <activated class="javafx.beans.property.SimpleBooleanProperty">
             <name></name>
             <value>true</value>
@@ -94,56 +94,7 @@
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
-              <activated class="javafx.beans.property.SimpleBooleanProperty">
-                <name></name>
-                <value>true</value>
-                <valid>false</valid>
-              </activated>
-              <parameters>
-                <at.bmlvs.NDMS.domain.templates.Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
-                </at.bmlvs.NDMS.domain.templates.Parameter>
-              </parameters>
-            </at.bmlvs.NDMS.domain.templates.Command>
-          </commands>
-        </at.bmlvs.NDMS.domain.templates.Section>
-        <at.bmlvs.NDMS.domain.templates.Section>
-          <name>Interface fa0/1 Configuration:</name>
-          <activated class="javafx.beans.property.SimpleBooleanProperty">
-            <name></name>
-            <value>true</value>
-            <valid>false</valid>
-          </activated>
-          <commands>
-            <at.bmlvs.NDMS.domain.templates.Command>
-              <id>0</id>
-              <name>interface fa0/1</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
-              <activated class="javafx.beans.property.SimpleBooleanProperty">
-                <name></name>
-                <value>true</value>
-                <valid>false</valid>
-              </activated>
-              <parameters/>
-            </at.bmlvs.NDMS.domain.templates.Command>
-            <at.bmlvs.NDMS.domain.templates.Command>
-              <id>0</id>
-              <name>vlan</name>
+              <name>switchport access vlan</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -178,7 +129,7 @@
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>interface fa0/2</name>
+              <name>interface fa0/1</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -192,7 +143,7 @@
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>vlan</name>
+              <name>switchport access vlan</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -227,7 +178,7 @@
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>interface fa0/3</name>
+              <name>interface fa0/2</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -241,7 +192,7 @@
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>vlan</name>
+              <name>switchport access vlan</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -276,7 +227,7 @@
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>interface fa0/4</name>
+              <name>interface fa0/3</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -290,7 +241,7 @@
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>vlan</name>
+              <name>switchport access vlan</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -325,7 +276,7 @@
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>interface fa0/5</name>
+              <name>interface fa0/4</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -339,7 +290,7 @@
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>vlan</name>
+              <name>switchport access vlan</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -374,7 +325,7 @@
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>interface fa0/6</name>
+              <name>interface fa0/5</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -388,7 +339,7 @@
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>vlan</name>
+              <name>switchport access vlan</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -423,7 +374,7 @@
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>interface fa0/7</name>
+              <name>interface fa0/6</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -437,7 +388,7 @@
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>vlan</name>
+              <name>switchport access vlan</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -472,7 +423,7 @@
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>interface fa0/8</name>
+              <name>interface fa0/7</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -486,7 +437,7 @@
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>vlan</name>
+              <name>switchport access vlan</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -521,7 +472,7 @@
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>interface fa0/9</name>
+              <name>interface fa0/8</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -535,7 +486,7 @@
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>vlan</name>
+              <name>switchport access vlan</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -570,7 +521,7 @@
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>interface fa0/10</name>
+              <name>interface fa0/9</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -584,7 +535,7 @@
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>vlan</name>
+              <name>switchport access vlan</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -619,7 +570,7 @@
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>interface fa0/11</name>
+              <name>interface fa0/10</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -633,7 +584,7 @@
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>vlan</name>
+              <name>switchport access vlan</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -668,7 +619,7 @@
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>interface fa0/12</name>
+              <name>interface fa0/11</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -682,7 +633,7 @@
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>vlan</name>
+              <name>switchport access vlan</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -717,7 +668,7 @@
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>interface fa0/13</name>
+              <name>interface fa0/12</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -731,7 +682,7 @@
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>vlan</name>
+              <name>switchport access vlan</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -766,7 +717,7 @@
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>interface fa0/14</name>
+              <name>interface fa0/13</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -780,7 +731,7 @@
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>vlan</name>
+              <name>switchport access vlan</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -815,7 +766,7 @@
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>interface fa0/15</name>
+              <name>interface fa0/14</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -829,7 +780,7 @@
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>vlan</name>
+              <name>switchport access vlan</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -864,7 +815,7 @@
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>interface fa0/16</name>
+              <name>interface fa0/15</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -878,7 +829,7 @@
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>vlan</name>
+              <name>switchport access vlan</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -913,7 +864,7 @@
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>interface fa0/17</name>
+              <name>interface fa0/16</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -927,7 +878,7 @@
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>vlan</name>
+              <name>switchport access vlan</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -962,7 +913,7 @@
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>interface fa0/18</name>
+              <name>interface fa0/17</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -976,7 +927,7 @@
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>vlan</name>
+              <name>switchport access vlan</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -1011,7 +962,7 @@
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>interface fa0/19</name>
+              <name>interface fa0/18</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -1025,7 +976,7 @@
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>vlan</name>
+              <name>switchport access vlan</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -1060,7 +1011,7 @@
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>interface fa0/20</name>
+              <name>interface fa0/19</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -1074,7 +1025,7 @@
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>vlan</name>
+              <name>switchport access vlan</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -1109,7 +1060,7 @@
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>interface fa0/21</name>
+              <name>interface fa0/20</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -1123,7 +1074,7 @@
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>vlan</name>
+              <name>switchport access vlan</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -1158,7 +1109,7 @@
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>interface fa0/22</name>
+              <name>interface fa0/21</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -1172,7 +1123,7 @@
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>vlan</name>
+              <name>switchport access vlan</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -1207,7 +1158,7 @@
           <commands>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>interface fa0/23</name>
+              <name>interface fa0/22</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
@@ -1221,7 +1172,7 @@
             </at.bmlvs.NDMS.domain.templates.Command>
             <at.bmlvs.NDMS.domain.templates.Command>
               <id>0</id>
-              <name>vlan</name>
+              <name>switchport access vlan</name>
               <alias></alias>
               <type>None</type>
               <hidden>true</hidden>
