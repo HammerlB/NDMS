@@ -2,6 +2,11 @@ package at.bmlvs.NDMS.domain.templates;
 
 import java.io.Serializable;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 @SuppressWarnings("serial")
 public class Parameter implements Serializable
 {
@@ -13,6 +18,9 @@ public class Parameter implements Serializable
 	private String value;
 	private boolean used;
 	private boolean useName;
+	
+	@XStreamOmitField
+	private BooleanProperty activated;
 	
 	public Parameter(int id, String name, String alias, String type, String defaultValue, String value, boolean used, boolean useName)
 	{
@@ -100,6 +108,31 @@ public class Parameter implements Serializable
 	public void setUseName(boolean useName)
 	{
 		this.useName = useName;
+	}
+	
+	public final boolean isActivated()
+	{
+		if (activated != null)
+		{
+			return activated.get();
+		}
+
+		return false;
+	}
+
+	public final void setActivated(boolean activated)
+	{
+		this.activatedProperty().set(activated);
+	}
+
+	public final BooleanProperty activatedProperty()
+	{
+		if (activated == null)
+		{
+			activated = new SimpleBooleanProperty();
+		}
+
+		return activated;
 	}
 
 	public String getParameterOutput()
