@@ -82,9 +82,9 @@ public class MainWindowController extends VBox
 				"xml/MainWindow.fxml"));
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);
-		
+
 		tabBorderPane = new BorderPane();
-		
+
 		try
 		{
 			fxmlLoader.load();
@@ -195,14 +195,14 @@ public class MainWindowController extends VBox
 			StackPane viewstack = new StackPane();
 			ScrollPane sp = new ScrollPane();
 			VBox leftbox = new VBox();
-			
+
 			SplitPane splitter = new SplitPane();
 			splitter.setOrientation(Orientation.HORIZONTAL);
 
 			TextArea show = new TextArea();
 			show.disableProperty();
 			show.setEditable(false);
-			
+
 			for (TemplateToPathLinker template : ServiceFactory
 					.getPersistenceService().getTemplates())
 			{
@@ -214,71 +214,163 @@ public class MainWindowController extends VBox
 				{
 					// UEBERSCHRIFT NAME DES TEMPLATES
 
-					Label tempnamelabel = new Label(template.getElement().getFullName());
+					Label tempnamelabel = new Label(template.getElement()
+							.getFullName());
 
-					tempnamelabel.setStyle("-fx-font-weight: bold;-fx-font-size: 15;");
+					tempnamelabel
+							.setStyle("-fx-font-weight: bold;-fx-font-size: 15;");
 					tempnamelabel.setPadding(new Insets(10, 10, 10, 10));
 
 					leftbox.getChildren().add(tempnamelabel);
 
 					for (Snippet snippet : template.getElement().getSnippets())
 					{
+						snippet.setActivated(true);
+						
 						// UEBERSCHRIFT NAME DES SNIPPETS
 						Label snipnamelabel = new Label(snippet.getName());
 						GridPane snippetGrid = new GridPane();
-						
-						snipnamelabel.setStyle("-fx-font-weight: bold;-fx-font-size: 14;");
+
+						snipnamelabel
+								.setStyle("-fx-font-weight: bold;-fx-font-size: 14;");
 						snipnamelabel.setPadding(new Insets(10, 10, 10, 10));
-						
+
 						CheckBox checksnippet = new CheckBox();
 
 						snippetGrid.add(checksnippet, 0, 0);
 						snippetGrid.add(snipnamelabel, 1, 0);
 						leftbox.getChildren().add(snippetGrid);
-						
-						checksnippet.selectedProperty().addListener(new ChangeListener<Boolean>() {
-						    @Override
-						    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 
-						    	if (checksnippet.isSelected() == true)
+						checksnippet.selectedProperty().addListener(
+								new ChangeListener<Boolean>()
 								{
-						    		snipnamelabel.setDisable(false);
-								} else {
-									snipnamelabel.setDisable(true);
-								}
-						    }
-						});
+									@Override
+									public void changed(
+											ObservableValue<? extends Boolean> observable,
+											Boolean old_val, Boolean new_val)
+									{
+										old_val = !old_val;
+										new_val = !new_val;
+										
+										snippet.setActivated(new_val);
+										
+										System.out
+										.println("CHANGED SNIPPET: " + new_val);
+										
+										snipnamelabel.setDisable(!new_val);
+										
+										if (new_val == true)
+										{
+											snippet.activateChildren();
+										}
+										else
+										{
+											snippet.deactivateChildren();
+										}
+										
+										show.setText(template
+												.getElement()
+												.receiveTemplateOutputAsString());
+									}
+								});
 						
+//						snippet.activatedProperty().bind(checksnippet.selectedProperty());
+
 						for (Section section : snippet.getSections())
 						{
+							section.setActivated(true);
+							
 							// UEBERSCHRIFT NAME DER SECTION
 							Label secnamelabel = new Label(section.getName());
-							
+
 							GridPane sectionGrid = new GridPane();
-							
-							secnamelabel.setStyle("-fx-font-weight: bold;-fx-font-size: 11;");
+
+							secnamelabel
+									.setStyle("-fx-font-weight: bold;-fx-font-size: 11;");
 							secnamelabel.setPadding(new Insets(10, 10, 10, 10));
-							
+
 							CheckBox checksection = new CheckBox();
+							checksection.selectedProperty().addListener(
+									new ChangeListener<Boolean>()
+									{
+										public void changed(
+												ObservableValue<? extends Boolean> ov,
+												Boolean old_val, Boolean new_val)
+										{
+											old_val = !old_val;
+											new_val = !new_val;
+											
+											section.setActivated(new_val);
+											
+											System.out
+											.println("CHANGED SECTION: " + new_val);
+											
+											secnamelabel.setDisable(!new_val);
+											
+											if(new_val == true)
+											{
+												section.activateChildren();
+											}
+											else
+											{
+												section.deactivateChildren();
+											}
+											
+											show.setText(template
+													.getElement()
+													.receiveTemplateOutputAsString());
+										}
+									});
+							
+//							section.activatedProperty().bind(checksection.selectedProperty());
 
 							sectionGrid.add(checksection, 0, 0);
 							sectionGrid.add(secnamelabel, 1, 0);
 							leftbox.getChildren().add(sectionGrid);
-							
+
 							for (Command command : section.getCommands())
 							{
+								command.setActivated(true);
+								
 								if (command.isHidden() == false)
 								{
 									GridPane commandPane = new GridPane();
-									
+
 									Label commandlabel = new Label(
 											command.getAlias());
 									
+									CheckBox checkcommand = new CheckBox();
+									checkcommand.selectedProperty().addListener(
+											new ChangeListener<Boolean>()
+											{
+												public void changed(
+														ObservableValue<? extends Boolean> ov,
+														Boolean old_val, Boolean new_val)
+												{
+										
+													old_val = !old_val;
+													new_val = !new_val;
+													
+													command.setActivated(new_val);
+													
+													System.out
+															.println("CHANGED COMMAND: " + new_val);
+													
+													commandlabel.setDisable(!new_val);
+													
+													show.setText(template
+															.getElement()
+															.receiveTemplateOutputAsString());
+												}
+											});
+									
+//									command.activatedProperty().bind(checkcommand.selectedProperty());
+
 									commandlabel.setPadding(new Insets(10, 10,
 											10, 10));
 
 									commandPane.add(commandlabel, 0, 0);
-									
+
 									leftbox.getChildren().add(new CheckBox());
 									leftbox.getChildren().add(commandPane);
 								}
@@ -289,16 +381,17 @@ public class MainWindowController extends VBox
 
 									GridPane paraPane = new GridPane();
 
-									Label paranamelabel = new Label(parameter.getAlias());
+									Label paranamelabel = new Label(
+											parameter.getAlias());
 
 									// paranamelabel.setStyle("-fx-font-size: 11;");
-									paranamelabel.setPadding(new Insets(10, 10, 10, 10));
-									
-									CheckBox checkcommand = new CheckBox();
-									paraPane.add(checkcommand, 0, 0);
+									paranamelabel.setPadding(new Insets(10, 10,
+											10, 10));
+
 									paraPane.add(paranamelabel, 1, 0);
 
-									if (parameter.getType().equals("DatatypeString"))
+									if (parameter.getType().equals(
+											"DatatypeString"))
 									{
 										TextField dataString = new TextField(
 												parameter.getDefaultValue());
@@ -332,7 +425,7 @@ public class MainWindowController extends VBox
 																			.setDefaultValue(dataString
 																					.getText());
 																	template.setChanged(true);
-																	//System.out.println(template.getPath());
+																	// System.out.println(template.getPath());
 																	show.setText(template
 																			.getElement()
 																			.receiveTemplateOutputAsString());
@@ -341,7 +434,8 @@ public class MainWindowController extends VBox
 														});
 
 									}
-									if (parameter.getType().equals("DatatypeVlan"))
+									if (parameter.getType().equals(
+											"DatatypeVlan"))
 									{
 										// WICHTIG Restriced Textfield!!!!
 										TextField dataString = new TextField(
@@ -350,7 +444,6 @@ public class MainWindowController extends VBox
 										dataString
 												.setId("" + parameter.getId());
 
-										
 										paraPane.add(dataString, 1, 0);
 										dataString
 												.focusedProperty()
@@ -376,7 +469,7 @@ public class MainWindowController extends VBox
 																	parameter
 																			.setDefaultValue(dataString
 																					.getText());
-																	//System.out.println(template.getPath());
+																	// System.out.println(template.getPath());
 																	template.setChanged(true);
 																	show.setText(template
 																			.getElement()
@@ -385,17 +478,17 @@ public class MainWindowController extends VBox
 															}
 														});
 									}
-									
-									show.setText(template
-											.getElement()
+
+									show.setText(template.getElement()
 											.receiveTemplateOutputAsString());
-									
+
 									leftbox.getChildren().add(paraPane);
 								}
 							}
 						}
 					}
 				}
+
 			}
 
 			Button einspielen = new Button("Einspielen");
@@ -456,18 +549,18 @@ public class MainWindowController extends VBox
 							.saveAllChangedTemplates();
 				}
 			});
-			
-			
+
 			leftbox.getChildren().add(einspielen);
 			sp.setContent(leftbox);
 			splitter.getItems().addAll(sp, show);
 			splitter.setDividerPositions(0.6f, 0.4f);
 
 			viewstack.getChildren().add(splitter);
-			
-			//PresentationService.getMainWindowController().getTabPane().getTabs().get(id).getContent();
-			
-			PresentationService.getMainWindowController().getTabBorderPane().setCenter(viewstack);
+
+			// PresentationService.getMainWindowController().getTabPane().getTabs().get(id).getContent();
+
+			PresentationService.getMainWindowController().getTabBorderPane()
+					.setCenter(viewstack);
 
 		}
 		catch (Exception e)

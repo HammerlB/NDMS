@@ -48,7 +48,7 @@ public class TemplateTest
 			Section sectionBasicDeviceConfigurations = new Section("Basic Device Configurations");
 			
 			//String name, String alias, boolean appendParameters
-			Command commandSetHostname = new Command("hostname", "", "None", true);
+			Command commandSetHostname = new Command("hostname", "Configure Hostname", "None", true);
 			
 			//int id, String name, String alias, String type, String defaultValue, String value, boolean used, boolean useName
 			Parameter parameterSetHostname = new Parameter(0, "Hostname", "Hostname", "DatatypeString", "GWDSWITCH", "", true, false);
@@ -74,7 +74,7 @@ public class TemplateTest
 			{
 				Command commandSetInterface = new Command("interface fa0/" + sectionsInterfaces.indexOf(sectionInterface), "", "None", true);
 				
-				Command commandInterfaceSetShutdownOption = new Command("shutdown", "Shutdown", "ObjecttypeSelectOne", false);
+				Command commandInterfaceSetShutdownOption = new Command("shutdown", "Configure Shutdown", "ObjecttypeSelectOne", false);
 				
 				Parameter parameterInterfaceSetShutdownOptionTrue = new Parameter(0, "Shutdown", "", "None", "", "", true, false);
 				

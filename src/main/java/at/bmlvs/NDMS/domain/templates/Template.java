@@ -153,19 +153,28 @@ public class Template implements Serializable
 		
 		for(Snippet snippet: getSnippets())
 		{
-			for(Section section: snippet.getSections())
+			if(snippet.isActivated() == true)
 			{
-				for(Command command: section.getCommands())
+				for(Section section: snippet.getSections())
 				{
-					String cmd = "";
-					cmd += command.getName();
-					
-					for(Parameter parameter: command.getParameters())
+					if(section.isActivated() == true)
 					{
-						cmd += " " + parameter.getParameterOutput();
+						for(Command command: section.getCommands())
+						{
+							if(command.isActivated() == true)
+							{
+								String cmd = "";
+								cmd += command.getName();
+								
+								for(Parameter parameter: command.getParameters())
+								{
+									cmd += " " + parameter.getParameterOutput();
+								}
+								
+								receivedOutput.add(cmd);
+							}
+						}
 					}
-					
-					receivedOutput.add(cmd);
 				}
 			}
 		}
