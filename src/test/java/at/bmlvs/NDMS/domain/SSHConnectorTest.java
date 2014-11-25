@@ -7,13 +7,15 @@ import at.bmlvs.NDMS.domain.connectors.SSHConnector;
 public class SSHConnectorTest {
 
 	public static void main(String[] args) {
-		SSHConnector ssh = new SSHConnector("192.168.1.12", "Herkel",
+		SSHConnector ssh = new SSHConnector("192.168.1.11", "Herkel",
 				"gwdH_2014", "gwd_2014");
 		try {
 			ssh.connect(true);
-			ArrayList<String> a = new ArrayList<String>();
-			for (int i = 1; i <= 48; i++) {
-				a.add("int f0/" + i + "\nno desc trololol1");
+			ssh.sendEnableMode();
+			ssh.sendSingleCMD("delete flash:snapshot.txt");
+			while(true){
+				System.out.println(ssh.getSSHConnection().getOutput());
+				Thread.sleep(1000);
 			}
 //			ssh.sendMultipleCMD(a);
 //			ssh.sendConfigMode();
@@ -22,7 +24,7 @@ public class SSHConnectorTest {
 //			ssh.saveRunningConfig();
 //			ssh.reloadWithWrite();
 //			ssh.reloadWithoutWrite();
-			ssh.disconnect();
+//			ssh.disconnect();
 			// try {
 			// Thread.sleep(10000); // 1000 milliseconds is one second.
 			// } catch (InterruptedException ex) {
