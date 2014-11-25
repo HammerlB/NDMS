@@ -365,18 +365,21 @@ public class MainWindowController extends VBox
 
 							for (Command command : section.getCommands())
 							{
+								
 								command.setActivated(true);
 
 								if (command.isHidden() == false)
 								{
 									GridPane commandPane = new GridPane();
-
+									
+									CheckBox checkcommand = new CheckBox();
 									Label commandlabel = new Label(
 											command.getAlias());
 									commandlabel.setPadding(new Insets(10, 10,
 											10, 10));
-
-									commandPane.add(commandlabel, 0, 0);
+									
+									commandPane.add(checkcommand,0,0);
+									commandPane.add(commandlabel, 1, 0);
 
 									command.activatedProperty().addListener(
 											new ChangeListener<Object>()
@@ -412,7 +415,7 @@ public class MainWindowController extends VBox
 												}
 											});
 
-									CheckBox checkcommand = new CheckBox();
+									
 									checkcommand
 											.selectedProperty()
 											.addListener(
@@ -434,7 +437,6 @@ public class MainWindowController extends VBox
 
 									// command.activatedProperty().bind(checkcommand.selectedProperty());
 
-									leftbox.getChildren().add(new CheckBox());
 									leftbox.getChildren().add(commandPane);
 								}
 
@@ -533,6 +535,49 @@ public class MainWindowController extends VBox
 										dataString
 												.setId("" + parameter.getId());
 
+										paraPane.add(dataString, 2, 0);
+										dataString
+												.focusedProperty()
+												.addListener(
+														new ChangeListener<Boolean>()
+														{
+															@Override
+															public void changed(
+																	ObservableValue<? extends Boolean> arg0,
+																	Boolean oldPropertyValue,
+																	Boolean newPropertyValue)
+															{
+																if (newPropertyValue)
+																{
+																	// System.out.println("Textfield on focus");
+																}
+																else
+																{
+																	// System.out.println("Textfield lost focus");
+																	parameter
+																			.setValue(dataString
+																					.getText());
+																	parameter
+																			.setDefaultValue(dataString
+																					.getText());
+																	// System.out.println(template.getPath());
+																	template.setChanged(true);
+																	show.setText(template
+																			.getElement()
+																			.receiveTemplateOutputAsString());
+																}
+															}
+														});
+									}
+									if (parameter.getType().equals("DatatypeObject"))
+									{
+										// WICHTIG Restriced Textfield!!!!
+										TextField dataString = new TextField(
+												parameter.getDefaultValue());
+
+										dataString
+												.setId("" + parameter.getId());
+
 										paraPane.add(dataString, 1, 0);
 										dataString
 												.focusedProperty()
@@ -567,7 +612,6 @@ public class MainWindowController extends VBox
 															}
 														});
 									}
-
 									show.setText(template.getElement()
 											.receiveTemplateOutputAsString());
 

@@ -69,8 +69,8 @@ public class Main extends Application
 		stage.setScene(new Scene(ServiceFactory.getPresentationService().getMainWindowController()));
 		stage.setTitle("NDMS");
 		stage.getIcons().add(new Image("file:icons/ndms.png"));
-		stage.setWidth(800);
-		stage.setHeight(700);
+		//stage.setWidth(800);
+		//stage.setHeight(700);
 		stage.setMaximized(true);
 		stage.show();
 		
