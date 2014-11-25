@@ -88,6 +88,8 @@ public class TemplateTest
 				
 				Parameter parameterInterfaceSetVlan = new Parameter(0, "Vlan", "Vlan", "DatatypeVlan", "1", "", true, false);
 				
+				//TEST
+				
 				commandInterfaceSetVlan.getParameters().add(parameterInterfaceSetVlan);
 				
 				sectionInterface.getCommands().add(commandSetInterface);
