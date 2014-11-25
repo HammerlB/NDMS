@@ -65,14 +65,14 @@ public class TemplateTest
 			
 			ArrayList<Section> sectionsInterfaces = new ArrayList<Section>();
 			
-			for(int i = 1; i < 24; i++)
+			for(int i = 1; i <= 24; i++)
 			{
 				sectionsInterfaces.add(new Section("Interface fa0/" + i + " Configuration:"));
 			}
 			
 			for(Section sectionInterface: sectionsInterfaces)
 			{
-				Command commandSetInterface = new Command("interface fa0/" + sectionsInterfaces.indexOf(sectionInterface), "", "None", true);
+				Command commandSetInterface = new Command("interface fa0/" + (sectionsInterfaces.indexOf(sectionInterface) + 1), "", "None", true);
 				
 				Command commandInterfaceSetShutdownOption = new Command("shutdown", "Configure Shutdown", "ObjecttypeSelectOne", false);
 				
