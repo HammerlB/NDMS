@@ -27,14 +27,13 @@ public class SnapshotTest {
 		TFTPSender tftps = new TFTPSender();
 		
 		try {
+			
 			ssh.connect(true);
-			tftps.setActiveConnection(ssh);
 			tftpc.takeSnapshot("Hallo", "trallalla", ssh);
-			tftps.playSnapshot(ServiceFactory.getPersistenceService().getSnapshots().get(0).getElement().getFullName(), ssh);
 //			tftp.takeInitialSnapshot();
 //			tftp.takeSnapshot("abc", "desc", ssh);
 //			tftp.takeSnapshot("abc", "desc", ssh);
-			JOptionPane.showMessageDialog(null, "Disconnect?");
+			tftps.playSnapshot(ServiceFactory.getPersistenceService().getSnapshots().get(0).getElement().getFullName(), ssh);
 //			tftp.deleteSnapshot(ServiceFactory.getPersistenceService().getSnapshots().get(1).getElement().getFullName(), ssh);
 //			tftps.playSnapshot("asd", ssh);
 			

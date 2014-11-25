@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 
 import at.bmlvs.NDMS.domain.connectors.TFTPServer.ServerMode;
 import at.bmlvs.NDMS.domain.connectors.CustomExceptions.TFTPException;
@@ -30,15 +32,13 @@ public class TFTPSender {
 						.getNDMS_DEFAULT_PATH_SNAPSHOT_DIRECTORY();
 		this.mode = ServerMode.GET_ONLY;
 		this.stpl = new SnapshotToPathLinker(null, null);
-//		this.tftps = new TFTPServer(new File(readDir), new File(writeDir), mode);
-		this.tftps.setSocketTimeout(6000);
 		this.fingerprint = "UNDEFINED";
 		this.snapshotToSend = "UNDEFINED";
 	}
 
-	private void send() throws TFTPException {
+	private void send() throws TFTPException, SocketException, UnknownHostException, InterruptedException {
 		if (snapshotToSend != "UNDEFINED" && fingerprint != "UNDEFINED") {
-			
+			ssh.playSnapshot(snapshotToSend);
 		} else if (snapshotToSend == "UNDEFINED") {
 			throw new TFTPException("The snapshot to send is undefined");
 		} else if (fingerprint == "UNDEFINED") {
@@ -49,17 +49,19 @@ public class TFTPSender {
 		}
 	}
 
-	public void playSnapshot(String fullName, SSHConnector ssh) throws TFTPException, IOException {
+	public void playSnapshot(String fullName, SSHConnector ssh) throws TFTPException, IOException, InterruptedException {
 		this.snapshotToSend = fullName;
 		this.ssh = ssh;
 		setActiveConnection(ssh);
 		send();
+		Thread.sleep(5000);
 		disconnect();
 	}
 
 	public void setActiveConnection(SSHConnector ssh) throws IOException {
 		this.fingerprint = ssh.getSSHFingerprint();
 		this.tftps = new TFTPServer(new File(readDir+"\\"+fingerprint), new File(writeDir+"\\"+fingerprint), mode);
+		this.tftps.setSocketTimeout(6000);
 	}
 
 	public void setActiveConnection(String sshFingerprint) {

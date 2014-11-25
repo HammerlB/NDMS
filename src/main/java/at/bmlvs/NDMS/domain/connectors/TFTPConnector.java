@@ -160,7 +160,7 @@ public class TFTPConnector extends FileTransferConnector {
 		setSSHFingerprint(ssh.getSSHFingerprint());
 		ssh.prepareSnapshot();
 		System.out.println("Waiting for Snapshot to take!");
-		Thread.sleep(3000);
+		Thread.sleep(5000);
 		Snapshot s = new Snapshot(name, desc);
 		stpl = new SnapshotToPathLinker(s, localPath + "\\" + sshfingerprint
 				+ "\\" + s.getFullName());

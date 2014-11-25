@@ -2,12 +2,15 @@ package at.bmlvs.NDMS.domain.connectors;
 
 import java.io.IOException;
 import java.net.ConnectException;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.sshtools.j2ssh.transport.IgnoreHostKeyVerification;
 
 import at.bmlvs.NDMS.domain.connectors.CustomExceptions.SSHException;
+import at.bmlvs.NDMS.domain.helper.IPGrabber;
 
 public class SSHConnector {
 	private ConnectionSSH ssh;
@@ -37,6 +40,7 @@ public class SSHConnector {
 		if (!connected&&withRetry) {
 			try{
 				ssh.connect();
+				ssh.wantOutput();
 			}catch(ConnectException e){
 				try{
 					System.out.println("Retry connecting... ("+e.getMessage()+")(1)");
@@ -99,17 +103,19 @@ public class SSHConnector {
 		sendCMD("end\n");
 	}
 
-	public void reloadWithoutWrite() {
+	public void reloadWithoutWrite() throws InterruptedException {
+		Thread.sleep(10000);
 		sendEnableMode();
-		reload();
 		reload1();
+		reload();
 		System.err.println("Reload issued!!! (without write)");
 		System.err.println("Disconnected due reload...");
 		System.err.println("Please reconnect when device is avaliable again!");
 	}
 
-	public void reloadWithWrite() {
+	public void reloadWithWrite() throws InterruptedException {
 		saveRunningConfig();
+		Thread.sleep(10000);
 		reload();
 		System.err.println("Reload issued!!! (with write)");
 		System.err.println("Disconnected due reload...");
@@ -144,16 +150,22 @@ public class SSHConnector {
 	}
 
 	public void prepareSnapshot() {
-		sendCMD("enable\n"
-				+ enablePass
-				+ "\ncopy run flash:snapshot.txt\n\n\nconf t\ntftp flash:snapshot.txt\nend\n");
+		sendEnableMode();
+		sendCMD("del flash:snapshot.txt\n\n");
+		sendCMD("\ncopy run flash:snapshot.txt\n\n\nconf t\ntftp flash:snapshot.txt\nend\n");
 	}
 
-	public void playSnapshot(String fullName) {
-		sendCMD("enable\n"
-				+ enablePass
-				+ "\ncopy tftp: flash:"
-				+ "\n");
+	public void playSnapshot(String fullName) throws SocketException, UnknownHostException, InterruptedException {
+		sendEnableMode();
+		sendCMD("del flash:play.txt\n\n\ncopy tftp: flash:"
+				+ "\n"+IPGrabber.grab()
+				+ "\n"+fullName
+				+ "\nplay.txt\n\n");
+		Thread.sleep(2000);
+		sendCMD("copy flash:play.txt start\n\n");
+		Thread.sleep(2000);
+		System.out.println("Snapshot played! Waiting for Reload...");
+		reloadWithoutWrite();
 	}
 	
 	
