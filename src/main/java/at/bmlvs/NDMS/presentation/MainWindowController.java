@@ -54,6 +54,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -200,7 +201,8 @@ public class MainWindowController extends VBox
 			ScrollPane sp = new ScrollPane();
 			VBox overtheleftbox = new VBox();
 			VBox leftbox = new VBox();
-
+			FlowPane flowpie = new FlowPane();
+			
 			SplitPane splitter = new SplitPane();
 			splitter.setOrientation(Orientation.HORIZONTAL);
 
@@ -275,7 +277,8 @@ public class MainWindowController extends VBox
 						GridPane snippetGrid = new GridPane();
 
 						CheckBox checksnippet = new CheckBox();
-
+						
+						
 						snippetGrid.add(checksnippet, 0, 0);
 						snippetGrid.add(snipnamelabel, 1, 0);
 						leftbox.getChildren().add(snippetGrid);
@@ -345,8 +348,7 @@ public class MainWindowController extends VBox
 										}
 									});
 
-							GridPane sectionGrid = new GridPane();
-
+	
 							CheckBox checksection = new CheckBox();
 							checksection.selectedProperty().addListener(
 									new ChangeListener<Boolean>()
@@ -367,9 +369,13 @@ public class MainWindowController extends VBox
 
 							// Bindings.bindBidirectional(section.activatedProperty(),
 							// checksection.selectedProperty());
-
-							sectionGrid.add(checksection, 0, 0);
-							sectionGrid.add(secnamelabel, 1, 0);
+							GridPane sectionGrid = new GridPane();
+							Label spaceInvader1 = new Label("   ");
+							
+						
+							sectionGrid.add(spaceInvader1, 1, 0);
+							sectionGrid.add(checksection, 2, 0);
+							sectionGrid.add(secnamelabel, 3, 0);
 							leftbox.getChildren().add(sectionGrid);
 
 							for (Command command : section.getCommands())
@@ -380,16 +386,20 @@ public class MainWindowController extends VBox
 								if (command.isHidden() == false)
 								{
 									GridPane commandPane = new GridPane();
-
+									
+									Label spaceInvader2 = new Label("   ");
+									Label spaceInvader3 = new Label("   ");
 									CheckBox checkcommand = new CheckBox();
 									Label commandlabel = new Label(
 											command.getAlias());
 									commandlabel.setPadding(new Insets(10, 10,
 											10, 10));
 
-									commandPane.add(checkcommand, 0, 0);
-									commandPane.add(commandlabel, 1, 0);
-
+									commandPane.add(spaceInvader2, 0, 0);
+									commandPane.add(spaceInvader3, 1, 0);
+									commandPane.add(checkcommand, 2, 0);
+									commandPane.add(commandlabel, 3, 0);
+									
 									command.activatedProperty().addListener(
 											new ChangeListener<Object>()
 											{
@@ -461,11 +471,24 @@ public class MainWindowController extends VBox
 									Label paranamelabel = new Label(
 											parameter.getAlias());
 
+									Label spaceInvader4 = new Label("   ");
+									Label spaceInvader5 = new Label("   ");
+									Label spaceInvader6 = new Label("   ");
+									Label spaceInvader7 = new Label("   ");
+									Label spaceInvader8 = new Label("   ");
+									
+									
 									// paranamelabel.setStyle("-fx-font-size: 11;");
 									paranamelabel.setPadding(new Insets(10, 10,
 											10, 10));
 
-									paraPane.add(paranamelabel, 1, 0);
+									paraPane.add(spaceInvader4, 0, 0);
+									paraPane.add(spaceInvader5, 1, 0);
+									paraPane.add(spaceInvader6, 2, 0);
+									paraPane.add(spaceInvader7, 3, 0);
+									paraPane.add(spaceInvader8, 4, 0);
+									
+									paraPane.add(paranamelabel, 5, 0);
 
 									parameter.activatedProperty().addListener(
 											new ChangeListener<Object>()
@@ -504,7 +527,7 @@ public class MainWindowController extends VBox
 										dataString
 												.setId("" + parameter.getId());
 
-										paraPane.add(dataString, 2, 0);
+										paraPane.add(dataString, 6, 0);
 										dataString
 												.focusedProperty()
 												.addListener(
@@ -549,7 +572,7 @@ public class MainWindowController extends VBox
 										dataString
 												.setId("" + parameter.getId());
 
-										paraPane.add(dataString, 2, 0);
+										paraPane.add(dataString, 6, 0);
 										dataString
 												.focusedProperty()
 												.addListener(
@@ -593,7 +616,7 @@ public class MainWindowController extends VBox
 										dataString
 												.setId("" + parameter.getId());
 
-										paraPane.add(dataString, 1, 0);
+										paraPane.add(dataString, 6, 0);
 										dataString
 												.focusedProperty()
 												.addListener(
@@ -641,6 +664,7 @@ public class MainWindowController extends VBox
 
 			Button einspielen = new Button("Einspielen");
 			einspielen.setPadding(new Insets(10, 10, 10, 10));
+			einspielen.setAlignment(Pos.CENTER_RIGHT);
 			
 			einspielen.setOnAction(new EventHandler<ActionEvent>()
 			{
@@ -703,7 +727,8 @@ public class MainWindowController extends VBox
 			
 			
 			overtheleftbox.getChildren().add(sp);
-			overtheleftbox.getChildren().add(einspielen);
+			flowpie.getChildren().add(einspielen);
+			overtheleftbox.getChildren().add(flowpie);
 			
 			splitter.getItems().addAll(overtheleftbox, show);
 			splitter.setDividerPositions(0.6f, 0.4f);
