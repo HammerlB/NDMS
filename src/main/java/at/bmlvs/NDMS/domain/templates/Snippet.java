@@ -3,11 +3,14 @@ package at.bmlvs.NDMS.domain.templates;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.scene.control.CheckBox;
 
+@XStreamAlias("Snippet")
 @SuppressWarnings("serial")
 public class Snippet implements Serializable
 {
@@ -18,7 +21,11 @@ public class Snippet implements Serializable
 	@XStreamOmitField
 	private BooleanProperty activated;
 
+	@XStreamAlias("Sections")
 	private ArrayList<Section> sections;
+	
+	@XStreamOmitField
+	private CheckBox checkbox;
 
 	public Snippet(String name, String prev, String next)
 	{
@@ -96,11 +103,22 @@ public class Snippet implements Serializable
 		this.sections = sections;
 	}
 	
+	public CheckBox getCheckbox()
+	{
+		return checkbox;
+	}
+
+	public void setCheckbox(CheckBox checkbox)
+	{
+		this.checkbox = checkbox;
+	}
+
 	public void deactivateChildren()
 	{
 		for(Section section: getSections())
 		{
-			section.setActivated(false);
+			section.getCheckbox().setSelected(false);
+			section.deactivateChildren();
 		}
 	}
 	
@@ -108,7 +126,8 @@ public class Snippet implements Serializable
 	{
 		for(Section section: getSections())
 		{
-			section.setActivated(true);
+			section.getCheckbox().setSelected(true);
+			section.activateChildren();
 		}
 	}
 }

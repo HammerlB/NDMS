@@ -6,10 +6,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 
+import at.bmlvs.NDMS.domain.templates.Snippet;
 import at.bmlvs.NDMS.domain.templates.Template;
 import at.bmlvs.NDMS.persistence.general.TemplateDAO;
 
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
 @SuppressWarnings("serial")
@@ -22,7 +24,7 @@ public class XMLTemplateDAO implements TemplateDAO, Serializable
 		try
 		{
 			XStream xs = new XStream();
-			xs.alias("template", Template.class);
+			xs.autodetectAnnotations(true);
 
 			try
 			{
@@ -65,12 +67,13 @@ public class XMLTemplateDAO implements TemplateDAO, Serializable
 		FileInputStream fs = null;
 
 		XStream xs = new XStream(new DomDriver());
+		xs.autodetectAnnotations(true);
 		Template element = null;
 
 		try
 		{
 			fs = new FileInputStream(path);
-			xs.alias("template", Template.class);
+			xs.alias("Template", Template.class);
 
 			element = (Template) xs.fromXML(fs);
 		}

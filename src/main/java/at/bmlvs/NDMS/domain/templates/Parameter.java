@@ -4,9 +4,12 @@ import java.io.Serializable;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.scene.control.CheckBox;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
+@XStreamAlias("Parameter")
 @SuppressWarnings("serial")
 public class Parameter implements Serializable
 {

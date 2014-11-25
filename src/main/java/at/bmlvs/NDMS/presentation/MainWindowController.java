@@ -36,6 +36,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.CheckBoxTreeItem;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
@@ -83,8 +84,7 @@ public class MainWindowController extends VBox
 
 	public MainWindowController()
 	{
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
-				"xml/MainWindow.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("xml/MainWindow.fxml"));
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);
 
@@ -105,8 +105,7 @@ public class MainWindowController extends VBox
 	{
 
 		stage = new Stage();
-		Parent root = FXMLLoader
-				.load(getClass().getResource("xml/AddTab.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("xml/AddTab.fxml"));
 		Scene scene = new Scene(root);
 		stage.setTitle("Verbinden zu...");
 		stage.getIcons().add(new Image("file:icons/ndms.png"));
@@ -123,8 +122,7 @@ public class MainWindowController extends VBox
 	{
 
 		stage = new Stage();
-		Parent root = FXMLLoader.load(getClass().getResource(
-				"xml/SnapshotWindow.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("xml/SnapshotWindow.fxml"));
 		Scene scene = new Scene(root);
 		stage.setTitle("Snapshot-Manager");
 		stage.getIcons().add(new Image("file:icons/ndms.png"));
@@ -136,56 +134,40 @@ public class MainWindowController extends VBox
 
 	}
 
+	@SuppressWarnings("static-access")
 	@FXML
 	public void templatusBox()
 	{
 		templateBox.getItems().add("Templates");
 
-		for (TemplateToPathLinker template : ServiceFactory
-				.getPersistenceService().getTemplates())
+		for (TemplateToPathLinker template : ServiceFactory.getPersistenceService().getTemplates())
 		{
-			try
+			if (template.getElement() != null)
 			{
-
-				if ((template.getElement().getOs_version()
-						.equals(ServiceFactory
-								.getDomainService()
-								.getInstances()
-								.getInstances()
-								.get(ServiceFactory.getPresentationService()
-										.getMainWindowController().getTabPane()
-										.getSelectionModel().getSelectedIndex())
-								.getOs_Version()))
-						&& (template.getElement().getDevice_type()
-								.equals(ServiceFactory
-										.getDomainService()
-										.getInstances()
-										.getInstances()
-										.get(ServiceFactory
-												.getPresentationService()
-												.getMainWindowController()
-												.getTabPane()
-												.getSelectionModel()
-												.getSelectedIndex())
-										.getDevice_Type())))
+				try
 				{
+					if ((template.getElement().getOs_version().equals(ServiceFactory.getDomainService().getInstances().getInstances()
+							.get(ServiceFactory.getPresentationService().getMainWindowController().getTabPane().getSelectionModel().getSelectedIndex())
+							.getOs_Version()))
+							&& (template.getElement().getDevice_type().equals(ServiceFactory.getDomainService().getInstances().getInstances()
+									.get(ServiceFactory.getPresentationService().getMainWindowController().getTabPane().getSelectionModel().getSelectedIndex())
+									.getDevice_Type())))
+					{
 
-					templateBox.getItems().add(
-							(template.getElement().getFullName()));
+						templateBox.getItems().add((template.getElement().getFullName()));
+					}
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace();
 				}
 			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
-			}
-
 		}
 
 		templateBox.setOnAction((event) -> {
 			// System.out.println(templateBox.getSelectionModel().getSelectedItem());
 
-				if (!templateBox.getSelectionModel().getSelectedItem()
-						.equals("Templates"))
+				if (!templateBox.getSelectionModel().getSelectedItem().equals("Templates"))
 				{
 					templateview(tabPane.getSelectionModel().getSelectedIndex());
 				}
@@ -202,7 +184,7 @@ public class MainWindowController extends VBox
 			VBox overtheleftbox = new VBox();
 			VBox leftbox = new VBox();
 			FlowPane flowpie = new FlowPane();
-			
+
 			SplitPane splitter = new SplitPane();
 			splitter.setOrientation(Orientation.HORIZONTAL);
 
@@ -210,448 +192,388 @@ public class MainWindowController extends VBox
 			show.disableProperty();
 			show.setEditable(false);
 
-			for (TemplateToPathLinker template : ServiceFactory
-					.getPersistenceService().getTemplates())
+			for (TemplateToPathLinker template : ServiceFactory.getPersistenceService().getTemplates())
 			{
-				if (template
-						.getElement()
-						.getFullName()
-						.equals(templateBox.getSelectionModel()
-								.getSelectedItem()))
+				if (template.getElement().getFullName().equals(templateBox.getSelectionModel().getSelectedItem()))
 				{
 					// UEBERSCHRIFT NAME DES TEMPLATES
 
-					Label tempnamelabel = new Label(template.getElement()
-							.getFullName());
-
-					tempnamelabel
-							.setStyle("-fx-font-weight: bold;-fx-font-size: 15;");
+					Label tempnamelabel = new Label(template.getElement().getFullName());
+					tempnamelabel.setStyle("-fx-font-weight: bold;-fx-font-size: 15;");
 					tempnamelabel.setPadding(new Insets(10, 10, 10, 10));
 
-					leftbox.getChildren().add(tempnamelabel);
+					template.getElement().setActivated(true);
+
+					template.getElement().activatedProperty().addListener(new ChangeListener<Object>()
+					{
+						@Override
+						public void changed(ObservableValue<? extends Object> arg0, Object old_val, Object new_val)
+						{
+							boolean oldValue = (Boolean) old_val;
+							boolean newValue = (Boolean) new_val;
+
+							System.out.println("FIRED TEMPLATEPROPERTY: " + newValue);
+
+							// snippet.setActivated(!newValue);
+
+							if (newValue == true)
+							{
+								template.getElement().activateChildren();
+							}
+							else
+							{
+								template.getElement().deactivateChildren();
+							}
+
+							show.setText(template.getElement().receiveTemplateOutputAsString());
+
+							tempnamelabel.setDisable(!newValue);
+						}
+					});
+
+					// UEBERSCHRIFT NAME DES SNIPPETS
+					GridPane templateGrid = new GridPane();
+					
+//					CheckBoxTreeItem<String> checktemplate = 
+//				            new CheckBoxTreeItem<String>(template.getElement().getFullName());
+//					checktemplate.setExpanded(true);
+					
+					template.getElement().setCheckbox(new CheckBox());
+
+					templateGrid.add(template.getElement().getCheckbox(), 0, 0);
+					templateGrid.add(tempnamelabel, 1, 0);
+					leftbox.getChildren().add(templateGrid);
+
+					template.getElement().getCheckbox().selectedProperty().addListener(new ChangeListener<Boolean>()
+					{
+						@Override
+						public void changed(ObservableValue<? extends Boolean> observable, Boolean old_val, Boolean new_val)
+						{
+							System.out.println("FIRED TEMPLATECHECKBOX: " + !new_val);
+
+							template.getElement().setActivated(!new_val);
+						}
+					});
 
 					for (Snippet snippet : template.getElement().getSnippets())
 					{
 						Label snipnamelabel = new Label(snippet.getName());
-						snipnamelabel
-								.setStyle("-fx-font-weight: bold;-fx-font-size: 14;");
+						snipnamelabel.setStyle("-fx-font-weight: bold;-fx-font-size: 14;");
 						snipnamelabel.setPadding(new Insets(10, 10, 10, 10));
 
 						snippet.setActivated(true);
 
-						snippet.activatedProperty().addListener(
-								new ChangeListener<Object>()
+						snippet.activatedProperty().addListener(new ChangeListener<Object>()
+						{
+							@Override
+							public void changed(ObservableValue<? extends Object> arg0, Object old_val, Object new_val)
+							{
+								boolean oldValue = (Boolean) old_val;
+								boolean newValue = (Boolean) new_val;
+
+								System.out.println("FIRED SNIPPETPROPERTY: " + newValue);
+
+								// snippet.setActivated(!newValue);
+
+								if (newValue == true)
 								{
-									@Override
-									public void changed(
-											ObservableValue<? extends Object> arg0,
-											Object old_val, Object new_val)
-									{
-										boolean oldValue = (Boolean) old_val;
-										boolean newValue = (Boolean) new_val;
+									snippet.activateChildren();
+								}
+								else
+								{
+									snippet.deactivateChildren();
+								}
 
-										System.out
-												.println("FIRED SNIPPETPROPERTY: "
-														+ newValue);
+								show.setText(template.getElement().receiveTemplateOutputAsString());
 
-										// snippet.setActivated(!newValue);
-
-										if (newValue == true)
-										{
-											snippet.activateChildren();
-										}
-										else
-										{
-											snippet.deactivateChildren();
-										}
-
-										show.setText(template
-												.getElement()
-												.receiveTemplateOutputAsString());
-
-										snipnamelabel.setDisable(!newValue);
-									}
-								});
+								snipnamelabel.setDisable(!newValue);
+							}
+						});
 
 						// UEBERSCHRIFT NAME DES SNIPPETS
 						GridPane snippetGrid = new GridPane();
 
-						CheckBox checksnippet = new CheckBox();
+						Label spaceInvader0 = new Label("   ");
 						
-						
-						snippetGrid.add(checksnippet, 0, 0);
-						snippetGrid.add(snipnamelabel, 1, 0);
+						snippet.setCheckbox(new CheckBox());
+
+						snippetGrid.add(spaceInvader0, 1, 0);
+						snippetGrid.add(snippet.getCheckbox(), 2, 0);
+						snippetGrid.add(snipnamelabel, 3, 0);
 						leftbox.getChildren().add(snippetGrid);
 
-						checksnippet.selectedProperty().addListener(
-								new ChangeListener<Boolean>()
-								{
-									@Override
-									public void changed(
-											ObservableValue<? extends Boolean> observable,
-											Boolean old_val, Boolean new_val)
-									{
-										System.out
-												.println("FIRED SNIPPETCHECKBOX: "
-														+ !new_val);
+						snippet.getCheckbox().selectedProperty().addListener(new ChangeListener<Boolean>()
+						{
+							@Override
+							public void changed(ObservableValue<? extends Boolean> observable, Boolean old_val, Boolean new_val)
+							{
+								System.out.println("FIRED SNIPPETCHECKBOX: " + !new_val);
 
-										snippet.setActivated(!new_val);
-									}
-								});
+								snippet.setActivated(!new_val);
+							}
+						});
 
 						// snippet.activatedProperty().bind(checksnippet.selectedProperty());
 
-						// Bindings.bindBidirectional(snippet.activatedProperty(),
-						// checksnippet.selectedProperty());
+//						Bindings.bindBidirectional(snippet.activatedProperty(), checksnippet.selectedProperty());
 
 						for (Section section : snippet.getSections())
 						{
 							section.setActivated(true);
+							section.setCheckbox(new CheckBox());
 
 							// UEBERSCHRIFT NAME DER SECTION
 							Label secnamelabel = new Label(section.getName());
-							secnamelabel
-									.setStyle("-fx-font-weight: bold;-fx-font-size: 11;");
+							secnamelabel.setStyle("-fx-font-weight: bold;-fx-font-size: 11;");
 							secnamelabel.setPadding(new Insets(10, 10, 10, 10));
 
-							section.activatedProperty().addListener(
-									new ChangeListener<Object>()
+							section.activatedProperty().addListener(new ChangeListener<Object>()
+							{
+								@Override
+								public void changed(ObservableValue<? extends Object> arg0, Object old_val, Object new_val)
+								{
+									boolean oldValue = (Boolean) old_val;
+									boolean newValue = (Boolean) new_val;
+
+									System.out.println("FIRED SECTIONPROPERTY: " + newValue);
+
+									// section.setActivated(newValue);
+
+									if (newValue == true)
 									{
-										@Override
-										public void changed(
-												ObservableValue<? extends Object> arg0,
-												Object old_val, Object new_val)
-										{
-											boolean oldValue = (Boolean) old_val;
-											boolean newValue = (Boolean) new_val;
-
-											System.out
-													.println("FIRED SECTIONPROPERTY: "
-															+ newValue);
-
-											// section.setActivated(newValue);
-
-											if (newValue == true)
-											{
-												section.activateChildren();
-											}
-											else
-											{
-												section.deactivateChildren();
-											}
-
-											show.setText(template
-													.getElement()
-													.receiveTemplateOutputAsString());
-
-											secnamelabel.setDisable(!newValue);
-										}
-									});
-
-	
-							CheckBox checksection = new CheckBox();
-							checksection.selectedProperty().addListener(
-									new ChangeListener<Boolean>()
+										section.activateChildren();
+									}
+									else
 									{
-										public void changed(
-												ObservableValue<? extends Boolean> ov,
-												Boolean old_val, Boolean new_val)
-										{
-											System.out
-													.println("FIRED SECTIONCHECKBOX: "
-															+ !new_val);
+										section.deactivateChildren();
+									}
 
-											section.setActivated(!new_val);
-										}
-									});
+									show.setText(template.getElement().receiveTemplateOutputAsString());
+
+									secnamelabel.setDisable(!newValue);
+								}
+							});
+
+							section.getCheckbox().selectedProperty().addListener(new ChangeListener<Boolean>()
+							{
+								public void changed(ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val)
+								{
+									System.out.println("FIRED SECTIONCHECKBOX: " + !new_val);
+
+									section.setActivated(!new_val);
+								}
+							});
 
 							// section.activatedProperty().bind(checksection.selectedProperty());
 
-							// Bindings.bindBidirectional(section.activatedProperty(),
-							// checksection.selectedProperty());
+//							Bindings.bindBidirectional(section.activatedProperty(), checksection.selectedProperty());
 							GridPane sectionGrid = new GridPane();
 							Label spaceInvader1 = new Label("   ");
-							
-						
+							Label spaceInvader2 = new Label("   ");
+
 							sectionGrid.add(spaceInvader1, 1, 0);
-							sectionGrid.add(checksection, 2, 0);
-							sectionGrid.add(secnamelabel, 3, 0);
+							sectionGrid.add(spaceInvader2, 2, 0);
+							sectionGrid.add(section.getCheckbox(), 3, 0);
+							sectionGrid.add(secnamelabel, 4, 0);
 							leftbox.getChildren().add(sectionGrid);
 
 							for (Command command : section.getCommands())
 							{
-
 								command.setActivated(true);
+								
+								command.setCheckbox(new CheckBox());
 
 								if (command.isHidden() == false)
 								{
 									GridPane commandPane = new GridPane();
-									
-									Label spaceInvader2 = new Label("   ");
+
 									Label spaceInvader3 = new Label("   ");
-									CheckBox checkcommand = new CheckBox();
-									Label commandlabel = new Label(
-											command.getAlias());
-									commandlabel.setPadding(new Insets(10, 10,
-											10, 10));
+									Label spaceInvader4 = new Label("   ");
+									Label spaceInvader5 = new Label("   ");
+									Label commandlabel = new Label(command.getAlias());
+									commandlabel.setPadding(new Insets(10, 10, 10, 10));
 
-									commandPane.add(spaceInvader2, 0, 0);
-									commandPane.add(spaceInvader3, 1, 0);
-									commandPane.add(checkcommand, 2, 0);
-									commandPane.add(commandlabel, 3, 0);
-									
-									command.activatedProperty().addListener(
-											new ChangeListener<Object>()
+									commandPane.add(spaceInvader3, 0, 0);
+									commandPane.add(spaceInvader4, 1, 0);
+									commandPane.add(spaceInvader5, 2, 0);
+									commandPane.add(command.getCheckbox(), 3, 0);
+									commandPane.add(commandlabel, 4, 0);
+
+									command.activatedProperty().addListener(new ChangeListener<Object>()
+									{
+										@Override
+										public void changed(ObservableValue<? extends Object> arg0, Object old_val, Object new_val)
+										{
+											boolean oldValue = (Boolean) old_val;
+											boolean newValue = (Boolean) new_val;
+
+											System.out.println("FIRED COMMANDPROPERTY: " + newValue);
+
+											// command.setActivated(newValue);
+
+											if (newValue == true)
 											{
-												@Override
-												public void changed(
-														ObservableValue<? extends Object> arg0,
-														Object old_val,
-														Object new_val)
-												{
-													boolean oldValue = (Boolean) old_val;
-													boolean newValue = (Boolean) new_val;
+												command.activateChildren();
+											}
+											else
+											{
+												command.deactivateChildren();
+											}
 
-													System.out
-															.println("FIRED COMMANDPROPERTY: "
-																	+ newValue);
+											show.setText(template.getElement().receiveTemplateOutputAsString());
 
-													// command.setActivated(newValue);
+											commandlabel.setDisable(!newValue);
+										}
+									});
 
-													if (newValue == true)
-													{
-														command.activateChildren();
-													}
-													else
-													{
-														command.deactivateChildren();
-													}
+									command.getCheckbox().selectedProperty().addListener(new ChangeListener<Boolean>()
+									{
+										public void changed(ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val)
+										{
+											System.out.println("FIRED COMMANDCHECKBOX: " + !new_val);
 
-													show.setText(template
-															.getElement()
-															.receiveTemplateOutputAsString());
+											command.setActivated(!new_val);
+										}
+									});
 
-													commandlabel
-															.setDisable(!newValue);
-												}
-											});
-
-									checkcommand
-											.selectedProperty()
-											.addListener(
-													new ChangeListener<Boolean>()
-													{
-														public void changed(
-																ObservableValue<? extends Boolean> ov,
-																Boolean old_val,
-																Boolean new_val)
-														{
-															System.out
-																	.println("FIRED COMMANDCHECKBOX: "
-																			+ !new_val);
-
-															command.setActivated(!new_val);
-														}
-													});
-
-									// Bindings.bindBidirectional(command.activatedProperty(),
-									// checkcommand.selectedProperty());
+//									Bindings.bindBidirectional(command.activatedProperty(), checkcommand.selectedProperty());
 
 									// command.activatedProperty().bind(checkcommand.selectedProperty());
 
 									leftbox.getChildren().add(commandPane);
 								}
 
-								for (Parameter parameter : command
-										.getParameters())
+								for (Parameter parameter : command.getParameters())
 								{
 
 									GridPane paraPane = new GridPane();
 
-									Label paranamelabel = new Label(
-											parameter.getAlias());
+									Label paranamelabel = new Label(parameter.getAlias());
 
-									Label spaceInvader4 = new Label("   ");
-									Label spaceInvader5 = new Label("   ");
 									Label spaceInvader6 = new Label("   ");
 									Label spaceInvader7 = new Label("   ");
 									Label spaceInvader8 = new Label("   ");
-									
-									
-									// paranamelabel.setStyle("-fx-font-size: 11;");
-									paranamelabel.setPadding(new Insets(10, 10,
-											10, 10));
+									Label spaceInvader9 = new Label("   ");
+									Label spaceInvader10 = new Label("   ");
 
-									paraPane.add(spaceInvader4, 0, 0);
-									paraPane.add(spaceInvader5, 1, 0);
-									paraPane.add(spaceInvader6, 2, 0);
-									paraPane.add(spaceInvader7, 3, 0);
-									paraPane.add(spaceInvader8, 4, 0);
-									
+									// paranamelabel.setStyle("-fx-font-size: 11;");
+									paranamelabel.setPadding(new Insets(10, 10, 10, 10));
+
+									paraPane.add(spaceInvader6, 0, 0);
+									paraPane.add(spaceInvader7, 1, 0);
+									paraPane.add(spaceInvader8, 2, 0);
+									paraPane.add(spaceInvader9, 3, 0);
+									paraPane.add(spaceInvader10, 4, 0);
+
 									paraPane.add(paranamelabel, 5, 0);
 
-									parameter.activatedProperty().addListener(
-											new ChangeListener<Object>()
+									parameter.activatedProperty().addListener(new ChangeListener<Object>()
+									{
+										@Override
+										public void changed(ObservableValue<? extends Object> arg0, Object old_val, Object new_val)
+										{
+											boolean oldValue = (Boolean) old_val;
+											boolean newValue = (Boolean) new_val;
+
+											System.out.println("FIRED PARAMETERPROPERTY: " + newValue);
+
+											// parameter.setActivated(newValue);
+
+											show.setText(template.getElement().receiveTemplateOutputAsString());
+
+											paranamelabel.setDisable(!newValue);
+											paraPane.setDisable(!newValue);
+										}
+									});
+
+									if (parameter.getType().equals("DatatypeString"))
+									{
+										TextField dataString = new TextField(parameter.getDefaultValue());
+
+										dataString.setId("" + parameter.getId());
+
+										paraPane.add(dataString, 6, 0);
+										dataString.focusedProperty().addListener(new ChangeListener<Boolean>()
+										{
+											@Override
+											public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
 											{
-												@Override
-												public void changed(
-														ObservableValue<? extends Object> arg0,
-														Object old_val,
-														Object new_val)
+												if (newPropertyValue)
 												{
-													boolean oldValue = (Boolean) old_val;
-													boolean newValue = (Boolean) new_val;
-
-													System.out
-															.println("FIRED PARAMETERPROPERTY: "
-																	+ newValue);
-
-													// parameter.setActivated(newValue);
-
-													show.setText(template
-															.getElement()
-															.receiveTemplateOutputAsString());
-
-													paranamelabel
-															.setDisable(!newValue);
-													paraPane.setDisable(!newValue);
+													// System.out.println("Textfield on focus");
 												}
-											});
-
-									if (parameter.getType().equals(
-											"DatatypeString"))
-									{
-										TextField dataString = new TextField(
-												parameter.getDefaultValue());
-
-										dataString
-												.setId("" + parameter.getId());
-
-										paraPane.add(dataString, 6, 0);
-										dataString
-												.focusedProperty()
-												.addListener(
-														new ChangeListener<Boolean>()
-														{
-															@Override
-															public void changed(
-																	ObservableValue<? extends Boolean> arg0,
-																	Boolean oldPropertyValue,
-																	Boolean newPropertyValue)
-															{
-																if (newPropertyValue)
-																{
-																	// System.out.println("Textfield on focus");
-																}
-																else
-																{
-																	// System.out.println("Textfield lost focus");
-																	parameter
-																			.setValue(dataString
-																					.getText());
-																	parameter
-																			.setDefaultValue(dataString
-																					.getText());
-																	template.setChanged(true);
-																	// System.out.println(template.getPath());
-																	show.setText(template
-																			.getElement()
-																			.receiveTemplateOutputAsString());
-																}
-															}
-														});
+												else
+												{
+													// System.out.println("Textfield lost focus");
+													parameter.setValue(dataString.getText());
+													parameter.setDefaultValue(dataString.getText());
+													template.setChanged(true);
+													// System.out.println(template.getPath());
+													show.setText(template.getElement().receiveTemplateOutputAsString());
+												}
+											}
+										});
 
 									}
-									if (parameter.getType().equals(
-											"DatatypeVlan"))
+									if (parameter.getType().equals("DatatypeVlan"))
 									{
 										// WICHTIG Restriced Textfield!!!!
-										TextField dataString = new TextField(
-												parameter.getDefaultValue());
+										TextField dataString = new TextField(parameter.getDefaultValue());
 
-										dataString
-												.setId("" + parameter.getId());
+										dataString.setId("" + parameter.getId());
 
 										paraPane.add(dataString, 6, 0);
-										dataString
-												.focusedProperty()
-												.addListener(
-														new ChangeListener<Boolean>()
-														{
-															@Override
-															public void changed(
-																	ObservableValue<? extends Boolean> arg0,
-																	Boolean oldPropertyValue,
-																	Boolean newPropertyValue)
-															{
-																if (newPropertyValue)
-																{
-																	// System.out.println("Textfield on focus");
-																}
-																else
-																{
-																	// System.out.println("Textfield lost focus");
-																	parameter
-																			.setValue(dataString
-																					.getText());
-																	parameter
-																			.setDefaultValue(dataString
-																					.getText());
-																	// System.out.println(template.getPath());
-																	template.setChanged(true);
-																	show.setText(template
-																			.getElement()
-																			.receiveTemplateOutputAsString());
-																}
-															}
-														});
+										dataString.focusedProperty().addListener(new ChangeListener<Boolean>()
+										{
+											@Override
+											public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
+											{
+												if (newPropertyValue)
+												{
+													// System.out.println("Textfield on focus");
+												}
+												else
+												{
+													// System.out.println("Textfield lost focus");
+													parameter.setValue(dataString.getText());
+													parameter.setDefaultValue(dataString.getText());
+													// System.out.println(template.getPath());
+													template.setChanged(true);
+													show.setText(template.getElement().receiveTemplateOutputAsString());
+												}
+											}
+										});
 									}
-									if (parameter.getType().equals(
-											"DatatypeObject"))
+									if (parameter.getType().equals("DatatypeObject"))
 									{
 										// WICHTIG Restriced Textfield!!!!
-										TextField dataString = new TextField(
-												parameter.getDefaultValue());
+										TextField dataString = new TextField(parameter.getDefaultValue());
 
-										dataString
-												.setId("" + parameter.getId());
+										dataString.setId("" + parameter.getId());
 
 										paraPane.add(dataString, 6, 0);
-										dataString
-												.focusedProperty()
-												.addListener(
-														new ChangeListener<Boolean>()
-														{
-															@Override
-															public void changed(
-																	ObservableValue<? extends Boolean> arg0,
-																	Boolean oldPropertyValue,
-																	Boolean newPropertyValue)
-															{
-																if (newPropertyValue)
-																{
-																	// System.out.println("Textfield on focus");
-																}
-																else
-																{
-																	// System.out.println("Textfield lost focus");
-																	parameter
-																			.setValue(dataString
-																					.getText());
-																	parameter
-																			.setDefaultValue(dataString
-																					.getText());
-																	// System.out.println(template.getPath());
-																	template.setChanged(true);
-																	show.setText(template
-																			.getElement()
-																			.receiveTemplateOutputAsString());
-																}
-															}
-														});
+										dataString.focusedProperty().addListener(new ChangeListener<Boolean>()
+										{
+											@Override
+											public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
+											{
+												if (newPropertyValue)
+												{
+													// System.out.println("Textfield on focus");
+												}
+												else
+												{
+													// System.out.println("Textfield lost focus");
+													parameter.setValue(dataString.getText());
+													parameter.setDefaultValue(dataString.getText());
+													// System.out.println(template.getPath());
+													template.setChanged(true);
+													show.setText(template.getElement().receiveTemplateOutputAsString());
+												}
+											}
+										});
 									}
-									show.setText(template.getElement()
-											.receiveTemplateOutputAsString());
+									show.setText(template.getElement().receiveTemplateOutputAsString());
 
 									leftbox.getChildren().add(paraPane);
 								}
@@ -665,21 +587,16 @@ public class MainWindowController extends VBox
 			Button einspielen = new Button("Einspielen");
 			einspielen.setPadding(new Insets(10, 10, 10, 10));
 			einspielen.setAlignment(Pos.CENTER_RIGHT);
-			
+
 			einspielen.setOnAction(new EventHandler<ActionEvent>()
 			{
 				@SuppressWarnings("static-access")
 				@Override
 				public void handle(ActionEvent e)
 				{
-					for (TemplateToPathLinker template : ServiceFactory
-							.getPersistenceService().getTemplates())
+					for (TemplateToPathLinker template : ServiceFactory.getPersistenceService().getTemplates())
 					{
-						if (template
-								.getElement()
-								.getFullName()
-								.equals(templateBox.getSelectionModel()
-										.getSelectedItem()))
+						if (template.getElement().getFullName().equals(templateBox.getSelectionModel().getSelectedItem()))
 						{
 							try
 							{
@@ -687,28 +604,17 @@ public class MainWindowController extends VBox
 										.getDomainService()
 										.getInstances()
 										.getInstances()
-										.get(ServiceFactory
-												.getPresentationService()
-												.getMainWindowController()
-												.getTabPane()
-												.getSelectionModel()
+										.get(ServiceFactory.getPresentationService().getMainWindowController().getTabPane().getSelectionModel()
 												.getSelectedIndex()).getClass() == InstanceOnline.class)
 								{
 									InstanceOnline inst = (InstanceOnline) ServiceFactory
 											.getDomainService()
 											.getInstances()
 											.getInstances()
-											.get(ServiceFactory
-													.getPresentationService()
-													.getMainWindowController()
-													.getTabPane()
-													.getSelectionModel()
+											.get(ServiceFactory.getPresentationService().getMainWindowController().getTabPane().getSelectionModel()
 													.getSelectedIndex());
 
-									inst.getSshConnector()
-											.sendMultipleCMD(
-													template.getElement()
-															.receiveTemplateOutputAsArrayList());
+									inst.getSshConnector().sendMultipleCMD(template.getElement().receiveTemplateOutputAsArrayList());
 								}
 							}
 							catch (Exception exc)
@@ -718,27 +624,24 @@ public class MainWindowController extends VBox
 						}
 					}
 
-//					ServiceFactory.getPersistenceService()
-//							.saveAllChangedTemplates();
+					ServiceFactory.getPersistenceService().saveAllChangedTemplates();
 				}
 			});
 
 			sp.setContent(leftbox);
-			
-			
+
 			overtheleftbox.getChildren().add(sp);
 			flowpie.getChildren().add(einspielen);
 			overtheleftbox.getChildren().add(flowpie);
-			
+
 			splitter.getItems().addAll(overtheleftbox, show);
 			splitter.setDividerPositions(0.6f, 0.4f);
-			
+
 			viewstack.getChildren().add(splitter);
 
 			// PresentationService.getMainWindowController().getTabPane().getTabs().get(id).getContent();
 
-			PresentationService.getMainWindowController().getTabBorderPane()
-					.setCenter(viewstack);
+			PresentationService.getMainWindowController().getTabBorderPane().setCenter(viewstack);
 
 		}
 		catch (Exception e)
@@ -746,8 +649,8 @@ public class MainWindowController extends VBox
 			e.printStackTrace();
 		}
 	}
-	
-	//TEST
+
+	// TEST
 
 	@FXML
 	private void showportview()
