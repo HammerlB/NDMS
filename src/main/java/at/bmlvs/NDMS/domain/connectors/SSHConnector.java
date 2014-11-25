@@ -168,8 +168,10 @@ public class SSHConnector {
 		reloadWithoutWrite();
 	}
 	
+	public void expect(String element){
+		
+	}
 	
-
 	public String getSSHFingerprint() {
 		return ssh.getSSHFingerprint().split(":")[1];
 	}
