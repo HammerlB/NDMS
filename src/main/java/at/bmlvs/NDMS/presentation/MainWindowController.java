@@ -198,7 +198,6 @@ public class MainWindowController extends VBox
 		{
 			StackPane viewstack = new StackPane();
 			ScrollPane sp = new ScrollPane();
-			VBox overtheleftbox = new VBox();
 			VBox leftbox = new VBox();
 
 			SplitPane splitter = new SplitPane();
@@ -247,10 +246,12 @@ public class MainWindowController extends VBox
 									{
 										boolean oldValue = (Boolean) old_val;
 										boolean newValue = (Boolean) new_val;
-										
-										System.out.println("FIRED SNIPPETPROPERTY: " + newValue);
 
-//										snippet.setActivated(!newValue);
+										System.out
+												.println("FIRED SNIPPETPROPERTY: "
+														+ newValue);
+
+										// snippet.setActivated(!newValue);
 
 										if (newValue == true)
 										{
@@ -286,8 +287,10 @@ public class MainWindowController extends VBox
 											ObservableValue<? extends Boolean> observable,
 											Boolean old_val, Boolean new_val)
 									{
-										System.out.println("FIRED SNIPPETCHECKBOX: " + !new_val);
-										
+										System.out
+												.println("FIRED SNIPPETCHECKBOX: "
+														+ !new_val);
+
 										snippet.setActivated(!new_val);
 									}
 								});
@@ -317,10 +320,12 @@ public class MainWindowController extends VBox
 										{
 											boolean oldValue = (Boolean) old_val;
 											boolean newValue = (Boolean) new_val;
-											
-											System.out.println("FIRED SECTIONPROPERTY: " + newValue);
 
-//											section.setActivated(newValue);
+											System.out
+													.println("FIRED SECTIONPROPERTY: "
+															+ newValue);
+
+											// section.setActivated(newValue);
 
 											if (newValue == true)
 											{
@@ -340,9 +345,8 @@ public class MainWindowController extends VBox
 									});
 
 							GridPane sectionGrid = new GridPane();
-							Label spaceInvader1 = new Label("   ");
+
 							CheckBox checksection = new CheckBox();
-							
 							checksection.selectedProperty().addListener(
 									new ChangeListener<Boolean>()
 									{
@@ -350,8 +354,10 @@ public class MainWindowController extends VBox
 												ObservableValue<? extends Boolean> ov,
 												Boolean old_val, Boolean new_val)
 										{
-											System.out.println("FIRED SECTIONCHECKBOX: " + !new_val);
-											
+											System.out
+													.println("FIRED SECTIONCHECKBOX: "
+															+ !new_val);
+
 											section.setActivated(!new_val);
 										}
 									});
@@ -360,33 +366,28 @@ public class MainWindowController extends VBox
 
 							// Bindings.bindBidirectional(section.activatedProperty(),
 							// checksection.selectedProperty());
-							
-							sectionGrid.add(spaceInvader1, 1, 0);
-							sectionGrid.add(checksection, 2, 0);
-							sectionGrid.add(secnamelabel, 3, 0);
+
+							sectionGrid.add(checksection, 0, 0);
+							sectionGrid.add(secnamelabel, 1, 0);
 							leftbox.getChildren().add(sectionGrid);
 
 							for (Command command : section.getCommands())
 							{
-								
+
 								command.setActivated(true);
 
 								if (command.isHidden() == false)
 								{
 									GridPane commandPane = new GridPane();
-									Label spaceInvader2 = new Label("   ");
-									Label spaceInvader3 = new Label("   ");
+
 									CheckBox checkcommand = new CheckBox();
-									
 									Label commandlabel = new Label(
 											command.getAlias());
 									commandlabel.setPadding(new Insets(10, 10,
 											10, 10));
-									
-									commandPane.add(spaceInvader2, 0, 0);
-									commandPane.add(spaceInvader3, 1, 0);
-									commandPane.add(checkcommand, 2, 0);
-									commandPane.add(commandlabel, 3, 0);
+
+									commandPane.add(checkcommand, 0, 0);
+									commandPane.add(commandlabel, 1, 0);
 
 									command.activatedProperty().addListener(
 											new ChangeListener<Object>()
@@ -399,11 +400,13 @@ public class MainWindowController extends VBox
 												{
 													boolean oldValue = (Boolean) old_val;
 													boolean newValue = (Boolean) new_val;
-													
-													System.out.println("FIRED COMMANDPROPERTY: " + newValue);
 
-//													command.setActivated(newValue);
-													
+													System.out
+															.println("FIRED COMMANDPROPERTY: "
+																	+ newValue);
+
+													// command.setActivated(newValue);
+
 													if (newValue == true)
 													{
 														command.activateChildren();
@@ -422,7 +425,6 @@ public class MainWindowController extends VBox
 												}
 											});
 
-									
 									checkcommand
 											.selectedProperty()
 											.addListener(
@@ -433,8 +435,10 @@ public class MainWindowController extends VBox
 																Boolean old_val,
 																Boolean new_val)
 														{
-															System.out.println("FIRED COMMANDCHECKBOX: " + !new_val);
-															
+															System.out
+																	.println("FIRED COMMANDCHECKBOX: "
+																			+ !new_val);
+
 															command.setActivated(!new_val);
 														}
 													});
@@ -452,12 +456,7 @@ public class MainWindowController extends VBox
 								{
 
 									GridPane paraPane = new GridPane();
-									Label spaceInvader4 = new Label("   ");
-									Label spaceInvader5 = new Label("   ");
-									Label spaceInvader6 = new Label("   ");
-									Label spaceInvader7 = new Label("   ");
-									Label spaceInvader8 = new Label("   ");
-									
+
 									Label paranamelabel = new Label(
 											parameter.getAlias());
 
@@ -465,14 +464,8 @@ public class MainWindowController extends VBox
 									paranamelabel.setPadding(new Insets(10, 10,
 											10, 10));
 
-									paraPane.add(spaceInvader4, 0, 0);
-									paraPane.add(spaceInvader5, 1, 0);
-									paraPane.add(spaceInvader6, 2, 0);
-									paraPane.add(spaceInvader7, 3, 0);
-									paraPane.add(spaceInvader8, 4, 0);
-									
-									paraPane.add(paranamelabel, 5, 0);
-									
+									paraPane.add(paranamelabel, 1, 0);
+
 									parameter.activatedProperty().addListener(
 											new ChangeListener<Object>()
 											{
@@ -484,20 +477,22 @@ public class MainWindowController extends VBox
 												{
 													boolean oldValue = (Boolean) old_val;
 													boolean newValue = (Boolean) new_val;
-													
-													System.out.println("FIRED PARAMETERPROPERTY: " + newValue);
 
-//													parameter.setActivated(newValue);
+													System.out
+															.println("FIRED PARAMETERPROPERTY: "
+																	+ newValue);
+
+													// parameter.setActivated(newValue);
 
 													show.setText(template
 															.getElement()
 															.receiveTemplateOutputAsString());
 
-													paranamelabel.setDisable(!newValue);
+													paranamelabel
+															.setDisable(!newValue);
 													paraPane.setDisable(!newValue);
 												}
 											});
-
 
 									if (parameter.getType().equals(
 											"DatatypeString"))
@@ -508,7 +503,7 @@ public class MainWindowController extends VBox
 										dataString
 												.setId("" + parameter.getId());
 
-										paraPane.add(dataString, 6, 0);
+										paraPane.add(dataString, 2, 0);
 										dataString
 												.focusedProperty()
 												.addListener(
@@ -553,7 +548,7 @@ public class MainWindowController extends VBox
 										dataString
 												.setId("" + parameter.getId());
 
-										paraPane.add(dataString, 6, 0);
+										paraPane.add(dataString, 2, 0);
 										dataString
 												.focusedProperty()
 												.addListener(
@@ -587,7 +582,8 @@ public class MainWindowController extends VBox
 															}
 														});
 									}
-									if (parameter.getType().equals("DatatypeObject"))
+									if (parameter.getType().equals(
+											"DatatypeObject"))
 									{
 										// WICHTIG Restriced Textfield!!!!
 										TextField dataString = new TextField(
@@ -596,7 +592,7 @@ public class MainWindowController extends VBox
 										dataString
 												.setId("" + parameter.getId());
 
-										paraPane.add(dataString, 6, 0);
+										paraPane.add(dataString, 1, 0);
 										dataString
 												.focusedProperty()
 												.addListener(
@@ -643,8 +639,7 @@ public class MainWindowController extends VBox
 			}
 
 			Button einspielen = new Button("Einspielen");
-			einspielen.setPadding(new Insets(10, 10, 10, 10));
-			
+
 			einspielen.setOnAction(new EventHandler<ActionEvent>()
 			{
 				@SuppressWarnings("static-access")
@@ -697,17 +692,14 @@ public class MainWindowController extends VBox
 						}
 					}
 
-					ServiceFactory.getPersistenceService()
-							.saveAllChangedTemplates();
+//					ServiceFactory.getPersistenceService()
+//							.saveAllChangedTemplates();
 				}
 			});
-			
-			
+
+			leftbox.getChildren().add(einspielen);
 			sp.setContent(leftbox);
-			overtheleftbox.getChildren().add(sp);
-			overtheleftbox.getChildren().add(einspielen);
-			
-			splitter.getItems().addAll(overtheleftbox, show);
+			splitter.getItems().addAll(sp, show);
 			splitter.setDividerPositions(0.6f, 0.4f);
 
 			viewstack.getChildren().add(splitter);
@@ -723,6 +715,8 @@ public class MainWindowController extends VBox
 			e.printStackTrace();
 		}
 	}
+	
+	//TEST
 
 	@FXML
 	private void showportview()

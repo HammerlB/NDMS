@@ -30,7 +30,7 @@ public class InstanceOffline extends Instance
 	@Override
 	public void populateInterfaces()
 	{
-		for(int i = 0; i < getPortcount(); i++)
+		for(int i = 1; i < getPortcount(); i++)
 		{
 			Interface interf = new Interface("" + i);
 			interf.setText("Fa0" + "/" + interf.getPortid());
