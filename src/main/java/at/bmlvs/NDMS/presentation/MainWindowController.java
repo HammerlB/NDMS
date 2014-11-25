@@ -225,6 +225,8 @@ public class MainWindowController extends VBox
 
 					for (Snippet snippet : template.getElement().getSnippets())
 					{
+						snippet.setActivated(true);
+						
 						// UEBERSCHRIFT NAME DES SNIPPETS
 						Label snipnamelabel = new Label(snippet.getName());
 						GridPane snippetGrid = new GridPane();
@@ -245,18 +247,30 @@ public class MainWindowController extends VBox
 									@Override
 									public void changed(
 											ObservableValue<? extends Boolean> observable,
-											Boolean oldValue, Boolean newValue)
+											Boolean old_val, Boolean new_val)
 									{
-										if (newValue == true)
+										old_val = !old_val;
+										new_val = !new_val;
+										
+										snippet.setActivated(new_val);
+										
+										System.out
+										.println("CHANGED SNIPPET: " + new_val);
+										
+										snipnamelabel.setDisable(!new_val);
+										
+										if (new_val == true)
 										{
 											snippet.activateChildren();
-											snipnamelabel.setDisable(snippet.isActivated());
 										}
 										else
 										{
 											snippet.deactivateChildren();
-											snipnamelabel.setDisable(snippet.isActivated());
 										}
+										
+										show.setText(template
+												.getElement()
+												.receiveTemplateOutputAsString());
 									}
 								});
 						
@@ -264,6 +278,8 @@ public class MainWindowController extends VBox
 
 						for (Section section : snippet.getSections())
 						{
+							section.setActivated(true);
+							
 							// UEBERSCHRIFT NAME DER SECTION
 							Label secnamelabel = new Label(section.getName());
 
@@ -281,16 +297,28 @@ public class MainWindowController extends VBox
 												ObservableValue<? extends Boolean> ov,
 												Boolean old_val, Boolean new_val)
 										{
+											old_val = !old_val;
+											new_val = !new_val;
+											
+											section.setActivated(new_val);
+											
+											System.out
+											.println("CHANGED SECTION: " + new_val);
+											
+											secnamelabel.setDisable(!new_val);
+											
 											if(new_val == true)
 											{
 												section.activateChildren();
-												secnamelabel.setDisable(section.isActivated());
 											}
 											else
 											{
 												section.deactivateChildren();
-												secnamelabel.setDisable(section.isActivated());
 											}
+											
+											show.setText(template
+													.getElement()
+													.receiveTemplateOutputAsString());
 										}
 									});
 							
@@ -302,6 +330,8 @@ public class MainWindowController extends VBox
 
 							for (Command command : section.getCommands())
 							{
+								command.setActivated(true);
+								
 								if (command.isHidden() == false)
 								{
 									GridPane commandPane = new GridPane();
@@ -317,14 +347,20 @@ public class MainWindowController extends VBox
 														ObservableValue<? extends Boolean> ov,
 														Boolean old_val, Boolean new_val)
 												{
-													if(new_val == true)
-													{
-														commandlabel.setDisable(true);
-													}
-													else
-													{
-														commandlabel.setDisable(false);
-													}
+										
+													old_val = !old_val;
+													new_val = !new_val;
+													
+													command.setActivated(new_val);
+													
+													System.out
+															.println("CHANGED COMMAND: " + new_val);
+													
+													commandlabel.setDisable(!new_val);
+													
+													show.setText(template
+															.getElement()
+															.receiveTemplateOutputAsString());
 												}
 											});
 									

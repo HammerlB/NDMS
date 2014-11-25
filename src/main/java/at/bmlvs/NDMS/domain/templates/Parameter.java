@@ -104,6 +104,11 @@ public class Parameter implements Serializable
 
 	public String getParameterOutput()
 	{
+		if(getValue().equals(""))
+		{
+			setValue(defaultValue);
+		}
+		
 		if(isUseName())
 		{
 			return getName() + " " + getValue();
