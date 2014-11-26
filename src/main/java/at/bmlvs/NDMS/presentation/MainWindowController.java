@@ -629,7 +629,8 @@ public class MainWindowController extends VBox
 			});
 
 			sp.setContent(leftbox);
-
+			
+			flowpie.setAlignment(Pos.BASELINE_RIGHT);
 			overtheleftbox.getChildren().add(sp);
 			flowpie.getChildren().add(einspielen);
 			overtheleftbox.getChildren().add(flowpie);
