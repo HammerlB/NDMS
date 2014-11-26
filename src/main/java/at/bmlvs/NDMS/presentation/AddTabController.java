@@ -16,6 +16,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tab;
@@ -123,6 +124,7 @@ public class AddTabController
 	@FXML
 	private void startconnection(ActionEvent event) throws IOException
 	{
+		
 
 		if (rbaddress.isSelected())
 		{
@@ -139,7 +141,7 @@ public class AddTabController
 				{
 					try
 					{
-
+						ServiceFactory.getPresentationService().getMainWindowController().getScene().setCursor(Cursor.WAIT);
 						sshc = new SSHConnector(address.getIPv4Address(), "Herkel", "gwdH_2014",
 								"gwd_2014");
 
@@ -175,9 +177,9 @@ public class AddTabController
 							DateFormat dateformat = new SimpleDateFormat(
 									"_dd-MM-yyyy_HH-mm-ss_");
 							Date date = new Date();
-							tftpc.takeSnapshot("Initial",
-									"Initial Snapshot from " + address.getIPv4Address() + " "
-											+ dateformat.format(date), sshc);
+//							tftpc.takeSnapshot("Initial",
+//									"Initial Snapshot from " + address.getIPv4Address() + " "
+//											+ dateformat.format(date), sshc);
 
 							InstanceOnline inst = new InstanceOnline(address.getIPv4Address(),
 									sshc.getSSHFingerprint(), address.getIPv4Address(), sshc,

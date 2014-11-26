@@ -10,15 +10,20 @@ import javafx.beans.property.StringProperty;
 import javafx.scene.control.CheckBox;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 @XStreamAlias("Template")
 @SuppressWarnings("serial")
 public class Template implements Serializable
 {
+	@XStreamAsAttribute
 	private String name;
+	@XStreamAsAttribute
 	private String version;
+	@XStreamAsAttribute
 	private String os_version;
+	@XStreamAsAttribute
 	private String device_type;
 
 	@XStreamOmitField
@@ -35,6 +40,10 @@ public class Template implements Serializable
 
 	public Template(String name, String version, String os_version, String device_type)
 	{
+		setCheckbox(new CheckBox());
+		
+		setActivated(true);
+		
 		setName(name);
 		setVersion(version);
 		setOs_version(os_version);
@@ -131,6 +140,7 @@ public class Template implements Serializable
 	public final void setActivated(boolean activated)
 	{
 		this.activatedProperty().set(activated);
+		this.getCheckbox().setSelected(activated);
 	}
 
 	public final BooleanProperty activatedProperty()
@@ -145,6 +155,12 @@ public class Template implements Serializable
 
 	public CheckBox getCheckbox()
 	{
+		if(checkbox == null)
+		{
+			setCheckbox(new CheckBox());
+			getCheckbox().setSelected(isActivated());
+		}
+		
 		return checkbox;
 	}
 

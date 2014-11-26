@@ -1,1745 +1,1743 @@
-<Template>
-  <name>TEST</name>
-  <version>1.0</version>
-  <os__version>15.0(2)SE6</os__version>
-  <device__type>WS-C2960-48TC-L</device__type>
+<Template name="TEST" version="1.0" os__version="15.0(2)SE6" device__type="WS-C2960-48TC-L">
   <Snippets>
-    <Snippet>
-      <name>Basic-Snippet</name>
-      <prev>None</prev>
-      <next>Interface-Snippet</next>
+    <Snippet name="Basic-Snippet" prev="None" next="Interface-Snippet">
+      <parent reference="../../.."/>
       <Sections>
-        <Section>
-          <name>Basic Device Configurations</name>
+        <Section name="Basic Device Configurations">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>hostname</name>
-              <alias>Configure Hostname</alias>
-              <type>None</type>
-              <hidden>false</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="hostname" alias="Configure Hostname" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Hostname</name>
-                  <alias>Hostname</alias>
-                  <type>DatatypeString</type>
-                  <defaultValue>GWDSWITCH</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Hostname" alias="Hostname" type="DatatypeString" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>2</size>
+                      </default>
+                      <int>2</int>
+                      <Value alias="" value=""/>
+                      <Value alias="GWDSWITCH" value="GWDSWITCH"/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value[2]"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>SNMP Configuration</name>
+        <Section name="SNMP Configuration">
+          <parent reference="../../.."/>
           <Commands/>
         </Section>
       </Sections>
     </Snippet>
-    <Snippet>
-      <name>Interface-Snippet</name>
-      <prev>Basic-Snippet</prev>
-      <next>None</next>
+    <Snippet name="Interface-Snippet" prev="Basic-Snippet" next="None">
+      <parent reference="../../.."/>
       <Sections>
-        <Section>
-          <name>Interface fa0/1 Configuration:</name>
+        <Section name="Interface fa0/1 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/1</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/1" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/2 Configuration:</name>
+        <Section name="Interface fa0/2 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/2</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/2" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/3 Configuration:</name>
+        <Section name="Interface fa0/3 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/3</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/3" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/4 Configuration:</name>
+        <Section name="Interface fa0/4 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/4</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/4" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/5 Configuration:</name>
+        <Section name="Interface fa0/5 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/5</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/5" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/6 Configuration:</name>
+        <Section name="Interface fa0/6 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/6</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/6" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/7 Configuration:</name>
+        <Section name="Interface fa0/7 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/7</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/7" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/8 Configuration:</name>
+        <Section name="Interface fa0/8 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/8</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/8" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/9 Configuration:</name>
+        <Section name="Interface fa0/9 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/9</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/9" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/10 Configuration:</name>
+        <Section name="Interface fa0/10 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/10</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/10" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/11 Configuration:</name>
+        <Section name="Interface fa0/11 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/11</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/11" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/12 Configuration:</name>
+        <Section name="Interface fa0/12 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/12</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/12" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/13 Configuration:</name>
+        <Section name="Interface fa0/13 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/13</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/13" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/14 Configuration:</name>
+        <Section name="Interface fa0/14 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/14</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/14" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/15 Configuration:</name>
+        <Section name="Interface fa0/15 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/15</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/15" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/16 Configuration:</name>
+        <Section name="Interface fa0/16 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/16</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/16" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/17 Configuration:</name>
+        <Section name="Interface fa0/17 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/17</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/17" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/18 Configuration:</name>
+        <Section name="Interface fa0/18 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/18</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/18" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/19 Configuration:</name>
+        <Section name="Interface fa0/19 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/19</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/19" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/20 Configuration:</name>
+        <Section name="Interface fa0/20 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/20</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/20" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/21 Configuration:</name>
+        <Section name="Interface fa0/21 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/21</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/21" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/22 Configuration:</name>
+        <Section name="Interface fa0/22 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/22</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/22" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/23 Configuration:</name>
+        <Section name="Interface fa0/23 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/23</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/23" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/24 Configuration:</name>
+        <Section name="Interface fa0/24 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/24</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/24" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/25 Configuration:</name>
+        <Section name="Interface fa0/25 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/25</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/25" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/26 Configuration:</name>
+        <Section name="Interface fa0/26 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/26</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/26" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/27 Configuration:</name>
+        <Section name="Interface fa0/27 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/27</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/27" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/28 Configuration:</name>
+        <Section name="Interface fa0/28 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/28</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/28" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/29 Configuration:</name>
+        <Section name="Interface fa0/29 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/29</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/29" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/30 Configuration:</name>
+        <Section name="Interface fa0/30 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/30</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/30" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/31 Configuration:</name>
+        <Section name="Interface fa0/31 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/31</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/31" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/32 Configuration:</name>
+        <Section name="Interface fa0/32 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/32</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/32" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/33 Configuration:</name>
+        <Section name="Interface fa0/33 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/33</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/33" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/34 Configuration:</name>
+        <Section name="Interface fa0/34 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/34</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/34" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/35 Configuration:</name>
+        <Section name="Interface fa0/35 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/35</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/35" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/36 Configuration:</name>
+        <Section name="Interface fa0/36 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/36</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/36" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/37 Configuration:</name>
+        <Section name="Interface fa0/37 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/37</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/37" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/38 Configuration:</name>
+        <Section name="Interface fa0/38 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/38</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/38" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/39 Configuration:</name>
+        <Section name="Interface fa0/39 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/39</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/39" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/40 Configuration:</name>
+        <Section name="Interface fa0/40 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/40</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/40" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/41 Configuration:</name>
+        <Section name="Interface fa0/41 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/41</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/41" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/42 Configuration:</name>
+        <Section name="Interface fa0/42 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/42</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/42" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/43 Configuration:</name>
+        <Section name="Interface fa0/43 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/43</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/43" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/44 Configuration:</name>
+        <Section name="Interface fa0/44 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/44</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/44" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/45 Configuration:</name>
+        <Section name="Interface fa0/45 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/45</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/45" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/46 Configuration:</name>
+        <Section name="Interface fa0/46 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/46</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/46" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/47 Configuration:</name>
+        <Section name="Interface fa0/47 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/47</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/47" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface fa0/48 Configuration:</name>
+        <Section name="Interface fa0/48 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface fa0/48</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface fa0/48" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface gi0/1 Configuration:</name>
+        <Section name="Interface gi0/1 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface gi0/1</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface gi0/1" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>
           </Commands>
         </Section>
-        <Section>
-          <name>Interface gi0/2 Configuration:</name>
+        <Section name="Interface gi0/2 Configuration:">
+          <parent reference="../../.."/>
           <Commands>
-            <Command>
-              <id>0</id>
-              <name>interface gi0/2</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="interface gi0/2" alias="" hidden="true" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters/>
             </Command>
-            <Command>
-              <id>0</id>
-              <name>switchport access vlan</name>
-              <alias></alias>
-              <type>None</type>
-              <hidden>true</hidden>
-              <appendParameters>true</appendParameters>
+            <Command id="0" name="switchport access vlan" alias="None" hidden="false" appendParameters="true">
+              <parent reference="../../.."/>
               <Parameters>
-                <Parameter>
-                  <id>0</id>
-                  <name>Vlan</name>
-                  <alias>Vlan</alias>
-                  <type>DatatypeVlan</type>
-                  <defaultValue>1</defaultValue>
-                  <value></value>
-                  <used>true</used>
-                  <useName>false</useName>
+                <Parameter id="0" name="Vlan" alias="Vlan" type="DatatypeVlan" used="true" useName="false">
+                  <parent reference="../../.."/>
+                  <value alias="" value=""/>
+                  <DefaultValues serialization="custom">
+                    <unserializable-parents/>
+                    <list>
+                      <default>
+                        <size>1</size>
+                      </default>
+                      <int>1</int>
+                      <Value alias="" value=""/>
+                    </list>
+                    <at.bmlvs.NDMS.domain.templates.ParameterList>
+                      <default>
+                        <parent reference="../../../.."/>
+                        <selected reference="../../../list/Value"/>
+                      </default>
+                    </at.bmlvs.NDMS.domain.templates.ParameterList>
+                  </DefaultValues>
                 </Parameter>
               </Parameters>
             </Command>

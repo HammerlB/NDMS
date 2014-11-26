@@ -4,37 +4,71 @@ import java.io.Serializable;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.scene.control.CheckBox;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 @XStreamAlias("Parameter")
 @SuppressWarnings("serial")
 public class Parameter implements Serializable
 {
+	@XStreamAsAttribute
+	private Command parent;
+	
+	@XStreamAsAttribute
 	private int id;
+	@XStreamAsAttribute
 	private String name;
+	@XStreamAsAttribute
 	private String alias;
+	@XStreamAsAttribute
 	private String type;
-	private String defaultValue;
-	private String value;
+	@XStreamAsAttribute
+	private Value value;
+	@XStreamAsAttribute
 	private boolean used;
+	@XStreamAsAttribute
 	private boolean useName;
+	
+	@XStreamAlias("DefaultValues")
+	private ParameterList defaultValues;
 	
 	@XStreamOmitField
 	private BooleanProperty activated;
 	
-	public Parameter(int id, String name, String alias, String type, String defaultValue, String value, boolean used, boolean useName)
+	public Parameter(Command parent, int id, String name, String alias, String type, Value value, boolean used, boolean useName, ParameterList parameterList)
 	{
+		setParent(parent);
+		
 		setId(id);
 		setName(name);
 		setAlias(alias);
 		setType(type);
-		setDefaultValue(defaultValue);
+		
+		if(parameterList != null && parameterList.size() > 0)
+		{
+			setDefaultValues(parameterList);
+		}
+		else
+		{
+			setDefaultValues(new ParameterList(this));
+			getDefaultValues().add(new Value("", ""));
+		}
+		
 		setValue(value);
 		setUsed(used);
 		setUseName(useName);
+	}
+
+	public Command getParent()
+	{
+		return parent;
+	}
+
+	public void setParent(Command parent)
+	{
+		this.parent = parent;
 	}
 
 	public int getId()
@@ -77,12 +111,12 @@ public class Parameter implements Serializable
 		this.type = type;
 	}
 
-	public String getValue()
+	public Value getValue()
 	{
 		return value;
 	}
 
-	public void setValue(String value)
+	public void setValue(Value value)
 	{
 		this.value = value;
 	}
@@ -128,6 +162,16 @@ public class Parameter implements Serializable
 		this.activatedProperty().set(activated);
 	}
 
+	public ParameterList getDefaultValues()
+	{
+		return defaultValues;
+	}
+
+	public void setDefaultValues(ParameterList defaultValues)
+	{
+		this.defaultValues = defaultValues;
+	}
+
 	public final BooleanProperty activatedProperty()
 	{
 		if (activated == null)
@@ -140,26 +184,29 @@ public class Parameter implements Serializable
 
 	public String getParameterOutput()
 	{
-		if(getValue().equals(""))
+		if(getValue() != null)
 		{
-			setValue(defaultValue);
+			if(getValue().equals(""))
+			{
+				setValue(getDefaultValues().getSelected());
+			}
+			
+			if(isUseName())
+			{
+				return getName() + " " + getValue();
+			}
 		}
 		
-		if(isUseName())
-		{
-			return getName() + " " + getValue();
-		}
-		
-		return getValue();
+		return getValue().getValue();
 	}
-
+	
 	public String getDefaultValue()
 	{
-		return defaultValue;
-	}
-
-	public void setDefaultValue(String defaultValue)
-	{
-		this.defaultValue = defaultValue;
+		if(getDefaultValues().size() > 0 && getDefaultValues().getSelected() != null)
+		{
+			return getDefaultValues().getSelected().getValue();
+		}
+		
+		return "";
 	}
 }

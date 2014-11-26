@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 import javafx.beans.property.BooleanProperty;
@@ -14,8 +15,14 @@ import javafx.scene.control.CheckBox;
 @SuppressWarnings("serial")
 public class Snippet implements Serializable
 {
+	@XStreamAsAttribute
+	private Template parent;
+	
+	@XStreamAsAttribute
 	private String name;
+	@XStreamAsAttribute
 	private String prev;
+	@XStreamAsAttribute
 	private String next;
 	
 	@XStreamOmitField
@@ -27,8 +34,12 @@ public class Snippet implements Serializable
 	@XStreamOmitField
 	private CheckBox checkbox;
 
-	public Snippet(String name, String prev, String next)
+	public Snippet(Template parent, String name, String prev, String next)
 	{
+		setCheckbox(new CheckBox());
+		
+		setParent(parent);
+		
 		setActivated(true);
 		
 		setName(name);
@@ -36,6 +47,22 @@ public class Snippet implements Serializable
 		setNext(next);
 
 		setSections(new ArrayList<Section>());
+	}
+
+	/**
+	 * @return the parent
+	 */
+	public Template getParent()
+	{
+		return parent;
+	}
+
+	/**
+	 * @param parent the parent to set
+	 */
+	public void setParent(Template parent)
+	{
+		this.parent = parent;
 	}
 
 	public String getName()
@@ -81,6 +108,7 @@ public class Snippet implements Serializable
 	public final void setActivated(boolean activated)
 	{
 		this.activatedProperty().set(activated);
+		this.getCheckbox().setSelected(activated);
 	}
 
 	public final BooleanProperty activatedProperty()
@@ -105,6 +133,12 @@ public class Snippet implements Serializable
 	
 	public CheckBox getCheckbox()
 	{
+		if(checkbox == null)
+		{
+			setCheckbox(new CheckBox());
+			getCheckbox().setSelected(isActivated());
+		}
+		
 		return checkbox;
 	}
 
