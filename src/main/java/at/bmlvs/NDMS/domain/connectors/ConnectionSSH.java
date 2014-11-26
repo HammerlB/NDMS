@@ -126,10 +126,10 @@ public class ConnectionSSH extends TerminalConnector implements Runnable {
 			while (true) {
 				if(connected&&noOutput){
 					this.read = in.read(buffer);
-					output+= new String(buffer, 0, read);
+					output+=new String(buffer, 0, read);
 				}else if(connected&&!noOutput){
 					this.read = in.read(buffer);
-					output+= new String(buffer, 0, read);
+					output+=new String(buffer, 0, read);
 					System.out.print(new String(buffer, 0, read));
 				}else{
 					Thread.sleep(5000);

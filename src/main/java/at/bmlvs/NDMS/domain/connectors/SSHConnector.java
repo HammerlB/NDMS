@@ -16,7 +16,7 @@ public class SSHConnector {
 	private ConnectionSSH ssh;
 	private volatile boolean connected;
 	private int progress, counter;
-	private String enablePass;
+	private String enablePass, currentCMD;
 	private Thread reader;
 
 	public SSHConnector(String host, String user, String sshPass,
@@ -55,6 +55,7 @@ public class SSHConnector {
 
 	private void sendCMD(String cmd) {
 		try {
+			currentCMD = cmd;
 			ssh.sendCmd(cmd);
 			if (!reader.isAlive()) {
 				reader.start();
@@ -133,8 +134,8 @@ public class SSHConnector {
 	
 	public void disconnect() throws Exception {
 		if (connected) {
-			ssh.disconnectReader();
 			ssh.disconnect();
+			ssh.disconnectReader();
 		}
 	}
 
@@ -161,11 +162,28 @@ public class SSHConnector {
 //		reloadWithoutWrite();
 	}
 	
-	public boolean expect(String element){
-		if(ssh.getOutput().matches("/Delete filename\\s\\Ssnapshot.txt\\S\\S/g")){
+	public boolean expect(String element) throws InterruptedException{
+		String[] lines = ssh.getOutput().split("\n");
+		String line = lines[lines.length-1];
+		System.out.println(line);
+		if(line.contains(element)){
 			return true;
 		}else{
 			return false;
+		}
+	}
+	
+	public void expectWaitForIt(String element) throws InterruptedException, SSHException{
+		String[] lines = ssh.getOutput().split("\n");
+		String line = lines[lines.length-1];
+		int counter = 0;
+		System.out.println(line);
+		while(!expect(element)){
+			Thread.sleep(1000);
+			counter++;
+			if(counter==10){
+				throw new SSHException("Error after Command: "+currentCMD);
+			}
 		}
 	}
 	
@@ -183,6 +201,10 @@ public class SSHConnector {
 	
 	public ConnectionSSH getSSHConnection(){
 		return ssh;
+	}
+	
+	public String currentCMD(){
+		return currentCMD;
 	}
 	// public void checkProgress(int i) {
 	// this.progress = 100 / cmd.size() * i;

@@ -12,11 +12,10 @@ public class SSHConnectorTest {
 		try {
 			ssh.connect(true);
 			ssh.sendEnableMode();
-			ssh.sendSingleCMD("delete flash:snapshot.txt");
-			while(true){
-				System.out.println(ssh.getSSHConnection().getOutput());
-				Thread.sleep(1000);
-			}
+//			ssh.sendConfigMode();
+			ssh.expectWaitForIt("(config)#");
+			ssh.disconnect();
+			System.exit(0);
 //			ssh.sendMultipleCMD(a);
 //			ssh.sendConfigMode();
 //			ssh.sendSingleCMD("hostname GWD-SW3");
