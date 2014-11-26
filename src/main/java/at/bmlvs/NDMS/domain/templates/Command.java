@@ -14,10 +14,11 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
 @SuppressWarnings("serial")
 public class Command implements Serializable
 {
+	private Section parent;
+	
 	private int id;
 	private String name;
 	private String alias;
-	private String type;
 	private boolean hidden;
 	private boolean appendParameters;
 	
@@ -30,14 +31,17 @@ public class Command implements Serializable
 	@XStreamOmitField
 	private CheckBox checkbox;
 	
-	public Command(String name, String alias, String type, boolean appendParameters)
+	public Command(Section parent, String name, String alias, boolean appendParameters)
 	{
+		setCheckbox(new CheckBox());
+		
+		setParent(parent);
+		
 		setActivated(true);
 		
 		setId(id);
 		setName(name);
 		setAlias(alias);
-		setType(type);
 		
 		if(alias.equals(""))
 		{
@@ -51,6 +55,22 @@ public class Command implements Serializable
 		setAppendParameters(appendParameters);
 		
 		setParameters(new ArrayList<Parameter>());
+	}
+
+	/**
+	 * @return the parent
+	 */
+	public Section getParent()
+	{
+		return parent;
+	}
+
+	/**
+	 * @param parent the parent to set
+	 */
+	public void setParent(Section parent)
+	{
+		this.parent = parent;
 	}
 
 	public int getId()
@@ -103,22 +123,6 @@ public class Command implements Serializable
 		this.appendParameters = appendParameters;
 	}
 	
-	/**
-	 * @return the type
-	 */
-	public String getType()
-	{
-		return type;
-	}
-
-	/**
-	 * @param type the type to set
-	 */
-	public void setType(String type)
-	{
-		this.type = type;
-	}
-
 	public final boolean isActivated()
 	{
 		if (activated != null)
@@ -132,6 +136,7 @@ public class Command implements Serializable
 	public final void setActivated(boolean activated)
 	{
 		this.activatedProperty().set(activated);
+		this.getCheckbox().setSelected(activated);
 	}
 
 	public final BooleanProperty activatedProperty()
@@ -156,6 +161,12 @@ public class Command implements Serializable
 	
 	public CheckBox getCheckbox()
 	{
+		if(checkbox == null)
+		{
+			setCheckbox(new CheckBox());
+			getCheckbox().setSelected(isActivated());
+		}
+		
 		return checkbox;
 	}
 

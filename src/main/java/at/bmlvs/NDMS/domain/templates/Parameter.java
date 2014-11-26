@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.scene.control.CheckBox;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
@@ -13,28 +12,54 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
 @SuppressWarnings("serial")
 public class Parameter implements Serializable
 {
+	private Command parent;
+	
 	private int id;
 	private String name;
 	private String alias;
 	private String type;
-	private String defaultValue;
 	private String value;
 	private boolean used;
 	private boolean useName;
 	
+	@XStreamAlias("DefaultValues")
+	private ParameterList<String> defaultValues;
+	
 	@XStreamOmitField
 	private BooleanProperty activated;
 	
-	public Parameter(int id, String name, String alias, String type, String defaultValue, String value, boolean used, boolean useName)
+	public Parameter(Command parent, int id, String name, String alias, String type, String value, boolean used, boolean useName, ParameterList<String> parameterList)
 	{
+		setParent(parent);
+		
 		setId(id);
 		setName(name);
 		setAlias(alias);
 		setType(type);
-		setDefaultValue(defaultValue);
+		
+		if(parameterList != null && parameterList.size() > 0)
+		{
+			setDefaultValues(parameterList);
+		}
+		else
+		{
+			setDefaultValues(new ParameterList<String>(this));
+			getDefaultValues().add("");
+		}
+		
 		setValue(value);
 		setUsed(used);
 		setUseName(useName);
+	}
+
+	public Command getParent()
+	{
+		return parent;
+	}
+
+	public void setParent(Command parent)
+	{
+		this.parent = parent;
 	}
 
 	public int getId()
@@ -128,6 +153,16 @@ public class Parameter implements Serializable
 		this.activatedProperty().set(activated);
 	}
 
+	public ParameterList<String> getDefaultValues()
+	{
+		return defaultValues;
+	}
+
+	public void setDefaultValues(ParameterList<String> defaultValues)
+	{
+		this.defaultValues = defaultValues;
+	}
+
 	public final BooleanProperty activatedProperty()
 	{
 		if (activated == null)
@@ -140,26 +175,29 @@ public class Parameter implements Serializable
 
 	public String getParameterOutput()
 	{
-		if(getValue().equals(""))
+		if(getValue() != null)
 		{
-			setValue(defaultValue);
-		}
-		
-		if(isUseName())
-		{
-			return getName() + " " + getValue();
+			if(getValue().equals(""))
+			{
+				setValue(getDefaultValues().getSelected());
+			}
+			
+			if(isUseName())
+			{
+				return getName() + " " + getValue();
+			}
 		}
 		
 		return getValue();
 	}
-
+	
 	public String getDefaultValue()
 	{
-		return defaultValue;
-	}
-
-	public void setDefaultValue(String defaultValue)
-	{
-		this.defaultValue = defaultValue;
+		if(getDefaultValues().size() > 0 && getDefaultValues().getSelected() != null)
+		{
+			return getDefaultValues().getSelected();
+		}
+		
+		return "";
 	}
 }

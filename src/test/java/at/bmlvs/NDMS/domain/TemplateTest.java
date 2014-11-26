@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -21,8 +22,9 @@ import at.bmlvs.NDMS.linker.TemplateToPathLinker;
 import at.bmlvs.NDMS.service.PersistenceService;
 import at.bmlvs.NDMS.service.ServiceFactory;
 
-public class TemplateTest
+public class TemplateTest extends Application
 {
+	@SuppressWarnings("unchecked")
 	public static void main(String[] args)
 	{
 		//KILL THE LOGGERS!!!
@@ -42,16 +44,17 @@ public class TemplateTest
 			
 			Template templateBasic = new Template("TEST", "1.0", "15.0(2)SE6", "WS-C2960-48TC-L");
 
-			Snippet snippetBasic = new Snippet("Basic-Snippet", "None", "Interface-Snippet");
-			Snippet snippetInterfaces = new Snippet("Interface-Snippet", "Basic-Snippet", "None");
+			Snippet snippetBasic = new Snippet(templateBasic, "Basic-Snippet", "None", "Interface-Snippet");
+			Snippet snippetInterfaces = new Snippet(templateBasic, "Interface-Snippet", "Basic-Snippet", "None");
 			
-			Section sectionBasicDeviceConfigurations = new Section("Basic Device Configurations");
+			Section sectionBasicDeviceConfigurations = new Section(snippetBasic, "Basic Device Configurations");
 			
 			//String name, String alias, boolean appendParameters
-			Command commandSetHostname = new Command("hostname", "Configure Hostname", "None", true);
+			Command commandSetHostname = new Command(sectionBasicDeviceConfigurations, "hostname", "Configure Hostname", true);
 			
-			//int id, String name, String alias, String type, String defaultValue, String value, boolean used, boolean useName
-			Parameter parameterSetHostname = new Parameter(0, "Hostname", "Hostname", "DatatypeString", "GWDSWITCH", "", true, false);
+			//int id, String name, String alias, String type, String value, boolean used, boolean useName
+			Parameter parameterSetHostname = new Parameter(commandSetHostname, 0, "Hostname", "Hostname", "DatatypeString", "", true, false, null);
+			parameterSetHostname.getDefaultValues().add("GWDSWITCH");
 			
 			commandSetHostname.getParameters().add(parameterSetHostname);
 			
@@ -59,7 +62,7 @@ public class TemplateTest
 			
 			snippetBasic.getSections().add(sectionBasicDeviceConfigurations);
 			
-			Section sectionSNMPConfiguration = new Section("SNMP Configuration");
+			Section sectionSNMPConfiguration = new Section(snippetBasic, "SNMP Configuration");
 			
 			snippetBasic.getSections().add(sectionSNMPConfiguration);
 			
@@ -67,12 +70,12 @@ public class TemplateTest
 			
 			for(int i = 1; i <= 48; i++)
 			{
-				sectionsInterfaces.add(new Section("Interface fa0/" + i + " Configuration:"));
+				sectionsInterfaces.add(new Section(snippetInterfaces, "Interface fa0/" + i + " Configuration:"));
 			}
 			
-			sectionsInterfaces.add(new Section("Interface gi0/1 Configuration:"));
+			sectionsInterfaces.add(new Section(snippetInterfaces, "Interface gi0/1 Configuration:"));
 			
-			sectionsInterfaces.add(new Section("Interface gi0/2 Configuration:"));
+			sectionsInterfaces.add(new Section(snippetInterfaces, "Interface gi0/2 Configuration:"));
 			
 			for(Section sectionInterface: sectionsInterfaces)
 			{
@@ -80,30 +83,30 @@ public class TemplateTest
 				
 				if(sectionInterface.getName().contains("gi"))
 				{
-					commandSetInterface = new Command("interface gi0/" + (sectionsInterfaces.indexOf(sectionInterface) + 1 - 48), "", "None", true);
+					commandSetInterface = new Command(sectionInterface, "interface gi0/" + (sectionsInterfaces.indexOf(sectionInterface) + 1 - 48), "", true);
 				}
 				else
 				{
-					commandSetInterface = new Command("interface fa0/" + (sectionsInterfaces.indexOf(sectionInterface) + 1), "", "None", true);
+					commandSetInterface = new Command(sectionInterface, "interface fa0/" + (sectionsInterfaces.indexOf(sectionInterface) + 1), "", true);
 				}
 				
-				Command commandInterfaceSetShutdownOption = new Command("shutdown", "Configure Shutdown", "ObjecttypeSelectOne", false);
+				Command commandInterfaceSetShutdownOption = new Command(sectionInterface, "shutdown", "Configure Shutdown", false);
 				
-				Parameter parameterInterfaceSetShutdownOptionTrue = new Parameter(0, "", "Shutdown", "None", "", "", true, false);
+				Parameter parameterInterfaceSetShutdownOptionTrue = new Parameter(commandInterfaceSetShutdownOption, 0, "", "Shutdown", "None", "", true, false, null);
 				
-				Parameter parameterInterfaceSetShutdownOptionFalse = new Parameter(1, "no", "No Shutdown", "None", "", "", true, false);
+				Parameter parameterInterfaceSetShutdownOptionFalse = new Parameter(commandInterfaceSetShutdownOption, 1, "no", "No Shutdown", "None", "", true, false, null);
 				
 				commandInterfaceSetShutdownOption.getParameters().add(parameterInterfaceSetShutdownOptionTrue);
 				
 				commandInterfaceSetShutdownOption.getParameters().add(parameterInterfaceSetShutdownOptionFalse);
 				
-				Command commandInterfaceSetMode = new Command("switchport mode", "ObjecttypeSelectOne", "None", true);
+				Command commandInterfaceSetMode = new Command(sectionInterface, "switchport mode", "None", true);
 				
-				Parameter parameterInterfaceSetModeOptionAccess = new Parameter(0, "access", "Access", "None", "", "", true, false);
+				Parameter parameterInterfaceSetModeOptionAccess = new Parameter(commandInterfaceSetMode, 0, "access", "Access", "None", "", true, false, null);
 				
-				Parameter parameterInterfaceSetModeOptionTrunk = new Parameter(0, "trunk", "Trunk", "None", "", "", true, false);
+				Parameter parameterInterfaceSetModeOptionTrunk = new Parameter(commandInterfaceSetMode, 0, "trunk", "Trunk", "None", "", true, false, null);
 				
-				Parameter parameterInterfaceSetModeOptionDynamic = new Parameter(0, "dynamic", "Dynamic", "None", "", "", true, false);
+				Parameter parameterInterfaceSetModeOptionDynamic = new Parameter(commandInterfaceSetMode, 0, "dynamic", "Dynamic", "None", "", true, false, null);
 				
 				//TEST123
 				
@@ -113,9 +116,9 @@ public class TemplateTest
 						
 				commandInterfaceSetMode.getParameters().add(parameterInterfaceSetModeOptionDynamic);
 				
-				Command commandInterfaceSetVlan = new Command("switchport access vlan", "", "None", true);
+				Command commandInterfaceSetVlan = new Command(sectionInterface, "switchport access vlan", "None", true);
 				
-				Parameter parameterInterfaceSetVlan = new Parameter(0, "Vlan", "Vlan", "DatatypeVlan", "1", "", true, false);
+				Parameter parameterInterfaceSetVlan = new Parameter(commandInterfaceSetVlan, 0, "Vlan", "Vlan", "DatatypeVlan", "", true, false, null);
 				
 				//TEST
 				

@@ -35,6 +35,10 @@ public class Template implements Serializable
 
 	public Template(String name, String version, String os_version, String device_type)
 	{
+		setCheckbox(new CheckBox());
+		
+		setActivated(true);
+		
 		setName(name);
 		setVersion(version);
 		setOs_version(os_version);
@@ -131,6 +135,7 @@ public class Template implements Serializable
 	public final void setActivated(boolean activated)
 	{
 		this.activatedProperty().set(activated);
+		this.getCheckbox().setSelected(activated);
 	}
 
 	public final BooleanProperty activatedProperty()
@@ -145,6 +150,12 @@ public class Template implements Serializable
 
 	public CheckBox getCheckbox()
 	{
+		if(checkbox == null)
+		{
+			setCheckbox(new CheckBox());
+			getCheckbox().setSelected(isActivated());
+		}
+		
 		return checkbox;
 	}
 

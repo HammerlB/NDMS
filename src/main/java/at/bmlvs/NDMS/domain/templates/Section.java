@@ -14,6 +14,8 @@ import javafx.scene.control.CheckBox;
 @SuppressWarnings("serial")
 public class Section implements Serializable
 {
+	private Snippet parent;
+	
 	private String name;
 	
 	@XStreamOmitField
@@ -25,13 +27,33 @@ public class Section implements Serializable
 	@XStreamOmitField
 	private CheckBox checkbox;
 	
-	public Section(String name)
+	public Section(Snippet parent, String name)
 	{
+		setCheckbox(new CheckBox());
+		
+		setParent(parent);
+		
 		setActivated(true);
 		
 		setName(name);
 		
 		setCommands(new ArrayList<Command>());
+	}
+
+	/**
+	 * @return the parent
+	 */
+	public Snippet getParent()
+	{
+		return parent;
+	}
+
+	/**
+	 * @param parent the parent to set
+	 */
+	public void setParent(Snippet parent)
+	{
+		this.parent = parent;
 	}
 
 	public String getName()
@@ -57,6 +79,7 @@ public class Section implements Serializable
 	public final void setActivated(boolean activated)
 	{
 		this.activatedProperty().set(activated);
+		this.getCheckbox().setSelected(activated);
 	}
 
 	public final BooleanProperty activatedProperty()
@@ -81,6 +104,12 @@ public class Section implements Serializable
 	
 	public CheckBox getCheckbox()
 	{
+		if(checkbox == null)
+		{
+			setCheckbox(new CheckBox());
+			getCheckbox().setSelected(isActivated());
+		}
+		
 		return checkbox;
 	}
 
