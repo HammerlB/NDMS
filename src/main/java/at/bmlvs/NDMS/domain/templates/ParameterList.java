@@ -2,11 +2,15 @@ package at.bmlvs.NDMS.domain.templates;
 
 import java.util.ArrayList;
 
+import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
+
 @SuppressWarnings({ "serial" })
 public class ParameterList extends ArrayList<Value>
 {
+	@XStreamAsAttribute
 	private Parameter parent;
 	
+	@XStreamAsAttribute
 	private Value selected;
 
 	public ParameterList(Parameter parent)

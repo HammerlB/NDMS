@@ -10,15 +10,20 @@ import javafx.beans.property.StringProperty;
 import javafx.scene.control.CheckBox;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 @XStreamAlias("Template")
 @SuppressWarnings("serial")
 public class Template implements Serializable
 {
+	@XStreamAsAttribute
 	private String name;
+	@XStreamAsAttribute
 	private String version;
+	@XStreamAsAttribute
 	private String os_version;
+	@XStreamAsAttribute
 	private String device_type;
 
 	@XStreamOmitField

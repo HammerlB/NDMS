@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 import javafx.beans.property.BooleanProperty;
@@ -14,10 +15,14 @@ import javafx.scene.control.CheckBox;
 @SuppressWarnings("serial")
 public class Snippet implements Serializable
 {
+	@XStreamAsAttribute
 	private Template parent;
 	
+	@XStreamAsAttribute
 	private String name;
+	@XStreamAsAttribute
 	private String prev;
+	@XStreamAsAttribute
 	private String next;
 	
 	@XStreamOmitField

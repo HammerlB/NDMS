@@ -8,18 +8,25 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.control.CheckBox;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 @XStreamAlias("Command")
 @SuppressWarnings("serial")
 public class Command implements Serializable
 {
+	@XStreamAsAttribute
 	private Section parent;
 	
+	@XStreamAsAttribute
 	private int id;
+	@XStreamAsAttribute
 	private String name;
+	@XStreamAsAttribute
 	private String alias;
+	@XStreamAsAttribute
 	private boolean hidden;
+	@XStreamAsAttribute
 	private boolean appendParameters;
 	
 	@XStreamOmitField

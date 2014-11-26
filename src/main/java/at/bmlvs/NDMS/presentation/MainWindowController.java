@@ -18,6 +18,7 @@ import at.bmlvs.NDMS.domain.templates.Parameter;
 import at.bmlvs.NDMS.domain.templates.Section;
 import at.bmlvs.NDMS.domain.templates.Snippet;
 import at.bmlvs.NDMS.domain.templates.Template;
+import at.bmlvs.NDMS.domain.templates.Value;
 import at.bmlvs.NDMS.linker.TemplateToPathLinker;
 import at.bmlvs.NDMS.service.PresentationService;
 import at.bmlvs.NDMS.service.ServiceFactory;
@@ -523,11 +524,11 @@ public class MainWindowController extends VBox
 												else
 												{
 													// System.out.println("Textfield lost focus");
-													parameter.setValue(dataString.getText());
+													parameter.getValue().setValue(dataString.getText());
 
 													if (parameter.getDefaultValues().get(0) != null)
 													{
-														parameter.getDefaultValues().set(0, dataString.getText());
+														parameter.getDefaultValues().get(0).setValue(dataString.getText());;
 													}
 
 													template.setChanged(true);
@@ -558,11 +559,11 @@ public class MainWindowController extends VBox
 												else
 												{
 													// System.out.println("Textfield lost focus");
-													parameter.setValue(dataString.getText());
+													parameter.getValue().setValue(dataString.getText());
 
 													if (parameter.getDefaultValues().get(0) != null)
 													{
-														parameter.getDefaultValues().set(0, dataString.getText());
+														parameter.getDefaultValues().get(0).setValue(dataString.getText());;
 													}
 
 													// System.out.println(template.getPath());
@@ -576,7 +577,7 @@ public class MainWindowController extends VBox
 									{
 										// WICHTIG Restriced Textfield!!!!
 										
-										ComboBox<String> dataCombo = new ComboBox<String>();
+										ComboBox<Value> dataCombo = new ComboBox<Value>();
 										dataCombo.setItems(FXCollections.observableArrayList(parameter.getDefaultValues()));
 										
 										dataCombo.setId("" + parameter.getId());

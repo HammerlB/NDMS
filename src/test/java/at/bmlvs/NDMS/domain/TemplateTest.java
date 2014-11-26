@@ -15,10 +15,10 @@ import org.apache.log4j.Logger;
 
 import at.bmlvs.NDMS.domain.templates.Command;
 import at.bmlvs.NDMS.domain.templates.Parameter;
-import at.bmlvs.NDMS.domain.templates.ParameterList;
 import at.bmlvs.NDMS.domain.templates.Section;
 import at.bmlvs.NDMS.domain.templates.Snippet;
 import at.bmlvs.NDMS.domain.templates.Template;
+import at.bmlvs.NDMS.domain.templates.Value;
 import at.bmlvs.NDMS.linker.TemplateToPathLinker;
 import at.bmlvs.NDMS.service.PersistenceService;
 import at.bmlvs.NDMS.service.ServiceFactory;
@@ -34,8 +34,6 @@ public class TemplateTest extends Application
 		for ( Logger logger : loggers ) {
 		    logger.setLevel(Level.OFF);
 		}
-		
-		String tabname = "192.168.1.12";
 		
 		try
 		{
@@ -53,9 +51,9 @@ public class TemplateTest extends Application
 			//String name, String alias, boolean appendParameters
 			Command commandSetHostname = new Command(sectionBasicDeviceConfigurations, "hostname", "Configure Hostname", true);
 			
-			//int id, String name, String alias, String type, String value, boolean used, boolean useName
-			Parameter parameterSetHostname = new Parameter(commandSetHostname, 0, "Hostname", "Hostname", "DatatypeString", "", true, false, null);
-			parameterSetHostname.getDefaultValues().add("GWDSWITCH");
+			//int id, String name, String alias, String type, Value value, boolean used, boolean useName, ArrayList<Value> defaultValues
+			Parameter parameterSetHostname = new Parameter(commandSetHostname, 0, "Hostname", "Hostname", "DatatypeString", new Value("", ""), true, false, null);
+			parameterSetHostname.getDefaultValues().add(new Value("GWDSWITCH", "GWDSWITCH"));
 			
 			commandSetHostname.getParameters().add(parameterSetHostname);
 			
@@ -93,18 +91,18 @@ public class TemplateTest extends Application
 				
 				Command commandInterfaceSetShutdownOption = new Command(sectionInterface, "shutdown", "Configure Shutdown", false);
 				
-				Parameter parameterInterfaceSetShutdownOption = new Parameter(commandInterfaceSetShutdownOption, 0, "", "Shutdown", "DatatypeChooseOneString", "", true, false, null);
-				parameterInterfaceSetShutdownOption.getDefaultValues().add("no");
+				Parameter parameterInterfaceSetShutdownOption = new Parameter(commandInterfaceSetShutdownOption, 0, "", "Shutdown", "DatatypeChooseOneString", new Value("", ""), true, false, null);
+				parameterInterfaceSetShutdownOption.getDefaultValues().add(new Value("No Shutdown", "no"));
 				
 				commandInterfaceSetShutdownOption.getParameters().add(parameterInterfaceSetShutdownOption);
 				
 				Command commandInterfaceSetMode = new Command(sectionInterface, "switchport mode", "None", true);
 				
-				Parameter parameterInterfaceSetModeOptionAccess = new Parameter(commandInterfaceSetMode, 0, "access", "Access", "None", "", true, false, null);
+				Parameter parameterInterfaceSetModeOptionAccess = new Parameter(commandInterfaceSetMode, 0, "access", "Access", "None", new Value("", ""), true, false, null);
 				
-				Parameter parameterInterfaceSetModeOptionTrunk = new Parameter(commandInterfaceSetMode, 0, "trunk", "Trunk", "None", "", true, false, null);
+				Parameter parameterInterfaceSetModeOptionTrunk = new Parameter(commandInterfaceSetMode, 0, "trunk", "Trunk", "None", new Value("", ""), true, false, null);
 				
-				Parameter parameterInterfaceSetModeOptionDynamic = new Parameter(commandInterfaceSetMode, 0, "dynamic", "Dynamic", "None", "", true, false, null);
+				Parameter parameterInterfaceSetModeOptionDynamic = new Parameter(commandInterfaceSetMode, 0, "dynamic", "Dynamic", "None", new Value("", ""), true, false, null);
 				
 				//TEST123
 				
@@ -116,7 +114,7 @@ public class TemplateTest extends Application
 				
 				Command commandInterfaceSetVlan = new Command(sectionInterface, "switchport access vlan", "None", true);
 				
-				Parameter parameterInterfaceSetVlan = new Parameter(commandInterfaceSetVlan, 0, "Vlan", "Vlan", "DatatypeVlan", "", true, false, null);
+				Parameter parameterInterfaceSetVlan = new Parameter(commandInterfaceSetVlan, 0, "Vlan", "Vlan", "DatatypeVlan", new Value("", ""), true, false, null);
 				
 				//TEST
 				

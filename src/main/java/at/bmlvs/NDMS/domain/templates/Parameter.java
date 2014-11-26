@@ -6,20 +6,29 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 @XStreamAlias("Parameter")
 @SuppressWarnings("serial")
 public class Parameter implements Serializable
 {
+	@XStreamAsAttribute
 	private Command parent;
 	
+	@XStreamAsAttribute
 	private int id;
+	@XStreamAsAttribute
 	private String name;
+	@XStreamAsAttribute
 	private String alias;
+	@XStreamAsAttribute
 	private String type;
+	@XStreamAsAttribute
 	private Value value;
+	@XStreamAsAttribute
 	private boolean used;
+	@XStreamAsAttribute
 	private boolean useName;
 	
 	@XStreamAlias("DefaultValues")

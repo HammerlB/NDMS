@@ -1,10 +1,17 @@
 package at.bmlvs.NDMS.domain.templates;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
+
+@XStreamAlias("Value")
+@SuppressWarnings("serial")
 public class Value
 {
+	@XStreamAsAttribute
 	private String alias;
+	@XStreamAsAttribute
 	private String value;
-	
+
 	public Value(String alias, String value)
 	{
 		setAlias(alias);
@@ -29,5 +36,11 @@ public class Value
 	public void setValue(String value)
 	{
 		this.value = value;
+	}
+
+	@Override
+	public String toString()
+	{
+		return alias;
 	}
 }
