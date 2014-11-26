@@ -572,39 +572,41 @@ public class MainWindowController extends VBox
 											}
 										});
 									}
-									if (parameter.getType().equals("DatatypeObject"))
+									if (parameter.getType().equals("DatattypeChooseOneString"))
 									{
 										// WICHTIG Restriced Textfield!!!!
-										TextField dataString = new TextField(parameter.getDefaultValue());
+										
+										ComboBox<String> dataCombo = new ComboBox<String>();
+										dataCombo.setItems(FXCollections.observableArrayList(parameter.getDefaultValues()));
+										
+										dataCombo.setId("" + parameter.getId());
 
-										dataString.setId("" + parameter.getId());
-
-										paraPane.add(dataString, 6, 0);
-										dataString.focusedProperty().addListener(new ChangeListener<Boolean>()
-										{
-											@Override
-											public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
-											{
-												if (newPropertyValue)
-												{
-													// System.out.println("Textfield on focus");
-												}
-												else
-												{
-													// System.out.println("Textfield lost focus");
-													parameter.setValue(dataString.getText());
-
-													if (parameter.getDefaultValues().get(0) != null)
-													{
-														parameter.getDefaultValues().set(0, dataString.getText());
-													}
-
-													// System.out.println(template.getPath());
-													template.setChanged(true);
-													show.setText(template.getElement().receiveTemplateOutputAsString());
-												}
-											}
-										});
+										paraPane.add(dataCombo, 6, 0);
+//										dataCombo.focusedProperty().addListener(new ChangeListener<Boolean>()
+//										{
+//											@Override
+//											public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
+//											{
+//												if (newPropertyValue)
+//												{
+//													// System.out.println("Textfield on focus");
+//												}
+//												else
+//												{
+//													// System.out.println("Textfield lost focus");
+//													parameter.setValue(dataString.getText());
+//
+//													if (parameter.getDefaultValues().get(0) != null)
+//													{
+//														parameter.getDefaultValues().set(0, dataString.getText());
+//													}
+//
+//													// System.out.println(template.getPath());
+//													template.setChanged(true);
+//													show.setText(template.getElement().receiveTemplateOutputAsString());
+//												}
+//											}
+//										});
 									}
 									show.setText(template.getElement().receiveTemplateOutputAsString());
 
