@@ -18,17 +18,17 @@ public class Parameter implements Serializable
 	private String name;
 	private String alias;
 	private String type;
-	private String value;
+	private Value value;
 	private boolean used;
 	private boolean useName;
 	
 	@XStreamAlias("DefaultValues")
-	private ParameterList<String> defaultValues;
+	private ParameterList defaultValues;
 	
 	@XStreamOmitField
 	private BooleanProperty activated;
 	
-	public Parameter(Command parent, int id, String name, String alias, String type, String value, boolean used, boolean useName, ParameterList<String> parameterList)
+	public Parameter(Command parent, int id, String name, String alias, String type, Value value, boolean used, boolean useName, ParameterList parameterList)
 	{
 		setParent(parent);
 		
@@ -43,8 +43,8 @@ public class Parameter implements Serializable
 		}
 		else
 		{
-			setDefaultValues(new ParameterList<String>(this));
-			getDefaultValues().add("");
+			setDefaultValues(new ParameterList(this));
+			getDefaultValues().add(new Value("", ""));
 		}
 		
 		setValue(value);
@@ -102,12 +102,12 @@ public class Parameter implements Serializable
 		this.type = type;
 	}
 
-	public String getValue()
+	public Value getValue()
 	{
 		return value;
 	}
 
-	public void setValue(String value)
+	public void setValue(Value value)
 	{
 		this.value = value;
 	}
@@ -153,12 +153,12 @@ public class Parameter implements Serializable
 		this.activatedProperty().set(activated);
 	}
 
-	public ParameterList<String> getDefaultValues()
+	public ParameterList getDefaultValues()
 	{
 		return defaultValues;
 	}
 
-	public void setDefaultValues(ParameterList<String> defaultValues)
+	public void setDefaultValues(ParameterList defaultValues)
 	{
 		this.defaultValues = defaultValues;
 	}
@@ -188,14 +188,14 @@ public class Parameter implements Serializable
 			}
 		}
 		
-		return getValue();
+		return getValue().getValue();
 	}
 	
 	public String getDefaultValue()
 	{
 		if(getDefaultValues().size() > 0 && getDefaultValues().getSelected() != null)
 		{
-			return getDefaultValues().getSelected();
+			return getDefaultValues().getSelected().getValue();
 		}
 		
 		return "";

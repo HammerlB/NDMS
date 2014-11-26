@@ -2,21 +2,20 @@ package at.bmlvs.NDMS.domain.templates;
 
 import java.util.ArrayList;
 
-@SuppressWarnings({ "serial", "hiding" })
-public class ParameterList<String> extends ArrayList<String>
+@SuppressWarnings({ "serial" })
+public class ParameterList extends ArrayList<Value>
 {
 	private Parameter parent;
 	
-	private String selected;
+	private Value selected;
 
-	@SuppressWarnings("unchecked")
 	public ParameterList(Parameter parent)
 	{
 		super();
 		
 		setParent(parent);
 		
-		setSelected((String) "");
+		setSelected(new Value("", ""));
 	}
 
 	/**
@@ -38,7 +37,7 @@ public class ParameterList<String> extends ArrayList<String>
 	/**
 	 * @return the selected
 	 */
-	public String getSelected()
+	public Value getSelected()
 	{
 		return selected;
 	}
@@ -46,13 +45,13 @@ public class ParameterList<String> extends ArrayList<String>
 	/**
 	 * @param selected the selected to set
 	 */
-	public void setSelected(String selected)
+	public void setSelected(Value selected)
 	{
 		this.selected = selected;
 	}
 
 	@Override
-	public boolean add(String arg0)
+	public boolean add(Value arg0)
 	{
 		setSelected(arg0);
 		

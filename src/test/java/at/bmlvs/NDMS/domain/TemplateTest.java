@@ -15,6 +15,7 @@ import org.apache.log4j.Logger;
 
 import at.bmlvs.NDMS.domain.templates.Command;
 import at.bmlvs.NDMS.domain.templates.Parameter;
+import at.bmlvs.NDMS.domain.templates.ParameterList;
 import at.bmlvs.NDMS.domain.templates.Section;
 import at.bmlvs.NDMS.domain.templates.Snippet;
 import at.bmlvs.NDMS.domain.templates.Template;
@@ -92,13 +93,10 @@ public class TemplateTest extends Application
 				
 				Command commandInterfaceSetShutdownOption = new Command(sectionInterface, "shutdown", "Configure Shutdown", false);
 				
-				Parameter parameterInterfaceSetShutdownOptionTrue = new Parameter(commandInterfaceSetShutdownOption, 0, "", "Shutdown", "None", "", true, false, null);
+				Parameter parameterInterfaceSetShutdownOption = new Parameter(commandInterfaceSetShutdownOption, 0, "", "Shutdown", "DatatypeChooseOneString", "", true, false, null);
+				parameterInterfaceSetShutdownOption.getDefaultValues().add("no");
 				
-				Parameter parameterInterfaceSetShutdownOptionFalse = new Parameter(commandInterfaceSetShutdownOption, 1, "no", "No Shutdown", "None", "", true, false, null);
-				
-				commandInterfaceSetShutdownOption.getParameters().add(parameterInterfaceSetShutdownOptionTrue);
-				
-				commandInterfaceSetShutdownOption.getParameters().add(parameterInterfaceSetShutdownOptionFalse);
+				commandInterfaceSetShutdownOption.getParameters().add(parameterInterfaceSetShutdownOption);
 				
 				Command commandInterfaceSetMode = new Command(sectionInterface, "switchport mode", "None", true);
 				
