@@ -138,4 +138,20 @@ public class Section implements Serializable
 			command.activateChildren();
 		}
 	}
+	
+	public boolean someElementsActivated()
+	{
+		boolean activated = false;
+		
+		for (Command command: getCommands())
+		{
+			if(command.isActivated() == true)
+			{
+				activated = true;
+				break;
+			}
+		}
+		
+		return activated;
+	}
 }

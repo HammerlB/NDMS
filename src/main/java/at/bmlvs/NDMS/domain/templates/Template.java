@@ -213,23 +213,32 @@ public class Template implements Serializable
 	public String receiveTemplateOutputAsString()
 	{
 		String receivedOutput = "";
-
-		for (Snippet snippet : getSnippets())
+		
+		if(someElementsActivated() || isActivated() == true)
 		{
-			for (Section section : snippet.getSections())
+			for (Snippet snippet : getSnippets())
 			{
-				for (Command command : section.getCommands())
+				if(snippet.someElementsActivated() || snippet.isActivated() == true)
 				{
-					if (command.isActivated() == true)
+					for (Section section : snippet.getSections())
 					{
-						receivedOutput += command.getName();
-
-						for (Parameter parameter : command.getParameters())
+						if(section.someElementsActivated() || section.isActivated() == true)
 						{
-							receivedOutput += " " + parameter.getParameterOutput();
-						}
+							for (Command command : section.getCommands())
+							{
+								if (command.isActivated() == true)
+								{
+									receivedOutput += command.getName();
 
-						receivedOutput += "\n";
+									for (Parameter parameter : command.getParameters())
+									{
+										receivedOutput += " " + parameter.getParameterOutput();
+									}
+
+									receivedOutput += "\n";
+								}
+							}
+						}
 					}
 				}
 			}
@@ -320,6 +329,22 @@ public class Template implements Serializable
 			snippet.getCheckbox().setSelected(true);
 			snippet.activateChildren();
 		}
+	}
+	
+	public boolean someElementsActivated()
+	{
+		boolean activated = false;
+		
+		for (Snippet snippet : getSnippets())
+		{
+			if(snippet.isActivated() == true)
+			{
+				activated = true;
+				break;
+			}
+		}
+		
+		return activated;
 	}
 
 	public String getFullName()

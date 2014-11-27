@@ -52,8 +52,7 @@ public class TemplateTest extends Application
 			Command commandSetHostname = new Command(sectionBasicDeviceConfigurations, "hostname", "Configure Hostname", true);
 			
 			//int id, String name, String alias, String type, Value value, boolean used, boolean useName, ArrayList<Value> defaultValues
-			Parameter parameterSetHostname = new Parameter(commandSetHostname, 0, "Hostname", "Hostname", "DatatypeString", new Value("", ""), true, false, null);
-			parameterSetHostname.getDefaultValues().add(new Value("GWDSWITCH", "GWDSWITCH"));
+			Parameter parameterSetHostname = new Parameter(commandSetHostname, 0, "Hostname", "Hostname", "DatatypeString", new Value("GWDSWITCH", "GWDSWITCH"), true, false, null);
 			
 			commandSetHostname.getParameters().add(parameterSetHostname);
 			
@@ -91,12 +90,12 @@ public class TemplateTest extends Application
 				
 				Command commandInterfaceSetShutdownOption = new Command(sectionInterface, "shutdown", "Configure Shutdown", false);
 				
-				Parameter parameterInterfaceSetShutdownOption = new Parameter(commandInterfaceSetShutdownOption, 0, "", "Shutdown", "DatatypeChooseOneString", new Value("", ""), true, false, null);
+				Parameter parameterInterfaceSetShutdownOption = new Parameter(commandInterfaceSetShutdownOption, 0, "", "Shutdown", "DatatypeChooseOneString", new Value("Shutdown", ""), true, false, null);
 				parameterInterfaceSetShutdownOption.getDefaultValues().add(new Value("No Shutdown", "no"));
 				
 				commandInterfaceSetShutdownOption.getParameters().add(parameterInterfaceSetShutdownOption);
 				
-				Command commandInterfaceSetMode = new Command(sectionInterface, "switchport mode", "None", true);
+				Command commandInterfaceSetMode = new Command(sectionInterface, "switchport mode", "Configure Interface Mode", true);
 				
 				Parameter parameterInterfaceSetModeOptionAccess = new Parameter(commandInterfaceSetMode, 0, "access", "Access", "None", new Value("", ""), true, false, null);
 				
@@ -122,6 +121,8 @@ public class TemplateTest extends Application
 				
 				sectionInterface.getCommands().add(commandSetInterface);
 				sectionInterface.getCommands().add(commandInterfaceSetVlan);
+				sectionInterface.getCommands().add(commandInterfaceSetShutdownOption);
+				sectionInterface.getCommands().add(commandInterfaceSetMode);
 				
 				snippetInterfaces.getSections().add(sectionInterface);
 			}
