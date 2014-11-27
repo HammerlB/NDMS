@@ -164,4 +164,20 @@ public class Snippet implements Serializable
 			section.activateChildren();
 		}
 	}
+	
+	public boolean someElementsActivated()
+	{
+		boolean activated = false;
+		
+		for (Section section: getSections())
+		{
+			if(section.isActivated() == true)
+			{
+				activated = true;
+				break;
+			}
+		}
+		
+		return activated;
+	}
 }
