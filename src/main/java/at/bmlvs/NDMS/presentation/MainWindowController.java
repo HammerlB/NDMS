@@ -52,6 +52,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
@@ -185,7 +186,9 @@ public class MainWindowController extends VBox
 			VBox overtheleftbox = new VBox();
 			VBox leftbox = new VBox();
 			FlowPane flowpie = new FlowPane();
-
+			TitledPane titlepane = new TitledPane();
+			
+			
 			SplitPane splitter = new SplitPane();
 			splitter.setOrientation(Orientation.HORIZONTAL);
 
