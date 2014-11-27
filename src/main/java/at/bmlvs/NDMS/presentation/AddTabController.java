@@ -141,7 +141,6 @@ public class AddTabController
 				{
 					try
 					{
-						ServiceFactory.getPresentationService().getMainWindowController().getScene().setCursor(Cursor.WAIT);
 						sshc = new SSHConnector(address.getIPv4Address(), "Herkel", "gwdH_2014",
 								"gwd_2014");
 

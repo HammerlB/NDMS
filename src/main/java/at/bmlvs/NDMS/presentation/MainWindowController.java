@@ -88,7 +88,7 @@ public class MainWindowController extends VBox
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("xml/MainWindow.fxml"));
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);
-
+		
 		tabBorderPane = new BorderPane();
 
 		try
@@ -663,10 +663,13 @@ public class MainWindowController extends VBox
 					ServiceFactory.getPersistenceService().saveAllChangedTemplates();
 				}
 			});
-
+			
 			sp.setContent(leftbox);
-
+			
+			flowpie.setFocusTraversable(false);
 			flowpie.setAlignment(Pos.BASELINE_RIGHT);
+			
+			overtheleftbox.setFocusTraversable(false);
 			overtheleftbox.getChildren().add(sp);
 			flowpie.getChildren().add(einspielen);
 			overtheleftbox.getChildren().add(flowpie);
