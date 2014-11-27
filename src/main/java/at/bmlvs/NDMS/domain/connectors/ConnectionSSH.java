@@ -137,8 +137,15 @@ public class ConnectionSSH extends TerminalConnector implements Runnable {
 				}
 			}
 			System.out.println("Reader has stopped!");
-		} catch (IOException | InterruptedException e) {
+		} catch (IOException | InterruptedException  e) {
 			System.out.println("Reader was interrupted!");
+		} catch (StringIndexOutOfBoundsException e1){
+			System.out.println("Retry connecting due connection timeout...");
+			try {
+				this.connect();
+			} catch (Exception e) {
+				System.out.println(e.getMessage()+": Please connect again manually");
+			}
 		}
 	}
 	
