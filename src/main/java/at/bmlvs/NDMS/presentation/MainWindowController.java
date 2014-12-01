@@ -557,14 +557,14 @@ public class MainWindowController extends VBox
 											}
 										});
 									}
-									if (parameter.getType().equals("DatattypeChooseOneString"))
+									if (parameter.getType().equals("DatatypeChooseOneString"))
 									{
 										// WICHTIG Restriced Textfield!!!!
 
 										ComboBox<Value> dataCombo = new ComboBox<Value>();
 										dataCombo.setItems(FXCollections.observableArrayList(parameter.getDefaultValues()));
 
-										dataCombo.setId("" + parameter.getId());
+										//dataCombo.setId("" + parameter.getId());
 
 										paraPane.add(dataCombo, 6, 0);
 										// dataCombo.focusedProperty().addListener(new
