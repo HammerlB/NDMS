@@ -360,8 +360,18 @@ public class MainWindowController extends VBox
 								public void changed(ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val)
 								{
 									System.out.println("FIRED SECTIONCHECKBOX: " + new_val);
-
-									section.setActivated(new_val);
+//
+//									section.setActivated(new_val);
+								}
+							});
+							
+							section.getCheckbox().indeterminateProperty().addListener(new ChangeListener<Boolean>()
+							{
+								public void changed(ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val)
+								{
+									System.out.println("FIREDINDETERMINATE SECTIONCHECKBOX: " + new_val);
+//
+//									section.setActivated(new_val);
 								}
 							});
 

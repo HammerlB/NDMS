@@ -1,5 +1,6 @@
 package at.bmlvs.NDMS.domain.templates;
 
+import java.io.ObjectStreamException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -41,6 +42,7 @@ public class Command implements Serializable
 	public Command(Section parent, String name, String alias, boolean appendParameters)
 	{
 		setCheckbox(new CheckBox());
+		getCheckbox().setAllowIndeterminate(true);
 		
 		setParent(parent);
 		
@@ -196,5 +198,13 @@ public class Command implements Serializable
 		{
 			parameter.setActivated(true);
 		}
+	}
+	
+	private Object readResolve() throws ObjectStreamException
+	{
+		setCheckbox(new CheckBox());
+		getCheckbox().setAllowIndeterminate(true);
+		
+		return this;
 	}
 }

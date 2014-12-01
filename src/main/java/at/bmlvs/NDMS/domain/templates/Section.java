@@ -1,5 +1,6 @@
 package at.bmlvs.NDMS.domain.templates;
 
+import java.io.ObjectStreamException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -33,6 +34,7 @@ public class Section implements Serializable
 	public Section(Snippet parent, String name)
 	{
 		setCheckbox(new CheckBox());
+		getCheckbox().setAllowIndeterminate(true);
 		
 		setParent(parent);
 		
@@ -153,5 +155,13 @@ public class Section implements Serializable
 		}
 		
 		return activated;
+	}
+	
+	private Object readResolve() throws ObjectStreamException
+	{
+		setCheckbox(new CheckBox());
+		getCheckbox().setAllowIndeterminate(true);
+		
+		return this;
 	}
 }

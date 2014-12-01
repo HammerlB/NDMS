@@ -2,8 +2,10 @@ package at.bmlvs.NDMS.domain.templates;
 
 import java.util.ArrayList;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 
+@XStreamAlias("ParameterList")
 @SuppressWarnings({ "serial" })
 public class ParameterList extends ArrayList<Value>
 {

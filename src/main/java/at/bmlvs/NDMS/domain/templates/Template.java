@@ -1,5 +1,6 @@
 package at.bmlvs.NDMS.domain.templates;
 
+import java.io.ObjectStreamException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -41,9 +42,10 @@ public class Template implements Serializable
 	public Template(String name, String version, String os_version, String device_type)
 	{
 		setCheckbox(new CheckBox());
-		
+		getCheckbox().setAllowIndeterminate(true);
+
 		setActivated(true);
-		
+
 		setName(name);
 		setVersion(version);
 		setOs_version(os_version);
@@ -155,12 +157,12 @@ public class Template implements Serializable
 
 	public CheckBox getCheckbox()
 	{
-		if(checkbox == null)
+		if (checkbox == null)
 		{
 			setCheckbox(new CheckBox());
 			getCheckbox().setSelected(isActivated());
 		}
-		
+
 		return checkbox;
 	}
 
@@ -213,16 +215,16 @@ public class Template implements Serializable
 	public String receiveTemplateOutputAsString()
 	{
 		String receivedOutput = "";
-		
-		if(someElementsActivated() || isActivated() == true)
+
+		if (someElementsActivated() || isActivated() == true)
 		{
 			for (Snippet snippet : getSnippets())
 			{
-				if(snippet.someElementsActivated() || snippet.isActivated() == true)
+				if (snippet.someElementsActivated() || snippet.isActivated() == true)
 				{
 					for (Section section : snippet.getSections())
 					{
-						if(section.someElementsActivated() || section.isActivated() == true)
+						if (section.someElementsActivated() || section.isActivated() == true)
 						{
 							for (Command command : section.getCommands())
 							{
@@ -330,25 +332,49 @@ public class Template implements Serializable
 			snippet.activateChildren();
 		}
 	}
-	
+
 	public boolean someElementsActivated()
 	{
 		boolean activated = false;
-		
+
 		for (Snippet snippet : getSnippets())
 		{
-			if(snippet.isActivated() == true)
+			if (snippet.isActivated() == true)
 			{
 				activated = true;
 				break;
 			}
 		}
-		
+
 		return activated;
 	}
 
 	public String getFullName()
 	{
 		return getDevice_type() + "-" + getName() + "-" + getVersion() + "-" + getOs_version();
+	}
+
+	/**
+	 * There is one major flaw in XStream. Unfortunately it has no way of
+	 * telling if a field or attribute should get any default value if not
+	 * present in the xml file. Because constructor is not being invoked we
+	 * cannot set the value there. Neither setting the value in field definition
+	 * will work. The resulting instance will always have zero or null values in
+	 * the fields.
+	 *
+	 * The only way of setting the desired default value is using the following
+	 * method. It is called during deserialization process and here we can check
+	 * if the field value is null. If yes it means that it's tag is not present
+	 * and we can set the default value if needed.
+	 * http://www.itcuties.com/java/xstream-complex-example/
+	 * @return this
+	 * @throws ObjectStreamException
+	 */
+	private Object readResolve() throws ObjectStreamException
+	{
+		setCheckbox(new CheckBox());
+		getCheckbox().setAllowIndeterminate(true);
+		
+		return this;
 	}
 }

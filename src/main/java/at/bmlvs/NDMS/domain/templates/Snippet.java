@@ -1,5 +1,6 @@
 package at.bmlvs.NDMS.domain.templates;
 
+import java.io.ObjectStreamException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -37,6 +38,7 @@ public class Snippet implements Serializable
 	public Snippet(Template parent, String name, String prev, String next)
 	{
 		setCheckbox(new CheckBox());
+		getCheckbox().setAllowIndeterminate(true);
 		
 		setParent(parent);
 		
@@ -179,5 +181,13 @@ public class Snippet implements Serializable
 		}
 		
 		return activated;
+	}
+	
+	private Object readResolve() throws ObjectStreamException
+	{
+		setCheckbox(new CheckBox());
+		getCheckbox().setAllowIndeterminate(true);
+		
+		return this;
 	}
 }
