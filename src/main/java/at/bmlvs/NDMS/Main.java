@@ -37,7 +37,7 @@ public class Main extends Application
 		    logger.setLevel(Level.OFF);
 		}
 		
-		// Presentation
+		// Presentation Layer
 		// TODO Auto-generated method stub
 		// Set the look and feel to users OS LaF.
 		try
