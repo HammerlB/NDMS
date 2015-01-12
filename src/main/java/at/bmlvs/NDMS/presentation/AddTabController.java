@@ -373,7 +373,7 @@ public class AddTabController
 							portview(ServiceFactory.getDomainService()
 									.getInstances().getInstances()
 									.indexOf(inst));
-
+							
 							inst.setOnClosed(new EventHandler<Event>()
 							{
 								public void handle(Event t)
