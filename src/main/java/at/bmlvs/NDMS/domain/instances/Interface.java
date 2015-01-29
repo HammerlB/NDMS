@@ -1,5 +1,8 @@
 package at.bmlvs.NDMS.domain.instances;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import at.bmlvs.NDMS.domain.helper.UUIDGenerator;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -38,6 +41,7 @@ public class Interface extends Button
 		
 		setTooltip(new Tooltip());
 		setTextForTooltip();
+		
 	}
 	
 	public final String getUUID()
@@ -467,4 +471,5 @@ public class Interface extends Button
 				+ cdpstatus + ", cdpneighbor=" + cdpneighbor + ", port_8021X="
 				+ port_8021X + ", vlan=" + vlan + "]";
 	}
+
 }

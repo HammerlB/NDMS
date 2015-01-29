@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.apache.log4j.helpers.OnlyOnceErrorHandler;
+
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -103,7 +105,7 @@ public class AddTabController
 	private TFTPConnector tftpc;
 	private SSHConnector sshc;
 	private GridPane portview1;
-
+	private BorderPane boadpane;
 
 	@FXML
 	public void initialize()
@@ -636,20 +638,12 @@ public class AddTabController
 		for (Interface interf : ServiceFactory.getDomainService()
 				.getInstances().getInstances().get(id).getInterfaces())
 		{
-			interf.typeProperty().addListener(new ChangeListener<Object>()
-			{
+			//SKOBAMG: Erste erkentnisse: Ports anclickbar
+			interf.setOnAction(new EventHandler<ActionEvent>() {
+
 				@Override
-				public void changed(ObservableValue<? extends Object> arg0,
-						Object arg1, Object arg2)
-				{
-					Platform.runLater(new Runnable()
-					{
-						public void run()
-						{
-							interf.setTextForTooltip();
-							
-						}
-					});
+				public void handle(ActionEvent event) {
+					((MainWindowController)ServiceFactory.getPresentationService().getMainWindowController()).configurePort(interf);
 				}
 			});
 
@@ -751,8 +745,11 @@ public class AddTabController
 		
 		tabbox.getChildren().add(flow2);
 		tabbox.getChildren().add(flow);
-		PresentationService.getMainWindowController().getTabBorderPane().setTop(tabbox);
-		PresentationService.getMainWindowController().getTabPane().getTabs().get(id).setContent(PresentationService.getMainWindowController().getTabBorderPane());
+		
+		boadpane = new BorderPane();
+		boadpane.setTop(tabbox);
+		PresentationService.getMainWindowController().setTabBorderPane(boadpane);
+		PresentationService.getMainWindowController().getTabPane().getTabs().get(id).setContent(PresentationService.getMainWindowController().getTabBorderPane()); //PresentationService.getMainWindowController().getTabBorderPane() statt tabbox
 		
 	}
 

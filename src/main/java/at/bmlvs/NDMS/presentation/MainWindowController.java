@@ -10,9 +10,9 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 
 import com.sshtools.j2ssh.transport.Service;
-import com.sun.javafx.binding.BidirectionalBinding;
 
 import at.bmlvs.NDMS.domain.instances.InstanceOnline;
+import at.bmlvs.NDMS.domain.instances.Interface;
 import at.bmlvs.NDMS.domain.templates.Command;
 import at.bmlvs.NDMS.domain.templates.Parameter;
 import at.bmlvs.NDMS.domain.templates.Section;
@@ -102,6 +102,28 @@ public class MainWindowController extends VBox
 		}
 	}
 
+	public void configurePort(Interface intf){
+		stage = new Stage();
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("xml/PortKonfWindow.fxml"));
+		Parent root = null;
+		try {
+			root = loader.load();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Scene scene = new Scene(root);
+		stage.setTitle("Portkonfiguration");
+		stage.getIcons().add(new Image("file:icons/ndms.png"));
+		stage.initModality(Modality.WINDOW_MODAL);
+		stage.initOwner(this.getScene().getWindow());
+		PortKonfController konfController = loader.<PortKonfController>getController();
+		konfController.initData(intf);
+		stage.setScene(scene);
+		stage.setResizable(false);
+		stage.show();
+	}
+	
 	@FXML
 	private void addnew(ActionEvent event) throws IOException
 	{
@@ -140,7 +162,7 @@ public class MainWindowController extends VBox
 	@FXML
 	public void templatusBox()
 	{
-		templateBox.getItems().add("Templates");
+		//templateBox.getItems().add("Templates");
 
 		for (TemplateToPathLinker template : ServiceFactory.getPersistenceService().getTemplates())
 		{
@@ -416,7 +438,6 @@ public class MainWindowController extends VBox
 										{
 //											boolean oldValue = (Boolean) old_val;
 											boolean newValue = (Boolean) new_val;
-
 											System.out.println("FIRED COMMANDPROPERTY: " + newValue);
 
 											// command.setActivated(newValue);
@@ -683,10 +704,10 @@ public class MainWindowController extends VBox
 
 			viewstack.getChildren().add(splitter);
 
-			// PresentationService.getMainWindowController().getTabPane().getTabs().get(id).getContent();
-
+			//PresentationService.getMainWindowController().getTabPane().getTabs().get(id).getContent();
+			
 			PresentationService.getMainWindowController().getTabBorderPane().setCenter(viewstack);
-
+			
 		}
 		catch (Exception e)
 		{
